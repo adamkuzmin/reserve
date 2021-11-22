@@ -89,6 +89,7 @@ Header.Title = styled.div`
 
   && p {
     line-height: 1.46;
+    font-weight: 400;
   }
 `;
 

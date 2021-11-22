@@ -138,6 +138,7 @@ const CloseIcon = styled.div`
 
 const StyledH4 = styled.div`
   margin-bottom: 20px;
+  font-weight: 400;
 `;
 
 const FooterData = [

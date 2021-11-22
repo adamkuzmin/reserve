@@ -8,6 +8,7 @@ const LeadText = styled(Paragraph)`
     line-height: 1.22;
     color: black;
     margin-bottom: 0px;
+    font-weight: 400;
   }
 `;
 

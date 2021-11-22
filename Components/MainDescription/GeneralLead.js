@@ -30,10 +30,14 @@ KPI.Number = styled.div`
   color: black;
 `;
 
-KPI.Text = styled.div``;
+KPI.Text = styled.div`
+  font-weight: 400;
+`;
 
 const LeadAbout = styled.div`
   line-height: 1;
+  font-weight: 400;
+  color: black;
   padding-left: 60px;
   padding-right: 60px;
 `;
@@ -49,6 +53,7 @@ const ButtonBlock = styled.div`
 
   && span {
     border-bottom: 1px solid white;
+    font-weight: 400;
   }
 
   &&:hover span {
@@ -86,7 +91,9 @@ const GeneralLead = () => {
       </KPI>
       <LeadWithBtn>
         <LeadAbout>
-          <Text96 data-font="ibm">Ведущая проектная организация с&nbsp;1987&nbsp;года</Text96>
+          <Text96 data-font="ibm">
+            Ведущая проектная организация с&nbsp;1987&nbsp;года
+          </Text96>
         </LeadAbout>
         <ButtonBlock>
           <Text30 data-font="ibm">О&nbsp;нас</Text30>

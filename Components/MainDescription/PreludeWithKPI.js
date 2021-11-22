@@ -27,12 +27,17 @@ KPIs.Item = styled.div`
     margin-bottom: 0px;
     color: black;
   }
+
+  && p {
+    font-weight: 400;
+  }
 `;
 
 const SLeadText = styled(LeadText)`
   &&& {
     margin-top: 6vw;
     margin-bottom: 6vw;
+    font-weight: 400;
   }
 `;
 
