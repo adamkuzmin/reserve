@@ -99,7 +99,7 @@ const LinksBlock = styled.div`
   }
 
   && a:hover {
-    opacity: .75
+    opacity: 0.75;
   }
 `;
 
@@ -121,6 +121,7 @@ const SearchInput = styled.input`
   background: none;
   color: white;
   font-size: 30px;
+  
 
   &&::placeholder {
     font-size: 30px;
@@ -137,7 +138,7 @@ const CloseIcon = styled.div`
 
 const StyledH4 = styled.div`
   margin-bottom: 20px;
-`
+`;
 
 const FooterData = [
   {
@@ -207,7 +208,7 @@ const Footer = ({ BlackBlockIsScrolling, setBlackBlockIsScrolling }) => {
     <Foot ref={FooterRef}>
       <Foot.Search>
         <SearchIcon />
-        <SearchInput type="text" placeholder="Поиск по сайту" />
+        <SearchInput data-font="ibm" type="text" placeholder="Поиск по сайту" />
         <CloseIcon />
       </Foot.Search>
       <Foot.Sections>
@@ -215,12 +216,12 @@ const Footer = ({ BlackBlockIsScrolling, setBlackBlockIsScrolling }) => {
           return (
             <Foot.Col key={`Foot.Col${i}`}>
               <StyledH4>
-                <Text36>{key.title}</Text36>
+                <Text36 data-font="ibm">{key.title}</Text36>
               </StyledH4>
               <LinksBlock>
                 {key?.links?.map((link, b) => {
                   return (
-                    <Text30 key={`footer.a.${b}`}>
+                    <Text30 data-font="ibm" key={`footer.a.${b}`}>
                       <a>{link.name}</a>
                     </Text30>
                   );
@@ -232,13 +233,13 @@ const Footer = ({ BlackBlockIsScrolling, setBlackBlockIsScrolling }) => {
       </Foot.Sections>
       <Foot.Base>
         <p>
-          <Text30>© 1987—2021 Резерв</Text30>
+          <Text30 data-font="ibm">© 1987—2021 Резерв</Text30>
         </p>
         <SocialNets>
           <SIcon data-type="facebook" />
           <SIcon data-type="instagram" />
           <a>
-            <Text30>EN</Text30>
+            <Text30 data-font="ibm">EN</Text30>
           </a>
         </SocialNets>
       </Foot.Base>

@@ -95,10 +95,10 @@ const Home = () => {
       <Content ref={LastProjectsRef} justifyContent={"flex-end"}>
         <Col>
           <StyledTitle>
-            <Text60>Актуальные проекты</Text60>
+            <Text60 data-font="ibm">Актуальные проекты</Text60>
           </StyledTitle>
           <LeadText>
-            <Text36>
+            <Text36 data-font="ibm">
               Мы спроектировали колоссальное количество общественных
               пространств, что прям душа не может нарадоваться. А визуалки
               просто блеск!
