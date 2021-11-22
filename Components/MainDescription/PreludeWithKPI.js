@@ -40,7 +40,7 @@ const PreludeWithKPI = () => {
   return (
     <Col>
       <SLeadText>
-        <Text36>
+        <Text36 data-font="ibm">
           Творческое Производственное Объединение «РЕЗЕРВ» — одно из ведущих
           российских архитектурных бюро, основанное в 1987 году в Москве.
           Основными направлениями работы компании являются архитектурное
@@ -50,34 +50,34 @@ const PreludeWithKPI = () => {
       <KPIs>
         <KPIs.Item>
           <h3 data-font="ibm">
-            <Text96>165</Text96>
+            <Text96 data-font="ibm">165</Text96>
           </h3>
           <p>
-            <Text24>сотрудников</Text24>
+            <Text24 data-font="ibm">сотрудников</Text24>
           </p>
         </KPIs.Item>
         <KPIs.Item>
           <h3 data-font="ibm">
-            <Text96>&#62;30</Text96>
+            <Text96 data-font="ibm">&#62;30</Text96>
           </h3>
           <p>
-            <Text24>профессиональных наград</Text24>
+            <Text24 data-font="ibm">профессиональных наград</Text24>
           </p>
         </KPIs.Item>
         <KPIs.Item>
           <h3 data-font="ibm">
-            <Text96>30+</Text96>
+            <Text96 data-font="ibm">30+</Text96>
           </h3>
           <p>
-            <Text24>лет в архитектуре</Text24>
+            <Text24 data-font="ibm">лет в архитектуре</Text24>
           </p>
         </KPIs.Item>
         <KPIs.Item>
           <h3 data-font="ibm">
-            <Text96>20</Text96>
+            <Text96 data-font="ibm">20</Text96>
           </h3>
           <p>
-            <Text24>побед в конкурсах</Text24>
+            <Text24 data-font="ibm">побед в конкурсах</Text24>
           </p>
         </KPIs.Item>
       </KPIs>
