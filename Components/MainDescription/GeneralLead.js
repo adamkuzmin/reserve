@@ -74,10 +74,10 @@ const GeneralLead = () => {
     <Lead>
       <KPI>
         <KPI.Number>
-          <Text254>55</Text254>
+          <Text254 data-font="ibm">55</Text254>
         </KPI.Number>
         <KPI.Text>
-          <Text24>
+          <Text24 data-font="ibm">
             построенных
             <br />
             объектов
@@ -86,10 +86,10 @@ const GeneralLead = () => {
       </KPI>
       <LeadWithBtn>
         <LeadAbout>
-          <Text96>Ведущая проектная организация с&nbsp;1987&nbsp;года</Text96>
+          <Text96 data-font="ibm">Ведущая проектная организация с&nbsp;1987&nbsp;года</Text96>
         </LeadAbout>
         <ButtonBlock>
-          <Text30>О нас</Text30>
+          <Text30 data-font="ibm">О нас</Text30>
         </ButtonBlock>
       </LeadWithBtn>
     </Lead>
