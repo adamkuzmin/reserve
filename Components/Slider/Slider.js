@@ -141,7 +141,7 @@ const Slider = ({ BlackBlockIsScrolling, setBlackBlockIsScrolling }) => {
 
   return (
     <CarouselWrapper ref={CarouselRef}>
-      <CarouselBlock autoplay>
+      <CarouselBlock autoplay speed={2000}>
         <Card src="/renders/14.jpg">
           <Card.Substrate deg={0} />
           <Card.Substrate deg={180} />
