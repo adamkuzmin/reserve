@@ -39,6 +39,8 @@ const CarouselBlock = styled(Carousel)`
     justify-content: right;
     margin-left: auto;
     margin-right: 40px;
+    left: auto;
+    right: 0;
 
     & li {
       width: 16px;

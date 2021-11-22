@@ -87,12 +87,12 @@ const Home = () => {
       <Cover>
         <Slider {...{ BlackBlockIsScrolling, setBlackBlockIsScrolling }} />
       </Cover>
-      <Content justifyContent={"end"} ref={DescriptionRef}>
+      <Content justifyContent={"flex-end"} ref={DescriptionRef}>
         <PreludeWithKPI />
         <GeneralLead />
         <InteractiveDescription />
       </Content>
-      <Content ref={LastProjectsRef} justifyContent={"end"}>
+      <Content ref={LastProjectsRef} justifyContent={"flex-end"}>
         <Col>
           <StyledTitle>
             <Text60>Актуальные проекты</Text60>
