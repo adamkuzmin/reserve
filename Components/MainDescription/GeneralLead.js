@@ -89,7 +89,7 @@ const GeneralLead = () => {
           <Text96 data-font="ibm">Ведущая проектная организация с&nbsp;1987&nbsp;года</Text96>
         </LeadAbout>
         <ButtonBlock>
-          <Text30 data-font="ibm">О нас</Text30>
+          <Text30 data-font="ibm">О&nbsp;нас</Text30>
         </ButtonBlock>
       </LeadWithBtn>
     </Lead>
