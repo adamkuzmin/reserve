@@ -16,6 +16,7 @@ const Lead = styled.div`
   justify-content: space-between;
   align-items: start;
   margin-top: 8.3vw;
+  margin-bottom: 6vw;
 `;
 
 const KPI = styled.div`

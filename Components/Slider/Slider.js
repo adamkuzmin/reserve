@@ -13,20 +13,6 @@ const contentStyle = {
 const CarouselWrapper = styled.div`
   width: 100vw;
   height: 100vh;
-  animation: appearScale 4s ease-out;
-
-  @keyframes appearScale {
-    0% {
-      transform: scale(0.9);
-    }
-
-    50% {
-      transform: scale(0.9);
-    }
-
-    100% {
-      transform: scale(1);
-    }
   }
 `;
 
@@ -43,8 +29,8 @@ const CarouselBlock = styled(Carousel)`
     right: 0;
 
     & li {
-      width: 16px;
-      height: 16px;
+      width: 12.5px;
+      height: 12.5px;
       border: 1px solid white;
       margin-right: 0px;
       margin-left: 16px;

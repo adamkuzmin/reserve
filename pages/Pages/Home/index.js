@@ -11,6 +11,8 @@ import Footer from "../../../Components/Footer/Footer";
 import { Content, Col, LeadText } from "../../../Components/common/body";
 import { useEffect, useRef, useState } from "react";
 
+import ThreeCanvas from '../../../Models/construcetor'
+
 import {
   Text254,
   Text96,
@@ -24,6 +26,7 @@ import {
 import PreludeWithKPI from "../../../Components/MainDescription/PreludeWithKPI";
 import GeneralLead from "../../../Components/MainDescription/GeneralLead";
 import InteractiveDescription from "../../../Components/MainDescription/InteractiveDescription";
+import FloatedBack from "../../../Components/MainDescription/FloatedBack";
 
 const { Paragraph } = Typography;
 
@@ -35,7 +38,18 @@ const Cover = styled.div`
 const StyledTitle = styled.h2`
   font-weight: 600;
   color: black;
-  margin-bottom: 30px
+  margin-top: 6vw;
+  margin-bottom: 1.5vw;
+`;
+
+const CanvasGeometry = styled.div`
+  position: absolute;
+  top: 80px;
+  left: 0;
+  width: 35vw;
+  height: 40.5vw;
+  //background-image: url("/renders/16.svg");
+  //background-size: cover;
 `;
 
 const Home = () => {
@@ -88,10 +102,15 @@ const Home = () => {
         <Slider {...{ BlackBlockIsScrolling, setBlackBlockIsScrolling }} />
       </Cover>
       <Content justifyContent={"flex-end"} ref={DescriptionRef}>
+        <CanvasGeometry>
+          <ThreeCanvas/>
+          </CanvasGeometry>
         <PreludeWithKPI />
         <GeneralLead />
-        <InteractiveDescription />
       </Content>
+
+      <FloatedBack />
+
       <Content ref={LastProjectsRef} justifyContent={"flex-end"}>
         <Col>
           <StyledTitle>

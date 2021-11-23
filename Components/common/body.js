@@ -13,6 +13,7 @@ const LeadText = styled(Paragraph)`
 `;
 
 const Content = styled.div`
+  position: relative;
   width: 100%;
   background-color: ${({ background }) => (background ? background : "white")};
   padding: 0 40px;
