@@ -15,7 +15,7 @@ const Lead = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: start;
-  margin-top: 8.3vw;
+  margin-top: 9.7vw;
   margin-bottom: 6vw;
 `;
 

@@ -139,7 +139,7 @@ const Lead = styled.div`
   margin-top: 7vw;
   margin-bottom: 9.3vw;
   line-height: 1.06;
-  width: 59.3vw;
+  width: 70vw;
   margin-left: 11.4vw;
   color: white;
 `;

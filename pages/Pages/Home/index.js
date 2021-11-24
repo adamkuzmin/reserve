@@ -38,7 +38,7 @@ const Cover = styled.div`
 const StyledTitle = styled.h2`
   font-weight: 600;
   color: black;
-  margin-top: 6vw;
+  margin-top: 6.5vw;
   margin-bottom: 1.5vw;
 `;
 
