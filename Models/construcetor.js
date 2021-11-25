@@ -41,11 +41,8 @@ const MeshGeometry = ({ ...props }) => {
     const { geometry } = Reff.current;
     const { position } = geometry.attributes;
 
-    console.log(geometry)
 
     setXdelta(xdelta + .008)
-
-    console.log(position)
 
     const xcos = 0.2 * Math.cos(xdelta)
     const xsin = 0.2 * Math.sin(xdelta)

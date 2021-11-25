@@ -1,5 +1,5 @@
 import { Carousel } from "antd";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
 const contentStyle = {
@@ -105,10 +105,16 @@ Card.Header = styled.div`
   }
 `;
 
-const Slider = ({ BlackBlockIsScrolling, setBlackBlockIsScrolling }) => {
+const Slider = ({ BlackBlockIsScrolling, setBlackBlockIsScrolling, PreloadIsHidden }) => {
   const CarouselRef = useRef();
+  const [autoplayStatus, setAutoplayStatus] = useState(false)
 
   useEffect(() => {
+    setAutoplayStatus(PreloadIsHidden)
+  }, [PreloadIsHidden])
+
+  useEffect(() => {
+    
     const onScroll = (e) => {
       const BoundingRect = CarouselRef.current.getBoundingClientRect();
 
@@ -125,10 +131,11 @@ const Slider = ({ BlackBlockIsScrolling, setBlackBlockIsScrolling }) => {
     return () => window.removeEventListener("scroll", onScroll);
   });
 
+
   return (
     <CarouselWrapper ref={CarouselRef} infinite>
-      <CarouselBlock autoplay speed={2000}>
-        <Card src="/renders/14.jpg">
+      <CarouselBlock autoplay={autoplayStatus && true} speed={2000} autoplaySpeed={5000}>
+        <Card src="/carousel/1.jpg">
           <Card.Substrate deg={0} />
           <Card.Substrate deg={180} />
           <Card.Content>
@@ -138,63 +145,63 @@ const Slider = ({ BlackBlockIsScrolling, setBlackBlockIsScrolling }) => {
             </Card.Header>
           </Card.Content>
         </Card>
-        <Card src="/renders/3.jpg">
+        <Card src="/carousel/2.jpg">
           <Card.Substrate deg={0} />
           <Card.Substrate deg={180} />
           <Card.Content>
             <Card.Header data-type="slide-header">
               <p data-font="wremena">Офисно-административные проекты</p>
-              <h3 data-font="ibm">Префектура ТИНАО</h3>
+              <h3 data-font="ibm">Больница с родильным домом в Коммунарке</h3>
             </Card.Header>
           </Card.Content>
         </Card>
-        <Card src="/renders/14.jpg">
-          <Card.Substrate deg={0} />
-          <Card.Substrate deg={180} />
-          <Card.Content>
-            <Card.Header data-type="slide-header">
-              <p data-font="wremena">Объект культуры</p>
-              <h3 data-font="ibm">Концертный зал «Зарядье»</h3>
-            </Card.Header>
-          </Card.Content>
-        </Card>
-        <Card src="/renders/3.jpg">
+        <Card src="/carousel/3.jpg">
           <Card.Substrate deg={0} />
           <Card.Substrate deg={180} />
           <Card.Content>
             <Card.Header data-type="slide-header">
               <p data-font="wremena">Офисно-административные проекты</p>
-              <h3 data-font="ibm">Префектура ТИНАО</h3>
+              <h3 data-font="ibm">Штаб-квартира ОАО "Аэрофлот-Российские авиалинии"</h3>
             </Card.Header>
           </Card.Content>
         </Card>
-        <Card src="/renders/14.jpg">
-          <Card.Substrate deg={0} />
-          <Card.Substrate deg={180} />
-          <Card.Content>
-            <Card.Header data-type="slide-header">
-              <p data-font="wremena">Объект культуры</p>
-              <h3 data-font="ibm">Концертный зал «Зарядье»</h3>
-            </Card.Header>
-          </Card.Content>
-        </Card>
-        <Card src="/renders/3.jpg">
+        <Card src="/carousel/6.jpg">
           <Card.Substrate deg={0} />
           <Card.Substrate deg={180} />
           <Card.Content>
             <Card.Header data-type="slide-header">
               <p data-font="wremena">Офисно-административные проекты</p>
-              <h3 data-font="ibm">Префектура ТИНАО</h3>
+              <h3 data-font="ibm">Административно-деловой центр ТиНАО</h3>
             </Card.Header>
           </Card.Content>
         </Card>
-        <Card src="/renders/14.jpg">
+        <Card src="/carousel/5.jpg">
+          <Card.Substrate deg={0} />
+          <Card.Substrate deg={180} />
+          <Card.Content>
+            <Card.Header data-type="slide-header">
+              <p data-font="wremena">Проекты жилых зданий</p>
+              <h3 data-font="ibm">Жилой комплекс «Небо»</h3>
+            </Card.Header>
+          </Card.Content>
+        </Card>
+        <Card src="/carousel/7.jpg">
+          <Card.Substrate deg={0} />
+          <Card.Substrate deg={180} />
+          <Card.Content>
+            <Card.Header data-type="slide-header">
+              <p data-font="wremena">Офисно-административные проекты</p>
+              <h3 data-font="ibm">Торговый центр "Времена года"</h3>
+            </Card.Header>
+          </Card.Content>
+        </Card>
+        <Card src="/carousel/8.jpg">
           <Card.Substrate deg={0} />
           <Card.Substrate deg={180} />
           <Card.Content>
             <Card.Header data-type="slide-header">
               <p data-font="wremena">Объект культуры</p>
-              <h3 data-font="ibm">Концертный зал «Зарядье»</h3>
+              <h3 data-font="ibm">Комплекс апартаментов “STORY”</h3>
             </Card.Header>
           </Card.Content>
         </Card>

@@ -8,25 +8,15 @@ import Slider from "../../../Components/Slider/Slider";
 import LastProjects from "../../../Components/LastProjects/LastProjects";
 import LastMedia from "../../../Components/LastMedia/LastMedia";
 import Footer from "../../../Components/Footer/Footer";
-import { Content, Col, LeadText } from "../../../Components/common/body";
+import { Content } from "../../../Components/common/body";
 import { useEffect, useRef, useState } from "react";
 
 import ThreeCanvas from '../../../Models/construcetor'
 
-import {
-  Text254,
-  Text96,
-  Text60,
-  Text48,
-  Text40,
-  Text36,
-  Text30,
-  Text24,
-} from "../../../Components/common/text";
 import PreludeWithKPI from "../../../Components/MainDescription/PreludeWithKPI";
 import GeneralLead from "../../../Components/MainDescription/GeneralLead";
-import InteractiveDescription from "../../../Components/MainDescription/InteractiveDescription";
 import FloatedBack from "../../../Components/MainDescription/FloatedBack";
+import SectionLead from "../../../Components/MainDescription/SectionLead";
 
 const { Paragraph } = Typography;
 
@@ -35,15 +25,11 @@ const Cover = styled.div`
   height: 100vh;
 `;
 
-const StyledTitle = styled.h2`
-  font-weight: 600;
-  color: black;
-  margin-top: 6.5vw;
-  margin-bottom: 1.5vw;
-`;
+
 
 const CanvasGeometry = styled.div`
   position: absolute;
+  opacity: .7;
   top: 80px;
   left: 0;
   width: 35vw;
@@ -52,7 +38,7 @@ const CanvasGeometry = styled.div`
   //background-size: cover;
 `;
 
-const Home = () => {
+const Home = ({PreloadIsHidden}) => {
   const [MiniNavIsOpened, setMiniNavIsOpened] = useState(false);
   const [BlackBlockIsScrolling, setBlackBlockIsScrolling] = useState(true);
 
@@ -99,7 +85,7 @@ const Home = () => {
         }}
       />
       <Cover>
-        <Slider {...{ BlackBlockIsScrolling, setBlackBlockIsScrolling }} />
+        <Slider {...{ BlackBlockIsScrolling, setBlackBlockIsScrolling, PreloadIsHidden }} />
       </Cover>
       <Content justifyContent={"flex-end"} ref={DescriptionRef}>
         <CanvasGeometry>
@@ -112,18 +98,7 @@ const Home = () => {
       <FloatedBack />
 
       <Content ref={LastProjectsRef} justifyContent={"flex-end"}>
-        <Col>
-          <StyledTitle>
-            <Text60 data-font="ibm">Актуальные проекты</Text60>
-          </StyledTitle>
-          <LeadText>
-            <Text36 data-font="ibm">
-              Мы спроектировали колоссальное количество общественных
-              пространств, что прям душа не может нарадоваться. А визуалки
-              просто блеск!
-            </Text36>
-          </LeadText>
-        </Col>
+        <SectionLead/>
       </Content>
       <Content>
         <LastProjects

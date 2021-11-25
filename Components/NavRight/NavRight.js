@@ -9,6 +9,7 @@ import {
   Text30,
   Text24,
 } from "../common/text";
+import Link from "next/link";
 
 const Nav = styled.div`
   position: fixed;
@@ -51,6 +52,10 @@ const NavLink = styled.div`
 
   & span {
     border-bottom: 3px solid black;
+  }
+
+  & span:hover {
+    border-bottom: 3px solid white;
   }
 
   &&[data-icon="plus"]::after {
@@ -107,12 +112,16 @@ const NavRight = ({ MiniNavIsOpened }) => {
       <NavBlock>
         <NavLink data-status="disabled" data-icon="plus">
           <Text48>
-            <a>Резерв</a>
+            <Link href="/" rel="nofollow">
+              <a>Резерв</a>
+            </Link>
           </Text48>
         </NavLink>
         <NavLink>
           <Text48>
-            <a data-font="ibm">Проекты</a>
+            <Link href="/projects" rel="nofollow">
+              <a data-font="ibm">Проекты</a>
+            </Link>
           </Text48>
         </NavLink>
         <NavLink>

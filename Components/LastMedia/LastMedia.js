@@ -11,6 +11,8 @@ import {
   Text24,
 } from "../common/text";
 
+import { ScreenLead } from "../common/body";
+
 const MediaWrapper = styled.div`
   width: 100%;
 `;
@@ -135,15 +137,6 @@ const Tile = styled.div`
   }
 `;
 
-const Lead = styled.div`
-  margin-top: 7vw;
-  margin-bottom: 9.3vw;
-  line-height: 1.06;
-  width: 70vw;
-  margin-left: 11.4vw;
-  color: white;
-`;
-
 const LastMedia = ({ BlackBlockIsScrolling, setBlackBlockIsScrolling }) => {
   const MediaRef = useRef();
 
@@ -166,13 +159,11 @@ const LastMedia = ({ BlackBlockIsScrolling, setBlackBlockIsScrolling }) => {
 
   return (
     <MediaWrapper ref={MediaRef}>
-      <Lead>
-        <Text60 data-font="wremena">
-          «Резерв» активно участвует в&nbsp;медиа-тусовке: постоянно публикуются
-          журналы, мы получаем награды, ведем образовательную деятельность.
-          Подписывайтесь, рыбки, на&nbsp;нас в&nbsp;соцсетях
-        </Text60>
-      </Lead>
+      <ScreenLead color={"white"} margintop={"7vw"} marginbottom={"9.3vw"}>
+        «Резерв» активно участвует в&nbsp;медиа-тусовке: постоянно публикуются
+        журналы, мы получаем награды, ведем образовательную деятельность.
+        Подписывайтесь, рыбки, на&nbsp;нас в&nbsp;соцсетях
+      </ScreenLead>
       <Media>
         <LargeCard>
           <LargeCard.Content data-content="image" src="/renders/10.jpg" />

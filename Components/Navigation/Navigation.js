@@ -5,6 +5,7 @@ import {
   enableBodyScroll,
   clearAllBodyScrollLocks,
 } from "body-scroll-lock";
+import Link from "next/link";
 
 ////////////////////////////////////////
 // Styled
@@ -124,21 +125,25 @@ const Navigation = ({
     };
   }, [AppearNav]);
 
+  useEffect(() => {
+    if (MiniNavIsOpened) disableBodyScroll(NavRef);
+    if (!MiniNavIsOpened) clearAllBodyScrollLocks();
+  }, [MiniNavIsOpened])
+
   return (
     <Nav data-status={NavIsOpened ? "opened" : "closed"} ref={NavRef}>
-      <Nav.Logo
-        data-type={
-          BlackBlockIsScrolling ? "white" : "black"
-        }
-      ></Nav.Logo>
+      <Link href="/">
+        <a>
+          <Nav.Logo
+            data-type={BlackBlockIsScrolling ? "white" : "black"}
+          ></Nav.Logo>
+        </a>
+      </Link>
       <Nav.Burger
         iswhite={BlackBlockIsScrolling}
         status={MiniNavIsOpened}
         onClick={() => {
           setMiniNavIsOpened(!MiniNavIsOpened);
-
-          if (!MiniNavIsOpened) disableBodyScroll(NavRef);
-          if (MiniNavIsOpened) clearAllBodyScrollLocks();
         }}
       />
     </Nav>

@@ -8,7 +8,9 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@react-three/drei": "^7.22.6",
+    "@react-three/drei": "^7.22.7",
+    "@react-three/fiber": "^7.0.19",
+    "@react-three/flex": "^0.7.0",
     "antd": "^4.16.13",
     "babel-preset-next": "^1.4.0",
     "body-scroll-lock": "^4.0.0-beta.0",
@@ -16,6 +18,7 @@
     "next": "12.0.4",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "react-map-gl": "^6.1.17",
     "react-three-fiber": "^6.0.13",
     "styled-components": "^5.3.3",
     "three": "^0.134.0",

@@ -80,4 +80,30 @@ const Text24 = styled.span`
   }
 `;
 
-export { Text254, Text96, Text60, Text48, Text40, Text36, Text30, Text24 };
+const Wrap24 = styled.div`
+  && {
+    width: ${({ swidth }) => swidth && swidth};
+  }
+
+  &&&&& *, &&&&& *::placeholder {
+    font-size: 24px;
+  }
+
+  @media (min-width: 1000px) and (max-width: 1500px) {
+    &&&&& *, &&&&& *::placeholder {
+      font-size: 21px;
+    }
+  }
+`;
+
+export {
+  Text254,
+  Text96,
+  Text60,
+  Text48,
+  Text40,
+  Text36,
+  Text30,
+  Text24,
+  Wrap24,
+};
