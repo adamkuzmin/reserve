@@ -13,11 +13,13 @@ import {
 
 const Foot = styled.div`
   width: 100%;
+  padding-top: 4.4vw;
 `;
 
 Foot.Search = styled.div`
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 2vw;
   width: 100%;
   max-width: 1486px;
   min-width: 1000px;
@@ -121,7 +123,6 @@ const SearchInput = styled.input`
   background: none;
   color: white;
   font-size: 30px;
-  
 
   &&::placeholder {
     font-size: 30px;
@@ -190,9 +191,10 @@ const Footer = ({ BlackBlockIsScrolling, setBlackBlockIsScrolling }) => {
 
   useEffect(() => {
     const onScroll = (e) => {
-      const BoundingRect = FooterRef.current.getBoundingClientRect();
+      const BoundingRect = FooterRef?.current?.getBoundingClientRect();
 
       if (
+        BoundingRect &&
         BoundingRect.top <= 0 &&
         BoundingRect.bottom >= 0 &&
         !BlackBlockIsScrolling

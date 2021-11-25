@@ -112,14 +112,14 @@ const NavRight = ({ MiniNavIsOpened }) => {
       <NavBlock>
         <NavLink data-status="disabled" data-icon="plus">
           <Text48>
-            <Link href="/" rel="nofollow">
+            <Link href="/">
               <a>Резерв</a>
             </Link>
           </Text48>
         </NavLink>
         <NavLink>
           <Text48>
-            <Link href="/projects" rel="nofollow">
+            <Link href="/projects">
               <a data-font="ibm">Проекты</a>
             </Link>
           </Text48>

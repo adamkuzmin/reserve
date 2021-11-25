@@ -42,7 +42,7 @@ const MeshGeometry = ({ ...props }) => {
     const { position } = geometry.attributes;
 
 
-    setXdelta(xdelta + .008)
+    setXdelta(xdelta + .012)
 
     const xcos = 0.2 * Math.cos(xdelta)
     const xsin = 0.2 * Math.sin(xdelta)
@@ -63,7 +63,7 @@ const MeshGeometry = ({ ...props }) => {
     position.array[100] = 2 + xcos;
     position.array[101] = 0.5 + xsin;
     
-    setX1delta(x1delta + .005)
+    setX1delta(x1delta + .007)
     const x1cos = -.7 * Math.cos(x1delta)
     const x1sin = -2 * Math.sin(x1delta)
     position.array[0] = .9 + x1cos;

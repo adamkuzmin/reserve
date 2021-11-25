@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import Link from "next/link";
 import styled from "styled-components";
 import {
   Text254,
@@ -35,17 +36,17 @@ Projects.Item = styled.div`
   cursor: pointer;
 
   & span[data-type="title"] {
-    border-bottom: 3px solid white
+    border-bottom: 3px solid white;
   }
 
   &&:hover {
     & div[data-type="render"]::before {
       transform: scale(1);
-      opacity: .9
+      opacity: 0.9;
     }
 
     & span[data-type="title"] {
-      border-bottom: 3px solid black
+      border-bottom: 3px solid black;
     }
   }
 `;
@@ -66,7 +67,7 @@ const Render = styled.div`
     background-image: url(${({ src }) => (src ? src : "")});
     background-size: cover;
     transform: scale(1.06);
-    transition: transform .6s ease-in-out;
+    transition: transform 0.6s ease-in-out;
   }
 `;
 
@@ -215,9 +216,13 @@ const LastProjects = ({ BlackBlockIsScrolling, setBlackBlockIsScrolling }) => {
           </Projects.Row>
         );
       })}
-      <WideButton data-font="wremena">
-        <Text48>Все проекты</Text48>
-      </WideButton>
+      <Link href="/projects">
+        <a>
+          <WideButton data-font="wremena">
+            <Text48>Все проекты</Text48>
+          </WideButton>
+        </a>
+      </Link>
     </Projects>
   );
 };

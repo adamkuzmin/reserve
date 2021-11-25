@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Link from "next/link";
 
 import {
   Text254,
@@ -93,7 +94,10 @@ Header.Year = styled.div`
 
 Layout.Card = ({ swidth, src }) => {
   return (
-    <Layout.Project {...{ swidth, src }}>
+    <Layout.Project
+      {...{ swidth, src }}
+      onClick={() => (location.href = "/project")}
+    >
       <Header data-type="card-header">
         <Header.Title>
           <p>

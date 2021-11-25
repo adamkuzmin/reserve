@@ -8,11 +8,15 @@ import { Content } from "../../Components/common/body";
 
 import { ScreenLead } from "../../Components/common/body";
 import ProjectCover from "../../Components/ProjectInfo/ProjectCover";
+import ProjectPlan from "../../Components/ProjectInfo/ProjectPlan";
+import ProjectHeader from "../../Components/ProjectInfo/ProjectHeader";
+import ProjectContent from "../../Components/ProjectInfo/ProjectContent";
+import OtherRenders from "../../Components/ProjectInfo/OtherRenders";
+import ProjectBottom from "../../Components/ProjectInfo/ProjectBottom";
 
 const Project = () => {
   const [MiniNavIsOpened, setMiniNavIsOpened] = useState(false);
   const [BlackBlockIsScrolling, setBlackBlockIsScrolling] = useState(false);
-  
 
   return (
     <div>
@@ -28,12 +32,11 @@ const Project = () => {
 
       <ProjectCover />
       <Content>
-        <ScreenLead margintop={"12.5vw"} marginbottom={"6.9vw"}>
-          Резерв&nbsp;&mdash; это бюро, которое создает решения, определяющие
-          и&nbsp;меняющие мировую моду в&nbsp;архитектуре и&nbsp;способные
-          создавать эмоции в&nbsp;душах даже самых черствых людей.
-        </ScreenLead>
+        <ProjectHeader />
+        <ProjectContent />
       </Content>
+      <ProjectPlan />
+      <Content><OtherRenders/><ProjectBottom/></Content>
 
       <Content background={"black"}>
         <Footer {...{ BlackBlockIsScrolling, setBlackBlockIsScrolling }} />
