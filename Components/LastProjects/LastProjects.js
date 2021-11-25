@@ -192,7 +192,7 @@ const LastProjects = ({ BlackBlockIsScrolling, setBlackBlockIsScrolling }) => {
           <Projects.Row key={`Projects.Row${i}`}>
             {key.map((project, b) => {
               return (
-                <Projects.Item
+                <Projects.Item onClick={() => location.href="/project"}
                   swidth={project.ratio && project.ratio}
                   key={`Projects.Item${b}`}
                 >

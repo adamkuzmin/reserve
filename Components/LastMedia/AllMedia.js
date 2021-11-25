@@ -11,17 +11,17 @@ import {
   Text24,
 } from "../common/text";
 
-import Link from "next/link";
-
 import { ScreenLead } from "../common/body";
 
 const MediaWrapper = styled.div`
+  padding-top: 9.6vw;
   width: 100%;
 `;
 
 const Media = styled.div`
   width: 100%;
   display: flex;
+  margin-bottom: 6.9vw;
 
   && > * + * {
     margin-left: 4px;
@@ -139,7 +139,7 @@ const Tile = styled.div`
   }
 `;
 
-const LastMedia = ({ BlackBlockIsScrolling, setBlackBlockIsScrolling }) => {
+const AllMedia = ({ BlackBlockIsScrolling, setBlackBlockIsScrolling }) => {
   const MediaRef = useRef();
 
   useEffect(() => {
@@ -161,11 +161,6 @@ const LastMedia = ({ BlackBlockIsScrolling, setBlackBlockIsScrolling }) => {
 
   return (
     <MediaWrapper ref={MediaRef}>
-      <ScreenLead color={"white"} margintop={"7vw"} marginbottom={"9.3vw"}>
-        «Резерв» активно участвует в&nbsp;медиа-тусовке: постоянно публикуются
-        журналы, мы получаем награды, ведем образовательную деятельность.
-        Подписывайтесь, рыбки, на&nbsp;нас в&nbsp;соцсетях
-      </ScreenLead>
       <Media>
         <LargeCard>
           <LargeCard.Content data-content="image" src="/renders/10.jpg" />
@@ -189,15 +184,38 @@ const LastMedia = ({ BlackBlockIsScrolling, setBlackBlockIsScrolling }) => {
           </h3>
         </LargeCard>
       </Media>
-      <Link href="/media">
-        <a>
-          <WideButton>
-            <Text48 data-font="wremena">Все медиа</Text48>
-          </WideButton>
-        </a>
-      </Link>
+
+      <Media>
+        <LargeCard>
+          <LargeCard.Content data-content="image" src="/renders/24.jpg" />
+          <h3>
+            <Text48 data-type="title">Выставки</Text48>
+          </h3>
+        </LargeCard>
+        <LargeCard>
+          <LargeCard.Content data-content="image" src="/renders/25.jpg" />
+          <h3>
+            <Text48 data-type="title">Интервью</Text48>
+          </h3>
+        </LargeCard>
+      </Media>
+
+      <Media>
+        <LargeCard>
+          <LargeCard.Content data-content="image" src="/renders/26.jpg" />
+          <h3>
+            <Text48 data-type="title">Лекции</Text48>
+          </h3>
+        </LargeCard>
+        <LargeCard>
+          <LargeCard.Content data-content="image" src="/renders/27.jpg" />
+          <h3>
+            <Text48 data-type="title">Студенты Владимира Плоткина</Text48>
+          </h3>
+        </LargeCard>
+      </Media>
     </MediaWrapper>
   );
 };
 
-export default LastMedia;
+export default AllMedia;

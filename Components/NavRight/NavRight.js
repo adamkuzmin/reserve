@@ -126,7 +126,9 @@ const NavRight = ({ MiniNavIsOpened }) => {
         </NavLink>
         <NavLink>
           <Text48>
-            <a data-font="ibm">Медиа</a>
+            <Link href="/media">
+              <a data-font="ibm">Медиа</a>
+            </Link>
           </Text48>
         </NavLink>
         <NavLink>
