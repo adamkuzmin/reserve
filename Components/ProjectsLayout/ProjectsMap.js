@@ -1,6 +1,6 @@
 /* global document */
 import * as React from "react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import ReactMapGL, { Marker } from "react-map-gl";
 
 import styled from "styled-components";
@@ -25,6 +25,14 @@ const CirclePoint = styled.div`
   }
 `;
 
+const RectProject = styled.div`
+  width: 300px;
+  height: 400px;
+  background: grey;
+  positon: fixed;
+  z-index: 80;
+`;
+
 const ProjectsMap = () => {
   const [viewport, setViewport] = useState({
     latitude: 55.76,
@@ -33,6 +41,7 @@ const ProjectsMap = () => {
     bearing: 0,
     pitch: 0,
   });
+
 
   return (
     <MapGLWrapped
@@ -43,9 +52,34 @@ const ProjectsMap = () => {
       onViewportChange={setViewport}
       mapboxApiAccessToken={MAPBOX_TOKEN}
     >
+      <RectProject ref={RectRef} />
       <Marker
         latitude={55.685726}
         longitude={37.704754}
+        offsetLeft={-15}
+        offsetTop={-15}
+      >
+        <CirclePoint/>
+      </Marker>
+      <Marker
+        latitude={55.798278}
+        longitude={37.570485}
+        offsetLeft={-15}
+        offsetTop={-15}
+      >
+        <CirclePoint />
+      </Marker>
+      <Marker
+        latitude={55.790595}
+        longitude={37.679288}
+        offsetLeft={-15}
+        offsetTop={-15}
+      >
+        <CirclePoint />
+      </Marker>
+      <Marker
+        latitude={55.713094}
+        longitude={37.49795}
         offsetLeft={-15}
         offsetTop={-15}
       >

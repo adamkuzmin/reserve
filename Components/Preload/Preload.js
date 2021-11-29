@@ -16,8 +16,8 @@ const BackWrapper = styled.div`
   width: 100vw;
   height: 100vh;
   background: white;
-  position: fixed;
-  z-index: 9999;
+  position: ${({type}) => type ? type : 'fixed'};
+  z-index: ${({type}) => type ? 0 : 9999};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -295,9 +295,9 @@ const Letter9 = styled.svg`
   }
 `;
 
-const Preload = ({PreloadIsHidden}) => {
+const Preload = ({PreloadIsHidden, absolute}) => {
   return (
-    <BackWrapper data-status={PreloadIsHidden && "hidden"}>
+    <BackWrapper type={absolute && 'absolute'} data-status={PreloadIsHidden && "hidden"}>
       <CanvasGeometry>
         <ThreeCanvas />
       </CanvasGeometry>
