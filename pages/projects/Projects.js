@@ -42,6 +42,42 @@ const Projects = () => {
   const [LayoutType, setLayoutType] = useState(1);
   const [FilterType, setFilterType] = useState(null);
 
+  /**
+   * Хинт с навигацией
+   * Ее раскрытие частично управлется со страницы при смене раздела
+   */
+  const [_NavIsOpened, _setNavIsOpened] = useState(null);
+
+  const toPageTop = () => {
+    window.scrollTo(0, 0);
+  };
+
+  /**
+   * Скролл
+   */
+  const maincontentRef = useRef();
+
+  useEffect(() => {
+    const onScroll = (e) => {
+      const maincontent = maincontentRef.current.getBoundingClientRect();
+
+      if (
+        maincontent.top <= 0 &&
+        maincontent.bottom >= 0 &&
+        BlackBlockIsScrolling
+      ) {
+        setBlackBlockIsScrolling(false);
+      }
+    };
+    window.addEventListener("scroll", onScroll);
+
+    return () => window.removeEventListener("scroll", onScroll);
+  });
+
+  /**
+   * Разделы
+   */
+
   let LayoutBlock;
   if (LayoutType === 0) {
     LayoutBlock = <ProjectsTable />;
@@ -56,6 +92,7 @@ const Projects = () => {
       <NavRight {...{ MiniNavIsOpened }} />
       <Navigation
         {...{
+          _NavIsOpened,
           MiniNavIsOpened,
           setMiniNavIsOpened,
           BlackBlockIsScrolling,
@@ -80,10 +117,17 @@ const Projects = () => {
           FilterType,
           setFilterType,
           //Дополнительное
+          toPageTop,
           setGalleryAnimation,
+          //Хинт с навигацией
+          _NavIsOpened, 
+          _setNavIsOpened
         }}
       />
-      <MainContent data-type={FilterType !== null && "filter-mode"}>
+      <MainContent
+        ref={maincontentRef}
+        data-type={FilterType !== null && "filter-mode"}
+      >
         {LayoutBlock}
       </MainContent>
 

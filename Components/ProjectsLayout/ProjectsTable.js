@@ -1,6 +1,9 @@
 import styled from "styled-components";
+import { useContext } from "react";
 
 import { Table, Input, Button, Space } from "antd";
+
+import { MouseContext } from "../common/Cursor/mouse-context";
 
 import {
   Text254,
@@ -43,8 +46,9 @@ const PTable = styled(Table)`
     border-bottom: 1px solid black;
   }
 
-  &&& .ant-table-column-sorter, &&& .ant-table-filter-trigger {
-    color: black
+  &&& .ant-table-column-sorter,
+  &&& .ant-table-filter-trigger {
+    color: black;
   }
 
   &&& .ant-table-thead > tr > th {
@@ -57,7 +61,7 @@ const PTable = styled(Table)`
     padding-bottom: 3px;
 
     &::before {
-      width: 0px !important
+      width: 0px !important;
     }
   }
 
@@ -69,7 +73,7 @@ const PTable = styled(Table)`
   }
 
   &&& tr:hover > td:nth-child(2) {
-    padding-left: 40px
+    padding-left: 40px;
   }
 `;
 
@@ -189,6 +193,8 @@ const data = [
 ];
 
 const ProjectsTable = () => {
+  const { cursorType, cursorChangeHandler } = useContext(MouseContext);
+
   const columns = [
     {
       title: "Год",
@@ -246,9 +252,24 @@ const ProjectsTable = () => {
   ];
 
   return (
-    <Wrap24 swidth={'100%'}>
+    <Wrap24 swidth={"100%"}>
       <TableWrapper>
-        <PTable columns={columns} dataSource={data} showSizeChanger={false} pagination={{ pageSize: 100 }}/>
+        <PTable
+          onRow={(record, rowIndex) => {
+            const rowClasses = [
+              "renderHor-1", "renderHor-2", "renderVer-3", "renderVer-4"
+            ]
+            
+            return {
+              onMouseEnter: () => cursorChangeHandler(rowClasses[rowIndex % 4]),
+              onMouseLeave: () => cursorChangeHandler(""),
+            };
+          }}
+          columns={columns}
+          dataSource={data}
+          showSizeChanger={false}
+          pagination={{ pageSize: 100 }}
+        />
       </TableWrapper>
     </Wrap24>
   );

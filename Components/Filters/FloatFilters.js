@@ -177,7 +177,6 @@ const CloseBtnCol = styled(Col)`
   }
 `;
 
-
 /**
  *
  * Фильтр "Направления"
@@ -346,6 +345,9 @@ const FloatFilters = ({
   setGalleryAnimation,
   FilterType,
   setFilterType,
+  toPageTop,
+  _NavIsOpened,
+  _setNavIsOpened,
 }) => {
   return (
     <FilterWrapper>
@@ -374,6 +376,8 @@ const FloatFilters = ({
           onClick={() => {
             setGalleryAnimation(false);
             setLayoutType(1);
+            toPageTop();
+            _setNavIsOpened(Math.random())
           }}
         >
           <Text24>Галерея</Text24>
@@ -383,6 +387,8 @@ const FloatFilters = ({
           onClick={() => {
             setGalleryAnimation(false);
             setLayoutType(0);
+            toPageTop();
+            _setNavIsOpened(Math.random())
           }}
         >
           <Text24>Список</Text24>
@@ -392,6 +398,8 @@ const FloatFilters = ({
           onClick={() => {
             setGalleryAnimation(false);
             setLayoutType(2);
+            toPageTop();
+            _setNavIsOpened(Math.random())
           }}
         >
           <Text24>Карта</Text24>

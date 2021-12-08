@@ -107,10 +107,19 @@ const Navigation = ({
   setMiniNavIsOpened,
   BlackBlockIsScrolling,
   setBlackBlockIsScrolling,
+  _NavIsOpened,
 }) => {
   const [oldScrollY, setOldScrollY] = useState(null);
   const [newScrollY, setNewScrollY] = useState(null);
   const [NavIsOpened, setNavIsOpened] = useState(true);
+
+  useEffect(() => {
+    if (_NavIsOpened !== null) {
+      setNavIsOpened(true);
+
+      console.log(`Состояние навигации: ${_NavIsOpened}`)
+    }
+  }, [_NavIsOpened]);
 
   const NavRef = useRef();
 

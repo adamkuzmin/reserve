@@ -39,3 +39,67 @@
   .dot.hovered {
     display: none;
   }
+
+  /* Ряд изображений, которые нужно будет поправить */
+
+  /* Img 1 */
+
+  .ring.renderHor-1 {
+    width: 300px;
+    height: 240px;
+    background-color: grey;
+    background: url("/catalog/12.jpg");
+    background-size: cover;
+    border-width: 0;
+    border-radius: 0;
+  }
+
+  .dot.renderHor-1 {
+    display: none;
+  }
+
+  /* Img 2 */
+
+  .ring.renderHor-2 {
+    width: 300px;
+    height: 240px;
+    background-color: grey;
+    background: url("/catalog/9.jpg");
+    background-size: cover;
+    border-width: 0;
+    border-radius: 0;
+  }
+
+  .dot.renderHor-2 {
+    display: none;
+  }
+
+  /* Img 3 */
+  .ring.renderVer-3 {
+    width: 200px;
+    height: 360px;
+    background-color: grey;
+    background: url("/catalog/1.jpg");
+    background-size: cover;
+    border-width: 0;
+    border-radius: 0;
+  }
+
+  .dot.renderVer-3 {
+    display: none;
+  }
+
+  /* Img 4 */
+  .ring.renderVer-4 {
+    width: 200px;
+    height: 360px;
+    background-color: grey;
+    background: url("/catalog/4.jpg");
+    background-size: cover;
+    border-width: 0;
+    border-radius: 0;
+  }
+
+  .dot.renderVer-4 {
+    display: none;
+  }
