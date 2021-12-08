@@ -5,7 +5,7 @@ const CanvasGeometry = styled.div`
   position: absolute;
   top: 50px;
   right: 40px;
-  opacity: .25;
+  opacity: 0.25;
   width: calc(35vw * 1.2);
   height: calc(40.5vw * 1.2);
   //background-image: url("/renders/16.svg");
@@ -16,17 +16,17 @@ const BackWrapper = styled.div`
   width: 100vw;
   height: 100vh;
   background: white;
-  position: ${({type}) => type ? type : 'fixed'};
-  z-index: ${({type}) => type ? 0 : 9999};
+  position: ${({ type }) => (type ? type : "fixed")};
+  z-index: ${({ type }) => (type ? 0 : 9999)};
   display: flex;
   justify-content: center;
   align-items: center;
   opacity: 1;
-  transition: all .6s cubic-bezier(0.19, 1, 0.22, 1);
+  transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transform: translate3d(0, 0, 0);
 
   &&[data-status="hidden"] {
-    opacity: 0;
-    z-index: 0;
+    transform: translate3d(0, -100%, 0);
   }
 `;
 
@@ -295,9 +295,12 @@ const Letter9 = styled.svg`
   }
 `;
 
-const Preload = ({PreloadIsHidden, absolute}) => {
+const Preload = ({ PreloadIsHidden, absolute }) => {
   return (
-    <BackWrapper type={absolute && 'absolute'} data-status={PreloadIsHidden && "hidden"}>
+    <BackWrapper
+      type={absolute && "absolute"}
+      data-status={PreloadIsHidden && "hidden"}
+    >
       <CanvasGeometry>
         <ThreeCanvas />
       </CanvasGeometry>

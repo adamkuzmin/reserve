@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useContext } from "react";
 import styled from "styled-components";
 import {
   disableBodyScroll,
@@ -6,6 +6,8 @@ import {
   clearAllBodyScrollLocks,
 } from "body-scroll-lock";
 import Link from "next/link";
+
+import { MouseContext } from "../common/Cursor/mouse-context";
 
 ////////////////////////////////////////
 // Styled
@@ -82,8 +84,15 @@ Nav.BurgerLine = styled.div`
 // Burger
 
 Nav.Burger = ({ iswhite, status, ...props }) => {
+  const { cursorType, cursorChangeHandler } = useContext(MouseContext);
+
   return (
-    <Nav.BurgerWrapper data-status={status ? "opened" : "closed"} {...props}>
+    <Nav.BurgerWrapper
+      onMouseEnter={() => cursorChangeHandler("hovered")}
+      onMouseLeave={() => cursorChangeHandler("")}
+      data-status={status ? "opened" : "closed"}
+      {...props}
+    >
       <Nav.BurgerLine data-type={iswhite && !status ? "white" : "black"} />
       <Nav.BurgerLine data-type={iswhite && !status ? "white" : "black"} />
     </Nav.BurgerWrapper>
@@ -128,7 +137,7 @@ const Navigation = ({
   useEffect(() => {
     if (MiniNavIsOpened) disableBodyScroll(NavRef);
     if (!MiniNavIsOpened) clearAllBodyScrollLocks();
-  }, [MiniNavIsOpened])
+  }, [MiniNavIsOpened]);
 
   return (
     <Nav data-status={NavIsOpened ? "opened" : "closed"} ref={NavRef}>

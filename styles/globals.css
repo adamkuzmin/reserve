@@ -1,3 +1,5 @@
+@import url("./dotRing.css");
+
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;600&display=swap');
 
 @font-face {
@@ -9,6 +11,13 @@
 * {
   transition: all .6s cubic-bezier(.19,1,.22,1);
 }
+
+/* Ant Design Styles */
+.ant-select-dropdown {
+  z-index: 9991
+}
+
+/* Main Content */
 
 html,
 body {

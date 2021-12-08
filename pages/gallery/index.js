@@ -10,7 +10,7 @@ export default function HomeApp() {
   const [PreloadIsHidden, setPreloadIsHidden] = useState(false);
 
   useEffect(() => {
-    let preloadTimeout = setTimeout(() => setPreloadIsHidden(true), 3500);
+    let preloadTimeout = setTimeout(() => setPreloadIsHidden(true), 100);
     return () => {
       clearTimeout(preloadTimeout);
     };

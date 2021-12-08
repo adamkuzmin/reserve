@@ -42,6 +42,7 @@ const ProjectsMap = () => {
     pitch: 0,
   });
 
+  const RectRef = useRef();
 
   return (
     <MapGLWrapped
@@ -59,7 +60,7 @@ const ProjectsMap = () => {
         offsetLeft={-15}
         offsetTop={-15}
       >
-        <CirclePoint/>
+        <CirclePoint />
       </Marker>
       <Marker
         latitude={55.798278}

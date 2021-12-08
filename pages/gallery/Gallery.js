@@ -7,7 +7,15 @@ import React, {
   useCallback,
 } from "react";
 import { Canvas, useThree, useFrame, useLoader } from "@react-three/fiber";
-import { useAspect, Html, TorusKnot, Plane } from "@react-three/drei";
+import {
+  useAspect,
+  Html,
+  TorusKnot,
+  Plane,
+  Image,
+  Preload,
+  Text,
+} from "@react-three/drei";
 import { Flex, Box, useReflow, useFlexSize } from "@react-three/flex";
 import styled from "styled-components";
 
@@ -42,39 +50,21 @@ function BackGrid() {
   );
 }
 
-function RotatingObj() {
-  const ref = useRef();
-  useFrame(
-    ({ clock }) =>
-      (ref.current.rotation.x = ref.current.rotation.y = clock.getElapsedTime())
-  );
-  return (
-    <TorusKnot
-      ref={ref}
-      position={[0, 0, 0]}
-      scale={[0.3, 0.3, 0.3]}
-      args={[1, 0.4, 128, 32]}
-    >
-      <meshStandardMaterial />
-    </TorusKnot>
-  );
-}
-
-const WhitePlane = ({ color, vpwidth, map }) => {
+const WhitePlane = ({ color, vpwidth, map, url }) => {
   const [width, height] = useFlexSize();
   const [planeStep, setPlaneStep] = useState(0);
   const [allowToMove, SetAllowToMove] = useState(false);
   const PlaneRef = useRef();
   const MaterialRef = useRef();
 
-  let oneStep = 0.002;
+  let oneStep = 0.005;
 
   const easeOutCirc = (x) => {
     return x === 1 ? 1 : 1 - Math.pow(2, -10 * x);
   };
 
   useEffect(() => {
-    let timer1 = setTimeout(() => SetAllowToMove(true), Math.random() * 3000);
+    let timer1 = setTimeout(() => SetAllowToMove(true), Math.random() * 1500);
 
     return () => {
       clearTimeout(timer1);
@@ -92,39 +82,40 @@ const WhitePlane = ({ color, vpwidth, map }) => {
 
   console.log(width);
 
-  return (
-    <mesh ref={PlaneRef}>
-      <planeBufferGeometry args={[width - 0.03, height - 0.03, 2, 2]} />
-      <meshStandardMaterial
-        map={map && map}
-        toneMapped={false}
-        ref={MaterialRef}
-        color={!map && color}
-      />
-    </mesh>
+  map.anisotropy = 16;
+  map.minFilter = THREE.NearestFilter;
+
+  console.log(map);
+
+  const standardMaterial = (
+    <meshLambertMaterial
+      map={map && map}
+      toneMapped={false}
+      ref={MaterialRef}
+      color={!map && color}
+    />
   );
 
-  /*return (
-    <group position-z={-10}>
-      <mesh position-z={-0.1}>
-        <planeBufferGeometry args={[width, height, 2, 2]} />
-        <meshStandardMaterial color={color ? color : "#ffffff"} wireframe />
+  return (
+    <group ref={PlaneRef}>
+      <mesh >
+        <planeBufferGeometry args={[width - 0.03, height - 0.03, 2, 2]} />
+        {standardMaterial}
       </mesh>
-      <CardHtml
-        center
-        nwidth={width}
-        nheight={height}
-        style={{ backgroundColor: color }}
-      >
-        <h1>hello</h1>
-        <p>world</p>
-      </CardHtml>
     </group>
-  );*/
+  );
+
+  /*
+  return (
+    <group position-z={0}>
+      <Image url={url && url} scale={[width - 0.03, height - 0.03, 2, 2]}/>
+    </group>
+  );
+  */
 };
 
 function Page({ onChangePages }) {
-  const textures = useLoader(THREE.TextureLoader, [
+  const ImageUrls = [
     "/catalog/1.jpg",
     "/catalog/2.jpg",
     "/catalog/3.jpg",
@@ -140,7 +131,9 @@ function Page({ onChangePages }) {
     "/catalog/13.jpg",
     "/catalog/14.jpg",
     "/catalog/15.jpg",
-  ]);
+  ];
+
+  const textures = useLoader(THREE.TextureLoader, [...ImageUrls]);
 
   const group = useRef();
   const { viewport, size } = useThree();
@@ -177,7 +170,11 @@ function Page({ onChangePages }) {
               onReflow={handleReflow}
             >
               <Box width={`${36.4}%`} height={`100%`} centerAnchor>
-                <WhitePlane color={"red"} map={textures[0]} />
+                <WhitePlane
+                  color={"red"}
+                  map={textures[0]}
+                  url={ImageUrls[0]}
+                />
               </Box>
 
               <Box
@@ -186,14 +183,26 @@ function Page({ onChangePages }) {
                 flexDirection="column"
               >
                 <Box width={`100%`} height={`50%`} centerAnchor>
-                  <WhitePlane color={"white"} map={textures[1]} />
+                  <WhitePlane
+                    color={"white"}
+                    map={textures[1]}
+                    url={ImageUrls[1]}
+                  />
                 </Box>
                 <Box width={`100%`} height={`50%`} flexDirection="row">
                   <Box width={`62%`} height={`100%`} centerAnchor>
-                    <WhitePlane color={"blue"} map={textures[2]} />
+                    <WhitePlane
+                      color={"blue"}
+                      map={textures[2]}
+                      url={ImageUrls[2]}
+                    />
                   </Box>
                   <Box width={`38%`} height={`100%`} centerAnchor>
-                    <WhitePlane color={"pink"} map={textures[3]} />
+                    <WhitePlane
+                      color={"pink"}
+                      map={textures[3]}
+                      url={ImageUrls[3]}
+                    />
                   </Box>
                 </Box>
               </Box>
@@ -218,17 +227,29 @@ function Page({ onChangePages }) {
                   onReflow={handleReflow}
                 >
                   <Box width={`${25.1}%`} height={`100%`} centerAnchor>
-                    <WhitePlane color={"blue"} map={textures[4]} />
+                    <WhitePlane
+                      color={"blue"}
+                      map={textures[4]}
+                      url={ImageUrls[4]}
+                    />
                   </Box>
                   <Box width={`${37.5}%`} height={`100%`} centerAnchor>
-                    <WhitePlane color={"white"} map={textures[5]} />
+                    <WhitePlane
+                      color={"white"}
+                      map={textures[5]}
+                      url={ImageUrls[5]}
+                    />
                   </Box>
                   <Box
                     width={`${100 - 25.1 - 37.5}%`}
                     height={`100%`}
                     centerAnchor
                   >
-                    <WhitePlane color={"yellow"} map={textures[6]} />
+                    <WhitePlane
+                      color={"yellow"}
+                      map={textures[6]}
+                      url={ImageUrls[6]}
+                    />
                   </Box>
                 </Box>
 
@@ -240,17 +261,29 @@ function Page({ onChangePages }) {
                   onReflow={handleReflow}
                 >
                   <Box width={`${36.4}%`} height={`100%`} centerAnchor>
-                    <WhitePlane color={"green"} map={textures[7]} />
+                    <WhitePlane
+                      color={"green"}
+                      map={textures[7]}
+                      url={ImageUrls[7]}
+                    />
                   </Box>
                   <Box width={`${38.0}%`} height={`100%`} centerAnchor>
-                    <WhitePlane color={"purple"} map={textures[8]} />
+                    <WhitePlane
+                      color={"purple"}
+                      map={textures[8]}
+                      url={ImageUrls[8]}
+                    />
                   </Box>
                   <Box
                     width={`${100 - 36.4 - 38.0}%`}
                     height={`100%`}
                     centerAnchor
                   >
-                    <WhitePlane color={"red"} map={textures[9]} />
+                    <WhitePlane
+                      color={"red"}
+                      map={textures[9]}
+                      url={ImageUrls[9]}
+                    />
                   </Box>
                 </Box>
               </Box>
@@ -270,27 +303,48 @@ function Page({ onChangePages }) {
               >
                 <Box width={`100%`} height={`50%`} flexDirection="row">
                   <Box width={`36%`} height={`100%`} centerAnchor>
-                    <WhitePlane color={"green"} map={textures[10]} />
+                    <WhitePlane
+                      color={"green"}
+                      map={textures[10]}
+                      url={ImageUrls[10]}
+                    />
                   </Box>
                   <Box width={`64%`} height={`100%`} centerAnchor>
-                    <WhitePlane color={"purple"} map={textures[11]} />
+                    <WhitePlane
+                      color={"purple"}
+                      map={textures[11]}
+                      url={ImageUrls[11]}
+                    />
                   </Box>
                 </Box>
                 <Box width={`100%`} height={`50%`} flexDirection="row">
                   <Box width={`62%`} height={`100%`} centerAnchor>
-                    <WhitePlane color={"blue"} map={textures[12]} />
+                    <WhitePlane
+                      color={"blue"}
+                      map={textures[12]}
+                      url={ImageUrls[12]}
+                    />
                   </Box>
                   <Box width={`38%`} height={`100%`} centerAnchor>
-                    <WhitePlane color={"pink"} map={textures[14]} />
+                    <WhitePlane
+                      color={"pink"}
+                      map={textures[14]}
+                      url={ImageUrls[14]}
+                    />
                   </Box>
                 </Box>
               </Box>
 
               <Box width={`${36.4}%`} height={`100%`} centerAnchor>
-                <WhitePlane color={"red"} map={textures[13]} />
+                <WhitePlane
+                  color={"red"}
+                  map={textures[13]}
+                  url={ImageUrls[13]}
+                />
               </Box>
             </Box>
           </Flex>
+          
           <Flex
             flexDirection="column"
             size={[vpWidth, vpWidth * 0.525, 0]}
@@ -568,7 +622,8 @@ export default function Gallery() {
         gl={{
           powerPreference: "high-performance",
           alpha: true,
-          antialias: false,
+          precision: "highp",
+          antialias: true,
           stencil: false,
           depth: false,
         }}
@@ -576,7 +631,7 @@ export default function Gallery() {
         // orthographic
         // pixelRatio={window.devicePixelRatio}
       >
-        <pointLight position={[0, 1, 4]} intensity={0.7} />
+        <pointLight position={[0, 1, 4]} intensity={0.3} />
         <ambientLight intensity={0.4} />
         <spotLight
           position={[1, 1, 1]}
@@ -587,7 +642,6 @@ export default function Gallery() {
 
         <Suspense fallback={<Html center></Html>}>
           <Page onChangePages={setPages} />
-          {/* <Cube /> */}
         </Suspense>
       </Canvas>
       <div

@@ -96,6 +96,10 @@ const Wrap24 = styled.div`
   }
 `;
 
+const Wrap16 = styled.div`
+  font-size: 16px;
+`
+
 export {
   Text254,
   Text96,
@@ -106,4 +110,5 @@ export {
   Text30,
   Text24,
   Wrap24,
+  Wrap16
 };

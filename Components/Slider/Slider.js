@@ -116,9 +116,10 @@ const Slider = ({ BlackBlockIsScrolling, setBlackBlockIsScrolling, PreloadIsHidd
   useEffect(() => {
     
     const onScroll = (e) => {
-      const BoundingRect = CarouselRef.current.getBoundingClientRect();
+      const BoundingRect = CarouselRef && CarouselRef.current.getBoundingClientRect();
 
       if (
+        BoundingRect &&
         BoundingRect.top <= 0 &&
         BoundingRect.bottom >= 0 &&
         !BlackBlockIsScrolling
