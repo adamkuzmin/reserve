@@ -23,6 +23,8 @@ const Nav = styled.div`
   z-index: 4000;
   padding-left: 25px;
   padding-right: 25px;
+  display: flex;
+  flex-direction: column;
 
   &&[data-status="closed"] {
     transform: translateX(100%);
@@ -82,6 +84,19 @@ const NavBottom = styled.div`
   align-items: center;
   margin-top: 18px;
 
+  &&[data-top="auto"] {
+    margin-top: auto;
+  }
+
+  &&&&[data-space="nospace"] {
+    justify-content: flex-start;
+    padding-bottom: 20px;
+
+    & > * + * {
+      margin-left: 10px;
+    }
+  }
+
   a {
     color: black;
   }
@@ -106,6 +121,21 @@ const Langs = styled.div`
 
 Langs.Item = styled.div`
   font-size: 28px;
+`;
+
+const SocNetIcon = styled.div`
+  width: 30px;
+  height: 30px;
+
+  &[data-type="facebook"] {
+    background: url("/icons/soc/fb-icon.svg");
+    background-size: cover;
+  }
+
+  &[data-type="instagram"] {
+    background: url("/icons/soc/ig-icon.svg");
+    background-size: cover;
+  }
 `;
 
 const NavRight = ({ MiniNavIsOpened }) => {
@@ -162,7 +192,7 @@ const NavRight = ({ MiniNavIsOpened }) => {
         <Langs>
           <Tooltip
             placement={"left"}
-            title={(<>Переключение языков в&nbsp;разработке</>)}
+            title={<>Переключение языков в&nbsp;разработке</>}
           >
             <Langs.Item>
               <a data-font="ibm">RU</a>
@@ -177,6 +207,18 @@ const NavRight = ({ MiniNavIsOpened }) => {
             </Langs.Item>
           </Tooltip>
         </Langs>
+      </NavBottom>
+
+      <NavBottom data-top="auto">
+        <Text24>hello@reserve.ru</Text24>
+      </NavBottom>
+      <NavBottom data-space="nospace">
+        <Tooltip placement={"left"} title={<>Ссылка в разработке</>}>
+          <SocNetIcon data-type={"facebook"} />
+        </Tooltip>
+        <Tooltip placement={"left"} title={<>Ссылка в разработке</>}>
+          <SocNetIcon data-type={"instagram"} />
+        </Tooltip>
       </NavBottom>
     </Nav>
   );
