@@ -12,6 +12,11 @@
   transition: all .6s cubic-bezier(.19,1,.22,1);
 }
 
+/* Tooltip */
+.ant-tooltip-placement-left, .ant-tooltip-placement-leftTop, .ant-tooltip-placement-leftBottom {
+  z-index: 4400 !important
+}
+
 /* Ant Design Styles */
 .ant-select-dropdown {
   z-index: 9991

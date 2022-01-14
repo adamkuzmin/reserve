@@ -11,8 +11,7 @@ import { useEffect, useRef, useState } from "react";
 
 const { Paragraph } = Typography;
 
-
-const Media = ({PreloadIsHidden}) => {
+const Media = ({ PreloadIsHidden }) => {
   const [MiniNavIsOpened, setMiniNavIsOpened] = useState(false);
   const [BlackBlockIsScrolling, setBlackBlockIsScrolling] = useState(true);
 
@@ -22,29 +21,31 @@ const Media = ({PreloadIsHidden}) => {
 
   useEffect(() => {
     const onScroll = (e) => {
-      const BoundingRect = DescriptionRef.current.getBoundingClientRect();
+      if (DescriptionRef && DescriptionRef.current) {
+        const BoundingRect = DescriptionRef.current.getBoundingClientRect();
 
-      if (
-        BoundingRect.top <= 0 &&
-        BoundingRect.bottom >= 0 &&
-        BlackBlockIsScrolling
-      ) {
-        setBlackBlockIsScrolling(false);
+        if (
+          BoundingRect.top <= 0 &&
+          BoundingRect.bottom >= 0 &&
+          BlackBlockIsScrolling
+        ) {
+          setBlackBlockIsScrolling(false);
+        }
+
+        const BoundingRect1 = LastProjectsRef.current.getBoundingClientRect();
+
+        if (
+          BoundingRect1.top <= 0 &&
+          BoundingRect1.bottom >= 0 &&
+          BlackBlockIsScrolling
+        ) {
+          setBlackBlockIsScrolling(false);
+        }
       }
+      window.addEventListener("scroll", onScroll);
 
-      const BoundingRect1 = LastProjectsRef.current.getBoundingClientRect();
-
-      if (
-        BoundingRect1.top <= 0 &&
-        BoundingRect1.bottom >= 0 &&
-        BlackBlockIsScrolling
-      ) {
-        setBlackBlockIsScrolling(false);
-      }
+      return () => window.removeEventListener("scroll", onScroll);
     };
-    window.addEventListener("scroll", onScroll);
-
-    return () => window.removeEventListener("scroll", onScroll);
   });
 
   return (
@@ -58,7 +59,7 @@ const Media = ({PreloadIsHidden}) => {
           setBlackBlockIsScrolling,
         }}
       />
-      
+
       <Content background={"black"}>
         <AllMedia {...{ BlackBlockIsScrolling, setBlackBlockIsScrolling }} />
       </Content>

@@ -11,6 +11,8 @@ import {
 } from "../common/text";
 import Link from "next/link";
 
+import { Tooltip } from "antd";
+
 const Nav = styled.div`
   position: fixed;
   width: 300px;
@@ -131,21 +133,49 @@ const NavRight = ({ MiniNavIsOpened }) => {
             </Link>
           </Text48>
         </NavLink>
-        <NavLink>
-          <Text48>
-            <a data-font="ibm">Контакты</a>
-          </Text48>
-        </NavLink>
+        <Tooltip placement={"left"} title={"Раздел в разработке"}>
+          <NavLink>
+            <Text48>
+              <a data-font="ibm">Новости</a>
+            </Text48>
+          </NavLink>
+        </Tooltip>
+        <Tooltip placement={"left"} title={"Раздел в разработке"}>
+          <NavLink>
+            <Text48>
+              <a data-font="ibm">Награды</a>
+            </Text48>
+          </NavLink>
+        </Tooltip>
+        <Tooltip placement={"left"} title={"Раздел в разработке"}>
+          <NavLink>
+            <Text48>
+              <a data-font="ibm">Контакты</a>
+            </Text48>
+          </NavLink>
+        </Tooltip>
       </NavBlock>
       <NavBottom>
-        <SearchIcon />
+        <Tooltip placement={"left"} title={"Поиск в разработке"}>
+          <SearchIcon />
+        </Tooltip>
         <Langs>
-          <Langs.Item>
-            <a data-font="ibm">RU</a>
-          </Langs.Item>
-          <Langs.Item>
-            <a data-font="ibm">EN</a>
-          </Langs.Item>
+          <Tooltip
+            placement={"left"}
+            title={(<>Переключение языков в&nbsp;разработке</>)}
+          >
+            <Langs.Item>
+              <a data-font="ibm">RU</a>
+            </Langs.Item>
+          </Tooltip>
+          <Tooltip
+            placement={"left"}
+            title={<>Переключение языков в&nbsp;разработке</>}
+          >
+            <Langs.Item>
+              <a data-font="ibm">EN</a>
+            </Langs.Item>
+          </Tooltip>
         </Langs>
       </NavBottom>
     </Nav>
