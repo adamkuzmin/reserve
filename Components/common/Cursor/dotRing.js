@@ -7,6 +7,7 @@ const DotRing = () => {
   const { cursorType, cursorChangeHandler } = useContext(MouseContext);
 
   const { x, y } = useMousePosition();
+  
   return (
     <>
             {/* 2. */}

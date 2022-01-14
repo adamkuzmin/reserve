@@ -64,7 +64,7 @@ Layout.Project = styled.div`
 
     animation: ImageRender 3.5s ease-in-out
       ${({ randomtime }) =>
-        randomtime ? `${randomtime * 1.2 + 3.5}s` : `2.5s`};
+        randomtime ? `${randomtime * 1.2 + 2}s` : `2.5s`};
     @keyframes ImageRender {
       0% {
         opacity: 0;

@@ -170,19 +170,21 @@ const LastProjects = ({ BlackBlockIsScrolling, setBlackBlockIsScrolling }) => {
 
   useEffect(() => {
     const onScroll = (e) => {
-      const BoundingRect = LPRef.current.getBoundingClientRect();
+      if (LPRef && LPRef.current) {
+        const BoundingRect = LPRef.current.getBoundingClientRect();
 
-      if (
-        BoundingRect.top <= 0 &&
-        BoundingRect.bottom >= 0 &&
-        BlackBlockIsScrolling
-      ) {
-        setBlackBlockIsScrolling(false);
+        if (
+          BoundingRect.top <= 0 &&
+          BoundingRect.bottom >= 0 &&
+          BlackBlockIsScrolling
+        ) {
+          setBlackBlockIsScrolling(false);
+        }
       }
-    };
-    window.addEventListener("scroll", onScroll);
+      window.addEventListener("scroll", onScroll);
 
-    return () => window.removeEventListener("scroll", onScroll);
+      return () => window.removeEventListener("scroll", onScroll);
+    };
   });
 
   return (
@@ -192,7 +194,8 @@ const LastProjects = ({ BlackBlockIsScrolling, setBlackBlockIsScrolling }) => {
           <Projects.Row key={`Projects.Row${i}`}>
             {key.map((project, b) => {
               return (
-                <Projects.Item onClick={() => location.href="/project"}
+                <Projects.Item
+                  onClick={() => (location.href = "/project")}
                   swidth={project.ratio && project.ratio}
                   key={`Projects.Item${b}`}
                 >

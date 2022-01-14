@@ -105,37 +105,45 @@ Card.Header = styled.div`
   }
 `;
 
-const Slider = ({ BlackBlockIsScrolling, setBlackBlockIsScrolling, PreloadIsHidden }) => {
+const Slider = ({
+  BlackBlockIsScrolling,
+  setBlackBlockIsScrolling,
+  PreloadIsHidden,
+}) => {
   const CarouselRef = useRef();
-  const [autoplayStatus, setAutoplayStatus] = useState(false)
+  const [autoplayStatus, setAutoplayStatus] = useState(false);
 
   useEffect(() => {
-    setAutoplayStatus(PreloadIsHidden)
-  }, [PreloadIsHidden])
+    setAutoplayStatus(PreloadIsHidden);
+  }, [PreloadIsHidden]);
 
   useEffect(() => {
-    
     const onScroll = (e) => {
-      const BoundingRect = CarouselRef && CarouselRef.current.getBoundingClientRect();
+      if (CarouselRef && CarouselRef.current) {
+        const BoundingRect = CarouselRef.current.getBoundingClientRect();
 
-      if (
-        BoundingRect &&
-        BoundingRect.top <= 0 &&
-        BoundingRect.bottom >= 0 &&
-        !BlackBlockIsScrolling
-      ) {
-        setBlackBlockIsScrolling(true);
+        if (
+          BoundingRect &&
+          BoundingRect.top <= 0 &&
+          BoundingRect.bottom >= 0 &&
+          !BlackBlockIsScrolling
+        ) {
+          setBlackBlockIsScrolling(true);
+        }
       }
+      window.addEventListener("scroll", onScroll);
+
+      return () => window.removeEventListener("scroll", onScroll);
     };
-    window.addEventListener("scroll", onScroll);
-
-    return () => window.removeEventListener("scroll", onScroll);
   });
-
 
   return (
     <CarouselWrapper ref={CarouselRef} infinite>
-      <CarouselBlock autoplay={autoplayStatus && true} speed={2000} autoplaySpeed={5000}>
+      <CarouselBlock
+        autoplay={autoplayStatus && true}
+        speed={2000}
+        autoplaySpeed={5000}
+      >
         <Card src="/carousel/1.jpg">
           <Card.Substrate deg={0} />
           <Card.Substrate deg={180} />
@@ -162,7 +170,9 @@ const Slider = ({ BlackBlockIsScrolling, setBlackBlockIsScrolling, PreloadIsHidd
           <Card.Content>
             <Card.Header data-type="slide-header">
               <p data-font="wremena">Офисно-административные проекты</p>
-              <h3 data-font="ibm">Штаб-квартира ОАО "Аэрофлот-Российские авиалинии"</h3>
+              <h3 data-font="ibm">
+                Штаб-квартира ОАО "Аэрофлот-Российские авиалинии"
+              </h3>
             </Card.Header>
           </Card.Content>
         </Card>

@@ -54,6 +54,7 @@ Nav.BurgerWrapper = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  cursor: pointer;
 
   &&[data-status="opened"] {
     & div:first-child {
