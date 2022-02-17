@@ -2,6 +2,55 @@
 
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;600&display=swap');
 
+/** Preload */
+.preload-backWrapper {
+  width: 100vw;
+  height: 100vh;
+  background: white;
+  position: 'fixed';
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 1;
+  transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transform: translate3d(0, 0, 0);
+}
+
+.preload-backWrapper[data-status="hidden"] {
+  transform: translate3d(0, -100%, 0);
+}
+
+.preload-logo {
+  width: calc(87.2px);
+  height: calc(48.24px);
+  background-size: cover;
+  position: relative;
+
+  -webkit-animation: fadein 4s ease-out;
+  -moz-animation: fadein 4s ease-out;
+  -ms-animation: fadein 4s ease-out;
+  -o-animation: fadein 4s ease-out;
+  animation: fadein 4s ease-out;
+  transform: scale(1.4);
+
+  @keyframes fadein {
+    0% {
+      opacity: 0;
+      transform: scale(1);
+    }
+
+    50% {
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 1;
+      transform: scale(1.4);
+    }
+  }
+}
+
 @font-face {
   font-family: "Wremena";
   src: url("/fonts/WremenaRegular.woff2") format("woff2"),

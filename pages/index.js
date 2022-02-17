@@ -1,13 +1,19 @@
+import dynamic from "next/dynamic";
+
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import "antd/dist/antd.css";
 
-import Home from "./Pages/Home/index";
+//import Home from "./Pages/Home/index";
 import { useEffect, useState } from "react";
 import Preload from "../Components/Preload/Preload";
 
 import DotRing from "../Components/common/Cursor/dotRing";
+
+const Home = dynamic(() => import("./Pages/Home/index"), {
+  loading: () => <p>LOOOOOOOO</p>,
+});
 
 export default function HomeApp() {
   const [PreloadIsHidden, setPreloadIsHidden] = useState(false);
@@ -34,7 +40,7 @@ export default function HomeApp() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <DotRing />
-      {!PreloadIsFullyHidden && <Preload {...{ PreloadIsHidden }} />}
+      {/*{!PreloadIsFullyHidden && <Preload {...{ PreloadIsHidden }} />}*/}
       {<Home {...{ PreloadIsHidden }} />}
     </div>
   );
