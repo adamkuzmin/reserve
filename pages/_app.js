@@ -14,38 +14,28 @@ import MouseContextProvider from "../Components/common/Cursor/mouse-context";
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
+
+    let timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+
     console.log("router", router);
 
-    const timeout = () =>
-      setTimeout(() => {
-        console.log("he out");
-        setLoading(false);
-      }, 2000);
-
-    const handleStart = (url) => {
-      console.log("ddd");
-
-      url !== router.pathname ? setLoading(true) : timeout();
+    return () => {
+      clearTimeout(timer);
     };
-
-    const handleComplete = (url) => console.log("df");
-
-    router.events.on("routeChangeStart", handleStart);
-    router.events.on("routeChangeComplete", handleComplete);
-    /*router.events.on("routeChangeError", handleComplete);*/
-  }, [router]);
-
-  console.log("styled", styled);
+  }, [router, setLoading]);
 
   return (
     <ConfigProvider locale={ruRU}>
       <MouseContextProvider>
         {<Preload PreloadIsHidden={!loading} />}
         {/* главный компонент */}
-        <Component {...pageProps} />
+        {!loading && <Component {...pageProps} />}
         {/* end: главный компонент */}
         <DotRing />
       </MouseContextProvider>
