@@ -7,7 +7,7 @@
   width: 100vw;
   height: 100vh;
   background: white;
-  position: 'fixed';
+  position: fixed;
   z-index: 999;
   display: flex;
   justify-content: center;

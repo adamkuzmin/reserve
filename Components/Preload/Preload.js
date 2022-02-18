@@ -296,15 +296,12 @@ const Letter9 = styled.svg`
 
 const Preload = ({ PreloadIsHidden, absolute }) => {
   return (
-    <div className={'preload-backWrapper'}
+    <div
+      className={"preload-backWrapper"}
       type={absolute && "absolute"}
       data-status={PreloadIsHidden && "hidden"}
     >
-      {/*<CanvasGeometry>
-        <ThreeCanvas />
-      </CanvasGeometry>*/}
-
-      <div className={'preload-logo'}>
+      <div className={"preload-logo"}>
         <svg
           width="88"
           height="49"
