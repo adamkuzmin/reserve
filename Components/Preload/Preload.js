@@ -294,12 +294,12 @@ const Letter9 = styled.svg`
   }
 `;
 
-const Preload = ({ PreloadIsHidden, absolute }) => {
+const Preload = ({ loading = true, absolute = false }) => {
   return (
     <div
       className={"preload-backWrapper"}
-      type={absolute && "absolute"}
-      data-status={PreloadIsHidden && "hidden"}
+      type={absolute ? "absolute" : null}
+      data-status={!loading ? "hidden" : null}
     >
       <div className={"preload-logo"}>
         <svg

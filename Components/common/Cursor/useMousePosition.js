@@ -5,16 +5,17 @@ export default function useMousePosition() {
 
   useEffect(() => {
     const mouseMoveHandler = (event) => {
-      
       const { clientX, clientY } = event;
       setMousePosition({ x: clientX, y: clientY });
     };
-    document.getElementById('__next').addEventListener("mousemove", mouseMoveHandler);
-
-    console.log('document', document)
+    document
+      .getElementById("__next")
+      .addEventListener("mousemove", mouseMoveHandler);
 
     return () => {
-      document.getElementById('__next').removeEventListener("mousemove", mouseMoveHandler);
+      document
+        .getElementById("__next")
+        .removeEventListener("mousemove", mouseMoveHandler);
     };
   }, []);
 
