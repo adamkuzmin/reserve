@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import Link from "next/link";
+import { useStore } from "../../Store/useStore";
 import styled from "styled-components";
 import {
   Text254,
@@ -165,7 +166,10 @@ const LPData = [
   ],
 ];
 
-const LastProjects = ({ BlackBlockIsScrolling, setBlackBlockIsScrolling }) => {
+const LastProjects = () => {
+  const blackLogo = useStore((state) => state.blackLogo);
+  const setBlackLogo = useStore((state) => state.setBlackLogo);
+
   const LPRef = useRef();
 
   useEffect(() => {
@@ -173,12 +177,8 @@ const LastProjects = ({ BlackBlockIsScrolling, setBlackBlockIsScrolling }) => {
       if (LPRef && LPRef.current) {
         const BoundingRect = LPRef.current.getBoundingClientRect();
 
-        if (
-          BoundingRect.top <= 0 &&
-          BoundingRect.bottom >= 0 &&
-          BlackBlockIsScrolling
-        ) {
-          setBlackBlockIsScrolling(false);
+        if (BoundingRect.top <= 0 && BoundingRect.bottom >= 0 && !blackLogo) {
+          setBlackLogo(true);
         }
       }
       window.addEventListener("scroll", onScroll);

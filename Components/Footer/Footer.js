@@ -11,6 +11,8 @@ import {
   Text24,
 } from "../common/text";
 
+import { useStore } from "../../Store/useStore";
+
 const Foot = styled.div`
   width: 100%;
   padding-top: 4.4vw;
@@ -186,7 +188,10 @@ const FooterData = [
   },
 ];
 
-const Footer = ({ BlackBlockIsScrolling, setBlackBlockIsScrolling }) => {
+const Footer = () => {
+  const blackLogo = useStore((state) => state.blackLogo);
+  const setBlackLogo = useStore((state) => state.setBlackLogo);
+
   const FooterRef = useRef();
 
   useEffect(() => {
@@ -197,9 +202,9 @@ const Footer = ({ BlackBlockIsScrolling, setBlackBlockIsScrolling }) => {
         BoundingRect &&
         BoundingRect.top <= 0 &&
         BoundingRect.bottom >= 0 &&
-        !BlackBlockIsScrolling
+        blackLogo
       ) {
-        setBlackBlockIsScrolling(true);
+        setBlackLogo(false);
       }
     };
     window.addEventListener("scroll", onScroll);

@@ -1,19 +1,10 @@
 import { useState } from "react";
-import styled from "styled-components";
-import { Select, Input, Space, Row, Col, AutoComplete } from "antd";
+import { useStore } from "../../Store/useStore";
 
-import {
-  Text254,
-  Text96,
-  Text60,
-  Text48,
-  Text40,
-  Text36,
-  Text30,
-  Text24,
-  Wrap24,
-  Wrap16,
-} from "../common/text";
+import styled from "styled-components";
+import { Row, Col, AutoComplete, Space } from "antd";
+
+import { Text24, Wrap24, Wrap16 } from "../common/text";
 
 const FilterWrapper = styled(Space)`
   position: fixed;
@@ -346,9 +337,9 @@ const FloatFilters = ({
   FilterType,
   setFilterType,
   toPageTop,
-  _NavIsOpened,
-  _setNavIsOpened,
 }) => {
+  const setBarIsVisible = useStore((state) => state.setBarIsVisible);
+
   return (
     <FilterWrapper>
       {
@@ -377,7 +368,7 @@ const FloatFilters = ({
             setGalleryAnimation(false);
             setLayoutType(1);
             toPageTop();
-            _setNavIsOpened(Math.random())
+            setBarIsVisible(Math.random());
           }}
         >
           <Text24>Галерея</Text24>
@@ -388,7 +379,7 @@ const FloatFilters = ({
             setGalleryAnimation(false);
             setLayoutType(0);
             toPageTop();
-            _setNavIsOpened(Math.random())
+            setBarIsVisible(Math.random());
           }}
         >
           <Text24>Список</Text24>
@@ -399,7 +390,7 @@ const FloatFilters = ({
             setGalleryAnimation(false);
             setLayoutType(2);
             toPageTop();
-            _setNavIsOpened(Math.random())
+            setBarIsVisible(Math.random());
           }}
         >
           <Text24>Карта</Text24>

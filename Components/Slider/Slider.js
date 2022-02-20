@@ -1,5 +1,6 @@
 import { Carousel } from "antd";
 import { useEffect, useRef, useState } from "react";
+import { useStore } from "../../Store/useStore";
 import styled from "styled-components";
 
 import "swiper/css";
@@ -11,6 +12,8 @@ import "swiper/css/bundle";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Parallax, Pagination, Navigation } from "swiper";
+
+import { sliderData } from "./sliderData";
 
 const SkeletonSlider = styled.div`
   position: absolute;
@@ -100,6 +103,7 @@ Card.Content = styled.div`
 Card.Header = styled.div`
   position: absolute;
   bottom: 0;
+  width: 40%;
   z-index: 5000;
   margin-left: 88px;
   margin-bottom: 72px;
@@ -118,7 +122,7 @@ Card.Header = styled.div`
 
   h3 {
     font-size: 40px;
-    line-height: 44px;
+    line-height: 1.1;
     font-weight: 600;
   }
 `;
@@ -162,32 +166,132 @@ const CustomSwiper = styled(Swiper)`
     max-width: 400px;
     line-height: 1.3;
   }
+
+  &&& .swiper-pagination-bullet {
+    width: 10px;
+    height: 10px;
+    opacity: 0.6;
+    background: white;
+
+    margin: 0 12px;
+
+    transition: transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  }
+
+  &&& .svgbullet {
+    fill: none;
+    stroke-width: 10;
+  }
+
+  & .swiper-pagination-bullet-active {
+    transform: scale(2, 2);
+    opacity: 1 !important;
+  }
+
+  & .swiper-pagination {
+    text-align: right;
+    bottom: 46px;
+    left: auto;
+    right: 0;
+    padding-right: 40px;
+  }
 `;
 
-const Slider = ({ BlackBlockIsScrolling, setBlackBlockIsScrolling }) => {
-  const swipeTitle = 2000;
-  const swipteLabel = 1000;
+const ScrollDown = styled.svg`
+  z-index: 999;
+  position: absolute;
+  width: 140px;
+  cursor: pointer;
+
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%) rotate(270deg);
+
+  & .svg-wrap {
+    transform: translateY(353px);
+  }
+
+  & .svg-circle-wrap {
+    transition: 0.5s;
+    transform-origin: -20px 40px;
+    opacity: 1;
+  }
+
+  & .svg-circle {
+    transition: 0.5s;
+    stroke-width: 2px;
+    stroke: #fff;
+    fill: none;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    opacity: 1;
+    transform-origin: 0px 0px 0px;
+  }
+
+  & .svg-arrow {
+    transition: 0.5s;
+    fill: #fff;
+    transform: rotateY(180deg) translate(-55px, 36.1px) scale(1.75);
+  }
+
+  & .svg-line {
+    transition: 0.5s;
+    stroke: #fff;
+    stroke-width: 2;
+    transform: translate(50px, 42px);
+  }
+
+  &&& {
+    & .svg-line {
+      transform: translate(35px, 42px) scaleX(0.5);
+    }
+
+    & .svg-arrow {
+      transform: rotateY(180deg) translate(-40px, 36.1px) scale(1.75);
+    }
+
+    & .svg-circle {
+      opacity: 1;
+    }
+
+    & .svg-circle-wrap {
+      transform: scale(1.1);
+    }
+  }
+`;
+
+const Slider = () => {
+  const swipeTitle = -700;
+  const swipeLabel = -2000;
 
   const [startAutoplay, setStartAutoplay] = useState(false);
+
+  const blackLogo = useStore((state) => state.blackLogo);
+  const setBlackLogo = useStore((state) => state.setBlackLogo);
 
   const CarouselRef = useRef();
   const sliderRef = useRef();
 
   useEffect(() => {
-    let timer = setTimeout(() => setStartAutoplay(true), 1200);
+    let timer = setTimeout(() => setStartAutoplay(true), 800);
 
     return () => {
       clearTimeout(timer);
     };
   }, []);
 
+  /* autoplay */
   useEffect(() => {
     if (sliderRef && startAutoplay) {
-      console.log("hello and start");
+      const swiper = sliderRef.current.swiper;
 
-      /*const autoPlay = () => setInterval(() => sliderRef.current.next(), 2000);
+      const autoTransition = setInterval(() => {
+        swiper.slideNext();
+      }, 4000);
 
-      return () => clearInterval(autoPlay);*/
+      return () => {
+        clearInterval(autoTransition);
+      };
     }
   }, [sliderRef, startAutoplay]);
 
@@ -200,20 +304,33 @@ const Slider = ({ BlackBlockIsScrolling, setBlackBlockIsScrolling }) => {
           BoundingRect &&
           BoundingRect.top <= 0 &&
           BoundingRect.bottom >= 0 &&
-          !BlackBlockIsScrolling
+          blackLogo
         ) {
-          setBlackBlockIsScrolling(true);
+          setBlackLogo(false);
         }
       }
-      window.addEventListener("scroll", onScroll);
-
-      return () => window.removeEventListener("scroll", onScroll);
     };
+
+    window.addEventListener("scroll", onScroll);
+
+    return () => window.removeEventListener("scroll", onScroll);
   });
 
   return (
     <CarouselWrapper ref={CarouselRef}>
       {!startAutoplay && false && <SkeletonSlider />}
+      <ScrollDown xmlns="http://www.w3.org/2000/svg" viewBox="0 350 160 90">
+        <g className="svg-wrap">
+          <g className="svg-circle-wrap">
+            <circle className="svg-circle" cx="42" cy="42" r="40"></circle>
+          </g>
+          <path
+            className="svg-arrow"
+            d="M.983,6.929,4.447,3.464.983,0,0,.983,2.482,3.464,0,5.946Z"
+          ></path>
+          <path className="svg-line" d="M80,0H0"></path>
+        </g>
+      </ScrollDown>
       <CustomSwiper
         style={{
           "--swiper-navigation-color": "#fff",
@@ -221,19 +338,27 @@ const Slider = ({ BlackBlockIsScrolling, setBlackBlockIsScrolling }) => {
         }}
         speed={1000}
         parallax={true}
+        loop={true}
+        ref={sliderRef}
         pagination={{
           clickable: true,
+          renderBullet: function (index, className) {
+            const dynamicBullet =
+              '<svg width="10" height="10"><path class="svgbullet" stroke="#ffffff" d="M10,5c2.8,0,5,2.2,5,5s-2.2,5-5,5s-5-2.2-5-5S7.2,5,10,5z" style="stroke-dasharray: 31.4876; stroke-dashoffset: 1;"></path></svg>';
+
+            return '<span class="' + className + '">' + "</span>";
+          },
         }}
         modules={[Parallax, Pagination, Navigation]}
         className="mySwiper"
       >
-        {Array(8).fill(
-          <SwiperSlide key={`swiper::${Math.random()}`}>
+        {sliderData.map(({ cover, category, name }, i) => (
+          <SwiperSlide key={`swiper::${i}`}>
             <div
               slot="container-start"
               className="parallax-bg"
               style={{
-                backgroundImage: "url('/carousel/1.jpg')",
+                backgroundImage: `url("${cover}")`,
               }}
               data-swiper-parallax="0"
             />
@@ -241,92 +366,18 @@ const Slider = ({ BlackBlockIsScrolling, setBlackBlockIsScrolling }) => {
             <Card.Substrate deg={180} />
             <Card.Content>
               <Card.Header data-type="slide-header">
-                <p data-font="wremena" data-swiper-parallax="-2000">
-                  Объект культуры
+                <p data-font="wremena" data-swiper-parallax={`${swipeLabel}`}>
+                  {category}
                 </p>
-                <h3 data-font="ibm" data-swiper-parallax="-700">
-                  Концертный зал «Зарядье»
+                <h3 data-font="ibm" data-swiper-parallax={`${swipeTitle}`}>
+                  {name}
                 </h3>
               </Card.Header>
             </Card.Content>
           </SwiperSlide>
-        )}
+        ))}
       </CustomSwiper>
       )
-      {/* <CarouselBlock ref={sliderRef}>
-          <Card src="/carousel/1.jpg">
-            <Card.Substrate deg={0} />
-            <Card.Substrate deg={180} />
-            <Card.Content>
-              <Card.Header data-type="slide-header">
-                <p data-font="wremena">Объект культуры</p>
-                <h3 data-font="ibm">Концертный зал «Зарядье»</h3>
-              </Card.Header>
-            </Card.Content>
-          </Card>
-          <Card src="/carousel/2.jpg">
-            <Card.Substrate deg={0} />
-            <Card.Substrate deg={180} />
-            <Card.Content>
-              <Card.Header data-type="slide-header">
-                <p data-font="wremena">Офисно-административные проекты</p>
-                <h3 data-font="ibm">Больница с родильным домом в Коммунарке</h3>
-              </Card.Header>
-            </Card.Content>
-          </Card>
-          <Card src="/carousel/3.jpg">
-            <Card.Substrate deg={0} />
-            <Card.Substrate deg={180} />
-            <Card.Content>
-              <Card.Header data-type="slide-header">
-                <p data-font="wremena">Офисно-административные проекты</p>
-                <h3 data-font="ibm">
-                  Штаб-квартира ОАО "Аэрофлот-Российские авиалинии"
-                </h3>
-              </Card.Header>
-            </Card.Content>
-          </Card>
-          <Card src="/carousel/6.jpg">
-            <Card.Substrate deg={0} />
-            <Card.Substrate deg={180} />
-            <Card.Content>
-              <Card.Header data-type="slide-header">
-                <p data-font="wremena">Офисно-административные проекты</p>
-                <h3 data-font="ibm">Административно-деловой центр ТиНАО</h3>
-              </Card.Header>
-            </Card.Content>
-          </Card>
-          <Card src="/carousel/5.jpg">
-            <Card.Substrate deg={0} />
-            <Card.Substrate deg={180} />
-            <Card.Content>
-              <Card.Header data-type="slide-header">
-                <p data-font="wremena">Проекты жилых зданий</p>
-                <h3 data-font="ibm">Жилой комплекс «Небо»</h3>
-              </Card.Header>
-            </Card.Content>
-          </Card>
-          <Card src="/carousel/7.jpg">
-            <Card.Substrate deg={0} />
-            <Card.Substrate deg={180} />
-            <Card.Content>
-              <Card.Header data-type="slide-header">
-                <p data-font="wremena">Офисно-административные проекты</p>
-                <h3 data-font="ibm">Торговый центр "Времена года"</h3>
-              </Card.Header>
-            </Card.Content>
-          </Card>
-          <Card src="/carousel/8.jpg">
-            <Card.Substrate deg={0} />
-            <Card.Substrate deg={180} />
-            <Card.Content>
-              <Card.Header data-type="slide-header">
-                <p data-font="wremena">Объект культуры</p>
-                <h3 data-font="ibm">Комплекс апартаментов “STORY”</h3>
-              </Card.Header>
-            </Card.Content>
-          </Card>
-        </CarouselBlock>*/}
     </CarouselWrapper>
   );
 };

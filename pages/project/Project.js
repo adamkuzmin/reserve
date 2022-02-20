@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useStore } from "../../Store/useStore";
 
 import Navigation from "../../Components/Navigation/Navigation";
 import NavRight from "../../Components/NavRight/NavRight";
@@ -15,20 +16,17 @@ import OtherRenders from "../../Components/ProjectInfo/OtherRenders";
 import ProjectBottom from "../../Components/ProjectInfo/ProjectBottom";
 
 const Project = () => {
-  const [MiniNavIsOpened, setMiniNavIsOpened] = useState(false);
-  const [BlackBlockIsScrolling, setBlackBlockIsScrolling] = useState(false);
+  const blackLogo = useStore((state) => state.blackLogo);
+  const setBlackLogo = useStore((state) => state.setBlackLogo);
+
+  useEffect(() => {
+    setBlackLogo(true);
+  }, []);
 
   return (
     <div>
-      <NavRight {...{ MiniNavIsOpened }} />
-      <Navigation
-        {...{
-          MiniNavIsOpened,
-          setMiniNavIsOpened,
-          BlackBlockIsScrolling,
-          setBlackBlockIsScrolling,
-        }}
-      />
+      <NavRight />
+      <Navigation />
 
       <ProjectCover />
       <Content>
@@ -36,10 +34,13 @@ const Project = () => {
         <ProjectContent />
       </Content>
       <ProjectPlan />
-      <Content><OtherRenders/><ProjectBottom/></Content>
+      <Content>
+        <OtherRenders />
+        <ProjectBottom />
+      </Content>
 
       <Content background={"black"}>
-        <Footer {...{ BlackBlockIsScrolling, setBlackBlockIsScrolling }} />
+        <Footer />
       </Content>
     </div>
   );

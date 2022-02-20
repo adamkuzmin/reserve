@@ -1,3 +1,4 @@
+import { useStore } from "../../Store/useStore";
 import styled from "styled-components";
 import { Typography } from "antd";
 
@@ -11,9 +12,9 @@ import { useEffect, useRef, useState } from "react";
 
 const { Paragraph } = Typography;
 
-const Media = ({ PreloadIsHidden }) => {
-  const [MiniNavIsOpened, setMiniNavIsOpened] = useState(false);
-  const [BlackBlockIsScrolling, setBlackBlockIsScrolling] = useState(true);
+const Media = () => {
+  const blackLogo = useStore((state) => state.blackLogo);
+  const setBlackLogo = useStore((state) => state.setBlackLogo);
 
   const BodyRef = useRef();
   const DescriptionRef = useRef();
@@ -24,47 +25,37 @@ const Media = ({ PreloadIsHidden }) => {
       if (DescriptionRef && DescriptionRef.current) {
         const BoundingRect = DescriptionRef.current.getBoundingClientRect();
 
-        if (
-          BoundingRect.top <= 0 &&
-          BoundingRect.bottom >= 0 &&
-          BlackBlockIsScrolling
-        ) {
-          setBlackBlockIsScrolling(false);
+        if (BoundingRect.top <= 0 && BoundingRect.bottom >= 0 && !blackLogo) {
+          setBlackLogo(true);
         }
 
         const BoundingRect1 = LastProjectsRef.current.getBoundingClientRect();
 
-        if (
-          BoundingRect1.top <= 0 &&
-          BoundingRect1.bottom >= 0 &&
-          BlackBlockIsScrolling
-        ) {
-          setBlackBlockIsScrolling(false);
+        if (BoundingRect1.top <= 0 && BoundingRect1.bottom >= 0 && !blackLogo) {
+          setBlackLogo(true);
         }
       }
-      window.addEventListener("scroll", onScroll);
-
-      return () => window.removeEventListener("scroll", onScroll);
     };
+
+    window.addEventListener("scroll", onScroll);
+
+    return () => window.removeEventListener("scroll", onScroll);
   });
+
+  useEffect(() => {
+    setBlackLogo(false);
+  }, []);
 
   return (
     <div ref={BodyRef}>
-      <NavRight {...{ MiniNavIsOpened }} />
-      <Navigation
-        {...{
-          MiniNavIsOpened,
-          setMiniNavIsOpened,
-          BlackBlockIsScrolling,
-          setBlackBlockIsScrolling,
-        }}
-      />
+      <NavRight />
+      <Navigation />
 
       <Content background={"black"}>
-        <AllMedia {...{ BlackBlockIsScrolling, setBlackBlockIsScrolling }} />
+        <AllMedia />
       </Content>
       <Content background={"black"}>
-        <Footer {...{ BlackBlockIsScrolling, setBlackBlockIsScrolling }} />
+        <Footer />
       </Content>
     </div>
   );

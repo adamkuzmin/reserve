@@ -1,3 +1,6 @@
+import { useEffect, useRef, useState } from "react";
+import { useStore } from "../../../Store/useStore";
+
 import styled from "styled-components";
 import { Typography } from "antd";
 
@@ -9,9 +12,8 @@ import LastProjects from "../../../Components/LastProjects/LastProjects";
 import LastMedia from "../../../Components/LastMedia/LastMedia";
 import Footer from "../../../Components/Footer/Footer";
 import { Content } from "../../../Components/common/body";
-import { useEffect, useRef, useState } from "react";
 
-import ThreeCanvas from '../../../Models/construcetor'
+import ThreeCanvas from "../../../Models/construcetor";
 
 import PreludeWithKPI from "../../../Components/MainDescription/PreludeWithKPI";
 import GeneralLead from "../../../Components/MainDescription/GeneralLead";
@@ -25,11 +27,9 @@ const Cover = styled.div`
   height: 100vh;
 `;
 
-
-
 const CanvasGeometry = styled.div`
   position: absolute;
-  opacity: .7;
+  opacity: 0.7;
   top: 80px;
   left: 0;
   width: 35vw;
@@ -38,9 +38,9 @@ const CanvasGeometry = styled.div`
   //background-size: cover;
 `;
 
-const Home = ({PreloadIsHidden}) => {
-  const [MiniNavIsOpened, setMiniNavIsOpened] = useState(false);
-  const [BlackBlockIsScrolling, setBlackBlockIsScrolling] = useState(true);
+const Home = () => {
+  const blackLogo = useStore((state) => state.blackLogo);
+  const setBlackLogo = useStore((state) => state.setBlackLogo);
 
   const BodyRef = useRef();
   const DescriptionRef = useRef();
@@ -50,22 +50,14 @@ const Home = ({PreloadIsHidden}) => {
     const onScroll = (e) => {
       const BoundingRect = DescriptionRef.current.getBoundingClientRect();
 
-      if (
-        BoundingRect.top <= 0 &&
-        BoundingRect.bottom >= 0 &&
-        BlackBlockIsScrolling
-      ) {
-        setBlackBlockIsScrolling(false);
+      if (BoundingRect.top <= 0 && BoundingRect.bottom >= 0 && !blackLogo) {
+        setBlackLogo(true);
       }
 
       const BoundingRect1 = LastProjectsRef.current.getBoundingClientRect();
 
-      if (
-        BoundingRect1.top <= 0 &&
-        BoundingRect1.bottom >= 0 &&
-        BlackBlockIsScrolling
-      ) {
-        setBlackBlockIsScrolling(false);
+      if (BoundingRect1.top <= 0 && BoundingRect1.bottom >= 0 && !blackLogo) {
+        setBlackLogo(true);
       }
     };
     window.addEventListener("scroll", onScroll);
@@ -75,22 +67,15 @@ const Home = ({PreloadIsHidden}) => {
 
   return (
     <div ref={BodyRef}>
-      <NavRight {...{ MiniNavIsOpened }} />
-      <Navigation
-        {...{
-          MiniNavIsOpened,
-          setMiniNavIsOpened,
-          BlackBlockIsScrolling,
-          setBlackBlockIsScrolling,
-        }}
-      />
+      <NavRight />
+      <Navigation />
       <Cover>
-        <Slider {...{ BlackBlockIsScrolling, setBlackBlockIsScrolling, PreloadIsHidden }} />
+        <Slider />
       </Cover>
       <Content justifyContent={"flex-end"} ref={DescriptionRef}>
         <CanvasGeometry>
-          <ThreeCanvas/>
-          </CanvasGeometry>
+          <ThreeCanvas />
+        </CanvasGeometry>
         <PreludeWithKPI />
         <GeneralLead />
       </Content>
@@ -98,18 +83,16 @@ const Home = ({PreloadIsHidden}) => {
       <FloatedBack />
 
       <Content ref={LastProjectsRef} justifyContent={"flex-end"}>
-        <SectionLead/>
+        <SectionLead />
       </Content>
       <Content>
-        <LastProjects
-          {...{ BlackBlockIsScrolling, setBlackBlockIsScrolling }}
-        />
+        <LastProjects />
       </Content>
       <Content background={"black"}>
-        <LastMedia {...{ BlackBlockIsScrolling, setBlackBlockIsScrolling }} />
+        <LastMedia />
       </Content>
       <Content background={"black"}>
-        <Footer {...{ BlackBlockIsScrolling, setBlackBlockIsScrolling }} />
+        <Footer />
       </Content>
     </div>
   );

@@ -1,211 +1,53 @@
-import styled from "styled-components";
-import {
-  Text254,
-  Text96,
-  Text60,
-  Text48,
-  Text40,
-  Text36,
-  Text30,
-  Text24,
-} from "../common/text";
-import Link from "next/link";
+import React, { useEffect } from "react";
+import { useStore } from "../../Store/useStore";
 
+import { LeadLinks, SecondaryLinks } from "./Links";
+import { Text24 } from "../common/text";
+import {
+  Nav,
+  NavBlock,
+  LinksGap,
+  NavBottom,
+  Langs,
+  SocNetIcon,
+} from "./styles";
 import { Tooltip } from "antd";
 
-const Nav = styled.div`
-  position: fixed;
-  width: 300px;
-  background: white;
-  height: 100vh;
-  top: 0px;
-  right: 0px;
-  z-index: 4000;
-  padding-left: 25px;
-  padding-right: 25px;
-  display: flex;
-  flex-direction: column;
+/* данные по ссылкам */
+import { pagesConfigs } from "../../Store/pagesConfigs";
 
-  &&[data-status="closed"] {
-    transform: translateX(100%);
-  }
-`;
+const NavRight = () => {
+  /* язык */
+  const lang = useStore((state) => state.lang);
+  const setLang = useStore((state) => state.setLang);
 
-const NavBlock = styled.div`
-  margin-top: 128px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
+  const navIsOpened = useStore((state) => state.navIsOpened);
 
-  && > * + * {
-    margin-top: 7px;
-  }
-`;
+  const links = Object.keys(pagesConfigs);
+  const leadLinks = links?.slice(0, 3);
+  const secondaryKeys = links?.slice(3, 5);
 
-const NavLink = styled.div`
-  line-height: 1;
-  display: flex;
-  align-items: center;
-
-  & a,
-  & a:hover {
-    color: black;
-    text-decoration: none;
-    font-weight: 400;
-  }
-
-  & span {
-    border-bottom: 3px solid black;
-  }
-
-  & span:hover {
-    border-bottom: 3px solid white;
-  }
-
-  &&[data-icon="plus"]::after {
-    content: "";
-    width: 31px;
-    height: 34px;
-    background: url("/icons/plusIcon.svg");
-    margin-left: 12px;
-  }
-
-  &&[data-status="disabled"] {
-    & span {
-      border-bottom: 0px;
-    }
-  }
-`;
-
-const NavBottom = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 18px;
-
-  &&[data-top="auto"] {
-    margin-top: auto;
-  }
-
-  &&&&[data-space="nospace"] {
-    justify-content: flex-start;
-    padding-bottom: 20px;
-
-    & > * + * {
-      margin-left: 10px;
-    }
-  }
-
-  a {
-    color: black;
-  }
-`;
-
-const SearchIcon = styled.div`
-  background-image: url("/icons/searchIconBl.svg");
-  background-size: cover;
-  width: 25px;
-  height: 25px;
-`;
-
-const Langs = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding-right: 24px;
-
-  && > * + * {
-    margin-left: 18px;
-  }
-`;
-
-Langs.Item = styled.div`
-  font-size: 28px;
-`;
-
-const SocNetIcon = styled.div`
-  width: 30px;
-  height: 30px;
-
-  &[data-type="facebook"] {
-    background: url("/icons/soc/fb-icon.svg");
-    background-size: cover;
-  }
-
-  &[data-type="instagram"] {
-    background: url("/icons/soc/ig-icon.svg");
-    background-size: cover;
-  }
-`;
-
-const NavRight = ({ MiniNavIsOpened }) => {
   return (
-    <Nav data-status={MiniNavIsOpened ? "opened" : "closed"}>
+    <Nav data-status={navIsOpened ? "opened" : "closed"}>
       <NavBlock>
-        <NavLink data-status="disabled" data-icon="plus">
-          <Text48>
-            <Link href="/">
-              <a>Резерв</a>
-            </Link>
-          </Text48>
-        </NavLink>
-        <NavLink>
-          <Text48>
-            <Link href="/projects">
-              <a data-font="ibm">Проекты</a>
-            </Link>
-          </Text48>
-        </NavLink>
-        <NavLink>
-          <Text48>
-            <Link href="/media">
-              <a data-font="ibm">Медиа</a>
-            </Link>
-          </Text48>
-        </NavLink>
-        <Tooltip placement={"left"} title={"Раздел в разработке"}>
-          <NavLink>
-            <Text48>
-              <a data-font="ibm">Новости</a>
-            </Text48>
-          </NavLink>
-        </Tooltip>
-        <Tooltip placement={"left"} title={"Раздел в разработке"}>
-          <NavLink>
-            <Text48>
-              <a data-font="ibm">Награды</a>
-            </Text48>
-          </NavLink>
-        </Tooltip>
-        <Tooltip placement={"left"} title={"Раздел в разработке"}>
-          <NavLink>
-            <Text48>
-              <a data-font="ibm">Контакты</a>
-            </Text48>
-          </NavLink>
-        </Tooltip>
+        <LeadLinks routes={leadLinks} />
+
+        <LinksGap />
+
+        <SecondaryLinks routes={secondaryKeys} />
       </NavBlock>
+
       <NavBottom>
-        <Tooltip placement={"left"} title={"Поиск в разработке"}>
-          <SearchIcon />
-        </Tooltip>
         <Langs>
-          <Tooltip
-            placement={"left"}
-            title={<>Переключение языков в&nbsp;разработке</>}
-          >
-            <Langs.Item>
-              <a data-font="ibm">RU</a>
+          {lang === "ru" ? (
+            <Langs.Item onClick={() => setLang("en")}>
+              <a data-font="ibm">En</a>
             </Langs.Item>
-          </Tooltip>
-          <Tooltip
-            placement={"left"}
-            title={<>Переключение языков в&nbsp;разработке</>}
-          >
-            <Langs.Item>
-              <a data-font="ibm">EN</a>
+          ) : (
+            <Langs.Item onClick={() => setLang("ru")}>
+              <a data-font="ibm">Ru</a>
             </Langs.Item>
-          </Tooltip>
+          )}
         </Langs>
       </NavBottom>
 

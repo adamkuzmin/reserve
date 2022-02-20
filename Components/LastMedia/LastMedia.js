@@ -1,4 +1,7 @@
 import { useEffect, useRef } from "react";
+import Link from "next/link";
+import { useStore } from "../../Store/useStore";
+
 import styled from "styled-components";
 import {
   Text254,
@@ -10,8 +13,6 @@ import {
   Text30,
   Text24,
 } from "../common/text";
-
-import Link from "next/link";
 
 import { ScreenLead } from "../common/body";
 
@@ -139,19 +140,18 @@ const Tile = styled.div`
   }
 `;
 
-const LastMedia = ({ BlackBlockIsScrolling, setBlackBlockIsScrolling }) => {
+const LastMedia = () => {
+  const blackLogo = useStore((state) => state.blackLogo);
+  const setBlackLogo = useStore((state) => state.setBlackLogo);
+
   const MediaRef = useRef();
 
   useEffect(() => {
     const onScroll = (e) => {
       const BoundingRect = MediaRef.current.getBoundingClientRect();
 
-      if (
-        BoundingRect.top <= 0 &&
-        BoundingRect.bottom >= 0 &&
-        !BlackBlockIsScrolling
-      ) {
-        setBlackBlockIsScrolling(true);
+      if (BoundingRect.top <= 0 && BoundingRect.bottom >= 0 && blackLogo) {
+        setBlackLogo(false);
       }
     };
     window.addEventListener("scroll", onScroll);

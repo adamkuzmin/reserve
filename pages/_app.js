@@ -25,6 +25,8 @@ function MyApp({ Component, pageProps }) {
   const [loading, setLoading] = useState(true);
 
   const setPageTitle = useStore((state) => state.setPageTitle);
+  const setBarIsVisible = useStore((state) => state.setBarIsVisible);
+  const setNavIsOpened = useStore((state) => state.setNavIsOpened);
 
   /* preload эффект, которые активируется при изменении route */
   useEffect(() => {
@@ -34,16 +36,24 @@ function MyApp({ Component, pageProps }) {
       setLoading(false);
     }, 2000);
 
-    console.log("router", router);
-
     /* конфигурации для страницы */
-    if (router && router.pathname && pagesConfigs[router.pathname]) {
+    /* название для <title> */
+    if (
+      router &&
+      router.pathname &&
+      pagesConfigs[router.pathname] &&
+      router.pathname !== "/"
+    ) {
       const configs = pagesConfigs[router.pathname];
 
       setPageTitle(configs?.title);
     } else {
       setPageTitle(null);
     }
+
+    /* при загрузке правая навигация скрыта, а бар видимый */
+    setBarIsVisible(true);
+    setNavIsOpened(false);
 
     return () => {
       clearTimeout(timer);
