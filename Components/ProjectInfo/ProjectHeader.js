@@ -1,12 +1,7 @@
 import styled from "styled-components";
 
 import {
-  Text254,
-  Text96,
   Text60,
-  Text48,
-  Text40,
-  Text36,
   Text30,
   Text24,
 } from "../common/text";

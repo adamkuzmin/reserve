@@ -1,37 +1,64 @@
 export const sliderData = [
   {
     cover: "/carousel/1.jpg",
-    category: "Объект культуры",
-    name: "Концертный зал «Зарядье»",
+    category: { ru: "Объект культуры", en: "Cultural object" },
+    name: { ru: "Концертный зал «Зарядье»", en: "Zaryadye Concert Hall" },
   },
   {
     cover: "/carousel/2.jpg",
-    category: "Офисно-административные проекты",
-    name: "Больница с родильным домом в Коммунарке",
+    category: {
+      ru: "Офисно-административные проекты",
+      en: "Office and administrative projects",
+    },
+    name: {
+      ru: "Больница с родильным домом в Коммунарке",
+      en: "A hospital with a maternity clinic in Kommunarka",
+    },
   },
   {
     cover: "/carousel/3.jpg",
-    category: "Офисно-административные проекты",
-    name: 'Штаб-квартира ОАО "Аэрофлот-Российские авиалинии"',
+    category: {
+      ru: "Офисно-административные проекты",
+      en: "Office and administrative projects",
+    },
+    name: {
+      ru: 'Штаб-квартира ОАО "Аэрофлот-Российские авиалинии"',
+      en: "Aeroflot-Russian Airlines headquarters",
+    },
   },
   {
     cover: "/carousel/6.jpg",
-    category: "Офисно-административные проекты",
-    name: "Административно-деловой центр ТиНАО",
+    category: {
+      ru: "Офисно-административные проекты",
+      en: "Office and administrative projects",
+    },
+    name: {
+      ru: "Административно-деловой центр ТиНАО",
+      en: "Administrative and business centre TINAO",
+    },
   },
   {
     cover: "/carousel/5.jpg",
-    category: "Проекты жилых зданий",
-    name: "Жилой комплекс «Небо»",
+    category: { ru: "Проекты жилых зданий", en: "Residential projects" },
+    name: { ru: "Жилой комплекс «Небо»", en: "The Sky residential complex" },
   },
   {
     cover: "/carousel/7.jpg",
-    category: "Офисно-административные проекты",
-    name: 'Торговый центр "Времена года"',
+    category: {
+      ru: "Офисно-административные проекты",
+      en: "Office and administrative projects",
+    },
+    name: {
+      ru: 'Торговый центр "Времена года"',
+      en: "Four Seasons Shopping Centre",
+    },
   },
   {
     cover: "/carousel/8.jpg",
-    category: "Объект культуры",
-    name: "Комплекс апартаментов “STORY”",
+    category: { ru: "Объект культуры", en: "Cultural object" },
+    name: {
+      ru: "Комплекс апартаментов “STORY”",
+      en: "STORY apartment complex",
+    },
   },
 ];

@@ -1,27 +1,26 @@
 import styled from "styled-components";
-import {
-  Text254,
-  Text96,
-  Text60,
-  Text48,
-  Text40,
-  Text36,
-  Text30,
-  Text24,
-} from "../common/text";
+import { useStore } from "../../Store/useStore";
+import { Text254, Text96, Text30, Text24 } from "../common/text";
 
 const Lead = styled.div`
   width: 100%;
   display: flex;
+  align-items: flex-end;
   justify-content: space-between;
   align-items: start;
   margin-top: 9.7vw;
   margin-bottom: 6vw;
+
+  @media (max-width: 1100px) {
+    & {
+      flex-direction: column !important;
+    }
+  }
 `;
 
 const KPI = styled.div`
   display: flex;
-  align-items: end;
+  align-items: flex-end;
   color: black;
 `;
 
@@ -41,6 +40,14 @@ const LeadAbout = styled.div`
   color: black;
   padding-left: 60px;
   padding-right: 60px;
+
+  @media (max-width: 1100px) {
+    & {
+      padding-left: 0;
+      padding-right: 0;
+      margin-top: 16px;
+    }
+  }
 `;
 
 const ButtonBlock = styled.div`
@@ -73,31 +80,61 @@ const LeadWithBtn = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: end;
+
+  @media (max-width: 1100px) {
+    & {
+      flex-direction: column;
+    }
+  }
 `;
 
+const leadData = {
+  count: <>55</>,
+  label: {
+    ru: (
+      <>
+        построенных
+        <br />
+        объектов
+      </>
+    ),
+    en: (
+      <>
+        built
+        <br />
+        objects
+      </>
+    ),
+  },
+  leadlabel: {
+    ru: <>Ведущая проектная организация с&nbsp;1987&nbsp;года</>,
+    en: <>Leading design organisation since 1987</>,
+  },
+  leadlink: {
+    ru: <>О&nbsp;нас</>,
+    en: <>About&nbsp;us</>,
+  },
+};
+
 const GeneralLead = () => {
+  const lang = useStore((state) => state.lang);
+
   return (
     <Lead>
       <KPI>
         <KPI.Number>
-          <Text254 data-font="ibm">55</Text254>
+          <Text254 data-font="ibm">{leadData.count}</Text254>
         </KPI.Number>
         <KPI.Text>
-          <Text24 data-font="ibm">
-            построенных
-            <br />
-            объектов
-          </Text24>
+          <Text24 data-font="ibm">{leadData.label[lang]}</Text24>
         </KPI.Text>
       </KPI>
       <LeadWithBtn>
         <LeadAbout>
-          <Text96 data-font="ibm">
-            Ведущая проектная организация с&nbsp;1987&nbsp;года
-          </Text96>
+          <Text96 data-font="ibm">{leadData.leadlabel[lang]}</Text96>
         </LeadAbout>
         <ButtonBlock>
-          <Text30 data-font="ibm">О&nbsp;нас</Text30>
+          <Text30 data-font="ibm">{leadData.leadlink[lang]}</Text30>
         </ButtonBlock>
       </LeadWithBtn>
     </Lead>

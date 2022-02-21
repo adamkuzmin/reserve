@@ -1,15 +1,6 @@
 import styled from "styled-components";
 
-import {
-  Text254,
-  Text96,
-  Text60,
-  Text48,
-  Text40,
-  Text36,
-  Text30,
-  Text24,
-} from "../common/text";
+import { Text48, Text36, Text30 } from "../common/text";
 
 const ProjectContentWrapper = styled.div`
   width: 100%;
@@ -52,8 +43,8 @@ const StyledSubTitle = styled.div`
 
 const StyledText36 = styled(Text36)`
   line-height: 1.3;
-  font-weight: 400
-`
+  font-weight: 400;
+`;
 
 const StyledText48 = styled(Text48)`
   line-height: 1.1;
@@ -77,11 +68,11 @@ const ParamBlock = styled.div`
   flex-direction: column;
   margin-bottom: 2.1vw;
   line-height: 1.33;
-  color: #6E6E6E;
+  color: #6e6e6e;
 
   && span:nth-child(1) {
     font-weight: 600;
-    margin-bottom: 10px
+    margin-bottom: 10px;
   }
 `;
 

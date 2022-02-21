@@ -2,17 +2,9 @@ import { useEffect, useRef } from "react";
 import { useStore } from "../../Store/useStore";
 import styled from "styled-components";
 import {
-  Text254,
-  Text96,
-  Text60,
   Text48,
-  Text40,
-  Text36,
-  Text30,
-  Text24,
 } from "../common/text";
 
-import { ScreenLead } from "../common/body";
 
 const MediaWrapper = styled.div`
   padding-top: 9.6vw;

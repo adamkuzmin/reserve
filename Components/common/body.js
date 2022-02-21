@@ -1,16 +1,7 @@
 import styled from "styled-components";
 import { Typography } from "antd";
 
-import {
-  Text254,
-  Text96,
-  Text60,
-  Text48,
-  Text40,
-  Text36,
-  Text30,
-  Text24,
-} from "../common/text";
+import { Text60 } from "../common/text";
 
 const { Paragraph } = Typography;
 
@@ -32,10 +23,20 @@ const Content = styled.div`
   flex-direction: column;
   align-items: ${({ justifyContent }) =>
     justifyContent ? justifyContent : "baseline"};
+
+  @media (max-width: 480px) {
+    padding: 0 20px;
+  }
 `;
 
 const Col = styled.div`
   width: 75%;
+
+  @media (max-width: 600px) {
+    & {
+      width: 100%;
+    }
+  }
 `;
 
 const Lead = styled.div`
@@ -53,9 +54,7 @@ const Lead = styled.div`
 const ScreenLead = ({ children, color, margintop, marginbottom }) => {
   return (
     <Lead {...{ color, margintop, marginbottom }}>
-      <Text60 data-font="wremena">
-        {children}
-      </Text60>
+      <Text60 data-font="wremena">{children}</Text60>
     </Lead>
   );
 };

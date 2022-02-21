@@ -12,6 +12,12 @@ const Nav = styled.div`
     padding-right: 40px;
     z-index: 7000;
     transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+
+    @media (max-width: 1000px) {
+      & {
+        height: clamp(68px, 11.2vw, 112px);
+      }
+    }
   }
 
   &&[data-status="closed"] {
@@ -32,7 +38,18 @@ Nav.Logo = styled.div`
   &&[data-type="white"] {
     background-image: url("/icons/logo.svg");
   }
+
+  &&&& {
+    @media (max-width: 1000px) {
+      & {
+        width: clamp(61px, 9.4vw, 94px);
+        height: clamp(32px, 4.9vw, 49px);
+      }
+    }
+  }
 `;
+
+/* w: 94, h: 49 */
 
 Nav.BurgerWrapper = styled.div`
   width: 72px;
@@ -43,6 +60,14 @@ Nav.BurgerWrapper = styled.div`
   align-items: center;
   cursor: pointer;
   cursor: pointer;
+
+  && {
+    @media (max-width: 480px) {
+      & {
+        transform: scale(0.7, 0.7);
+      }
+    }
+  }
 
   &&[data-status="opened"] {
     & div:first-child {

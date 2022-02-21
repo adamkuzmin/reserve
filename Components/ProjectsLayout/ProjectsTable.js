@@ -1,18 +1,11 @@
 import styled from "styled-components";
 import { useContext } from "react";
 
-import { Table, Input, Button, Space } from "antd";
+import { Table } from "antd";
 
 import { MouseContext } from "../common/Cursor/mouse-context";
 
 import {
-  Text254,
-  Text96,
-  Text60,
-  Text48,
-  Text40,
-  Text36,
-  Text30,
   Text24,
   Wrap24,
 } from "../common/text";

@@ -3,15 +3,11 @@ import Link from "next/link";
 import { useStore } from "../../Store/useStore";
 import styled from "styled-components";
 import {
-  Text254,
-  Text96,
-  Text60,
   Text48,
-  Text40,
-  Text36,
   Text30,
-  Text24,
 } from "../common/text";
+
+const transValue = "800px";
 
 const Projects = styled.div`
   display: flex;
@@ -28,6 +24,16 @@ Projects.Row = styled.div`
   && > * + * {
     margin-left: 4px;
   }
+
+  @media (max-width: ${transValue}) {
+    & {
+      flex-direction: column;
+
+      & > * + * {
+        margin-top: 90px;
+      }
+    }
+  }
 `;
 
 Projects.Item = styled.div`
@@ -35,6 +41,12 @@ Projects.Item = styled.div`
   display: flex;
   flex-direction: column;
   cursor: pointer;
+
+  @media (max-width: ${transValue}) {
+    & {
+      width: 100%;
+    }
+  }
 
   & span[data-type="title"] {
     border-bottom: 3px solid white;

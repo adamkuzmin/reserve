@@ -1,14 +1,8 @@
 import styled from "styled-components";
 import { useEffect, useRef } from "react";
 import {
-  Text254,
-  Text96,
-  Text60,
-  Text48,
-  Text40,
   Text36,
   Text30,
-  Text24,
 } from "../common/text";
 
 import { useStore } from "../../Store/useStore";
@@ -28,6 +22,12 @@ Foot.Search = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  @media (max-width: 1100px) {
+    & {
+      min-width: auto;
+    }
+  }
 `;
 
 Foot.Sections = styled.div`
@@ -38,6 +38,11 @@ Foot.Sections = styled.div`
   min-width: 1000px;
   display: flex;
   justify-content: space-between;
+
+  @media (max-width: 1100px) {
+    flex-wrap: wrap;
+    min-width: auto;
+  }
 `;
 
 Foot.Col = styled.div`

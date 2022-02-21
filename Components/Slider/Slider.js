@@ -103,10 +103,27 @@ Card.Content = styled.div`
 Card.Header = styled.div`
   position: absolute;
   bottom: 0;
-  width: 40%;
   z-index: 5000;
   margin-left: 88px;
   margin-bottom: 72px;
+
+  @media (max-width: 1000px) {
+    & {
+      margin-left: 40px;
+      margin-bottom: 120px;
+
+      @media (max-width: 480px) {
+        margin-left: 20px;
+      }
+    }
+  }
+
+  width: 40%;
+
+  @media (max-width: 900px) {
+    width: 80%;
+    bottom: 40px;
+  }
 
   p,
   h3 {
@@ -118,12 +135,36 @@ Card.Header = styled.div`
     font-size: 24px;
     margin-bottom: 3px;
     font-weight: 300;
+
+    @media (max-width: 1000px) {
+      & {
+        font-size: clamp(14px, 2.1vw, 21px);
+      }
+    }
+
+    @media (min-width: 1000px) and (max-width: 1500px) {
+      & {
+        font-size: 21px;
+      }
+    }
   }
 
   h3 {
     font-size: 40px;
     line-height: 1.1;
     font-weight: 600;
+
+    @media (max-width: 1000px) {
+      & {
+        font-size: clamp(20px, 3.4vw, 34px);
+      }
+    }
+
+    @media (min-width: 1000px) and (max-width: 1500px) {
+      & {
+        font-size: 34px;
+      }
+    }
   }
 `;
 
@@ -173,6 +214,11 @@ const CustomSwiper = styled(Swiper)`
     opacity: 0.6;
     background: white;
 
+    @media (max-width: 600px) {
+      width: 6px;
+      height: 6px;
+    }
+
     margin: 0 12px;
 
     transition: transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
@@ -194,6 +240,13 @@ const CustomSwiper = styled(Swiper)`
     left: auto;
     right: 0;
     padding-right: 40px;
+
+    @media (max-width: 600px) {
+      & {
+        text-align: center;
+        bottom: 120px;
+      }
+    }
   }
 `;
 
@@ -265,6 +318,8 @@ const Slider = () => {
   const swipeLabel = -2000;
 
   const [startAutoplay, setStartAutoplay] = useState(false);
+
+  const lang = useStore((state) => state.lang);
 
   const blackLogo = useStore((state) => state.blackLogo);
   const setBlackLogo = useStore((state) => state.setBlackLogo);
@@ -367,10 +422,10 @@ const Slider = () => {
             <Card.Content>
               <Card.Header data-type="slide-header">
                 <p data-font="wremena" data-swiper-parallax={`${swipeLabel}`}>
-                  {category}
+                  {category[lang]}
                 </p>
                 <h3 data-font="ibm" data-swiper-parallax={`${swipeTitle}`}>
-                  {name}
+                  {name[lang]}
                 </h3>
               </Card.Header>
             </Card.Content>

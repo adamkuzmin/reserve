@@ -34,6 +34,16 @@ const CanvasGeometry = styled.div`
   left: 0;
   width: 35vw;
   height: 40.5vw;
+
+  @media (max-width: 480px) {
+    top: 260px;
+    left: 0;
+    width: 100vw;
+    height: 99vw;
+
+    display: none;
+  }
+
   //background-image: url("/renders/16.svg");
   //background-size: cover;
 `;
@@ -48,16 +58,18 @@ const Home = () => {
 
   useEffect(() => {
     const onScroll = (e) => {
-      const BoundingRect = DescriptionRef.current.getBoundingClientRect();
+      if (DescriptionRef && DescriptionRef.current) {
+        const BoundingRect = DescriptionRef.current.getBoundingClientRect();
 
-      if (BoundingRect.top <= 0 && BoundingRect.bottom >= 0 && !blackLogo) {
-        setBlackLogo(true);
-      }
+        if (BoundingRect.top <= 0 && BoundingRect.bottom >= 0 && !blackLogo) {
+          setBlackLogo(true);
+        }
 
-      const BoundingRect1 = LastProjectsRef.current.getBoundingClientRect();
+        const BoundingRect1 = LastProjectsRef.current.getBoundingClientRect();
 
-      if (BoundingRect1.top <= 0 && BoundingRect1.bottom >= 0 && !blackLogo) {
-        setBlackLogo(true);
+        if (BoundingRect1.top <= 0 && BoundingRect1.bottom >= 0 && !blackLogo) {
+          setBlackLogo(true);
+        }
       }
     };
     window.addEventListener("scroll", onScroll);

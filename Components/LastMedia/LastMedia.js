@@ -3,18 +3,11 @@ import Link from "next/link";
 import { useStore } from "../../Store/useStore";
 
 import styled from "styled-components";
-import {
-  Text254,
-  Text96,
-  Text60,
-  Text48,
-  Text40,
-  Text36,
-  Text30,
-  Text24,
-} from "../common/text";
+import { Text48 } from "../common/text";
 
 import { ScreenLead } from "../common/body";
+
+const transValue = `800px`;
 
 const MediaWrapper = styled.div`
   width: 100%;
@@ -26,6 +19,10 @@ const Media = styled.div`
 
   && > * + * {
     margin-left: 4px;
+  }
+
+  @media (max-width: ${transValue}) {
+    flex-direction: column;
   }
 `;
 
@@ -53,6 +50,12 @@ const LargeCard = styled.div`
   width: ${({ swidth }) => (swidth ? `${swidth}%` : `100%`)};
   display: flex;
   flex-direction: column;
+
+  @media (max-width: ${transValue}) {
+    & {
+      width: 100%
+    }
+  }
 
   && h3 {
     color: white;
@@ -109,6 +112,10 @@ LargeCard.Content = styled.div`
     & > * + * {
       margin-top: 4px;
     }
+
+    @media (max-width: ${transValue}) {
+      flex-direction: row;
+    }
   }
 `;
 
@@ -148,10 +155,12 @@ const LastMedia = () => {
 
   useEffect(() => {
     const onScroll = (e) => {
-      const BoundingRect = MediaRef.current.getBoundingClientRect();
+      if (MediaRef && MediaRef.current) {
+        const BoundingRect = MediaRef.current.getBoundingClientRect();
 
-      if (BoundingRect.top <= 0 && BoundingRect.bottom >= 0 && blackLogo) {
-        setBlackLogo(false);
+        if (BoundingRect.top <= 0 && BoundingRect.bottom >= 0 && blackLogo) {
+          setBlackLogo(false);
+        }
       }
     };
     window.addEventListener("scroll", onScroll);
