@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import MediaFilters from "../../Components/Filters/MediaFilters";
 
+import styled from "styled-components";
+
 import Media from "./Media";
 import News from "../../Components/Media/News";
 import Publications from "../../Components/Media/Publications";
@@ -11,6 +13,26 @@ import NavRight from "../../Components/NavRight/NavRight";
 
 import Footer from "../../Components/Footer/Footer";
 import { useRouter } from "next/router";
+
+const WrapperAnimation = styled.div`
+  opacity: 0;
+  transform: translateY(100px);
+
+  animation: SectionAppear .7s ease-in-out .5s;
+  @keyframes SectionAppear {
+    0% {
+      opacity: 0;
+      transform: translateY(100px);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  animation-fill-mode: forwards;
+`;
 
 export default function HomeApp() {
   const [layoutType, setLayoutType] = useState(1);
@@ -34,31 +56,51 @@ export default function HomeApp() {
 
       {
         /* Все разделы медиа */
-        layoutType === 1 && <Media />
+        layoutType === 1 && (
+          <div>
+            <Media />
+          </div>
+        )
         /* */
       }
 
       {
         /* Все разделы медиа */
-        layoutType === 2 && <News />
+        layoutType === 2 && (
+          <WrapperAnimation>
+            <News />
+          </WrapperAnimation>
+        )
         /* */
       }
 
       {
         /* Все разделы медиа */
-        layoutType === 3 && <Publications />
+        layoutType === 3 && (
+          <WrapperAnimation>
+            <Publications />
+          </WrapperAnimation>
+        )
         /* */
       }
 
       {
         /* Все разделы медиа */
-        layoutType === 4 && <News interviews />
+        layoutType === 4 && (
+          <WrapperAnimation>
+            <News interviews />
+          </WrapperAnimation>
+        )
         /* */
       }
 
       {
         /* Все разделы медиа */
-        layoutType === 5 && <Publications exhibitions />
+        layoutType === 5 && (
+          <WrapperAnimation>
+            <Publications exhibitions />
+          </WrapperAnimation>
+        )
         /* */
       }
 

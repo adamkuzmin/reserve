@@ -7,6 +7,24 @@ import Router, { useRouter } from "next/router";
 const MediaWrapper = styled.div`
   padding-top: 9.6vw;
   width: 100%;
+
+  opacity: 0;
+  transform: translateY(100px);
+
+  animation: SectionAppear .7s ease-in-out 0.5s;
+  @keyframes SectionAppear {
+    0% {
+      opacity: 0;
+      transform: translateY(100px);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  animation-fill-mode: forwards;
 `;
 
 const Media = styled.div`
