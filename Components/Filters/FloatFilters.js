@@ -4,6 +4,33 @@ import { Text24 } from "../common/text";
 import { FilterWrapper, Filters, FLink } from "./styles";
 import { DirectionsFilter, YearsFilter, SearchFilter } from "./ProjectsFilter";
 
+const filterData = {
+  gallery: {
+    ru: <>Галерея</>,
+    en: <>Gallery</>,
+  },
+  list: {
+    ru: <>Список</>,
+    en: <>List</>,
+  },
+  map: {
+    ru: <>Карта</>,
+    en: <>Map</>,
+  },
+  direction: {
+    ru: <>Направления</>,
+    en: <>Directions</>,
+  },
+  year: {
+    ru: <>Год</>,
+    en: <>Year</>,
+  },
+  search: {
+    ru: <>Поиск</>,
+    en: <>Search</>,
+  },
+};
+
 /* * Компонент "Плавающие фильтры" */
 const FloatFilters = ({
   setLayoutType,
@@ -14,6 +41,8 @@ const FloatFilters = ({
   toPageTop,
 }) => {
   const setBarIsVisible = useStore((state) => state.setBarIsVisible);
+
+  const lang = useStore((state) => state.lang);
 
   return (
     <FilterWrapper data-animation="true">
@@ -46,7 +75,7 @@ const FloatFilters = ({
             setBarIsVisible(Math.random());
           }}
         >
-          <Text24>Галерея</Text24>
+          <Text24>{filterData.gallery[lang]}</Text24>
         </FLink>
         <FLink
           data-type={LayoutType === 0 && "link"}
@@ -57,7 +86,7 @@ const FloatFilters = ({
             setBarIsVisible(Math.random());
           }}
         >
-          <Text24>Список</Text24>
+          <Text24>{filterData.list[lang]}</Text24>
         </FLink>
         <FLink
           data-type={LayoutType === 2 && "link"}
@@ -68,7 +97,7 @@ const FloatFilters = ({
             setBarIsVisible(Math.random());
           }}
         >
-          <Text24>Карта</Text24>
+          <Text24>{filterData.map[lang]}</Text24>
         </FLink>
       </Filters>
 
@@ -81,19 +110,19 @@ const FloatFilters = ({
           data-type={FilterType !== null && FilterType !== 1 && "notfilter"}
           onClick={() => setFilterType(1)}
         >
-          <Text24>Направления</Text24>
+          <Text24>{filterData.direction[lang]}</Text24>
         </FLink>
         <FLink
           data-type={FilterType !== null && FilterType !== 2 && "notfilter"}
           onClick={() => setFilterType(2)}
         >
-          <Text24>Год</Text24>
+          <Text24>{filterData.year[lang]}</Text24>
         </FLink>
         <FLink
           data-type={FilterType !== null && FilterType !== 3 && "notfilter"}
           onClick={() => setFilterType(3)}
         >
-          <Text24>Поиск</Text24>
+          <Text24>{filterData.search[lang]}</Text24>
         </FLink>
       </Filters>
     </FilterWrapper>

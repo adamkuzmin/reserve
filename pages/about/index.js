@@ -17,7 +17,7 @@ import AboutFilters from "../../Components/Filters/AboutFilters";
 export default function HomeApp() {
   const setBlackLogo = useStore((state) => state.setBlackLogo);
 
-  const [layoutType, setLayoutType] = useState(5);
+  const [layoutType, setLayoutType] = useState(1);
 
   useEffect(() => {
     setBlackLogo(true);

@@ -1,7 +1,10 @@
+import React from "react";
+import { useRouter } from "next/router";
 import styled from "styled-components";
 
 import { Text48, Text30 } from "../common/text";
 import { useEffect, useState } from "react";
+import { useStore } from "../../Store/useStore";
 
 const Layout = styled.div`
   width: 100%;
@@ -63,8 +66,7 @@ Layout.Project = styled.div`
     opacity: 0;
 
     animation: ImageRender 3.5s ease-in-out
-      ${({ randomtime }) =>
-        randomtime ? `${randomtime * 1.2 + 2}s` : `2.5s`};
+      ${({ randomtime }) => (randomtime ? `${randomtime * 1.2 + 2}s` : `2.5s`)};
     @keyframes ImageRender {
       0% {
         opacity: 0;
@@ -163,7 +165,23 @@ const TextWrapper = styled.div`
   }
 `;
 
+const cardsData = {
+  a1: {
+    title: {
+      ru: <>Объект культуры</>,
+      en: <>Cultural object</>,
+    },
+    message: {
+      ru: <>Концертный зал «Зарядье»</>,
+      en: <>Zaryadye Concert Hall</>,
+    },
+  },
+};
+
 Layout.Card = ({ swidth, src, IsGalleryAnimation }) => {
+  const lang = useStore((state) => state.lang);
+  const router = useRouter();
+
   const [RandomTime, setRandomTime] = useState(0);
 
   useEffect(() => {
@@ -174,18 +192,19 @@ Layout.Card = ({ swidth, src, IsGalleryAnimation }) => {
     <Layout.Project
       {...{ swidth, randomtime: RandomTime }}
       data-effect={IsGalleryAnimation && "fade"}
+      onClick={() => router.push("/project")}
     >
       <Render {...{ src }} />
       <Header data-type="card-header">
         <Header.Title>
           <TextWrapper data-type="text-wrapper" direction={-100}>
             <p>
-              <Text30 data-font="wremena">Объект культуры</Text30>
+              <Text30 data-font="wremena">{cardsData.a1.title[lang]}</Text30>
             </p>
           </TextWrapper>
           <TextWrapper data-type="text-wrapper" direction={100}>
             <h3>
-              <Text48 data-type="title">Концертный зал «Зарядье»</Text48>
+              <Text48 data-type="title">{cardsData.a1.message[lang]}</Text48>
             </h3>
           </TextWrapper>
         </Header.Title>
@@ -292,7 +311,7 @@ const LayoutWrapper = styled.div`
   width: calc(100vw - 80px);
   overflow: hidden;
   position: relative;
-    height: 100%;
+  height: 100%;
 `;
 
 const ProjectsGallery = ({ IsGalleryAnimation }) => {

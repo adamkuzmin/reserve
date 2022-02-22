@@ -147,9 +147,48 @@ const Tile = styled.div`
   }
 `;
 
+const intro = {
+  descr: {
+    ru: (
+      <>
+        «Резерв» активно участвует в&nbsp;медиа-тусовке: постоянно публикуются
+        журналы, мы получаем награды, ведем образовательную деятельность.
+        Подписывайтесь, рыбки, на&nbsp;нас в&nbsp;соцсетях
+      </>
+    ),
+    en: (
+      <>
+        "Reserve is active in the media scene: we publish magazines all the
+        time, we win awards and we do educational activities. Subscribe, fish,
+        to us on social networks
+      </>
+    ),
+  },
+  labels: {
+    news: {
+      ru: <>Новости</>,
+      en: <>News</>,
+    },
+    publications: {
+      ru: <>Публикации</>,
+      en: <>Publications</>,
+    },
+    socmedia: {
+      ru: <>Соцсети</>,
+      en: <>Social media</>,
+    },
+    allmedia: {
+      ru: <>Все медиа</>,
+      en: <>All media</>,
+    },
+  },
+};
+
 const LastMedia = () => {
   const blackLogo = useStore((state) => state.blackLogo);
   const setBlackLogo = useStore((state) => state.setBlackLogo);
+
+  const lang = useStore((state) => state.lang);
 
   const MediaRef = useRef();
 
@@ -171,21 +210,19 @@ const LastMedia = () => {
   return (
     <MediaWrapper ref={MediaRef}>
       <ScreenLead color={"white"} margintop={"7vw"} marginbottom={"9.3vw"}>
-        «Резерв» активно участвует в&nbsp;медиа-тусовке: постоянно публикуются
-        журналы, мы получаем награды, ведем образовательную деятельность.
-        Подписывайтесь, рыбки, на&nbsp;нас в&nbsp;соцсетях
+        {intro.descr[lang]}
       </ScreenLead>
       <Media>
         <LargeCard>
           <LargeCard.Content data-content="image" src="/renders/10.jpg" />
           <h3>
-            <Text48 data-type="title">Новости</Text48>
+            <Text48 data-type="title">{intro.labels.news[lang]}</Text48>
           </h3>
         </LargeCard>
         <LargeCard>
           <LargeCard.Content data-content="image" src="/renders/11.jpg" />
           <h3>
-            <Text48 data-type="title">Публикации</Text48>
+            <Text48 data-type="title">{intro.labels.publications[lang]}</Text48>
           </h3>
         </LargeCard>
         <LargeCard swidth={60}>
@@ -194,14 +231,14 @@ const LastMedia = () => {
             <Tile src="/renders/13.jpg"></Tile>
           </LargeCard.Content>
           <h3>
-            <Text48 data-type="title">Соцсети</Text48>
+            <Text48 data-type="title">{intro.labels.socmedia[lang]}</Text48>
           </h3>
         </LargeCard>
       </Media>
       <Link href="/media">
         <a>
           <WideButton>
-            <Text48 data-font="wremena">Все медиа</Text48>
+            <Text48 data-font="wremena">{intro.labels.allmedia[lang]}</Text48>
           </WideButton>
         </a>
       </Link>

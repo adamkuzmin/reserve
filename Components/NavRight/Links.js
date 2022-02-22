@@ -48,19 +48,13 @@ const SecondaryLinks = ({ routes }) => {
       const lang = useStore((state) => state.lang);
 
       return (
-        <Tooltip
-          key={`nav:${type}:${i}`}
-          placement={"left"}
-          title={"Раздел в разработке"}
-        >
-          <NavLink data-active={pathname === route ? "active" : "noactive"}>
-            <Text30>
-              <Link href={route}>
-                <a data-font="ibm">{lang === "ru" ? title : entitle}</a>
-              </Link>
-            </Text30>
-          </NavLink>
-        </Tooltip>
+        <NavLink data-active={pathname === route ? "active" : "noactive"}>
+          <Text30>
+            <Link href={route}>
+              <a data-font="ibm">{lang === "ru" ? title : entitle}</a>
+            </Link>
+          </Text30>
+        </NavLink>
       );
     });
   }

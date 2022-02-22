@@ -2,10 +2,7 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { useStore } from "../../Store/useStore";
 import styled from "styled-components";
-import {
-  Text48,
-  Text30,
-} from "../common/text";
+import { Text48, Text30 } from "../common/text";
 
 const transValue = "800px";
 
@@ -134,43 +131,46 @@ const WideButton = styled.div`
 const LPData = [
   [
     {
-      category: "Жилой комлпекс",
-      title: "Небо",
+      category: { ru: "Жилой комлпекс", en: "Residential Compound" },
+      title: { ru: "Небо", en: "Sky" },
       year: 2021,
       render: "/renders/4.jpg",
       ratio: 60,
     },
     {
-      category: "Объект культуры",
-      title: "Концертный зал «Зарядье»",
+      category: { ru: "Объект культуры", en: "Cultural object" },
+      title: { ru: "Концертный зал «Зарядье»", en: "Zaryadye Concert Hall" },
       year: 2019,
       render: "/renders/5.jpg",
     },
   ],
   [
     {
-      category: "Жилой комлпекс",
-      title: "Концертный зал «Зарядье»",
+      category: { ru: "Жилой комлпекс", en: "Residential Compound" },
+      title: { ru: "Концертный зал «Зарядье»", en: "Zaryadye Concert Hall" },
       year: 2019,
       render: "/renders/6.jpg",
     },
     {
-      category: "Жилой комлпекс",
-      title: "Wine House",
+      category: { ru: "Жилой комлпекс", en: "Residential Compound" },
+      title: { ru: "Wine House", en: "Wine House" },
       year: 2019,
       render: "/renders/7.jpg",
     },
   ],
   [
     {
-      category: "Объект здравохранения",
-      title: "Больница с родильным домом в Коммунарке",
+      category: { ru: "Объект здравохранения", en: "Health facility" },
+      title: {
+        ru: "Больница с родильным домом в Коммунарке",
+        en: "A hospital with a maternity clinic in Kommunarka",
+      },
       year: 2019,
       render: "/renders/8.jpg",
     },
     {
-      category: "Жилой комлпекс",
-      title: "Небо",
+      category: { ru: "Жилой комлпекс", en: "Residential Compound" },
+      title: { ru: "Небо", en: "Sky" },
       year: 2019,
       render: "/renders/9.jpg",
       ratio: 60,
@@ -181,6 +181,8 @@ const LPData = [
 const LastProjects = () => {
   const blackLogo = useStore((state) => state.blackLogo);
   const setBlackLogo = useStore((state) => state.setBlackLogo);
+
+  const lang = useStore((state) => state.lang);
 
   const LPRef = useRef();
 
@@ -215,10 +217,12 @@ const LastProjects = () => {
                   <Header>
                     <Header.Title>
                       <p>
-                        <Text30 data-font="wremena">{project.category}</Text30>
+                        <Text30 data-font="wremena">
+                          {project.category[lang]}
+                        </Text30>
                       </p>
                       <h3>
-                        <Text48 data-type="title">{project.title}</Text48>
+                        <Text48 data-type="title">{project.title[lang]}</Text48>
                       </h3>
                     </Header.Title>
                     <Header.Year>
@@ -234,7 +238,7 @@ const LastProjects = () => {
       <Link href="/projects">
         <a>
           <WideButton data-font="wremena">
-            <Text48>Все проекты</Text48>
+            <Text48>{lang === "ru" ? "Все проекты" : "All projects"}</Text48>
           </WideButton>
         </a>
       </Link>

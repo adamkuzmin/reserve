@@ -48,14 +48,8 @@ const Media = () => {
 
   return (
     <div ref={BodyRef}>
-      <NavRight />
-      <Navigation />
-
       <Content background={"black"}>
         <AllMedia />
-      </Content>
-      <Content background={"black"}>
-        <Footer />
       </Content>
     </div>
   );
