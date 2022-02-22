@@ -51,10 +51,12 @@ const Projects = () => {
 
   useEffect(() => {
     const onScroll = () => {
-      const maincontent = maincontentRef.current.getBoundingClientRect();
+      if (maincontentRef && maincontentRef.current) {
+        const maincontent = maincontentRef.current.getBoundingClientRect();
 
-      if (maincontent.top <= 0 && maincontent.bottom >= 0 && !blackLogo) {
-        setBlackLogo(true);
+        if (maincontent.top <= 0 && maincontent.bottom >= 0 && !blackLogo) {
+          setBlackLogo(true);
+        }
       }
     };
     window.addEventListener("scroll", onScroll);

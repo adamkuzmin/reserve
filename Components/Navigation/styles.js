@@ -32,11 +32,11 @@ Nav.Logo = styled.div`
   mix-blend-mode: difference;
 
   &&[data-type="black"] {
-    background-image: url("/icons/preloadIcon.svg");
+    background-image: url("/icons/navlogo-black.png");
   }
 
   &&[data-type="white"] {
-    background-image: url("/icons/logo.svg");
+    background-image: url("/icons/navlogo-white.png");
   }
 
   &&&& {

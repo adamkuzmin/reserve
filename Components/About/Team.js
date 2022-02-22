@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import { useStore } from "../../Store/useStore";
 
@@ -111,16 +111,49 @@ const TeamList = ({ title, members, lang, col = 3 }) => {
 const Team = () => {
   const lang = useStore((state) => state.lang);
 
+  const setBlackLogo = useStore((state) => state.setBlackLogo);
+  const blackLogo = useStore((state) => state.blackLogo);
+
+  useEffect(() => {
+    setBlackLogo(true);
+  }, []);
+
+  const contentRef = useRef();
+  const contentRef1 = useRef();
+
+  useEffect(() => {
+    const onScroll = () => {
+      if (contentRef && contentRef.current) {
+        const maincontent = contentRef.current.getBoundingClientRect();
+
+        if (maincontent.top <= 0 && maincontent.bottom >= 0 && !blackLogo) {
+          setBlackLogo(true);
+        }
+      }
+
+      if (contentRef1 && contentRef1.current) {
+        const maincontent1 = contentRef1.current.getBoundingClientRect();
+
+        if (maincontent1.top <= 0 && maincontent1.bottom >= 0 && !blackLogo) {
+          setBlackLogo(true);
+        }
+      }
+    };
+    window.addEventListener("scroll", onScroll);
+
+    return () => window.removeEventListener("scroll", onScroll);
+  });
+
   return (
     <>
-      <Content>
+      <Content ref={contentRef}>
         <Gap sheight={`120px`} />
         <LocalTitle size={60}>{intro.title[lang]}</LocalTitle>
       </Content>
 
       <People />
 
-      <Content>
+      <Content ref={contentRef1}>
         <Intro>
           <Text36>{intro.descr[lang]}</Text36>
           <ContentFlex align="flex-end">

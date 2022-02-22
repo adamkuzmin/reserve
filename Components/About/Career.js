@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import styled from "styled-components";
 import { useStore } from "../../Store/useStore";
 
@@ -34,9 +34,42 @@ const MainContent = styled.div`
 const Career = () => {
   const lang = useStore((state) => state.lang);
 
+  const setBlackLogo = useStore((state) => state.setBlackLogo);
+  const blackLogo = useStore((state) => state.blackLogo);
+
+  useEffect(() => {
+    setBlackLogo(false);
+  }, []);
+
+  const backRef = useRef();
+  const contentRef = useRef();
+
+  useEffect(() => {
+    const onScroll = () => {
+      if (backRef && backRef.current) {
+        const maincontent = backRef.current.getBoundingClientRect();
+
+        if (maincontent.top <= 0 && maincontent.bottom >= 0 && blackLogo) {
+          setBlackLogo(false);
+        }
+      }
+
+      if (contentRef && contentRef.current) {
+        const maincontent1 = contentRef.current.getBoundingClientRect();
+
+        if (maincontent1.top <= 0 && maincontent1.bottom >= 0 && !blackLogo) {
+          setBlackLogo(true);
+        }
+      }
+    };
+    window.addEventListener("scroll", onScroll);
+
+    return () => window.removeEventListener("scroll", onScroll);
+  });
+
   return (
     <>
-      <BackCover>
+      <BackCover ref={backRef}>
         <Content background="none">
           <Gap sheight={"120px"} />
           <LocalTitle size={60} style={{ color: "white" }}>
@@ -57,7 +90,7 @@ const Career = () => {
         </Content>
       </BackCover>
 
-      <Content>
+      <Content ref={contentRef}>
         <Gap sheight={"80px"} />
         <LocalTitle size={60}>{career.title[lang]}</LocalTitle>
 

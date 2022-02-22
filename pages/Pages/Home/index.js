@@ -57,6 +57,10 @@ const Home = () => {
   const LastProjectsRef = useRef();
 
   useEffect(() => {
+    setBlackLogo(false);
+  }, []);
+
+  useEffect(() => {
     const onScroll = (e) => {
       if (DescriptionRef && DescriptionRef.current) {
         const BoundingRect = DescriptionRef.current.getBoundingClientRect();

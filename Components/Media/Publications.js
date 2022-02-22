@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import { useStore } from "../../Store/useStore";
 
@@ -62,13 +62,31 @@ const Publications = ({ exhibitions = false }) => {
   const lang = useStore((state) => state.lang);
 
   const setBlackLogo = useStore((state) => state.setBlackLogo);
+  const blackLogo = useStore((state) => state.blackLogo);
 
   useEffect(() => {
     setBlackLogo(true);
   }, []);
 
+  const contentRef = useRef();
+
+  useEffect(() => {
+    const onScroll = () => {
+      if (contentRef && contentRef.current) {
+        const maincontent = contentRef.current.getBoundingClientRect();
+
+        if (maincontent.top <= 0 && maincontent.bottom >= 0 && !blackLogo) {
+          setBlackLogo(true);
+        }
+      }
+    };
+    window.addEventListener("scroll", onScroll);
+
+    return () => window.removeEventListener("scroll", onScroll);
+  });
+
   return (
-    <Content>
+    <Content ref={contentRef}>
       <Gap sheight={"120px"} />
 
       <LocalTitle size={60}>
