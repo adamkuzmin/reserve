@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { Text48 } from "../common/text";
 
 import { ScreenLead } from "../common/body";
+import Router, { useRouter } from "next/router";
 
 const transValue = `800px`;
 
@@ -190,6 +191,8 @@ const LastMedia = () => {
 
   const lang = useStore((state) => state.lang);
 
+  const router = Router;
+
   const MediaRef = useRef();
 
   useEffect(() => {
@@ -213,13 +216,27 @@ const LastMedia = () => {
         {intro.descr[lang]}
       </ScreenLead>
       <Media>
-        <LargeCard>
+        <LargeCard
+          onClick={() =>
+            router.push({
+              pathname: "/media",
+              query: { section: 2 },
+            })
+          }
+        >
           <LargeCard.Content data-content="image" src="/renders/10.jpg" />
           <h3>
             <Text48 data-type="title">{intro.labels.news[lang]}</Text48>
           </h3>
         </LargeCard>
-        <LargeCard>
+        <LargeCard
+          onClick={() =>
+            router.push({
+              pathname: "/media",
+              query: { section: 3 },
+            })
+          }
+        >
           <LargeCard.Content data-content="image" src="/renders/11.jpg" />
           <h3>
             <Text48 data-type="title">{intro.labels.publications[lang]}</Text48>

@@ -1,10 +1,8 @@
 import { useEffect, useRef } from "react";
 import { useStore } from "../../Store/useStore";
 import styled from "styled-components";
-import {
-  Text48,
-} from "../common/text";
-
+import { Text48 } from "../common/text";
+import Router, { useRouter } from "next/router";
 
 const MediaWrapper = styled.div`
   padding-top: 9.6vw;
@@ -132,11 +130,52 @@ const Tile = styled.div`
   }
 `;
 
+const intro = {
+  labels: {
+    news: {
+      ru: <>Новости</>,
+      en: <>News</>,
+    },
+    publications: {
+      ru: <>Публикации</>,
+      en: <>Publications</>,
+    },
+    socmedia: {
+      ru: <>Соцсети</>,
+      en: <>Social media</>,
+    },
+    allmedia: {
+      ru: <>Все медиа</>,
+      en: <>All media</>,
+    },
+    interview: {
+      ru: <>Интервью</>,
+      en: <>interview</>,
+    },
+    exhibition: {
+      ru: <>Выставки</>,
+      en: <>Exhibitions</>,
+    },
+    lectures: {
+      ru: <>Лекции</>,
+      en: <>Lectures</>,
+    },
+    students: {
+      ru: <>Студенты Владимира Плоткина</>,
+      en: <>Plotkin students</>,
+    },
+  },
+};
+
 const AllMedia = () => {
+  const lang = useStore((state) => state.lang);
+
   const blackLogo = useStore((state) => state.blackLogo);
   const setBlackLogo = useStore((state) => state.setBlackLogo);
 
   const MediaRef = useRef();
+
+  const router = Router;
 
   useEffect(() => {
     const onScroll = (e) => {
@@ -156,16 +195,30 @@ const AllMedia = () => {
   return (
     <MediaWrapper ref={MediaRef}>
       <Media>
-        <LargeCard>
+        <LargeCard
+          onClick={() =>
+            router.push({
+              pathname: "/media",
+              query: { section: 2 },
+            })
+          }
+        >
           <LargeCard.Content data-content="image" src="/renders/10.jpg" />
           <h3>
-            <Text48 data-type="title">Новости</Text48>
+            <Text48 data-type="title">{intro.labels.news[lang]}</Text48>
           </h3>
         </LargeCard>
-        <LargeCard>
+        <LargeCard
+          onClick={() =>
+            router.push({
+              pathname: "/media",
+              query: { section: 3 },
+            })
+          }
+        >
           <LargeCard.Content data-content="image" src="/renders/11.jpg" />
           <h3>
-            <Text48 data-type="title">Публикации</Text48>
+            <Text48 data-type="title">{intro.labels.publications[lang]}</Text48>
           </h3>
         </LargeCard>
         <LargeCard swidth={60}>
@@ -174,22 +227,36 @@ const AllMedia = () => {
             <Tile src="/renders/13.jpg"></Tile>
           </LargeCard.Content>
           <h3>
-            <Text48 data-type="title">Соцсети</Text48>
+            <Text48 data-type="title">{intro.labels.socmedia[lang]}</Text48>
           </h3>
         </LargeCard>
       </Media>
 
       <Media>
-        <LargeCard>
+        <LargeCard
+          onClick={() =>
+            router.push({
+              pathname: "/media",
+              query: { section: 5 },
+            })
+          }
+        >
           <LargeCard.Content data-content="image" src="/renders/24.jpg" />
           <h3>
-            <Text48 data-type="title">Выставки</Text48>
+            <Text48 data-type="title">{intro.labels.exhibition[lang]}</Text48>
           </h3>
         </LargeCard>
-        <LargeCard>
+        <LargeCard
+          onClick={() =>
+            router.push({
+              pathname: "/media",
+              query: { section: 4 },
+            })
+          }
+        >
           <LargeCard.Content data-content="image" src="/renders/25.jpg" />
           <h3>
-            <Text48 data-type="title">Интервью</Text48>
+            <Text48 data-type="title">{intro.labels.interview[lang]}</Text48>
           </h3>
         </LargeCard>
       </Media>
@@ -198,13 +265,13 @@ const AllMedia = () => {
         <LargeCard>
           <LargeCard.Content data-content="image" src="/renders/26.jpg" />
           <h3>
-            <Text48 data-type="title">Лекции</Text48>
+            <Text48 data-type="title">{intro.labels.lectures[lang]}</Text48>
           </h3>
         </LargeCard>
         <LargeCard>
           <LargeCard.Content data-content="image" src="/renders/27.jpg" />
           <h3>
-            <Text48 data-type="title">Студенты Владимира Плоткина</Text48>
+            <Text48 data-type="title">{intro.labels.students[lang]}</Text48>
           </h3>
         </LargeCard>
       </Media>
