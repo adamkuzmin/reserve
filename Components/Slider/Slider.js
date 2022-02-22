@@ -14,6 +14,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Parallax, Pagination, Navigation } from "swiper";
 
 import { sliderData } from "./sliderData";
+import { projectSliderData } from "./projectSliderData";
 
 const SkeletonSlider = styled.div`
   position: absolute;
@@ -313,7 +314,7 @@ const ScrollDown = styled.svg`
   }
 `;
 
-const Slider = () => {
+const Slider = ({ projectType = false }) => {
   const swipeTitle = -700;
   const swipeLabel = -2000;
 
@@ -371,6 +372,8 @@ const Slider = () => {
     return () => window.removeEventListener("scroll", onScroll);
   });
 
+  const sdata = projectType ? projectSliderData : sliderData;
+
   return (
     <CarouselWrapper ref={CarouselRef}>
       {!startAutoplay && false && <SkeletonSlider />}
@@ -407,7 +410,7 @@ const Slider = () => {
         modules={[Parallax, Pagination, Navigation]}
         className="mySwiper"
       >
-        {sliderData.map(({ cover, category, name }, i) => (
+        {sdata.map(({ cover, category, name }, i) => (
           <SwiperSlide key={`swiper::${i}`}>
             <div
               slot="container-start"

@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import Link from "next/link";
 
-import {
-  Text48,
-} from "../common/text";
+import { useStore } from "../../Store/useStore";
+
+import { Text48 } from "../common/text";
 
 const ProjectB = styled.div`
   width: 100%;
@@ -49,21 +49,38 @@ const WideButton = styled.div`
   }
 `;
 
+const navData = {
+  prev: {
+    ru: <>Предыдущий</>,
+    en: <>Previous</>,
+  },
+  next: {
+    ru: <>Следующий</>,
+    en: <>Next</>,
+  },
+  all: {
+    ru: "Все проекты",
+    en: "All Projects",
+  },
+};
+
 const ProjectBottom = () => {
+  const lang = useStore((state) => state.lang);
+
   return (
     <ProjectB>
       <ProjectHeaderWrapper>
         <a>
-          <Text48>Предыдущий</Text48>
+          <Text48>{navData.prev[lang]}</Text48>
         </a>
         <a>
-          <Text48>Следующий</Text48>
+          <Text48>{navData.next[lang]}</Text48>
         </a>
       </ProjectHeaderWrapper>
       <Link href="/projects">
         <a>
           <WideButton data-font="wremena">
-            <Text48>Все проекты</Text48>
+            <Text48>{navData.all[lang]}</Text48>
           </WideButton>
         </a>
       </Link>

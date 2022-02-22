@@ -1,9 +1,6 @@
 import styled from "styled-components";
 import { useEffect, useRef } from "react";
-import {
-  Text36,
-  Text30,
-} from "../common/text";
+import { Text36, Text30, Text24 } from "../common/text";
 
 import { useStore } from "../../Store/useStore";
 
@@ -222,21 +219,20 @@ const Footer = () => {
       <Foot.Search>
         <SearchIcon />
         <SearchInput data-font="ibm" type="text" placeholder="Поиск по сайту" />
-        <CloseIcon />
       </Foot.Search>
       <Foot.Sections>
         {FooterData.map((key, i) => {
           return (
             <Foot.Col key={`Foot.Col${i}`}>
               <StyledH4>
-                <Text36 data-font="ibm">{key.title}</Text36>
+                <Text36 data-font="ibm" style={{fontWeight: '600'}}>{key.title}</Text36>
               </StyledH4>
               <LinksBlock>
                 {key?.links?.map((link, b) => {
                   return (
-                    <Text30 data-font="ibm" key={`footer.a.${b}`}>
+                    <Text24 data-font="ibm" key={`footer.a.${b}`}>
                       <a>{link.name}</a>
-                    </Text30>
+                    </Text24>
                   );
                 })}
               </LinksBlock>

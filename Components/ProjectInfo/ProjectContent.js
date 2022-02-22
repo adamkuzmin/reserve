@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useStore } from "../../Store/useStore";
 
 import { Text48, Text36, Text30 } from "../common/text";
 
@@ -76,21 +77,134 @@ const ParamBlock = styled.div`
   }
 `;
 
+const descr = {
+  l1: {
+    ru: <>Двор Is more</>,
+    en: <>Yard Is more</>,
+  },
+
+  l2: {
+    ru: (
+      <>
+        Двор — это нечто большее, чем просто пространство каре. Двор — это
+        смысл, глубина и суть русской души. Мы работали над двором, чтобы
+        сделать его больше, то есть more.
+      </>
+    ),
+    en: (
+      <>
+        A courtyard is more than just a carriage house. The yard is the meaning,
+        the depth and the essence of the Russian soul. We've been working on the
+        courtyard to to make it bigger, that is, more.
+      </>
+    ),
+  },
+
+  l3: {
+    ru: (
+      <>
+        Здание имеет в плане форму «каре». Внутренняя территория имеет два
+        уровня, то есть часть здания установлена на стилобате.
+        Объемно-пространственное решение здания представляет собой 3-7-этажный
+        объем с возрастанием этажности в сторону набережной, и имеющий в плане
+        форму «каре». Главная задача проекта — создание стилистически единого
+        комплекса, состоящего из 11 жилых секций, объединенных общим стилобатом.
+        Периметрально расположенное здание образует общий внутренний двор
+        комплекса, в который обращены все главные входы в жилые секции.
+      </>
+    ),
+    en: (
+      <>
+        The building is in the shape of a "square". The interior area has The
+        building has two levels, i.e. part of the building is set on a
+        stylobate. The spatial design of the building consists of 3-7-storey
+        volume with increasing number of floors Quay, and having a form of
+        "square" in the plan. The main objective The project is to create a
+        stylistically unified complex consisting of 11 residential sections
+        united by a square-shaped building. of 11 residential sections united by
+        a common stylobate. The perimeter building forms a common inner
+        courtyard Perimeterally arranged building forms a common inner yard of
+        the complex, to which all the main entrances to the dwelling units turn
+        residential units.
+      </>
+    ),
+  },
+
+  l4: {
+    ru: <>Двор создает вовлеченную изолированность</>,
+    en: <>The courtyard creates an involved insularity</>,
+  },
+
+  l5: {
+    ru: (
+      <>
+        Расположение помещений, их взаимосвязь, рациональное использование
+        полезных площадей создает комфортное условие для проживания жильцов.
+        Стилобатная часть имеет полноценное благоустройство и озеленение
+        (конструкция кровли стилобата предусматривает возможность посадки
+        деревьев и кустарников).
+      </>
+    ),
+    en: (
+      <>
+        The arrangement of the rooms, their interconnection, and the rational
+        use of usable space create a comfortable living environment for the
+        residents. The stylobate has full landscaping and landscaping (the
+        design of the roof of the stylobate provides for the planting of trees
+        and shrubs).
+      </>
+    ),
+  },
+
+  l6: {
+    ru: <>Владимир Плоткин:</>,
+    en: <>Vladimir Plotkin:</>,
+  },
+
+  l7: {
+    ru: (
+      <>
+        «В жилом комплексе Wine House центральным является взаимодействие
+        архитектуры исторического корпуса, связанного стилистически с застройкой
+        Замоскворечья, и новых жилых блоков. Мы внимательно подошли к соблюдению
+        высотности, поддержке карнизных линий зданий, прилегающих к кварталу.{" "}
+        <br />
+        <br />
+        Очень хорошо работает террасное решение корпусов с понижением к красной
+        линии. Расположение объекта в исторической части города предопределило
+        выбор натурального камня для отделки фасадов».
+      </>
+    ),
+    en: (
+      <>
+        "In the Wine House residential complex, the interaction of the
+        architecture of the historical building, stylistically linked to the
+        Zamoskvorechye development, and the new residential blocks is central.
+        We were careful to respect the height, to support the cornice lines of
+        the buildings adjacent to the block.
+        <br />
+        <br />
+        The terraced solution of the buildings downslope to the red line works
+        very well. The location of the building in the historical part of the
+        city predetermined the choice of natural stone for the façades.
+      </>
+    ),
+  },
+};
+
 const ProjectContent = () => {
+  const lang = useStore((state) => state.lang);
+
   return (
     <ProjectContentWrapper>
       <StyledSubTitle>
-        <Text48>Двор Is more</Text48>
+        <Text48>{descr.l1[lang]}</Text48>
       </StyledSubTitle>
       <ProjectCols>
         <ProjectCols.LeftCol>
           <ProjectCols.LeftGap />
           <ProjectCols.Content>
-            <StyledText48 data-font="wremena">
-              Двор — это нечто большее, чем просто пространство каре. Двор — это
-              смысл, глубина и суть русской души. Мы работали над двором, чтобы
-              сделать его больше, то есть more.
-            </StyledText48>
+            <StyledText48 data-font="wremena">{descr.l2[lang]}</StyledText48>
           </ProjectCols.Content>
         </ProjectCols.LeftCol>
         <ProjectCols.RightCol />
@@ -102,46 +216,21 @@ const ProjectContent = () => {
             <ProjectCols.LeftCol>
               <ProjectCols.LeftGap />
               <ProjectCols.Content>
-                <StyledText36 data-font="ibm">
-                  Здание имеет в плане форму «каре». Внутренняя территория имеет
-                  два уровня, то есть часть здания установлена на стилобате.
-                  Объемно-пространственное решение здания представляет собой
-                  3-7-этажный объем с возрастанием этажности в сторону
-                  набережной, и имеющий в плане форму «каре». Главная задача
-                  проекта — создание стилистически единого комплекса, состоящего
-                  из 11 жилых секций, объединенных общим стилобатом.
-                  Периметрально расположенное здание образует общий внутренний
-                  двор комплекса, в который обращены все главные входы в жилые
-                  секции.
-                </StyledText36>
+                <StyledText36 data-font="ibm">{descr.l3[lang]}</StyledText36>
               </ProjectCols.Content>
             </ProjectCols.LeftCol>
 
             <StyledSubTitle>
-              <Text48>Двор создает вовлеченную изолированность</Text48>
+              <Text48>{descr.l4[lang]}</Text48>
             </StyledSubTitle>
-            <StyledText36 data-font="ibm">
-              Расположение помещений, их взаимосвязь, рациональное использование
-              полезных площадей создает комфортное условие для проживания
-              жильцов. Стилобатная часть имеет полноценное благоустройство и
-              озеленение (конструкция кровли стилобата предусматривает
-              возможность посадки деревьев и кустарников).
-            </StyledText36>
+            <StyledText36 data-font="ibm">{descr.l5[lang]}</StyledText36>
             <ImageContent />
-            <StyledText36 data-font="ibm">Владимир Плоткин:</StyledText36>
+            <StyledText36 data-font="ibm">{descr.l6[lang]}</StyledText36>
             <ProjectCols.LeftCol>
               <ProjectCols.LeftGap />
               <ProjectCols.Content>
                 <StyledText48 data-font="wremena">
-                  «В жилом комплексе Wine House центральным является
-                  взаимодействие архитектуры исторического корпуса, связанного
-                  стилистически с застройкой Замоскворечья, и новых жилых
-                  блоков. Мы внимательно подошли к соблюдению высотности,
-                  поддержке карнизных линий зданий, прилегающих к кварталу.
-                  Очень хорошо работает террасное решение корпусов с понижением
-                  к красной линии. Расположение объекта в исторической части
-                  города предопределило выбор натурального камня для отделки
-                  фасадов».
+                  {descr.l7[lang]}
                 </StyledText48>
               </ProjectCols.Content>
             </ProjectCols.LeftCol>

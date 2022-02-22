@@ -1,10 +1,7 @@
 import styled from "styled-components";
+import { useStore } from "../../Store/useStore";
 
-import {
-  Text60,
-  Text30,
-  Text24,
-} from "../common/text";
+import { Text60, Text30, Text24 } from "../common/text";
 
 const ProjectHeaderWrapper = styled.div`
   margin-top: 5.1vw;
@@ -42,24 +39,48 @@ const StyledText24 = styled.div`
   min-width: 120px;
 `;
 
+const intro = {
+  location: {
+    ru: <>Москва, улица Остоженка, 23</>,
+    en: <>23 Ostozhenka Street, Moscow</>,
+  },
+  name: {
+    ru: <>Жилой комплекс Wine House</>,
+    en: <>Wine House residential complex</>,
+  },
+  descr: {
+    ru: (
+      <>
+        ЖК Wine House удостоен награды Arch-Cup Red Dot Award в 2018 году в
+        номинации «Перспективные пространства для жизни».
+      </>
+    ),
+    en: (
+      <>
+        Wine House has been awarded the Arch-Cup Red Dot Award in the 2018 in
+        the "Promising Living Spaces" category.
+      </>
+    ),
+  },
+};
+
 const ProjectHeader = () => {
+  const lang = useStore((state) => state.lang);
+
   return (
     <ProjectHeaderWrapper>
       <Header>
         <Header.Title>
           <p>
-            <Text30 data-font="wremena">Москва, улица Остоженка, 23</Text30>
+            <Text30 data-font="wremena">{intro.location[lang]}</Text30>
           </p>
           <h3>
-            <Text60 data-type="title">Жилой комплекс Wine House</Text60>
+            <Text60 data-type="title">{intro.name[lang]}</Text60>
           </h3>
         </Header.Title>
       </Header>
       <StyledText24>
-        <Text24>
-          ЖК Wine House удостоен награды Arch-Cup Red Dot Award в 2018 году в
-          номинации «Перспективные пространства для жизни».
-        </Text24>
+        <Text24>{intro.descr[lang]}</Text24>
       </StyledText24>
     </ProjectHeaderWrapper>
   );

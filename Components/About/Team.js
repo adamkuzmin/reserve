@@ -31,6 +31,7 @@ const PlotkinPhoto = styled.div`
 const Intro = styled.div`
   display: flex;
   width: 100%;
+  max-width: calc(100%);
 
   & > * + * {
     margin-left: 40px;
@@ -157,7 +158,7 @@ const Team = () => {
         <Intro>
           <Text36>{intro.descr[lang]}</Text36>
           <ContentFlex align="flex-end">
-            <Text48 style={{ minWidth: "max-content" }}>
+            <Text48 style={{ minWidth: "min-content" }}>
               {intro.kpi.label[lang]}
             </Text48>
             <Text254 data-type="kpi">{intro.kpi.count}</Text254>
