@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useStore } from "../../Store/useStore";
 import styled from "styled-components";
 
@@ -31,13 +31,29 @@ const NavRight = () => {
   const setLang = useStore((state) => state.setLang);
 
   const navIsOpened = useStore((state) => state.navIsOpened);
+  const setNavIsOpened = useStore((state) => state.setNavIsOpened);
 
   const links = Object.keys(pagesConfigs);
   const leadLinks = links?.slice(0, 4);
   const secondaryKeys = links?.slice(4, 6);
 
+  const navRef = useRef();
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (navRef.current && !navRef.current.contains(e.target)) {
+        setNavIsOpened(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [navRef]);
+
   return (
-    <Nav data-status={navIsOpened ? "opened" : "closed"}>
+    <Nav ref={navRef} data-status={navIsOpened ? "opened" : "closed"}>
       <FixedBottom>
         <NavBottom data-top="auto">
           <Text24>hello@reserve.ru</Text24>

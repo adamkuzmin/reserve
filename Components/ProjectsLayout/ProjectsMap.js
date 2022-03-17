@@ -7,6 +7,7 @@ import ReactMapGL, { Marker } from "react-map-gl";
 import styled from "styled-components";
 
 import { MouseContext } from "../common/Cursor/mouse-context";
+import { projectData } from "./data/data";
 
 const MAPBOX_TOKEN =
   "pk.eyJ1IjoibWFya2thYmllcnNraSIsImEiOiJja2lpa3N2c3QwaXVrMnltbHVzcXZ3dDU2In0.t_Lcd-0hPAJSk75HCJFw0g"; // Set your mapbox token here
@@ -39,7 +40,7 @@ const RectProject = styled.div`
 const MapWrapper = styled.div`
   width: 100%;
   height: 100%;
-  margin-bottom: 140px
+  margin-bottom: 140px;
 `;
 
 const ProjectsMap = () => {
@@ -65,18 +66,32 @@ const ProjectsMap = () => {
         onViewportChange={setViewport}
         mapboxApiAccessToken={MAPBOX_TOKEN}
       >
-        <Marker
-          latitude={55.854246}
-          longitude={37.647953}
-          offsetLeft={-15}
-          offsetTop={-15}
-        >
-          <CirclePoint
-            onMouseEnter={() => cursorChangeHandler("renderHor-1")}
-            onMouseLeave={() => cursorChangeHandler("")}
-          />
-        </Marker>
-        <Marker
+        {projectData &&
+          projectData.map((props = {}, i) => {
+            const { lat, lng } = props;
+
+            if (lat && lat > 0 && lng && lng > 0)
+              return (
+                <Marker
+                  latitude={lat}
+                  longitude={lng}
+                  offsetLeft={-15}
+                  offsetTop={-15}
+                  key={`marker:${i}`}
+                >
+                  <CirclePoint
+                    onMouseEnter={() =>
+                      cursorChangeHandler("renderHor-" + ((i + 1) % 4))
+                    }
+                    onMouseLeave={() => cursorChangeHandler("")}
+                  />
+                </Marker>
+              );
+
+            return;
+          })}
+
+        {/*<Marker
           latitude={55.685726}
           longitude={37.704754}
           offsetLeft={-15}
@@ -218,7 +233,7 @@ const ProjectsMap = () => {
             onMouseEnter={() => cursorChangeHandler("renderVer-4")}
             onMouseLeave={() => cursorChangeHandler("")}
           />
-        </Marker>
+        </Marker>*/}
       </MapGLWrapped>
     </MapWrapper>
   );

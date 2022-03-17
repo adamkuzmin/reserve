@@ -18,7 +18,8 @@ const Burger = ({ iswhite, ...props }) => {
       onMouseEnter={() => cursorChangeHandler("hovered")}
       onMouseLeave={() => cursorChangeHandler("")}
       data-status={navIsOpened ? "opened" : "closed"}
-      onClick={() => {
+      onClick={(e) => {
+        e.stopPropagation();
         setNavIsOpened(!navIsOpened);
       }}
     >

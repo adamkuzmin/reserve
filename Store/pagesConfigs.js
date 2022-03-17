@@ -10,12 +10,12 @@ export const pagesConfigs = {
     entitle: "Projects",
   },
 
-  "/media": {
+  "/media/all": {
     type: "media",
     title: "Медиа",
     entitle: "Media",
   },
-  "/media?section=2": {
+  "/media/news": {
     type: "news",
     title: "Новости",
     entitle: "News",

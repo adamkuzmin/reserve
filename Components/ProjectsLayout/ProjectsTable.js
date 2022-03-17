@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { Table } from "antd";
 
 import { MouseContext } from "../common/Cursor/mouse-context";
+import { projectData } from "./data/data";
 
 import {
   Text24,
@@ -191,15 +192,15 @@ const ProjectsTable = () => {
   const columns = [
     {
       title: "Год",
-      dataIndex: "year",
-      key: "year",
+      dataIndex: "finished",
+      key: "finished",
       width: "7%",
       render: (a) => <StyledText data-font="ibm">{a}</StyledText>,
       sorter: (a, b) => a.year - b.year,
     },
     {
       title: "Название",
-      dataIndex: "name",
+      dataIndex: "nameru",
       width: "40%",
       key: "name",
       render: (a) => (
@@ -222,18 +223,18 @@ const ProjectsTable = () => {
       width: "27%",
       render: (a) => (
         <CatsArray>
-          {a.map((key, i) => (
+          {/*a.map((key, i) => (
             <StyledText data-font="ibm" key={`catTable${i}`}>
               {key}
             </StyledText>
-          ))}
+          ))*/}
         </CatsArray>
       ),
     },
     {
       title: "Статус",
-      dataIndex: "status",
-      key: "status",
+      dataIndex: "built",
+      key: "built",
       filters: [
         { text: "Построен", value: "Построен" },
         { text: "Конкурс", value: "Конкурс" },
@@ -259,7 +260,7 @@ const ProjectsTable = () => {
             };
           }}
           columns={columns}
-          dataSource={data}
+          dataSource={projectData}
           showSizeChanger={false}
           pagination={{ pageSize: 100 }}
         />

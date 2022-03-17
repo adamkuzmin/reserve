@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { useStore } from "../../Store/useStore";
 
 import { Text24 } from "../common/text";
@@ -17,9 +18,9 @@ const MediaFilters = ({ setLayoutType, layoutType }) => {
     <FilterWrapper style={{ minWidth: "max-content" }}>
       <Filters size={0}>
         <FLink
-          data-type={layoutType === 1 && "link"}
+          data-type={layoutType === "all" && "link"}
           onClick={() => {
-            setLayoutType(1);
+            setLayoutType("all");
             toPageTop();
             setBarIsVisible(Math.random());
           }}
@@ -27,9 +28,9 @@ const MediaFilters = ({ setLayoutType, layoutType }) => {
           <Text24>{lang === "ru" ? "Все" : "All"}</Text24>
         </FLink>
         <FLink
-          data-type={layoutType === 2 && "link"}
+          data-type={layoutType === "news" && "link"}
           onClick={() => {
-            setLayoutType(2);
+            setLayoutType("news");
             toPageTop();
             setBarIsVisible(Math.random());
           }}
@@ -37,9 +38,9 @@ const MediaFilters = ({ setLayoutType, layoutType }) => {
           <Text24>{lang === "ru" ? "Новости" : "News"}</Text24>
         </FLink>
         <FLink
-          data-type={layoutType === 3 && "link"}
+          data-type={layoutType === "publications" && "link"}
           onClick={() => {
-            setLayoutType(3);
+            setLayoutType("publications");
             toPageTop();
             setBarIsVisible(Math.random());
           }}
@@ -47,9 +48,9 @@ const MediaFilters = ({ setLayoutType, layoutType }) => {
           <Text24>{lang === "ru" ? "Публикации" : "Publications"}</Text24>
         </FLink>
         <FLink
-          data-type={layoutType === 4 && "link"}
+          data-type={layoutType === "interviews" && "link"}
           onClick={() => {
-            setLayoutType(4);
+            setLayoutType("interviews");
             toPageTop();
             setBarIsVisible(Math.random());
           }}
@@ -57,9 +58,9 @@ const MediaFilters = ({ setLayoutType, layoutType }) => {
           <Text24>{lang === "ru" ? "Интервью" : "Interview"}</Text24>
         </FLink>
         <FLink
-          data-type={layoutType === 5 && "link"}
+          data-type={layoutType === "exhibitions" && "link"}
           onClick={() => {
-            setLayoutType(5);
+            setLayoutType("exhibitions");
             toPageTop();
             setBarIsVisible(Math.random());
           }}

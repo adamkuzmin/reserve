@@ -219,8 +219,7 @@ const LastMedia = () => {
         <LargeCard
           onClick={() =>
             router.push({
-              pathname: "/media",
-              query: { section: 2 },
+              pathname: "/media/news",
             })
           }
         >
@@ -232,8 +231,7 @@ const LastMedia = () => {
         <LargeCard
           onClick={() =>
             router.push({
-              pathname: "/media",
-              query: { section: 3 },
+              pathname: "/media/publications",
             })
           }
         >
@@ -252,7 +250,7 @@ const LastMedia = () => {
           </h3>
         </LargeCard>
       </Media>
-      <Link href="/media">
+      <Link href="/media/all">
         <a>
           <WideButton>
             <Text48 data-font="wremena">{intro.labels.allmedia[lang]}</Text48>

@@ -1,5 +1,6 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import InfiniteScroll from "react-infinite-scroll-component";
 import { useStore } from "../../Store/useStore";
 
 import { Content } from "../common/body";
@@ -8,22 +9,29 @@ import { Text30 } from "../common/text";
 
 import { newsData, newsList, interviewData } from "./news/data";
 
-import {
-  ContentFlex,
-  Gap,
-  LocalTitle,
-  VertFlex,
-  LeadQuote,
-  ShowBtn,
-  LeadDescription,
-} from "../About/common/styles";
+import { Skeleton, Row, Col, Space } from "antd";
+
+import { ContentFlex, Gap, LocalTitle } from "../About/common/styles";
 
 const MainContent = styled.div`
   width: 100%;
+  width: clamp(300px, 59vw, 1140px);
   max-width: clamp(300px, 59vw, 1140px);
 
   display: flex;
   flex-direction: column;
+`;
+
+const WireSpace = styled.div`
+  width: 100%;
+  margin-bottom: 48px;
+
+  display: flex;
+  flex-direction: column;
+
+  && > * + * {
+    margin-top: 24px;
+  }
 `;
 
 const BlockWrapper = styled.div`
@@ -53,12 +61,80 @@ const NewsBlock = ({ title, date }) => {
   );
 };
 
+const WireItem = (props) => {
+  return (
+    <WireSpace {...props}>
+      <Skeleton.Input
+        size="large"
+        style={{ maxWidth: "60%", marginBottom: "20px" }}
+        active
+      />
+      <Skeleton.Input
+        size="large"
+        style={{ maxWidth: "100%", height: "30px" }}
+        active
+      />
+      <Skeleton.Input
+        size="large"
+        style={{ maxWidth: "50%", height: "30px" }}
+        active
+      />
+    </WireSpace>
+  );
+};
+
+const WireWrapper = ({ children, loading }) => {
+  if (!loading) return children;
+
+  return (
+    <>
+      {Array(8)
+        .fill(1)
+        .map((_, i) => (
+          <WireItem key={`wire:${i}`} />
+        ))}
+    </>
+  );
+};
+
 const News = ({ interviews = false }) => {
+  const [loadingData, setLoadingData] = useState(true);
+
+  useEffect(() => {
+    const showData = setTimeout(() => setLoadingData(false), 1800);
+    return () => {
+      clearTimeout(showData);
+    };
+  }, []);
+
   const lang = useStore((state) => state.lang);
+
+  const [windowHeight, setWindowsHeight] = useState(0);
+  const [data, setData] = useState(newsList);
+
+  useEffect(() => {
+    const resizeListener = () => {
+      setWindowsHeight(window.innerHeight);
+    };
+
+    setWindowsHeight(window.innerHeight);
+    window.addEventListener("resize", resizeListener);
+
+    return () => {
+      window.removeEventListener("resize", resizeListener);
+    };
+  }, []);
 
   const setBlackLogo = useStore((state) => state.setBlackLogo);
   const blackLogo = useStore((state) => state.blackLogo);
 
+  const loadMoreData = () => {
+    setTimeout(() => {
+      setData((state) => state.concat(newsList));
+    }, 800);
+  };
+
+  /* настройка верхнего бара */
   useEffect(() => {
     setBlackLogo(true);
   }, []);
@@ -79,6 +155,7 @@ const News = ({ interviews = false }) => {
 
     return () => window.removeEventListener("scroll", onScroll);
   });
+  /* */
 
   return (
     <Content ref={contentRef}>
@@ -93,15 +170,31 @@ const News = ({ interviews = false }) => {
         <Gap swidth={`12.1vw`} />
 
         <MainContent>
-          {newsList.map(({ title, date }, i) => {
-            return (
-              <NewsBlock
-                key={`news:${i}`}
-                title={title[lang]}
-                date={date[lang]}
-              />
-            );
-          })}
+          <WireWrapper loading={loadingData}>
+            <InfiniteScroll
+              dataLength={data.length} //This is important field to render the next data
+              next={loadMoreData}
+              hasMore={data.length < 100}
+              loader={
+                <>
+                  <WireItem />
+                  <WireItem />
+                </>
+              }
+              endMessage={<></>}
+              scrollThreshold={`${windowHeight * 0.8}px`}
+            >
+              {data.map(({ title, date }, i) => {
+                return (
+                  <NewsBlock
+                    key={`news:${i}`}
+                    title={title[lang]}
+                    date={date[lang]}
+                  />
+                );
+              })}
+            </InfiniteScroll>
+          </WireWrapper>
         </MainContent>
       </ContentFlex>
 

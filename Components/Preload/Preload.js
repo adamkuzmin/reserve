@@ -24,16 +24,26 @@ const Preload = ({
       type={absolute ? "absolute" : null}
       data-status={!loading && imagesAreLoaded ? "hidden" : null}
     >
-      <div style={{ opacity: 0, position: "absolute" }}>
+      <div
+        data-type="preloader"
+        style={{
+          opacity: 1,
+          position: "fixed",
+          width: "100%",
+          height: "100%",
+          pointerEvents: "none",
+        }}
+      >
         {sliderData &&
           sliderData.map(({ cover }, i) => {
             return (
               <Image
+                layout={"fill"}
+                objectFit="contain"
+                objectPosition="center"
                 key={`preloadImage:${i}`}
                 src={cover}
                 onLoad={() => setLoadedImgCount((state) => state + 1)}
-                width="200"
-                height="200"
               />
             );
           })}

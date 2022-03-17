@@ -11,7 +11,7 @@ const MediaWrapper = styled.div`
   opacity: 0;
   transform: translateY(100px);
 
-  animation: SectionAppear .7s ease-in-out 0.5s;
+  animation: SectionAppear 0.7s ease-in-out 0.5s;
   @keyframes SectionAppear {
     0% {
       opacity: 0;
@@ -216,8 +216,7 @@ const AllMedia = () => {
         <LargeCard
           onClick={() =>
             router.push({
-              pathname: "/media",
-              query: { section: 2 },
+              pathname: "/media/news",
             })
           }
         >
@@ -229,8 +228,7 @@ const AllMedia = () => {
         <LargeCard
           onClick={() =>
             router.push({
-              pathname: "/media",
-              query: { section: 3 },
+              pathname: "/publications",
             })
           }
         >
@@ -254,8 +252,7 @@ const AllMedia = () => {
         <LargeCard
           onClick={() =>
             router.push({
-              pathname: "/media",
-              query: { section: 5 },
+              pathname: "/media/exhibition",
             })
           }
         >
@@ -267,8 +264,7 @@ const AllMedia = () => {
         <LargeCard
           onClick={() =>
             router.push({
-              pathname: "/media",
-              query: { section: 4 },
+              pathname: "/interview",
             })
           }
         >

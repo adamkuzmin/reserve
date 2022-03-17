@@ -18,7 +18,7 @@ const WrapperAnimation = styled.div`
   opacity: 0;
   transform: translateY(100px);
 
-  animation: SectionAppear .7s ease-in-out .5s;
+  animation: SectionAppear 0.7s ease-in-out 0.5s;
   @keyframes SectionAppear {
     0% {
       opacity: 0;
@@ -34,8 +34,50 @@ const WrapperAnimation = styled.div`
   animation-fill-mode: forwards;
 `;
 
+const Section = ({ type = "all" }) => {
+  switch (type) {
+    case "all":
+      return (
+        <div>
+          <Media />
+        </div>
+      );
+
+    case "news":
+      return (
+        <WrapperAnimation key="news">
+          <News />
+        </WrapperAnimation>
+      );
+    case "publications":
+      return (
+        <WrapperAnimation key="publications">
+          <Publications />
+        </WrapperAnimation>
+      );
+    case "interviews":
+      return (
+        <WrapperAnimation key="interviews">
+          <News interviews />
+        </WrapperAnimation>
+      );
+    case "exhibitions":
+      return (
+        <WrapperAnimation key="exhibitions">
+          <Publications exhibitions />
+        </WrapperAnimation>
+      );
+    default:
+      return (
+        <div>
+          <Media />
+        </div>
+      );
+  }
+};
+
 export default function HomeApp() {
-  const [layoutType, setLayoutType] = useState(1);
+  const [layoutType, setLayoutType] = useState("all");
 
   const router = useRouter();
 
@@ -43,7 +85,7 @@ export default function HomeApp() {
     if (router && router.query && router.query.section) {
       const s = router.query.section;
 
-      setLayoutType(parseInt(s));
+      setLayoutType(s);
     }
   }, [router]);
 
@@ -54,55 +96,7 @@ export default function HomeApp() {
       <NavRight />
       <Navigation />
 
-      {
-        /* Все разделы медиа */
-        layoutType === 1 && (
-          <div>
-            <Media />
-          </div>
-        )
-        /* */
-      }
-
-      {
-        /* Все разделы медиа */
-        layoutType === 2 && (
-          <WrapperAnimation>
-            <News />
-          </WrapperAnimation>
-        )
-        /* */
-      }
-
-      {
-        /* Все разделы медиа */
-        layoutType === 3 && (
-          <WrapperAnimation>
-            <Publications />
-          </WrapperAnimation>
-        )
-        /* */
-      }
-
-      {
-        /* Все разделы медиа */
-        layoutType === 4 && (
-          <WrapperAnimation>
-            <News interviews />
-          </WrapperAnimation>
-        )
-        /* */
-      }
-
-      {
-        /* Все разделы медиа */
-        layoutType === 5 && (
-          <WrapperAnimation>
-            <Publications exhibitions />
-          </WrapperAnimation>
-        )
-        /* */
-      }
+      <Section type={layoutType} />
 
       <Content background={"black"}>
         <Footer />
