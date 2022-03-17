@@ -10,7 +10,7 @@ const Nav = styled.div`
     align-items: center;
     padding-left: 40px;
     padding-right: 40px;
-    z-index: 7000;
+    z-index: 9999;
     transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
 
     @media (max-width: 1000px) {

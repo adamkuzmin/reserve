@@ -15,6 +15,11 @@ export const pagesConfigs = {
     title: "Медиа",
     entitle: "Media",
   },
+  "/media?section=2": {
+    type: "news",
+    title: "Новости",
+    entitle: "News",
+  },
   "/about": {
     type: "about",
     title: "О бюро",

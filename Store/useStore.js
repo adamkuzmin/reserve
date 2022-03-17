@@ -16,6 +16,8 @@ const useStore = create((set) => ({
   /* открыта ли правая навигация */
   navIsOpened: false,
   setNavIsOpened: (e) => set(() => ({ navIsOpened: e })),
+  /* предзагрузка */
+  
 }));
 
 export { useStore };

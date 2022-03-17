@@ -1,306 +1,44 @@
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import ThreeCanvas from "../../Models/construcetor";
+import Image from "next/image";
 
-const CanvasGeometry = styled.div`
-  position: absolute;
-  top: 50px;
-  right: 40px;
-  opacity: 0.25;
-  width: calc(35vw * 1.2);
-  height: calc(40.5vw * 1.2);
-  //background-image: url("/renders/16.svg");
-  //background-size: cover;
-`;
+import { sliderData } from "../Slider/sliderData";
 
-const BackWrapper = styled.div`
-  width: 100vw;
-  height: 100vh;
-  background: white;
-  position: ${({ type }) => (type ? type : "fixed")};
-  z-index: ${({ type }) => (type ? 0 : 9999)};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  opacity: 1;
-  transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
-  transform: translate3d(0, 0, 0);
-
-  &&[data-status="hidden"] {
-    transform: translate3d(0, -100%, 0);
-  }
-`;
-
-const Logo = styled.div`
-  width: calc(87.2px);
-  height: calc(48.24px);
-  background-size: cover;
-  position: relative;
-
-  -webkit-animation: fadein 4s ease-out;
-  -moz-animation: fadein 4s ease-out;
-  -ms-animation: fadein 4s ease-out;
-  -o-animation: fadein 4s ease-out;
-  animation: fadein 4s ease-out;
-  transform: scale(1.4);
-
-  @keyframes fadein {
-    0% {
-      opacity: 0;
-      transform: scale(1);
+const Preload = ({
+  loading = true,
+  absolute = false,
+  imagesAreLoaded = false,
+  setImagesLoaded,
+  loadedImgCount = 0,
+  setLoadedImgCount,
+}) => {
+  useEffect(() => {
+    if (loadedImgCount >= sliderData.length - 1) {
+      setImagesLoaded(true);
     }
+  }, [loadedImgCount, sliderData]);
 
-    50% {
-      opacity: 1;
-    }
-
-    100% {
-      opacity: 1;
-      transform: scale(1.4);
-    }
-  }
-`;
-
-const Letter1 = styled.svg`
-  position: absolute;
-  left: 113px;
-  top: 0;
-
-  -webkit-animation: fadein1 2s ease-out;
-  -moz-animation: fadein1 2s ease-out;
-  -ms-animation: fadein1 2s ease-out;
-  -o-animation: fadein1 2s ease-out;
-  animation: fadein1 2s ease-out;
-
-  @keyframes fadein1 {
-    0% {
-      opacity: 0;
-    }
-
-    5% {
-      opacity: 0;
-    }
-
-    60% {
-      opacity: 1;
-    }
-  }
-`;
-
-const Letter2 = styled.svg`
-  position: absolute;
-  left: 152px;
-  top: 0;
-
-  -webkit-animation: fadein2 2s ease-out;
-  -moz-animation: fadein2 2s ease-out;
-  -ms-animation: fadein2 2s ease-out;
-  -o-animation: fadein2 2s ease-out;
-  animation: fadein2 2s ease-out;
-
-  @keyframes fadein2 {
-    0% {
-      opacity: 0;
-    }
-
-    12% {
-      opacity: 0;
-    }
-
-    67% {
-      opacity: 1;
-    }
-  }
-`;
-
-const Letter3 = styled.svg`
-  position: absolute;
-  left: 188px;
-  top: 0;
-
-  -webkit-animation: fadein3 2s ease-out;
-  -moz-animation: fadein3 2s ease-out;
-  -ms-animation: fadein3 2s ease-out;
-  -o-animation: fadein3 2s ease-out;
-  animation: fadein3 2s ease-out;
-
-  @keyframes fadein3 {
-    0% {
-      opacity: 0;
-    }
-
-    19% {
-      opacity: 0;
-    }
-
-    74% {
-      opacity: 1;
-    }
-  }
-`;
-
-const Letter4 = styled.svg`
-  position: absolute;
-  left: 228px;
-  top: 0;
-
-  -webkit-animation: fadein4 2s ease-out;
-  -moz-animation: fadein4 2s ease-out;
-  -ms-animation: fadein4 2s ease-out;
-  -o-animation: fadein4 2s ease-out;
-  animation: fadein4 2s ease-out;
-
-  @keyframes fadein4 {
-    0% {
-      opacity: 0;
-    }
-
-    26% {
-      opacity: 0;
-    }
-
-    81% {
-      opacity: 1;
-    }
-  }
-`;
-
-const Letter5 = styled.svg`
-  position: absolute;
-  left: 265px;
-  top: 0;
-
-  -webkit-animation: fadein5 2s ease-out;
-  -moz-animation: fadein5 2s ease-out;
-  -ms-animation: fadein5 2s ease-out;
-  -o-animation: fadein5 2s ease-out;
-  animation: fadein5 2s ease-out;
-
-  @keyframes fadein5 {
-    0% {
-      opacity: 0;
-    }
-
-    33% {
-      opacity: 0;
-    }
-
-    88% {
-      opacity: 1;
-    }
-  }
-`;
-
-const Letter6 = styled.svg`
-  position: absolute;
-  left: 304px;
-  top: 0;
-
-  -webkit-animation: fadein6 2s ease-out;
-  -moz-animation: fadein6 2s ease-out;
-  -ms-animation: fadein6 2s ease-out;
-  -o-animation: fadein6 2s ease-out;
-  animation: fadein6 2s ease-out;
-
-  @keyframes fadein6 {
-    0% {
-      opacity: 0;
-    }
-
-    40% {
-      opacity: 0;
-    }
-
-    95% {
-      opacity: 1;
-    }
-  }
-`;
-
-const Letter7 = styled.svg`
-  position: absolute;
-  left: 113px;
-  top: 40px;
-
-  -webkit-animation: fadein7 2s ease-out;
-  -moz-animation: fadein7 2s ease-out;
-  -ms-animation: fadein7 2s ease-out;
-  -o-animation: fadein7 2s ease-out;
-  animation: fadein7 2s ease-out;
-
-  @keyframes fadein7 {
-    0% {
-      opacity: 0;
-    }
-
-    19% {
-      opacity: 0;
-    }
-
-    74% {
-      opacity: 1;
-    }
-  }
-`;
-
-const Letter8 = styled.svg`
-  position: absolute;
-  left: 176px;
-  top: 40px;
-
-  -webkit-animation: fadein8 2s ease-out;
-  -moz-animation: fadein8 2s ease-out;
-  -ms-animation: fadein8 2s ease-out;
-  -o-animation: fadein8 2s ease-out;
-  animation: fadein8 2s ease-out;
-
-  @keyframes fadein8 {
-    0% {
-      opacity: 0;
-    }
-
-    30% {
-      opacity: 0;
-    }
-
-    85% {
-      opacity: 1;
-    }
-  }
-`;
-
-const Letter9 = styled.svg`
-  position: absolute;
-  left: 274px;
-  top: 40px;
-
-  -webkit-animation: fadein6 2s ease-out;
-  -moz-animation: fadein6 2s ease-out;
-  -ms-animation: fadein6 2s ease-out;
-  -o-animation: fadein6 2s ease-out;
-  animation: fadein6 2s ease-out;
-
-  @keyframes fadein6 {
-    0% {
-      opacity: 0;
-    }
-
-    40% {
-      opacity: 0;
-    }
-
-    95% {
-      opacity: 1;
-    }
-  }
-`;
-
-const Preload = ({ loading = true, absolute = false }) => {
   return (
     <div
       className={"preload-backWrapper"}
       type={absolute ? "absolute" : null}
-      data-status={!loading ? "hidden" : null}
+      data-status={!loading && imagesAreLoaded ? "hidden" : null}
     >
+      <div style={{ opacity: 0, position: "absolute" }}>
+        {sliderData &&
+          sliderData.map(({ cover }, i) => {
+            return (
+              <Image
+                key={`preloadImage:${i}`}
+                src={cover}
+                onLoad={() => setLoadedImgCount((state) => state + 1)}
+                width="200"
+                height="200"
+              />
+            );
+          })}
+      </div>
+
       <div className={"preload-logo"}>
         <svg
           width="88"

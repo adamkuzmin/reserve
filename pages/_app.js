@@ -23,6 +23,8 @@ import { pagesConfigs } from "../Store/pagesConfigs";
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
+  const [imagesAreLoaded, setImagesLoaded] = useState(false);
+  const [loadedImgCount, setLoadedImgCount] = useState(0);
 
   const setPageTitle = useStore((state) => state.setPageTitle);
   const setBarIsVisible = useStore((state) => state.setBarIsVisible);
@@ -65,10 +67,18 @@ function MyApp({ Component, pageProps }) {
       <MouseContextProvider>
         <PageHead />
 
-        <Preload loading={loading} />
+        <Preload
+          loading={loading}
+          {...{
+            imagesAreLoaded,
+            setImagesLoaded,
+            loadedImgCount,
+            setLoadedImgCount,
+          }}
+        />
 
         {/* главный компонент */}
-        {!loading && <Component {...pageProps} />}
+        {!loading && imagesAreLoaded && <Component {...pageProps} />}
         <DotRing />
       </MouseContextProvider>
     </ConfigProvider>

@@ -6,7 +6,7 @@ const FilterWrapper = styled(Space)`
   bottom: 30px;
   left: 50%;
   transform: translateX(-50%) translateY(0%);
-  z-index: 9900;
+  z-index: 9200;
   opacity: 1;
 
   &&[data-animation="true"] {

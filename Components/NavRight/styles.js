@@ -2,13 +2,13 @@ import styled from "styled-components";
 
 const Nav = styled.div`
   position: fixed;
-  width: 300px;
+  width: clamp(400px, 20vw, 600px);
   background: white;
   height: 100vh;
   top: 0px;
   right: 0px;
-  z-index: 4000;
-  padding-left: 25px;
+  z-index: 9600;
+  padding-left: 45px;
   padding-right: 25px;
   display: flex;
   flex-direction: column;
@@ -16,6 +16,8 @@ const Nav = styled.div`
   &&[data-status="closed"] {
     transform: translateX(100%);
   }
+
+  box-shadow: 0px 0px 98px 15px rgba(0, 0, 0, 0.04);
 `;
 
 const NavBlock = styled.div`
