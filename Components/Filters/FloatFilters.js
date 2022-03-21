@@ -55,10 +55,6 @@ const FloatFilters = ({
   const [DirItems, selDirItems] = useState([0]);
   const [YearItems, selYearItems] = useState([0]);
 
-  useEffect(() => {
-    console.log("YearItems", YearItems);
-  });
-
   /* фильтрация по параметрам */
   useEffect(() => {
     setStateData((state) =>

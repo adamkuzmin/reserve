@@ -2,19 +2,31 @@ import { useEffect, useRef, useState } from "react";
 import { useStore } from "../../Store/useStore";
 import styled from "styled-components";
 
+import dynamic from "next/dynamic";
+
 import Navigation from "../../Components/Navigation/Navigation";
 import NavRight from "../../Components/NavRight/NavRight";
 
 import Footer from "../../Components/Footer/Footer";
 import { Content } from "../../Components/common/body";
 
-import ProjectsGallery from "../../Components/ProjectsLayout/ProjectsGallery";
+/*import ProjectsGallery from "../../Components/ProjectsLayout/ProjectsGallery";
 import ProjectsTable from "../../Components/ProjectsLayout/ProjectsTable";
-import ProjectsMap from "../../Components/ProjectsLayout/ProjectsMap";
+import ProjectsMap from "../../Components/ProjectsLayout/ProjectsMap";*/
 
 import FloatFilters from "../../Components/Filters/FloatFilters";
 
 import { projectData } from "../../Components/ProjectsLayout/data/data";
+
+const ProjectsGallery = dynamic(() =>
+  import("../../Components/ProjectsLayout/ProjectsGallery")
+);
+const ProjectsTable = dynamic(() =>
+  import("../../Components/ProjectsLayout/ProjectsTable")
+);
+const ProjectsMap = dynamic(() =>
+  import("../../Components/ProjectsLayout/ProjectsMap")
+);
 
 const MainContent = styled(Content)`
   &&& {
