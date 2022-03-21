@@ -103,7 +103,7 @@ Layout.Project = styled.div`
 
 /*  Inner content of card */
 const Render = styled.div`
-  background-color: grey;
+  background-color: white;
   width: 100%;
   height: 100%;
   left: 0;
@@ -116,6 +116,7 @@ const Render = styled.div`
 
 const Header = styled.div`
   width: 100%;
+  max-width: calc(100%);
   height: 100%;
   background: white;
   position: absolute;
@@ -152,6 +153,7 @@ Header.Year = styled.div`
 
 const TextWrapper = styled.div`
   overflow: hidden;
+  max-width: 100%;
 
   & > * {
     transform: translate3d(

@@ -27,7 +27,7 @@ const Preload = ({
       <div
         data-type="preloader"
         style={{
-          opacity: 1,
+          opacity: 0,
           position: "fixed",
           width: "100%",
           height: "100%",

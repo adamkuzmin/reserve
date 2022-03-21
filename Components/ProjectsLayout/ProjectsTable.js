@@ -1,15 +1,14 @@
 import styled from "styled-components";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 
-import { Table } from "antd";
+import { Table, Typography, Skeleton } from "antd";
 
 import { MouseContext } from "../common/Cursor/mouse-context";
 import { projectData } from "./data/data";
 
-import {
-  Text24,
-  Wrap24,
-} from "../common/text";
+import { Text24, Wrap24 } from "../common/text";
+
+const { Paragraph, Text } = Typography;
 
 const TableWrapper = styled.div`
   width: 100%;
@@ -71,199 +70,189 @@ const PTable = styled(Table)`
   }
 `;
 
-const data = [
+const SkeletonWrapper = styled.div`
+  min-width: 100%;
+
+  && * {
+    min-width: 100%;
+  }
+`;
+
+const columns = [
   {
-    key: 1,
-    year: 2020,
-    name: "Комплекс апартаментов STORY",
-    location: "Москва",
-    categories: ["Жилые объекты", "ритейл"],
-    status: "Построен",
+    title: "Год",
+    dataIndex: "finished",
+    key: "finished",
+    width: "7%",
+    render: (a) => <StyledText data-font="ibm">{a}</StyledText>,
+    sorter: (a, b) => a.year - b.year,
   },
   {
-    key: 2,
-    year: 2020,
-    name: "Больница с родильным домом в Коммунарке",
-    location: "Москва",
-    categories: ["Объекты здравоохранения"],
-    status: "Построен",
+    title: "Название",
+    dataIndex: "nameru",
+    width: "40%",
+    key: "name",
+    render: (a) => (
+      <StyledText data-weight="semibold" data-font="ibm">
+        {a}
+      </StyledText>
+    ),
   },
   {
-    key: 3,
-    year: 2020,
-    name: "Реконструкция площади В. И. Ленина",
-    location: "Якутск",
-    categories: ["Общественные пространства"],
-    status: "Конкурс",
+    title: "Место",
+    dataIndex: "location",
+    key: "location",
+    width: "18%",
+    render: (a) => <StyledText data-font="ibm">{a}</StyledText>,
   },
   {
-    key: 4,
-    year: 2018,
-    name: "Административно-деловой центр ТиНАО",
-    location: "Москва",
-    categories: ["Офисно-административные объекты"],
-    status: "Построен",
+    title: "Программа",
+    dataIndex: "categories",
+    key: "categories",
+    width: "27%",
+    render: (
+      a,
+      {
+        residential = 0,
+        office = 0,
+        trading = 0,
+        culture = 0,
+        transport = 0,
+        mixed = 0,
+        urban = 0,
+        current = 0,
+        competition = 0,
+        art = 0,
+      }
+    ) => {
+      let categories = [];
+      if (residential) categories.push("Жилые объекты");
+      if (office) categories.push("Офисно-административные объекты");
+      if (trading) categories.push("Торговые объекты");
+      if (culture) categories.push("Объекты культуры");
+      if (transport) categories.push("Объекты инфраструктуры и транспорта");
+      if (mixed) categories.push("Смешанная функция");
+      if (urban) categories.push("Градостроительные концепции");
+      if (current) categories.push("Текущие объекты");
+      if (competition) categories.push("Конкурсные проекты");
+      if (art) categories.push("Арт-объекты и дизайн");
+
+      return (
+        <CatsArray>
+          <StyledText data-font="ibm">
+            <Paragraph style={{ marginBottom: "0" }}>
+              {categories.reduce((prev, current) => `${prev}, ${current}`)}
+            </Paragraph>
+          </StyledText>
+        </CatsArray>
+      );
+    },
   },
   {
-    key: 5,
-    year: 2020,
-    name: "ЖК «Небо»",
-    location: "Москва",
-    categories: ["Жилые объекты", "ритейл"],
-    status: "Построен",
-  },
-  {
-    key: 6,
-    year: 2019,
-    name: "ЖК «Небо»",
-    location: "Москва",
-    categories: ["Жилые объекты", "ритейл"],
-    status: "Построен",
-  },
-  {
-    key: 7,
-    year: 2018,
-    name: "Московский концертный зал «Зарядье»",
-    location: "Москва",
-    categories: ["Объекты культуры", "концертный зал", "многофункциональный"],
-    status: "Построен",
-  },
-  {
-    key: 8,
-    year: 2021,
-    name: "ЖК «Небо»",
-    location: "Москва",
-    categories: ["Жилые объекты", "ритейл"],
-    status: "Построен",
-  },
-  {
-    key: 9,
-    year: 2015,
-    name: "Жилой комплекс Триколор",
-    location: "Москва",
-    categories: ["Жилые объекты", "ритейл"],
-    status: "Построен",
-  },
-  {
-    key: 10,
-    year: 2016,
-    name: "Многофункциональный комплекс в Москва-сити",
-    location: "Москва",
-    categories: ["Жилые объекты", "ритейл"],
-    status: "Построен",
-  },
-  {
-    key: 11,
-    year: 2021,
-    name: "ЖК «Небо»",
-    location: "Москва",
-    categories: ["Жилые объекты", "ритейл"],
-    status: "Построен",
-  },
-  {
-    key: 12,
-    year: 2021,
-    name: "Жилой комплекс «Золотая Звезда»",
-    location: "Москва",
-    categories: ["Жилые объекты", "ритейл"],
-    status: "Построен",
-  },
-  {
-    key: 13,
-    year: 2021,
-    name: "Жилой комплекс «Лица»",
-    location: "Москва",
-    categories: ["Жилые объекты", "ритейл"],
-    status: "Построен",
-  },
-  {
-    key: 14,
-    year: 2021,
-    name: "Серый пояс. Преобразование",
-    location: "Москва",
-    categories: ["Жилые объекты", "ритейл"],
-    status: "Построен",
+    title: "Статус",
+    dataIndex: "built",
+    key: "built",
+    filters: [
+      { text: "Построен", value: "Построен" },
+      { text: "Конкурс", value: "Конкурс" },
+    ],
+    onFilter: (value, record) => record.status.includes(value),
+    width: "8%",
+    render: (a) => <StyledText data-font="ibm">{a}</StyledText>,
   },
 ];
 
-const ProjectsTable = () => {
-  const { cursorType, cursorChangeHandler } = useContext(MouseContext);
+const wireColumns = [
+  {
+    title: "",
+    width: "15%",
+    key: "wire1",
+    render: () => (
+      <SkeletonWrapper>
+        <Skeleton.Input size="large" style={{ height: "32px" }} active />
+      </SkeletonWrapper>
+    ),
+  },
+  {
+    title: "",
+    width: "45%",
+    key: "wire2",
+    render: () => (
+      <SkeletonWrapper>
+        <Skeleton active title={false} />
+      </SkeletonWrapper>
+    ),
+  },
+  {
+    title: "",
+    width: "20%",
+    key: "wire3",
+    render: () => (
+      <SkeletonWrapper>
+        <Skeleton.Input size="default" style={{ height: "24px" }} active />
+      </SkeletonWrapper>
+    ),
+  },
+  {
+    title: "",
+    width: "20%",
+    key: "wire4",
+    render: () => (
+      <SkeletonWrapper>
+        <Skeleton.Input size="default" style={{ height: "24px" }} active />
+      </SkeletonWrapper>
+    ),
+  },
+];
 
-  const columns = [
-    {
-      title: "Год",
-      dataIndex: "finished",
-      key: "finished",
-      width: "7%",
-      render: (a) => <StyledText data-font="ibm">{a}</StyledText>,
-      sorter: (a, b) => a.year - b.year,
-    },
-    {
-      title: "Название",
-      dataIndex: "nameru",
-      width: "40%",
-      key: "name",
-      render: (a) => (
-        <StyledText data-weight="semibold" data-font="ibm">
-          {a}
-        </StyledText>
-      ),
-    },
-    {
-      title: "Место",
-      dataIndex: "location",
-      key: "location",
-      width: "18%",
-      render: (a) => <StyledText data-font="ibm">{a}</StyledText>,
-    },
-    {
-      title: "Программа",
-      dataIndex: "categories",
-      key: "categories",
-      width: "27%",
-      render: (a) => (
-        <CatsArray>
-          {/*a.map((key, i) => (
-            <StyledText data-font="ibm" key={`catTable${i}`}>
-              {key}
-            </StyledText>
-          ))*/}
-        </CatsArray>
-      ),
-    },
-    {
-      title: "Статус",
-      dataIndex: "built",
-      key: "built",
-      filters: [
-        { text: "Построен", value: "Построен" },
-        { text: "Конкурс", value: "Конкурс" },
-      ],
-      onFilter: (value, record) => record.status.includes(value),
-      width: "8%",
-      render: (a) => <StyledText data-font="ibm">{a}</StyledText>,
-    },
-  ];
+const ProjectsTable = ({ stateData }) => {
+  const { cursorType, cursorChangeHandler } = useContext(MouseContext);
+  const [wireMode, setWireMode] = useState(true);
+
+  useEffect(() => {
+    setWireMode(true);
+
+    const removeWire = () => setWireMode(false);
+    const timer = setTimeout(removeWire, 800);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [stateData]);
 
   return (
     <Wrap24 swidth={"100%"}>
       <TableWrapper>
-        <PTable
-          onRow={(record, rowIndex) => {
-            const rowClasses = [
-              "renderHor-1", "renderHor-2", "renderVer-3", "renderVer-4"
-            ]
-            
-            return {
-              onMouseEnter: () => cursorChangeHandler(rowClasses[rowIndex % 4]),
-              onMouseLeave: () => cursorChangeHandler(""),
-            };
-          }}
-          columns={columns}
-          dataSource={projectData}
-          showSizeChanger={false}
-          pagination={{ pageSize: 100 }}
-        />
+        {!wireMode && (
+          <PTable
+            onRow={(record, rowIndex) => {
+              const rowClasses = [
+                "renderHor-1",
+                "renderHor-2",
+                "renderVer-3",
+                "renderVer-4",
+              ];
+
+              return {
+                onMouseEnter: () =>
+                  cursorChangeHandler(rowClasses[rowIndex % 4]),
+                onMouseLeave: () => cursorChangeHandler(""),
+              };
+            }}
+            columns={columns}
+            dataSource={stateData}
+            showSizeChanger={false}
+            pagination={false}
+          />
+        )}
+        {wireMode && (
+          <PTable
+            columns={wireColumns}
+            dataSource={Array(12).fill(1)}
+            showSizeChanger={false}
+            pagination={false}
+          />
+        )}
       </TableWrapper>
     </Wrap24>
   );

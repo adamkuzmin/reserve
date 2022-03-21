@@ -43,7 +43,7 @@ const MapWrapper = styled.div`
   margin-bottom: 140px;
 `;
 
-const ProjectsMap = () => {
+const ProjectsMap = ({ stateData }) => {
   const { cursorType, cursorChangeHandler } = useContext(MouseContext);
 
   const [viewport, setViewport] = useState({
@@ -66,8 +66,8 @@ const ProjectsMap = () => {
         onViewportChange={setViewport}
         mapboxApiAccessToken={MAPBOX_TOKEN}
       >
-        {projectData &&
-          projectData.map((props = {}, i) => {
+        {stateData &&
+          stateData.map((props = {}, i) => {
             const { lat, lng } = props;
 
             if (lat && lat > 0 && lng && lng > 0)
@@ -90,150 +90,6 @@ const ProjectsMap = () => {
 
             return;
           })}
-
-        {/*<Marker
-          latitude={55.685726}
-          longitude={37.704754}
-          offsetLeft={-15}
-          offsetTop={-15}
-        >
-          <CirclePoint
-            onMouseEnter={() => cursorChangeHandler("renderHor-1")}
-            onMouseLeave={() => cursorChangeHandler("")}
-          />
-        </Marker>
-        <Marker
-          latitude={55.732365}
-          longitude={37.609544}
-          offsetLeft={-15}
-          offsetTop={-15}
-        >
-          <CirclePoint
-            onMouseEnter={() => cursorChangeHandler("renderHor-1")}
-            onMouseLeave={() => cursorChangeHandler("")}
-          />
-        </Marker>
-        <Marker
-          latitude={55.842874}
-          longitude={37.822597}
-          offsetLeft={-15}
-          offsetTop={-15}
-        >
-          <CirclePoint
-            onMouseEnter={() => cursorChangeHandler("renderHor-1")}
-            onMouseLeave={() => cursorChangeHandler("")}
-          />
-        </Marker>
-        <Marker
-          latitude={55.798278}
-          longitude={37.570485}
-          offsetLeft={-15}
-          offsetTop={-15}
-        >
-          <CirclePoint
-            onMouseEnter={() => cursorChangeHandler("renderHor-2")}
-            onMouseLeave={() => cursorChangeHandler("")}
-          />
-        </Marker>
-        <Marker
-          latitude={55.826748}
-          longitude={37.345837}
-          offsetLeft={-15}
-          offsetTop={-15}
-        >
-          <CirclePoint
-            onMouseEnter={() => cursorChangeHandler("renderHor-2")}
-            onMouseLeave={() => cursorChangeHandler("")}
-          />
-        </Marker>
-        <Marker
-          latitude={55.670443}
-          longitude={37.526568}
-          offsetLeft={-15}
-          offsetTop={-15}
-        >
-          <CirclePoint
-            onMouseEnter={() => cursorChangeHandler("renderHor-2")}
-            onMouseLeave={() => cursorChangeHandler("")}
-          />
-        </Marker>
-        <Marker
-          latitude={55.739392}
-          longitude={37.656063}
-          offsetLeft={-15}
-          offsetTop={-15}
-        >
-          <CirclePoint
-            onMouseEnter={() => cursorChangeHandler("renderHor-2")}
-            onMouseLeave={() => cursorChangeHandler("")}
-          />
-        </Marker>
-        <Marker
-          latitude={55.794765}
-          longitude={37.365433}
-          offsetLeft={-15}
-          offsetTop={-15}
-        >
-          <CirclePoint
-            onMouseEnter={() => cursorChangeHandler("renderHor-2")}
-            onMouseLeave={() => cursorChangeHandler("")}
-          />
-        </Marker>
-        <Marker
-          latitude={55.790595}
-          longitude={37.679288}
-          offsetLeft={-15}
-          offsetTop={-15}
-        >
-          <CirclePoint
-            onMouseEnter={() => cursorChangeHandler("renderVer-3")}
-            onMouseLeave={() => cursorChangeHandler("")}
-          />
-        </Marker>
-        <Marker
-          latitude={55.752324}
-          longitude={37.675067}
-          offsetLeft={-15}
-          offsetTop={-15}
-        >
-          <CirclePoint
-            onMouseEnter={() => cursorChangeHandler("renderVer-3")}
-            onMouseLeave={() => cursorChangeHandler("")}
-          />
-        </Marker>
-        <Marker
-          latitude={55.713094}
-          longitude={37.49795}
-          offsetLeft={-15}
-          offsetTop={-15}
-        >
-          <CirclePoint
-            onMouseEnter={() => cursorChangeHandler("renderVer-4")}
-            onMouseLeave={() => cursorChangeHandler("")}
-          />
-        </Marker>
-        <Marker
-          latitude={55.738913}
-          longitude={37.544588}
-          offsetLeft={-15}
-          offsetTop={-15}
-        >
-          <CirclePoint
-            onMouseEnter={() => cursorChangeHandler("renderVer-4")}
-            onMouseLeave={() => cursorChangeHandler("")}
-          />
-        </Marker>
-        <Marker
-          latitude={55.832831}
-          longitude={37.474586}
-          offsetLeft={-15}
-          offsetTop={-15}
-        >
-          <CirclePoint
-            onMouseEnter={() => cursorChangeHandler("renderVer-4")}
-            onMouseLeave={() => cursorChangeHandler("")}
-          />
-        </Marker>*/}
       </MapGLWrapped>
     </MapWrapper>
   );

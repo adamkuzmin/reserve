@@ -1,16 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
+import { useStore } from "../../Store/useStore";
 
-import { Row, Col, AutoComplete, Space } from "antd";
-import {
-  FilterWrapper,
-  Filters,
-  FLink,
-  BlackPanel,
-  BlackRow,
-  LabelRow,
-  CloseBtnCol,
-} from "./styles";
+import { Col, AutoComplete } from "antd";
+import { FLink, BlackPanel, BlackRow, LabelRow, CloseBtnCol } from "./styles";
 import { Text24, Wrap24, Wrap16 } from "../common/text";
 
 const AutoCompleteSearch = styled(AutoComplete)`
@@ -52,8 +45,13 @@ const DirsTags = [
   "Арт-объекты и дизайн",
 ];
 
-const DirectionsFilter = ({ setFilterType }) => {
-  const [DirItems, selDirItems] = useState([0]);
+const DirectionsFilter = ({
+  setFilterType,
+  DirItems,
+  selDirItems,
+  toPageTop,
+}) => {
+  const setAnimatedGallery = useStore((state) => state.setAnimatedGallery);
 
   const updateDir = (item) => {
     if (item === 0) {
@@ -87,7 +85,12 @@ const DirectionsFilter = ({ setFilterType }) => {
             <FLink
               data-theme="black"
               key={`FilterDir${i}`}
-              onClick={() => updateDir(i)}
+              onClick={() => {
+                setAnimatedGallery(false);
+                toPageTop();
+
+                updateDir(i);
+              }}
               data-status={DirItems.includes(i) && "active"}
             >
               <Text24>{key}</Text24>
@@ -105,8 +108,8 @@ for (let i = 2021; i >= 2000; i--) {
   YearsTags.push(i);
 }
 
-const YearsFilter = ({ setFilterType }) => {
-  const [YearItems, selYearItems] = useState([0]);
+const YearsFilter = ({ setFilterType, toPageTop, YearItems, selYearItems }) => {
+  const setAnimatedGallery = useStore((state) => state.setAnimatedGallery);
 
   const updateYear = (item) => {
     if (item === 0) {
@@ -140,8 +143,15 @@ const YearsFilter = ({ setFilterType }) => {
             <FLink
               data-theme="black"
               key={`filterYear${i}`}
-              onClick={() => updateYear(i)}
-              data-status={YearItems.includes(i) && "active"}
+              onClick={() => {
+                setAnimatedGallery(false);
+                toPageTop();
+
+                updateYear(key === "Все" ? i : key);
+              }}
+              data-status={
+                YearItems.includes(key === "Все" ? i : key) && "active"
+              }
             >
               <Text24>{key}</Text24>
             </FLink>

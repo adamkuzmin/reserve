@@ -14,6 +14,8 @@ import ProjectsMap from "../../Components/ProjectsLayout/ProjectsMap";
 
 import FloatFilters from "../../Components/Filters/FloatFilters";
 
+import { projectData } from "../../Components/ProjectsLayout/data/data";
+
 const MainContent = styled(Content)`
   &&& {
     padding-left: 40px;
@@ -21,18 +23,28 @@ const MainContent = styled(Content)`
     padding-top: 100px;
     overflow-x: hidden;
 
-    &&[data-type="filter-mode"] {
-      filter: blur(2px);
-      opacity: 0.6;
+    min-height: 100vh;
+
+    & {
+      transition: all 1s ease-in-out;
     }
   }
 `;
 
+const FilterBackdrop = styled.div`
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 9000;
+`;
+
 const Projects = () => {
+  /* записи */
+  const [stateData, setStateData] = useState(projectData);
+
   /**
    * States для анимации галереи
    */
-  const [IsGalleryAnimation, setGalleryAnimation] = useState(true);
 
   const blackLogo = useStore((state) => state.blackLogo);
   const setBlackLogo = useStore((state) => state.setBlackLogo);
@@ -73,18 +85,26 @@ const Projects = () => {
    */
 
   let LayoutBlock;
-  if (LayoutType === 0) {
-    LayoutBlock = <ProjectsTable />;
-  } else if (LayoutType === 1) {
-    LayoutBlock = <ProjectsGallery {...{ IsGalleryAnimation }} />;
-  } else if (LayoutType === 2) {
-    LayoutBlock = <ProjectsMap />;
+
+  switch (LayoutType) {
+    case 0:
+      LayoutBlock = <ProjectsTable {...{ stateData }} />;
+      break;
+    case 1:
+      LayoutBlock = <ProjectsGallery {...{ stateData }} />;
+      break;
+    case 2:
+      LayoutBlock = <ProjectsMap {...{ stateData }} />;
+      break;
   }
 
   return (
     <div>
       <NavRight />
       <Navigation />
+
+      {FilterType && <FilterBackdrop onClick={() => setFilterType(null)} />}
+
       <FloatFilters
         {...{
           //разделы
@@ -95,15 +115,12 @@ const Projects = () => {
           setFilterType,
           //Дополнительное
           toPageTop,
-          setGalleryAnimation,
+          //работа с записями
+          stateData,
+          setStateData,
         }}
       />
-      <MainContent
-        ref={maincontentRef}
-        data-type={FilterType !== null && "filter-mode"}
-      >
-        {LayoutBlock}
-      </MainContent>
+      <MainContent ref={maincontentRef}>{LayoutBlock}</MainContent>
 
       <Content background={"black"}>
         <Footer />

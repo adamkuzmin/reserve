@@ -1,60 +1,183 @@
-import React from "react";
-
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
-import Card from "./components/gallery-card";
+
+import { useStore } from "../../Store/useStore";
+import { Space, Spin } from "antd";
+
 import { Layout } from "./components/gallery-styles";
+import OneColumnGallery from "./components/gallery-column";
+import { RowA, RowB, RowC, RowD } from "./components/gallery-rows";
+import { LoadingOutlined } from "@ant-design/icons";
 
-const OneColumnGallery = ({ position, IsGalleryAnimation }) => (
-  <Layout data-position={position && position}>
-    <Layout.Row>
-      <Card swidth={57} src={"/catalog/1.jpg"} {...{ IsGalleryAnimation }} />
-      <Layout.Col>
-        <Card src={"/catalog/2.jpg"} {...{ IsGalleryAnimation }} />
-        <Layout.Row>
-          <Card src={"/catalog/3.jpg"} {...{ IsGalleryAnimation }} />
-          <Card
-            src={"/catalog/4.jpg"}
-            swidth={60}
-            {...{ IsGalleryAnimation }}
-          />
-        </Layout.Row>
-      </Layout.Col>
-    </Layout.Row>
+import { Text36, Text30 } from "../common/text";
 
-    <Layout.Row>
-      <Card src={"/catalog/5.jpg"} swidth={60} {...{ IsGalleryAnimation }} />
-      <Card src={"/catalog/6.jpg"} {...{ IsGalleryAnimation }} />
-      <Card src={"/catalog/7.jpg"} swidth={90} {...{ IsGalleryAnimation }} />
-    </Layout.Row>
-    <Layout.Row>
-      <Card src={"/catalog/8.jpg"} swidth={92} {...{ IsGalleryAnimation }} />
-      <Card src={"/catalog/9.jpg"} {...{ IsGalleryAnimation }} />
-      <Card src={"/catalog/10.jpg"} swidth={60} {...{ IsGalleryAnimation }} />
-    </Layout.Row>
+const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
-    <Layout.Row>
-      <Layout.Col>
-        <Layout.Row>
-          <Card
-            src={"/catalog/11.jpg"}
-            swidth={55}
-            {...{ IsGalleryAnimation }}
-          />
-          <Card src={"/catalog/12.jpg"} {...{ IsGalleryAnimation }} />
-        </Layout.Row>
-        <Layout.Row>
-          <Card src={"/catalog/14.jpg"} {...{ IsGalleryAnimation }} />
-          <Card
-            src={"/catalog/15.jpg"}
-            swidth={68}
-            {...{ IsGalleryAnimation }}
-          />
-        </Layout.Row>
-      </Layout.Col>
-      <Card src={"/catalog/13.jpg"} swidth={46} {...{ IsGalleryAnimation }} />
-    </Layout.Row>
-  </Layout>
-);
+const BottomTrigger = styled.div`
+  width: 100%;
+  background: rgba(255, 0, 0, 0);
+  height: 250px;
+  /*pointer-events: none;*/
+  opacity: 1;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  && * {
+    color: rgba(0, 0, 0, 1);
+  }
+
+  transform: translateY(-50px);
+`;
+
+const MainGallery = ({ stateData, cards, setCards }) => {
+  const [partCards, setPartCards] = useState([]);
+  const [loadedStep, setLoadedStep] = useState(1);
+  const [needsToLoadMore, setNeedsToLoadMore] = useState(false);
+
+  const setAnimatedGallery = useStore((state) => state.setAnimatedGallery);
+  const setBarIsVisible = useStore((state) => state.setBarIsVisible);
+
+  const bottomTriggerRef = useRef();
+
+  useEffect(() => {
+    if (bottomTriggerRef && partCards.length < cards.length) {
+      const triggerScroll = () => {
+        const top = bottomTriggerRef.current.getBoundingClientRect().top;
+
+        if (top <= window.innerHeight && !needsToLoadMore)
+          setNeedsToLoadMore(true);
+      };
+
+      document.addEventListener("scroll", triggerScroll, true);
+      return () => document.removeEventListener("scroll", triggerScroll, true);
+    }
+  }, [bottomTriggerRef, needsToLoadMore, partCards, cards]);
+
+  useEffect(() => {
+    setPartCards(cards.slice(0, 3));
+    setLoadedStep(1);
+
+    setBarIsVisible(true);
+  }, [cards]);
+
+  useEffect(() => {
+    if (needsToLoadMore) {
+      const fetchMoreData = () => {
+        setAnimatedGallery(false);
+        setPartCards((state) =>
+          state.concat(cards.slice(loadedStep * 3, loadedStep * 3 + 3))
+        );
+        setLoadedStep((state) => state + 1);
+        setNeedsToLoadMore(false);
+        return;
+      };
+
+      const timer = setTimeout(fetchMoreData, 1500);
+
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+  }, [needsToLoadMore, cards, loadedStep]);
+
+  /* количество проектов для каждого ряда */
+  const sequence1 = [4, 3, 3, 5, 3, 3];
+  const sequence2 = [3, 5, 3, 3, 4, 3];
+  const sequence3 = [5, 3, 3, 4, 3, 3];
+
+  const rowType1 = ["A", "B", "C", "D", "C", "B"];
+  const rowType2 = ["C", "D", "C", "B", "A", "B"];
+  const rowType3 = ["D", "C", "B", "A", "B", "C"];
+
+  useEffect(() => {
+    let stepKey = Math.round((Math.random() * 16) % 3);
+
+    let rowType;
+    let sequence;
+
+    switch (stepKey) {
+      case 0:
+        {
+          sequence = sequence1;
+          rowType = rowType1;
+        }
+        break;
+      case 1:
+        {
+          sequence = sequence2;
+          rowType = rowType2;
+        }
+        break;
+      case 2:
+        {
+          sequence = sequence3;
+          rowType = rowType3;
+        }
+        break;
+      default:
+        {
+          sequence = sequence1;
+          rowType = rowType1;
+        }
+        break;
+    }
+
+    const sumOfCycle = [...sequence].reduce((prev, curr) => prev + curr);
+    const cyclesAmount = Math.ceil(stateData.length / sumOfCycle);
+
+    let copiedData = [...stateData];
+    let components = [];
+
+    /* дробим на порции для row компонентов */
+    for (let i = 0; i < cyclesAmount; i++) {
+      for (let b = 0; b < sequence.length; b++) {
+        const part = copiedData.splice(0, sequence[b]);
+
+        if (part.length > 0) {
+          switch (rowType[b]) {
+            case "A":
+              components.push(<RowA {...{ data: part }} />);
+              break;
+            case "B":
+              components.push(<RowB {...{ data: part }} />);
+              break;
+            case "C":
+              components.push(<RowC {...{ data: part }} />);
+              break;
+            case "D":
+              components.push(<RowD {...{ data: part }} />);
+              break;
+          }
+        }
+      }
+    }
+
+    setCards(components);
+  }, [stateData]);
+
+  return (
+    <Layout>
+      {partCards}
+      {partCards && partCards.length < cards.length && (
+        <BottomTrigger ref={bottomTriggerRef}>
+          <Space size={25}>
+            <Spin indicator={antIcon} />
+            <Text30>Загрузка проектов...</Text30>
+          </Space>
+        </BottomTrigger>
+      )}
+      {partCards.length >= cards.length && (
+        <BottomTrigger>
+          <Space size={25}>
+            <Text30>🤐 Конец списка</Text30>
+          </Space>
+        </BottomTrigger>
+      )}
+    </Layout>
+  );
+};
 
 const CommonLayout = styled.div`
   width: 100%;
@@ -72,14 +195,25 @@ const LayoutWrapper = styled.div`
   height: 100%;
 `;
 
-const ProjectsGallery = ({ IsGalleryAnimation }) => {
+const ProjectsGallery = ({ stateData }) => {
+  //cards - row компоненты с 3, 4, 5 карточками
+  const [cards, setCards] = useState([]);
+
   return (
     <LayoutWrapper>
-      <CommonLayout>
-        <OneColumnGallery position="left" {...{ IsGalleryAnimation }} />
-        <OneColumnGallery position="right" {...{ IsGalleryAnimation }} />
-        <OneColumnGallery {...{ IsGalleryAnimation }} />
-      </CommonLayout>
+      {cards && (
+        <CommonLayout>
+          <OneColumnGallery position="left" />
+          <OneColumnGallery position="right" />
+          <MainGallery
+            {...{
+              stateData,
+              cards,
+              setCards,
+            }}
+          />
+        </CommonLayout>
+      )}
     </LayoutWrapper>
   );
 };

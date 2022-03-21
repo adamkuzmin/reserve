@@ -16,8 +16,9 @@ const useStore = create((set) => ({
   /* открыта ли правая навигация */
   navIsOpened: false,
   setNavIsOpened: (e) => set(() => ({ navIsOpened: e })),
-  /* предзагрузка */
-  
+  /* стэйт должна ли быть галерея анимированной */
+  animatedGallery: true,
+  setAnimatedGallery: (e) => set(() => ({ animatedGallery: e })),
 }));
 
 export { useStore };

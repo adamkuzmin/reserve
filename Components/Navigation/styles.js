@@ -12,6 +12,7 @@ const Nav = styled.div`
     padding-right: 40px;
     z-index: 9999;
     transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+    pointer-events: none;
 
     @media (max-width: 1000px) {
       & {
@@ -30,6 +31,7 @@ Nav.Logo = styled.div`
   height: 49px;
   background-size: cover;
   mix-blend-mode: difference;
+  pointer-events: visible;
 
   &&[data-type="black"] {
     background-image: url("/icons/navlogo-black.png");
@@ -59,7 +61,7 @@ Nav.BurgerWrapper = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  cursor: pointer;
+  pointer-events: visible;
 
   && {
     @media (max-width: 480px) {

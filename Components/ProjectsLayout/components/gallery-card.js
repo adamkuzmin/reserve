@@ -19,9 +19,15 @@ const cardsData = {
   },
 };
 
-const Card = ({ swidth, src, IsGalleryAnimation }) => {
+const Card = ({ swidth, src, meta, ratio = "horizontal" }) => {
   const lang = useStore((state) => state.lang);
+  const animatedGallery = useStore((state) => state.animatedGallery);
   const router = useRouter();
+
+  const localMeta = meta ? meta : {};
+  const { coverhor, coververt, finished, nameru, nameen } = localMeta;
+  const metaRatio = ratio === "vertical" ? coverhor : coververt;
+  const metaSrc = `/projects/Frame%20${metaRatio}.jpg`;
 
   const [RandomTime, setRandomTime] = useState(0);
 
@@ -32,20 +38,22 @@ const Card = ({ swidth, src, IsGalleryAnimation }) => {
   return (
     <Layout.Project
       {...{ swidth, randomtime: RandomTime }}
-      data-effect={IsGalleryAnimation && "fade"}
+      data-effect={animatedGallery && "fade"}
       onClick={() => router.push("/project")}
     >
-      <Render {...{ src }} />
+      <Render {...{ src: meta ? metaSrc : src }} />
       <Header data-type="card-header">
         <Header.Title>
           <TextWrapper data-type="text-wrapper" direction={-100}>
             <p>
-              <Text30 data-font="wremena">{cardsData.a1.title[lang]}</Text30>
+              <Text30 data-font="wremena">Объект культуры</Text30>
             </p>
           </TextWrapper>
           <TextWrapper data-type="text-wrapper" direction={100}>
             <h3>
-              <Text48 data-type="title">{cardsData.a1.message[lang]}</Text48>
+              <Text48 data-type="title">
+                {meta ? (lang === "ru" ? nameru : nameen) : null}
+              </Text48>
             </h3>
           </TextWrapper>
         </Header.Title>
@@ -53,7 +61,7 @@ const Card = ({ swidth, src, IsGalleryAnimation }) => {
           <TextWrapper data-type="text-wrapper">
             <div>
               <Text30 data-font="wremena" direction={-100}>
-                2018
+                {finished && finished}
               </Text30>
             </div>
           </TextWrapper>
