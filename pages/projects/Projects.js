@@ -40,6 +40,24 @@ const MainContent = styled(Content)`
     & {
       transition: all 1s ease-in-out;
     }
+
+    transform: translateY(20px);
+    opacity: 0;
+
+    animation: SectionAppear 0.4s cubic-bezier(.19,1,.22,1) 0.5s;
+    @keyframes SectionAppear {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    animation-fill-mode: forwards;
   }
 `;
 
@@ -132,7 +150,9 @@ const Projects = () => {
           setStateData,
         }}
       />
-      <MainContent ref={maincontentRef}>{LayoutBlock}</MainContent>
+      <MainContent key={`contentType:${LayoutType}`} ref={maincontentRef}>
+        {LayoutBlock}
+      </MainContent>
 
       <Content background={"black"}>
         <Footer />

@@ -31,8 +31,6 @@ const DotRing = () => {
   const ring_className = !conditionOfShow ? "ring" : `ring ` + imgClass;
   const dot_className = !conditionOfShow ? "dot" : "dot " + imgClass;
 
-  console.log("imgName", imgName);
-
   return (
     <>
       {/* 2. */}

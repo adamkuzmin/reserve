@@ -31,7 +31,7 @@ const BottomTrigger = styled.div`
   transform: translateY(-50px);
 `;
 
-const MainGallery = ({ stateData, cards, setCards }) => {
+const MainGallery = ({ stateData, cards, setCards, showBottomTrigger }) => {
   const [partCards, setPartCards] = useState([]);
   const [loadedStep, setLoadedStep] = useState(1);
   const [needsToLoadMore, setNeedsToLoadMore] = useState(false);
@@ -160,7 +160,7 @@ const MainGallery = ({ stateData, cards, setCards }) => {
   return (
     <Layout>
       {partCards}
-      {partCards && partCards.length < cards.length && (
+      {showBottomTrigger && partCards && partCards.length < cards.length && (
         <BottomTrigger ref={bottomTriggerRef}>
           <Space size={25}>
             <Spin indicator={antIcon} />
@@ -168,7 +168,7 @@ const MainGallery = ({ stateData, cards, setCards }) => {
           </Space>
         </BottomTrigger>
       )}
-      {partCards.length >= cards.length && (
+      {showBottomTrigger && partCards.length >= cards.length && (
         <BottomTrigger>
           <Space size={25}>
             <Text30>🤐 Конец списка</Text30>
@@ -198,18 +198,32 @@ const LayoutWrapper = styled.div`
 const ProjectsGallery = ({ stateData }) => {
   //cards - row компоненты с 3, 4, 5 карточками
   const [cards, setCards] = useState([]);
+  const animatedGallery = useStore((state) => state.animatedGallery);
+
+  /* чтобы лишний раз не светить триггером */
+  const [showBottomTrigger, setShowBottomTrigger] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowBottomTrigger(true), 2000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  });
+  /* */
 
   return (
     <LayoutWrapper>
       {cards && (
         <CommonLayout>
-          <OneColumnGallery position="left" />
-          <OneColumnGallery position="right" />
+          {animatedGallery && <OneColumnGallery position="left" />}
+          {animatedGallery && <OneColumnGallery position="right" />}
           <MainGallery
             {...{
               stateData,
               cards,
               setCards,
+              showBottomTrigger,
             }}
           />
         </CommonLayout>

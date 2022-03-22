@@ -62,7 +62,7 @@ Layout.Project = styled.div`
     opacity: 0;
 
     animation: ImageRender 3.5s ease-in-out
-      ${({ randomtime }) => (randomtime ? `${randomtime * 1.2 + 2}s` : `2.5s`)};
+      ${({ randomtime }) => (randomtime ? `${randomtime * 1.2 + 0.5}s` : `.5s`)};
     @keyframes ImageRender {
       0% {
         opacity: 0;
