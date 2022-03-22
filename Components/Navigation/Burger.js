@@ -16,7 +16,7 @@ const Burger = ({ iswhite, ...props }) => {
   return (
     <Nav.BurgerWrapper
       onMouseEnter={() => cursorChangeHandler("hovered")}
-      onMouseLeave={() => cursorChangeHandler("")}
+      onMouseLeave={() => cursorChangeHandler(null)}
       data-status={navIsOpened ? "opened" : "closed"}
       onClick={(e) => {
         e.stopPropagation();

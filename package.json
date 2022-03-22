@@ -24,6 +24,7 @@
     "react-kursor": "^1.0.0",
     "react-map-gl": "^6.1.17",
     "react-three-fiber": "^6.0.13",
+    "string-to-color": "^2.2.2",
     "styled-components": "^5.3.3",
     "swiper": "^8.0.6",
     "three": "^0.134.0",

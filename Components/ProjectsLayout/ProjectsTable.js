@@ -226,17 +226,17 @@ const ProjectsTable = ({ stateData }) => {
         {!wireMode && (
           <PTable
             onRow={(record, rowIndex) => {
-              const rowClasses = [
-                "renderHor-1",
-                "renderHor-2",
-                "renderVer-3",
-                "renderVer-4",
-              ];
+              const { coververt, coverhor } = record;
+              const cover = rowIndex % 2 === 0 ? coververt : coverhor;
+              const coverClass =
+                rowIndex % 2 === 0 ? "renderHor-1" : "renderVer-3";
 
+              const metaSrc = cover ? `/projects/Frame%20${cover}.jpg` : "";
+              
               return {
                 onMouseEnter: () =>
-                  cursorChangeHandler(rowClasses[rowIndex % 4]),
-                onMouseLeave: () => cursorChangeHandler(""),
+                  cursorChangeHandler({ url: metaSrc, coverClass }),
+                onMouseLeave: () => cursorChangeHandler(null),
               };
             }}
             columns={columns}

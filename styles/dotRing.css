@@ -47,6 +47,23 @@
 
   /* Img 1 */
 
+  .ringLabel {
+    background-color: rgba(0,0,0,.9);
+    border-radius: 100px;
+    color: white;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%) translateY(40px);
+    max-width: 200px;
+  }
+
+  .ringLabel * {
+    color: white !important;
+    margin: 8px 15px !important;
+    font-size: 12px;
+  }  
+
   .ring.renderHor-1 {
     width: 300px;
     height: 240px;
@@ -68,8 +85,6 @@
     width: 300px;
     height: 240px;
     background-color: grey;
-    background: url("/catalog/9.jpg");
-    background-size: cover;
     border-width: 0;
     border-radius: 0;
     opacity: 1
@@ -84,8 +99,6 @@
     width: 200px;
     height: 360px;
     background-color: grey;
-    background: url("/catalog/1.jpg");
-    background-size: cover;
     border-width: 0;
     border-radius: 0;
     opacity: 1
@@ -99,8 +112,6 @@
   .ring.renderVer-4 {
     width: 200px;
     height: 360px;
-    background-color: grey;
-    background: url("/catalog/4.jpg");
     background-size: cover;
     border-width: 0;
     border-radius: 0;

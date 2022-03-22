@@ -20,24 +20,6 @@ const PageHead = () => {
 
       <link rel="preload" as="image" href={`/icons/navlogo-black.png`}></link>
       <link rel="preload" as="image" href={`/icons/navlogo-white.png`}></link>
-
-      {projectData &&
-        projectData.map(({ coverhor, coververt }, i) => {
-          return (
-            <React.Fragment key={`link:rel${i}`}>
-              <link
-                rel="preload"
-                as="image"
-                href={`/projects/Frame%20${coverhor}.jpg`}
-              ></link>
-              <link
-                rel="preload"
-                as="image"
-                href={`/projects/Frame%20${coververt}.jpg`}
-              ></link>
-            </React.Fragment>
-          );
-        })}
     </Head>
   );
 };
