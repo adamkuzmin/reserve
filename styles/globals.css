@@ -2,6 +2,11 @@
 
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;600&display=swap');
 
+/* Skeleton */
+.ant-skeleton * {
+  border-radius: 50px !important
+}
+
 /** Preload */
 .preload-backWrapper {
   width: 100vw;
