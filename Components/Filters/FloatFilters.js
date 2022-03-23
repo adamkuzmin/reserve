@@ -10,7 +10,7 @@ import { projectData } from "../ProjectsLayout/data/data";
 
 const MobileFilterWrapper = styled.div`
   width: 100vw;
-  height: 80px;
+  height: 0px;
   position: fixed;
   top: auto;
   bottom: 0;
