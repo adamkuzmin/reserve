@@ -133,6 +133,8 @@ const BlackPanel = styled.div`
   right: 0;
   bottom: calc(100% + 4px);
 
+  pointer-events: visible;
+
   && * {
     color: white;
   }
@@ -140,7 +142,7 @@ const BlackPanel = styled.div`
   @media (max-width: 480px) {
     &&& {
       width: 100%;
-      border-radius: 25px
+      border-radius: 25px;
     }
   }
 `;
