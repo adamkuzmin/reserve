@@ -15,6 +15,7 @@ const MobileFilterWrapper = styled.div`
   top: auto;
   bottom: 0;
 
+  z-index: 9300;
   pointer-events: none;
 `;
 

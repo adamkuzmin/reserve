@@ -143,6 +143,7 @@ const BlackPanel = styled.div`
     &&& {
       width: 100%;
       border-radius: 25px;
+      bottom: calc(100%);
     }
   }
 `;
