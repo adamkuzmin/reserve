@@ -8,6 +8,9 @@ import { projectData } from "../ProjectsLayout/data/data";
 const PageHead = () => {
   const pageTitle = useStore((state) => state.pageTitle);
 
+  const cutData = [...projectData].slice(0, 9);
+  console.log(cutData);
+
   return (
     <Head>
       <title>ТПО «РЕЗЕРВ»{pageTitle && ` — ${pageTitle}`}</title>
@@ -19,7 +22,7 @@ const PageHead = () => {
 
       <link rel="preload" as="image" href={`/carousel/1.jpg`}></link>
 
-      {projectData.splice(0, 9).map(({ coverhor, coververt }, i) => {
+      {cutData.map(({ coverhor, coververt }, i) => {
         const metaSrcHot = `/projects/Frame%20${coverhor}.jpg`;
         const metaSrcVert = `/projects/Frame%20${coververt}.jpg`;
 
