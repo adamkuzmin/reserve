@@ -19,7 +19,6 @@ const TableWrapper = styled.div`
   @media (max-width: 576px) {
     &&&& {
       width: calc(100vw - 40px);
-      margin-left: -20px;
     }
   }
 `;

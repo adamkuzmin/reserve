@@ -37,6 +37,8 @@ const MainContent = styled(Content)`
 
     @media (max-width: 576px) {
       & {
+        padding-left: 20px;
+        padding-right: 20px;
         padding-top: 70px;
       }
     }

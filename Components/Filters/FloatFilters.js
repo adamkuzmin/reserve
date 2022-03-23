@@ -8,6 +8,16 @@ import { DirectionsFilter, YearsFilter, SearchFilter } from "./ProjectsFilter";
 
 import { projectData } from "../ProjectsLayout/data/data";
 
+const MobileFilterWrapper = styled.div`
+  width: 100vw;
+  height: 80px;
+  position: fixed;
+  top: auto;
+  bottom: 0;
+
+  pointer-events: none;
+`;
+
 import { Badge, Grid } from "antd";
 const { useBreakpoint } = Grid;
 
@@ -39,6 +49,14 @@ const filterData = {
 };
 
 const IfDesktop = ({ visible = true, children }) => {
+  if (visible) {
+    return children;
+  }
+
+  return null;
+};
+
+const IfMobile = ({ visible = true, children }) => {
   if (visible) {
     return children;
   }
@@ -114,133 +132,233 @@ const FloatFilters = ({
   const lang = useStore((state) => state.lang);
 
   return (
-    <FilterWrapper data-animation={animatedGallery ? "true" : "false"} size={0}>
-      {
-        /**
-         * Фильтр "Направления"
-         */
-        FilterType === 1 && (
-          <DirectionsFilter
-            {...{
-              setFilterType,
-              stateData,
-              setStateData,
-              DirItems,
-              selDirItems,
-              toPageTop,
-            }}
-          />
-        )
-      }
-      {
-        /**
-         * Фильтр "Года"
-         */
-        FilterType === 2 && (
-          <YearsFilter
-            {...{
-              setFilterType,
-              stateData,
-              setStateData,
-              YearItems,
-              selYearItems,
-              toPageTop,
-            }}
-          />
-        )
-      }
-      {
-        /**
-         * Фильтр "Года"
-         */
-        FilterType === 3 && (
-          <SearchFilter
-            {...{
-              setFilterType,
-              stateData,
-              setStateData,
-              toPageTop,
-            }}
-          />
-        )
-      }
+    <>
+      <IfMobile visible={!screens.sm}>
+        <MobileFilterWrapper>
+          {
+            /**
+             * Фильтр "Направления"
+             */
+            FilterType === 1 && (
+              <DirectionsFilter
+                {...{
+                  setFilterType,
+                  stateData,
+                  setStateData,
+                  DirItems,
+                  selDirItems,
+                  toPageTop,
+                }}
+              />
+            )
+          }
+          {
+            /**
+             * Фильтр "Года"
+             */
+            FilterType === 2 && (
+              <YearsFilter
+                {...{
+                  setFilterType,
+                  stateData,
+                  setStateData,
+                  YearItems,
+                  selYearItems,
+                  toPageTop,
+                }}
+              />
+            )
+          }
+          {
+            /**
+             * Фильтр "Года"
+             */
+            FilterType === 3 && (
+              <SearchFilter
+                {...{
+                  setFilterType,
+                  stateData,
+                  setStateData,
+                  toPageTop,
+                }}
+              />
+            )
+          }
+        </MobileFilterWrapper>
+      </IfMobile>
 
-      <Filters size={0}>
-        <FLink
-          data-type={LayoutType === 1 && "link"}
-          onClick={() => {
-            setAnimatedGallery(false);
-            setLayoutType(1);
-            toPageTop();
-            setBarIsVisible(Math.random());
-          }}
-        >
-          <Text24>{filterData.gallery[lang]}</Text24>
-        </FLink>
-        <FLink
-          data-type={LayoutType === 0 && "link"}
-          onClick={() => {
-            setAnimatedGallery(false);
-            setLayoutType(0);
-            toPageTop();
-            setBarIsVisible(Math.random());
-          }}
-        >
-          <Text24>{filterData.list[lang]}</Text24>
-        </FLink>
-        <FLink
-          data-type={LayoutType === 2 && "link"}
-          onClick={() => {
-            setAnimatedGallery(false);
-            setLayoutType(2);
-            toPageTop();
-            setBarIsVisible(Math.random());
-          }}
-        >
-          <Text24>{filterData.map[lang]}</Text24>
-        </FLink>
-      </Filters>
+      <FilterWrapper
+        data-animation={animatedGallery ? "true" : "false"}
+        size={0}
+      >
+        <IfDesktop visible={screens.sm}>
+          {
+            /**
+             * Фильтр "Направления"
+             */
+            FilterType === 1 && (
+              <DirectionsFilter
+                {...{
+                  setFilterType,
+                  stateData,
+                  setStateData,
+                  DirItems,
+                  selDirItems,
+                  toPageTop,
+                }}
+              />
+            )
+          }
+          {
+            /**
+             * Фильтр "Года"
+             */
+            FilterType === 2 && (
+              <YearsFilter
+                {...{
+                  setFilterType,
+                  stateData,
+                  setStateData,
+                  YearItems,
+                  selYearItems,
+                  toPageTop,
+                }}
+              />
+            )
+          }
+          {
+            /**
+             * Фильтр "Года"
+             */
+            FilterType === 3 && (
+              <SearchFilter
+                {...{
+                  setFilterType,
+                  stateData,
+                  setStateData,
+                  toPageTop,
+                }}
+              />
+            )
+          }
+        </IfDesktop>
 
-      <IfDesktop visible={screens.sm}>
-        <Filters
-          size={0}
-          data-block="filter"
-          data-theme={FilterType !== null && "black"}
-        >
-          <Badge
-            count={DirItems.includes(0) ? 0 : DirItems.length}
-            offset={[-15, 0]}
+        <Filters size={0}>
+          <FLink
+            data-type={LayoutType === 1 && "link"}
+            onClick={() => {
+              setAnimatedGallery(false);
+              setLayoutType(1);
+              toPageTop();
+              setBarIsVisible(Math.random());
+            }}
           >
-            <FLink
-              data-type={FilterType !== null && FilterType !== 1 && "notfilter"}
-              onClick={() => setFilterType(1)}
-            >
-              <Text24>{filterData.direction[lang]}</Text24>
-            </FLink>
-          </Badge>
-          <Badge
-            count={YearItems.includes(0) ? 0 : YearItems.length}
-            offset={[-15, 0]}
+            <Text24>{filterData.gallery[lang]}</Text24>
+          </FLink>
+          <FLink
+            data-type={LayoutType === 0 && "link"}
+            onClick={() => {
+              setAnimatedGallery(false);
+              setLayoutType(0);
+              toPageTop();
+              setBarIsVisible(Math.random());
+            }}
           >
-            <FLink
-              data-type={FilterType !== null && FilterType !== 2 && "notfilter"}
-              onClick={() => setFilterType(2)}
-            >
-              <Text24>{filterData.year[lang]}</Text24>
-            </FLink>
-          </Badge>
-          <Badge count={0} offset={[-15, 0]}>
-            <FLink
-              data-type={FilterType !== null && FilterType !== 3 && "notfilter"}
-              onClick={() => setFilterType(3)}
-            >
-              <Text24>{filterData.search[lang]}</Text24>
-            </FLink>
-          </Badge>
+            <Text24>{filterData.list[lang]}</Text24>
+          </FLink>
+          <FLink
+            data-type={LayoutType === 2 && "link"}
+            onClick={() => {
+              setAnimatedGallery(false);
+              setLayoutType(2);
+              toPageTop();
+              setBarIsVisible(Math.random());
+            }}
+          >
+            <Text24>{filterData.map[lang]}</Text24>
+          </FLink>
         </Filters>
-      </IfDesktop>
-    </FilterWrapper>
+
+        <IfDesktop visible={screens.sm}>
+          <Filters
+            size={0}
+            data-block="filter"
+            data-theme={FilterType !== null && "black"}
+          >
+            <Badge
+              count={DirItems.includes(0) ? 0 : DirItems.length}
+              offset={[-15, 0]}
+            >
+              <FLink
+                data-type={
+                  FilterType !== null && FilterType !== 1 && "notfilter"
+                }
+                onClick={() => setFilterType(1)}
+              >
+                <Text24>{filterData.direction[lang]}</Text24>
+              </FLink>
+            </Badge>
+            <Badge
+              count={YearItems.includes(0) ? 0 : YearItems.length}
+              offset={[-15, 0]}
+            >
+              <FLink
+                data-type={
+                  FilterType !== null && FilterType !== 2 && "notfilter"
+                }
+                onClick={() => setFilterType(2)}
+              >
+                <Text24>{filterData.year[lang]}</Text24>
+              </FLink>
+            </Badge>
+            <Badge count={0} offset={[-15, 0]}>
+              <FLink
+                data-type={
+                  FilterType !== null && FilterType !== 3 && "notfilter"
+                }
+                onClick={() => setFilterType(3)}
+              >
+                <Text24>{filterData.search[lang]}</Text24>
+              </FLink>
+            </Badge>
+          </Filters>
+        </IfDesktop>
+
+        <IfMobile visible={!screens.sm}>
+          <Filters
+            size={0}
+            data-block="filter"
+            data-theme={FilterType !== null && "black"}
+          >
+            <FLink onClick={() => setFilterType(1)}>
+              <div style={{ transform: "scale(0.85) translateY(3px)" }}>
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="currentColor"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M10.2782 3.5087C10.2782 2.56501 11.0432 1.8 11.9869 1.8C12.9306 1.8 13.6956 2.56501 13.6956 3.5087C13.6956 4.45238 12.9306 5.21739 11.9869 5.21739C11.0432 5.21739 10.2782 4.45238 10.2782 3.5087ZM8.59474 4.4087H0.247803V2.6087H8.59474C8.99212 1.10697 10.3603 0 11.9869 0C13.9247 0 15.4956 1.5709 15.4956 3.5087C15.4956 5.4465 13.9247 7.01739 11.9869 7.01739C10.3603 7.01739 8.99212 5.91042 8.59474 4.4087Z"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M5.21737 11.987C5.21737 11.0433 4.45236 10.2783 3.50867 10.2783C2.56499 10.2783 1.79998 11.0433 1.79998 11.987C1.79998 12.9307 2.56499 13.6957 3.50867 13.6957C4.45236 13.6957 5.21737 12.9307 5.21737 11.987ZM6.90087 12.887H15.2478V11.087H6.90087C6.50349 9.58524 5.13535 8.47827 3.50867 8.47827C1.57087 8.47827 -2.38419e-05 10.0492 -2.38419e-05 11.987C-2.38419e-05 13.9248 1.57087 15.4957 3.50867 15.4957C5.13535 15.4957 6.50349 14.3887 6.90087 12.887Z"
+                  />
+                </svg>
+              </div>
+            </FLink>
+          </Filters>
+        </IfMobile>
+      </FilterWrapper>
+    </>
   );
 };
 
 export default FloatFilters;
+
+/* data-theme={FilterType !== null && "black"} */

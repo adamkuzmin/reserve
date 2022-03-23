@@ -9,9 +9,10 @@ import { Text30 } from "../common/text";
 
 import { newsData, newsList, interviewData } from "./news/data";
 
-import { Skeleton, Row, Col, Space } from "antd";
+import { Skeleton, Row, Col, Space, Grid } from "antd";
 
 import { ContentFlex, Gap, LocalTitle } from "../About/common/styles";
+const { useBreakpoint } = Grid;
 
 const MainContent = styled.div`
   width: 100%;
@@ -20,6 +21,12 @@ const MainContent = styled.div`
 
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 576px) {
+    &&& {
+      min-width: 100%;
+    }
+  }
 `;
 
 const WireSpace = styled.div`
@@ -99,6 +106,7 @@ const WireWrapper = ({ children, loading }) => {
 
 const News = ({ interviews = false }) => {
   const [loadingData, setLoadingData] = useState(true);
+  const screens = useBreakpoint();
 
   useEffect(() => {
     const showData = setTimeout(() => setLoadingData(false), 1800);
@@ -167,7 +175,7 @@ const News = ({ interviews = false }) => {
       <Gap sheight={"120px"} />
 
       <ContentFlex>
-        <Gap swidth={`12.1vw`} />
+        {screens.sm && <Gap swidth={`12.1vw`} />}
 
         <MainContent>
           <WireWrapper loading={loadingData}>

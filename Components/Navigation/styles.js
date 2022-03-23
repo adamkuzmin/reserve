@@ -24,6 +24,13 @@ const Nav = styled.div`
   &&[data-status="closed"] {
     transform: translateY(-100%);
   }
+
+  @media (max-width: 480px) {
+    && {
+      padding-left: calc(20px + 10px);
+      padding-right: 20px;
+    }
+  }
 `;
 
 Nav.Logo = styled.div`

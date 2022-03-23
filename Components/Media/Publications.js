@@ -36,6 +36,13 @@ const MembersWrapper = styled.div`
     column-gap: 60px;
     row-gap: 70px;
   }
+
+  @media (max-width: 576px) {
+    && {
+      grid-template-columns: 1fr 1fr;
+      column-gap: 2px;
+    }
+  }
 `;
 
 const Member = styled.div`

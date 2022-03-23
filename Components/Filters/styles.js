@@ -42,6 +42,12 @@ const Filters = styled(Space)`
 
   &&&[data-block="filter"] {
     margin-left: 40px;
+
+    @media (max-width: 576px) {
+      & {
+        margin-left: 20px;
+      }
+    }
   }
 
   &&&&[data-theme="black"] {
@@ -129,6 +135,13 @@ const BlackPanel = styled.div`
 
   && * {
     color: white;
+  }
+
+  @media (max-width: 480px) {
+    &&& {
+      width: 100%;
+      border-radius: 25px
+    }
   }
 `;
 

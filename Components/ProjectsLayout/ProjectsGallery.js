@@ -206,7 +206,7 @@ const LayoutWrapperMobile = styled.div`
   overflow: hidden;
   height: 100%;
 
-  margin-left: -40px;
+  margin-left: -20px
 `;
 
 const ProjectsGallery = ({ stateData }) => {

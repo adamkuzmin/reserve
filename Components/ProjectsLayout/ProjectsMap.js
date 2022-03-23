@@ -68,7 +68,7 @@ const MapWrapper = styled.div`
     &&& {
       width: 100vw;
       height: 100vh;
-      margin-left: -40px;
+      margin-left: -20px;
     }
   }
 `;
