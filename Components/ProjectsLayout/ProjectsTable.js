@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useContext, useEffect, useState } from "react";
 
-import { Table, Typography, Skeleton } from "antd";
+import { Table, Typography, Skeleton, Space } from "antd";
 
 import { MouseContext } from "../common/Cursor/mouse-context";
 import { projectData } from "./data/data";
@@ -140,9 +140,11 @@ const columns = [
       return (
         <CatsArray>
           <StyledText data-font="ibm">
-            <Paragraph style={{ marginBottom: "0" }}>
-              {categories.reduce((prev, current) => `${prev}, ${current}`)}
-            </Paragraph>
+            <Space direction="vertical">
+              {categories.splice(0,2).map((category, i) => (
+                <Paragraph style={{ marginBottom: "0" }}>{category}</Paragraph>
+              ))}
+            </Space>
           </StyledText>
         </CatsArray>
       );
@@ -232,7 +234,7 @@ const ProjectsTable = ({ stateData }) => {
                 rowIndex % 2 === 0 ? "renderHor-1" : "renderVer-3";
 
               const metaSrc = cover ? `/projects/Frame%20${cover}.jpg` : "";
-              
+
               return {
                 onMouseEnter: () =>
                   cursorChangeHandler({ url: metaSrc, coverClass }),

@@ -21,7 +21,6 @@ const CirclePoint = styled.div`
   width: 22px;
   height: 22px;
   background: black;
-  border-radius: 50%;
   cursor: pointer;
   transition: transform 0.6s ease-in-out;
 
@@ -30,6 +29,18 @@ const CirclePoint = styled.div`
 
   &&:hover {
     transform: scale(1.1);
+  }
+
+  &&[data-type="0"] {
+    border-radius: 50%;
+  }
+
+  &&[data-type="1"] {
+    transform: rotate(45deg)
+  }
+
+  &&[data-type="2"] {
+    border-radius: 30%;
   }
 `;
 
@@ -137,6 +148,7 @@ const ProjectsMap = ({ stateData }) => {
             >
               <CirclePoint
                 color={stc(color)}
+                data-type={`${i % 4}`}
                 onMouseEnter={() => {
                   return cursorChangeHandler({
                     url: metaSrc,
