@@ -163,6 +163,11 @@ const Wrap16 = styled.div`
   font-size: 16px;
 `;
 
+const Text14 = styled.span`
+  font-size: 14px;
+  line-height: 1.25;
+`;
+
 export {
   Text254,
   Text96,
@@ -174,4 +179,5 @@ export {
   Text24,
   Wrap24,
   Wrap16,
+  Text14
 };

@@ -1,19 +1,27 @@
 import styled from "styled-components";
 import { useContext, useEffect, useState } from "react";
 
-import { Table, Typography, Skeleton, Space } from "antd";
+import { Table, Typography, Skeleton, Space, Grid } from "antd";
 
 import { MouseContext } from "../common/Cursor/mouse-context";
 import { projectData } from "./data/data";
 
 import stc from "string-to-color";
 
-import { Text24, Wrap24 } from "../common/text";
+import { Text24, Wrap24, Text14 } from "../common/text";
+const { useBreakpoint } = Grid;
 
 const { Paragraph, Text } = Typography;
 
 const TableWrapper = styled.div`
   width: 100%;
+
+  @media (max-width: 576px) {
+    &&&& {
+      width: calc(100vw - 40px);
+      margin-left: -20px;
+    }
+  }
 `;
 
 const CatsArray = styled.div`
@@ -25,6 +33,23 @@ const CatsArray = styled.div`
 `;
 
 const StyledText = styled(Text24)`
+  && {
+    line-height: 1.33;
+    letter-spacing: -0.01em;
+    font-weight: 400;
+  }
+
+  &&[data-weight="semibold"] {
+    font-weight: 600;
+  }
+`;
+
+const MobileText = styled(Text14)`
+  &&&& {
+    font-size: 14px !important;
+    line-height: 1.25 !important;
+  }
+
   && {
     line-height: 1.33;
     letter-spacing: -0.01em;
@@ -89,6 +114,23 @@ const SmallPick = styled.div`
   transform: rotate(45deg);
   filter: brightness(1.75);
 `;
+
+const mobileColumns = [
+  {
+    title: <MobileText data-font="ibm">Название</MobileText>,
+    dataIndex: "nameru",
+    key: "name",
+    width: "80%",
+    render: (a) => <MobileText data-font="ibm">{a}</MobileText>,
+  },
+  {
+    title: <MobileText data-font="ibm">Год</MobileText>,
+    dataIndex: "finished",
+    key: "finished",
+    width: "20%",
+    render: (a) => <MobileText data-font="ibm">{a}</MobileText>,
+  },
+];
 
 const columns = [
   {
@@ -225,6 +267,8 @@ const wireColumns = [
 ];
 
 const ProjectsTable = ({ stateData }) => {
+  const screens = useBreakpoint();
+
   const { cursorType, cursorChangeHandler } = useContext(MouseContext);
   const [wireMode, setWireMode] = useState(true);
 
@@ -258,7 +302,7 @@ const ProjectsTable = ({ stateData }) => {
                 onMouseLeave: () => cursorChangeHandler(null),
               };
             }}
-            columns={columns}
+            columns={screens.md ? columns : mobileColumns}
             dataSource={stateData}
             showSizeChanger={false}
             pagination={false}
