@@ -2,14 +2,19 @@ import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 
 import { useStore } from "../../Store/useStore";
-import { Space, Spin } from "antd";
+import { Space, Spin, Grid } from "antd";
 
 import { Layout } from "./components/gallery-styles";
 import OneColumnGallery from "./components/gallery-column";
 import { RowA, RowB, RowC, RowD } from "./components/gallery-rows";
 import { LoadingOutlined } from "@ant-design/icons";
 
+/* mobile */
+import MobileGallery from "./components/mobile/gallery";
+
 import { Text36, Text30 } from "../common/text";
+
+const { useBreakpoint } = Grid;
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -195,9 +200,21 @@ const LayoutWrapper = styled.div`
   height: 100%;
 `;
 
+const LayoutWrapperMobile = styled.div`
+  max-width: calc(100vw);
+  width: calc(100vw);
+  overflow: hidden;
+  height: 100%;
+
+  margin-left: -40px;
+`;
+
 const ProjectsGallery = ({ stateData }) => {
+  const screens = useBreakpoint();
+
   //cards - row компоненты с 3, 4, 5 карточками
   const [cards, setCards] = useState([]);
+  const [mobileCards, setMobileCards] = useState([]);
   const animatedGallery = useStore((state) => state.animatedGallery);
 
   /* чтобы лишний раз не светить триггером */
@@ -212,7 +229,7 @@ const ProjectsGallery = ({ stateData }) => {
   });
   /* */
 
-  return (
+  return screens.sm ? (
     <LayoutWrapper>
       {cards && (
         <CommonLayout>
@@ -229,6 +246,12 @@ const ProjectsGallery = ({ stateData }) => {
         </CommonLayout>
       )}
     </LayoutWrapper>
+  ) : (
+    <LayoutWrapperMobile>
+      <MobileGallery
+        {...{ stateData, mobileCards, setMobileCards, showBottomTrigger }}
+      />
+    </LayoutWrapperMobile>
   );
 };
 

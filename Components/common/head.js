@@ -9,7 +9,6 @@ const PageHead = () => {
   const pageTitle = useStore((state) => state.pageTitle);
 
   const cutData = [...projectData].slice(0, 9);
-  console.log(cutData);
 
   return (
     <Head>

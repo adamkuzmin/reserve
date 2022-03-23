@@ -3,6 +3,7 @@ import * as React from "react";
 import { useContext } from "react";
 import { useState, useRef, useMemo, useEffect } from "react";
 import ReactMapGL, { Marker } from "react-map-gl";
+import { Grid } from "antd";
 
 import { Text24 } from "../common/text";
 
@@ -11,6 +12,7 @@ import stc from "string-to-color";
 
 import { MouseContext } from "../common/Cursor/mouse-context";
 import { projectData } from "./data/data";
+const { useBreakpoint } = Grid;
 
 const MAPBOX_TOKEN =
   "pk.eyJ1IjoibWFya2thYmllcnNraSIsImEiOiJja2lpa3N2c3QwaXVrMnltbHVzcXZ3dDU2In0.t_Lcd-0hPAJSk75HCJFw0g"; // Set your mapbox token here
@@ -36,7 +38,7 @@ const CirclePoint = styled.div`
   }
 
   &&[data-type="1"] {
-    transform: rotate(45deg)
+    transform: rotate(45deg);
   }
 
   &&[data-type="2"] {
@@ -61,6 +63,14 @@ const MapWrapper = styled.div`
   background-color: lightgrey;
   width: 100%;
   height: 46vw;
+
+  @media (max-width: 576px) {
+    &&& {
+      width: 100vw;
+      height: 100vh;
+      margin-left: -40px;
+    }
+  }
 `;
 
 const StatusLoader = styled.div`
@@ -79,6 +89,8 @@ const StatusLoader = styled.div`
 
 const ProjectsMap = ({ stateData }) => {
   const { cursorType, cursorChangeHandler } = useContext(MouseContext);
+
+  const screens = useBreakpoint();
 
   /* загрузка карты */
   const [mapLoaded, setMapLoaded] = useState(false);
@@ -194,7 +206,7 @@ const ProjectsMap = ({ stateData }) => {
         <MapGLWrapped
           {...viewport}
           width="100%"
-          height="46vw"
+          height={screens.sm ? "46vw" : "100%"}
           mapStyle="mapbox://styles/markkabierski/ckwdu1l7q096k15p7se9gvol3"
           onViewportChange={setViewport}
           mapboxApiAccessToken={MAPBOX_TOKEN}

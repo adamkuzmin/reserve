@@ -66,6 +66,13 @@ const Filters = styled(Space)`
 `;
 
 const FLink = styled.div`
+  @media (max-width: 480px) {
+    &&& {
+      padding-left: 14px;
+      padding-right: 14px;
+    }
+  }
+
   && {
     cursor: pointer;
 

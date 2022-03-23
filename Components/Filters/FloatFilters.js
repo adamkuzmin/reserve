@@ -8,7 +8,8 @@ import { DirectionsFilter, YearsFilter, SearchFilter } from "./ProjectsFilter";
 
 import { projectData } from "../ProjectsLayout/data/data";
 
-import { Badge } from "antd";
+import { Badge, Grid } from "antd";
+const { useBreakpoint } = Grid;
 
 const filterData = {
   gallery: {
@@ -37,6 +38,14 @@ const filterData = {
   },
 };
 
+const IfDesktop = ({ visible = true, children }) => {
+  if (visible) {
+    return children;
+  }
+
+  return null;
+};
+
 /* * Компонент "Плавающие фильтры" */
 const FloatFilters = ({
   setLayoutType,
@@ -47,6 +56,8 @@ const FloatFilters = ({
   stateData,
   setStateData,
 }) => {
+  const screens = useBreakpoint();
+
   const setAnimatedGallery = useStore((state) => state.setAnimatedGallery);
   const animatedGallery = useStore((state) => state.animatedGallery);
 
@@ -190,42 +201,44 @@ const FloatFilters = ({
         </FLink>
       </Filters>
 
-      <Filters
-        size={0}
-        data-block="filter"
-        data-theme={FilterType !== null && "black"}
-      >
-        <Badge
-          count={DirItems.includes(0) ? 0 : DirItems.length}
-          offset={[-15, 0]}
+      <IfDesktop visible={screens.sm}>
+        <Filters
+          size={0}
+          data-block="filter"
+          data-theme={FilterType !== null && "black"}
         >
-          <FLink
-            data-type={FilterType !== null && FilterType !== 1 && "notfilter"}
-            onClick={() => setFilterType(1)}
+          <Badge
+            count={DirItems.includes(0) ? 0 : DirItems.length}
+            offset={[-15, 0]}
           >
-            <Text24>{filterData.direction[lang]}</Text24>
-          </FLink>
-        </Badge>
-        <Badge
-          count={YearItems.includes(0) ? 0 : YearItems.length}
-          offset={[-15, 0]}
-        >
-          <FLink
-            data-type={FilterType !== null && FilterType !== 2 && "notfilter"}
-            onClick={() => setFilterType(2)}
+            <FLink
+              data-type={FilterType !== null && FilterType !== 1 && "notfilter"}
+              onClick={() => setFilterType(1)}
+            >
+              <Text24>{filterData.direction[lang]}</Text24>
+            </FLink>
+          </Badge>
+          <Badge
+            count={YearItems.includes(0) ? 0 : YearItems.length}
+            offset={[-15, 0]}
           >
-            <Text24>{filterData.year[lang]}</Text24>
-          </FLink>
-        </Badge>
-        <Badge count={0} offset={[-15, 0]}>
-          <FLink
-            data-type={FilterType !== null && FilterType !== 3 && "notfilter"}
-            onClick={() => setFilterType(3)}
-          >
-            <Text24>{filterData.search[lang]}</Text24>
-          </FLink>
-        </Badge>
-      </Filters>
+            <FLink
+              data-type={FilterType !== null && FilterType !== 2 && "notfilter"}
+              onClick={() => setFilterType(2)}
+            >
+              <Text24>{filterData.year[lang]}</Text24>
+            </FLink>
+          </Badge>
+          <Badge count={0} offset={[-15, 0]}>
+            <FLink
+              data-type={FilterType !== null && FilterType !== 3 && "notfilter"}
+              onClick={() => setFilterType(3)}
+            >
+              <Text24>{filterData.search[lang]}</Text24>
+            </FLink>
+          </Badge>
+        </Filters>
+      </IfDesktop>
     </FilterWrapper>
   );
 };

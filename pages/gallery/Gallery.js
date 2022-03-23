@@ -80,12 +80,8 @@ const WhitePlane = ({ color, vpwidth, map, url }) => {
     }
   });
 
-  console.log(width);
-
   map.anisotropy = 16;
   map.minFilter = THREE.NearestFilter;
-
-  console.log(map);
 
   const standardMaterial = (
     <meshLambertMaterial

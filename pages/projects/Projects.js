@@ -35,6 +35,12 @@ const MainContent = styled(Content)`
     padding-top: 100px;
     overflow-x: hidden;
 
+    @media (max-width: 576px) {
+      & {
+        padding-top: 70px;
+      }
+    }
+
     min-height: 100vh;
 
     & {
@@ -44,7 +50,7 @@ const MainContent = styled(Content)`
     transform: translateY(20px);
     opacity: 0;
 
-    animation: SectionAppear 0.4s cubic-bezier(.19,1,.22,1) 0.5s;
+    animation: SectionAppear 0.4s cubic-bezier(0.19, 1, 0.22, 1) 0.5s;
     @keyframes SectionAppear {
       0% {
         opacity: 0;
