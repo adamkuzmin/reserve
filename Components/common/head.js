@@ -20,6 +20,8 @@ const PageHead = () => {
 
       <link rel="preload" as="image" href={`/icons/navlogo-black.png`}></link>
       <link rel="preload" as="image" href={`/icons/navlogo-white.png`}></link>
+
+      <link rel="preload" as="image" href={`/carousel/1.jpg`}></link>
     </Head>
   );
 };

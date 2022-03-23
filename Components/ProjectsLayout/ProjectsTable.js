@@ -6,6 +6,8 @@ import { Table, Typography, Skeleton, Space } from "antd";
 import { MouseContext } from "../common/Cursor/mouse-context";
 import { projectData } from "./data/data";
 
+import stc from "string-to-color";
+
 import { Text24, Wrap24 } from "../common/text";
 
 const { Paragraph, Text } = Typography;
@@ -78,6 +80,16 @@ const SkeletonWrapper = styled.div`
   }
 `;
 
+const SmallPick = styled.div`
+  min-width: 8px;
+  min-height: 8px;
+  margin-right: 5px;
+
+  background: ${({ color }) => (color ? color : "black")};
+  transform: rotate(45deg);
+  filter: brightness(1.75);
+`;
+
 const columns = [
   {
     title: "Год",
@@ -127,10 +139,10 @@ const columns = [
     ) => {
       let categories = [];
       if (residential) categories.push("Жилые объекты");
-      if (office) categories.push("Офисно-административные объекты");
+      if (office) categories.push("Офисно-административные");
       if (trading) categories.push("Торговые объекты");
       if (culture) categories.push("Объекты культуры");
-      if (transport) categories.push("Объекты инфраструктуры и транспорта");
+      if (transport) categories.push("Инфрастуктура / транспорт");
       if (mixed) categories.push("Смешанная функция");
       if (urban) categories.push("Градостроительные концепции");
       if (current) categories.push("Текущие объекты");
@@ -140,9 +152,14 @@ const columns = [
       return (
         <CatsArray>
           <StyledText data-font="ibm">
-            <Space direction="vertical">
-              {categories.splice(0,2).map((category, i) => (
-                <Paragraph style={{ marginBottom: "0" }}>{category}</Paragraph>
+            <Space direction="vertical" size={3}>
+              {categories.splice(0, 2).map((category, i) => (
+                <Space>
+                  <SmallPick color={stc(category)} />
+                  <Paragraph key={`parCat:${i}`} style={{ marginBottom: "0" }}>
+                    {category}
+                  </Paragraph>
+                </Space>
               ))}
             </Space>
           </StyledText>
