@@ -57,18 +57,19 @@ const Home = () => {
   const [windowHeight, setWindowHeight] = useState(null);
   useEffect(() => {
     const handleWindowHeight = () => {
-      setWindowHeight(() => window.innerHeight);
-    }
+      if (window.innerWidth > 576 || !window.innerHeight) {
+        setWindowHeight(() => window.innerHeight);
+      }
+    };
     window.addEventListener("resize", handleWindowHeight);
-    handleWindowHeight();
-
-    
 
     return () => window.removeEventListener("resize", handleWindowHeight);
-  }, []);
+  }, [window.innerHeight]);
   /* */
 
-  console.log('windowHeight', windowHeight)
+  useEffect(() => {
+    setWindowHeight(window.innerHeight);
+  }, []);
 
   const BodyRef = useRef();
   const DescriptionRef = useRef();
