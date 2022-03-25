@@ -28,10 +28,12 @@ KPI.Number = styled.div`
   font-weight: 600;
   line-height: 0.8;
   color: black;
+  margin-right: 8px;
 `;
 
 KPI.Text = styled.div`
   font-weight: 400;
+  max-width: clamp(100px, 13.8vw, 400px);
 `;
 
 const LeadAbout = styled.div`
@@ -79,7 +81,7 @@ const ButtonBlock = styled.div`
 const LeadWithBtn = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: end;
+  align-items: flex-end;
 
   @media (max-width: 1100px) {
     & {

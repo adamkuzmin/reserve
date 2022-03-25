@@ -42,7 +42,7 @@ const WideButton = styled.div`
   border: 1px solid white;
   color: white;
   margin-top: 5.7vw;
-  margin-bottom: 13vw;
+  margin-bottom: clamp(96px, 13vw, 144px);
 
   &&:hover {
     cursor: pointer;

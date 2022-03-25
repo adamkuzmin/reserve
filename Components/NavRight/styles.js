@@ -17,6 +17,12 @@ const Nav = styled.div`
     transform: translateX(100%);
   }
 
+  @media (max-width: 480px) {
+    && {
+      width: 100vw;
+    }
+  }
+
   box-shadow: 0px 0px 98px 15px rgba(0, 0, 0, 0.04);
 `;
 

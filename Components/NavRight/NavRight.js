@@ -55,16 +55,8 @@ const NavRight = () => {
   return (
     <Nav ref={navRef} data-status={navIsOpened ? "opened" : "closed"}>
       <FixedBottom>
-        <NavBottom data-top="auto">
-          <Text24>hello@reserve.ru</Text24>
-        </NavBottom>
         <NavBottom data-space="nospace">
-          <Tooltip placement={"left"} title={<>Ссылка в разработке</>}>
-            <SocNetIcon data-type={"facebook"} />
-          </Tooltip>
-          <Tooltip placement={"left"} title={<>Ссылка в разработке</>}>
-            <SocNetIcon data-type={"instagram"} />
-          </Tooltip>
+          <Text24>hello@reserve.ru</Text24>
         </NavBottom>
       </FixedBottom>
 

@@ -71,7 +71,7 @@ Foot.Base = styled.div`
   display: flex;
   justify-content: space-between;
   color: white;
-  margin-top: 5vw;
+  margin-top: clamp(60px, 5vw, 140px);
   margin-bottom: 5vw;
 `;
 
@@ -281,7 +281,7 @@ const Footer = () => {
                         <Text24 style={{ fontWeight: "600" }}>
                           ООО «ТПО “Резерв”»
                         </Text24>
-                        <Text14>
+                        <Text14 style={{color: 'rgb(162 162 162)'}}>
                           Фактический адрес: <br />
                           Ленинградский проспект, 31А стр. 1, Москва, 125284,
                           Россия
@@ -313,7 +313,7 @@ const Footer = () => {
                         <Text24 style={{ fontWeight: "600" }}>
                           Работа в «Резерве»
                         </Text24>
-                        <Text14>
+                        <Text14 style={{color: 'rgb(162 162 162)'}}>
                           Мы всегда заинтересованы в талантах! Присылайте ваше
                           портфолио и резюме. Размер прикрепленных к письму
                           файлов не должны превышать 10 мб.
@@ -335,8 +335,6 @@ const Footer = () => {
           <Text30 data-font="ibm">© 1987—2021 Резерв</Text30>
         </p>
         <SocialNets>
-          <SIcon data-type="facebook" />
-          <SIcon data-type="instagram" />
           <a>
             <Text30 data-font="ibm">EN</Text30>
           </a>

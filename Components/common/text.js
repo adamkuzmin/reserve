@@ -31,6 +31,10 @@ const Text96 = styled.span`
     &[data-type="kpi"] {
       font-size: clamp(56px, 7.2vw, 72px);
     }
+
+    &[data-type="navright"] {
+      font-size: clamp(44px, 7.2vw, 72px);
+    }
   }
 
   @media (min-width: 1000px) and (max-width: 1500px) {
@@ -97,6 +101,7 @@ const Text36 = styled.span`
   @media (max-width: 1000px) {
     && {
       font-size: clamp(16px, 3vw, 30px);
+      line-height: clamp(24px, 4.8vw, 48px)
     }
   }
 
