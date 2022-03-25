@@ -29,10 +29,11 @@ Projects.Row = styled.div`
   @media (max-width: ${transValue}) {
     &&& {
       flex-direction: column;
-      margin-bottom: clamp(50px, 10vw, 70px) !important;
+      margin-bottom: clamp(30px, 10vw, 70px) !important;
 
       & > * + * {
-        margin-top: clamp(50px, 10vw, 70px) !important;
+        margin-top: clamp(30px, 10vw, 70px) !important;
+        margin-left: 0px !important;
       }
     }
   }
@@ -112,6 +113,7 @@ const Header = styled.div`
   @media (max-width: 768px) {
     && {
       padding-right: 0px !important;
+      margin-top: clamp(8px, 2vw, 16px);
     }
   }
 `;
@@ -158,7 +160,7 @@ const WideButton = styled.div`
 
   @media (max-width: 768px) {
     &&& {
-      height: clamp(60px, 18vw, 147px);
+      height: clamp(45px, 18vw, 147px);
     }
   }
 `;

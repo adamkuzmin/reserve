@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useEffect, useRef } from "react";
-import { Text36, Text30, Text24 } from "../common/text";
+import { Text36, Text30, Text24, Text14 } from "../common/text";
+import { Space } from "antd";
 
 import { useStore } from "../../Store/useStore";
 
@@ -36,15 +37,29 @@ Foot.Sections = styled.div`
   display: flex;
   justify-content: space-between;
 
-  @media (max-width: 1100px) {
-    flex-wrap: wrap;
-    min-width: auto;
+  @media (max-width: 1100px) and (min-width: 576px) {
+    && {
+      min-width: 100%;
+      display: grid !important;
+      grid-template-columns: auto auto auto !important;
+    }
+  }
+
+  @media (max-width: 576px) {
+    && {
+      min-width: 100%;
+      display: grid !important;
+      grid-template-columns: 50% 50%;
+      column-gap: 2px;
+      row-gap: 35px
+    }
   }
 `;
 
 Foot.Col = styled.div`
   width: 100%;
   color: white;
+  max-width: max-content;
 
   && h4 {
     color: white;
@@ -126,10 +141,10 @@ const SearchInput = styled.input`
   border-bottom: 1px solid white;
   background: none;
   color: white;
-  font-size: 30px;
+  font-size: clamp(16px, 1.6vw, 24px);
 
   &&::placeholder {
-    font-size: 30px;
+    font-size: clamp(16px, 1.6vw, 24px);
     color: #9f9f9f;
   }
 `;
@@ -225,16 +240,83 @@ const Footer = () => {
           return (
             <Foot.Col key={`Foot.Col${i}`}>
               <StyledH4>
-                <Text36 data-font="ibm" style={{fontWeight: '600'}}>{key.title}</Text36>
+                <Text36 data-font="ibm" style={{ fontWeight: "600" }}>
+                  {key.title}
+                </Text36>
               </StyledH4>
               <LinksBlock>
-                {key?.links?.map((link, b) => {
-                  return (
-                    <Text24 data-font="ibm" key={`footer.a.${b}`}>
-                      <a>{link.name}</a>
-                    </Text24>
-                  );
-                })}
+                {key.title !== "Контакты" ? (
+                  key?.links?.map((link, b) => {
+                    return (
+                      <Text24 data-font="ibm" key={`footer.a.${b}`}>
+                        <a>{link.name}</a>
+                      </Text24>
+                    );
+                  })
+                ) : (
+                  <>
+                    <Space
+                      direction="vertical"
+                      size={40}
+                      style={{ maxWidth: "350px" }}
+                    >
+                      <Space direction="vertical" size={10}>
+                        <Text24 style={{ fontWeight: "600" }}>
+                          +7 495 755 69 60
+                        </Text24>
+                        <Text24 style={{ fontWeight: "600" }}>
+                          +7 495 280 75 25
+                        </Text24>
+                      </Space>
+
+                      <Space direction="vertical" size={10}>
+                        <Text24 style={{ fontWeight: "600" }}>
+                          ООО «ТПО “Резерв”»
+                        </Text24>
+                        <Text14>
+                          Фактический адрес: <br />
+                          Ленинградский проспект, 31А стр. 1, Москва, 125284,
+                          Россия
+                          <br />
+                          <br />
+                          Юридический адрес:
+                          <br /> Ул. Грузинская Б. дом 20, офис 4, Москва,
+                          123242, Россия
+                        </Text14>
+                      </Space>
+
+                      <Space direction="vertical" size={10}>
+                        <Text24 style={{ fontWeight: "600" }}>
+                          Сотрудничество и общие вопросы
+                        </Text24>
+                        <Text24 style={{ textDecoration: "underline" }}>
+                          info@reserve.ru
+                        </Text24>
+                      </Space>
+
+                      <Space direction="vertical" size={10}>
+                        <Text24 style={{ fontWeight: "600" }}>Пресса</Text24>
+                        <Text24 style={{ textDecoration: "underline" }}>
+                          press@reserve.ru
+                        </Text24>
+                      </Space>
+
+                      <Space direction="vertical" size={10}>
+                        <Text24 style={{ fontWeight: "600" }}>
+                          Работа в «Резерве»
+                        </Text24>
+                        <Text14>
+                          Мы всегда заинтересованы в талантах! Присылайте ваше
+                          портфолио и резюме. Размер прикрепленных к письму
+                          файлов не должны превышать 10 мб.
+                        </Text14>
+                        <Text24 style={{ textDecoration: "underline" }}>
+                          ok@reserve.ru
+                        </Text24>
+                      </Space>
+                    </Space>
+                  </>
+                )}
               </LinksBlock>
             </Foot.Col>
           );

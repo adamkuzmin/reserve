@@ -48,7 +48,7 @@ const WideButton = styled.div`
 
   @media (max-width: 768px) {
     &&& {
-      height: clamp(60px, 18vw, 147px);
+      height: clamp(45px, 18vw, 147px);
     }
   }
 `;
