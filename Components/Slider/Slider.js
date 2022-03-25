@@ -36,6 +36,7 @@ const CarouselWrapper = styled.div`
   width: 100vw;
 
   height: ${({ height }) => (height ? `${height}px` : `100vh;`)};
+  /*height: 100vh;*/
 `;
 
 const CarouselBlock = styled(Carousel)`
@@ -375,10 +376,59 @@ const Slider = ({ projectType = false, height }) => {
   const sdata = projectType ? projectSliderData : sliderData;
 
   return (
-    <CarouselWrapper height={height} ref={CarouselRef}>
-      {/*<Card.Substrate deg={0} />*/}
-      {/*<Card.Substrate deg={180} />*/}
-      {!startAutoplay && false && <SkeletonSlider />}
+    <>
+      <CarouselWrapper height={height} ref={CarouselRef}>
+        {/*<Card.Substrate deg={0} />*/}
+        {/*<Card.Substrate deg={180} />*/}
+        {!startAutoplay && false && <SkeletonSlider />}
+        <CustomSwiper
+          style={{
+            "--swiper-navigation-color": "#fff",
+            "--swiper-pagination-color": "#fff",
+          }}
+          speed={1000}
+          parallax={true}
+          loop={true}
+          ref={sliderRef}
+          pagination={{
+            clickable: true,
+            renderBullet: function (index, className) {
+              const dynamicBullet =
+                '<svg width="10" height="10"><path class="svgbullet" stroke="#ffffff" d="M10,5c2.8,0,5,2.2,5,5s-2.2,5-5,5s-5-2.2-5-5S7.2,5,10,5z" style="stroke-dasharray: 31.4876; stroke-dashoffset: 1;"></path></svg>';
+
+              return '<span class="' + className + '">' + "</span>";
+            },
+          }}
+          modules={[Parallax, Pagination, Navigation]}
+          className="mySwiper"
+        >
+          {sdata.map(({ cover, category, name }, i) => (
+            <SwiperSlide key={`swiper::${i}`}>
+              <div
+                slot="container-start"
+                className="parallax-bg"
+                style={{
+                  backgroundImage: `url("${cover}")`,
+                }}
+                data-swiper-parallax="0"
+              />
+
+              <Card.Content>
+                <Card.Header data-type="slide-header">
+                  <p data-font="wremena" data-swiper-parallax={`${swipeLabel}`}>
+                    {category[lang]}
+                  </p>
+                  <h3 data-font="ibm" data-swiper-parallax={`${swipeTitle}`}>
+                    {name[lang]}
+                  </h3>
+                </Card.Header>
+              </Card.Content>
+            </SwiperSlide>
+          ))}
+        </CustomSwiper>
+        )
+      </CarouselWrapper>
+
       <ScrollDown xmlns="http://www.w3.org/2000/svg" viewBox="0 350 160 90">
         <g className="svg-wrap">
           <g className="svg-circle-wrap">
@@ -391,53 +441,7 @@ const Slider = ({ projectType = false, height }) => {
           <path className="svg-line" d="M80,0H0"></path>
         </g>
       </ScrollDown>
-      <CustomSwiper
-        style={{
-          "--swiper-navigation-color": "#fff",
-          "--swiper-pagination-color": "#fff",
-        }}
-        speed={1000}
-        parallax={true}
-        loop={true}
-        ref={sliderRef}
-        pagination={{
-          clickable: true,
-          renderBullet: function (index, className) {
-            const dynamicBullet =
-              '<svg width="10" height="10"><path class="svgbullet" stroke="#ffffff" d="M10,5c2.8,0,5,2.2,5,5s-2.2,5-5,5s-5-2.2-5-5S7.2,5,10,5z" style="stroke-dasharray: 31.4876; stroke-dashoffset: 1;"></path></svg>';
-
-            return '<span class="' + className + '">' + "</span>";
-          },
-        }}
-        modules={[Parallax, Pagination, Navigation]}
-        className="mySwiper"
-      >
-        {sdata.map(({ cover, category, name }, i) => (
-          <SwiperSlide key={`swiper::${i}`}>
-            <div
-              slot="container-start"
-              className="parallax-bg"
-              style={{
-                backgroundImage: `url("${cover}")`,
-              }}
-              data-swiper-parallax="0"
-            />
-
-            <Card.Content>
-              <Card.Header data-type="slide-header">
-                <p data-font="wremena" data-swiper-parallax={`${swipeLabel}`}>
-                  {category[lang]}
-                </p>
-                <h3 data-font="ibm" data-swiper-parallax={`${swipeTitle}`}>
-                  {name[lang]}
-                </h3>
-              </Card.Header>
-            </Card.Content>
-          </SwiperSlide>
-        ))}
-      </CustomSwiper>
-      )
-    </CarouselWrapper>
+    </>
   );
 };
 

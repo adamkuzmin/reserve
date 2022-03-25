@@ -25,6 +25,7 @@ const { Paragraph } = Typography;
 const Cover = styled.div`
   width: 100vw;
   height: ${({ height }) => (height ? `${height}px` : `100vh;`)};
+  /*height: 100vh;*/
 `;
 
 const CanvasGeometry = styled.div`
@@ -56,14 +57,18 @@ const Home = () => {
   const [windowHeight, setWindowHeight] = useState(null);
   useEffect(() => {
     const handleWindowHeight = () => {
-      setWindowHeight(window.innerHeight);
+      setWindowHeight(() => window.innerHeight);
     }
     window.addEventListener("resize", handleWindowHeight);
     handleWindowHeight();
 
+    
+
     return () => window.removeEventListener("resize", handleWindowHeight);
   }, []);
   /* */
+
+  console.log('windowHeight', windowHeight)
 
   const BodyRef = useRef();
   const DescriptionRef = useRef();
