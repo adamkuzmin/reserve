@@ -39,8 +39,8 @@ KPIs.Item = styled.div`
 
 const SLeadText = styled(LeadText)`
   &&& {
-    margin-top: 6vw;
-    margin-bottom: 7.3vw;
+    margin-top: clamp(64px, 6vw, 100px);
+    margin-bottom: clamp(40px, 7.3vw, 116px);
     font-weight: 400;
   }
 `;

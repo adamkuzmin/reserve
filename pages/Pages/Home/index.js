@@ -52,10 +52,18 @@ const Home = () => {
   const blackLogo = useStore((state) => state.blackLogo);
   const setBlackLogo = useStore((state) => state.setBlackLogo);
 
+  /* высота для слайдера */
   const [windowHeight, setWindowHeight] = useState(null);
   useEffect(() => {
-    setWindowHeight(window.innerHeight);
+    const handleWindowHeight = () => {
+      setWindowHeight(window.innerHeight);
+    }
+    window.addEventListener("resize", handleWindowHeight);
+    handleWindowHeight();
+
+    return () => window.removeEventListener("resize", handleWindowHeight);
   }, []);
+  /* */
 
   const BodyRef = useRef();
   const DescriptionRef = useRef();

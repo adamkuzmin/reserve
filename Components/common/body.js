@@ -40,9 +40,9 @@ const Col = styled.div`
 `;
 
 const Lead = styled.div`
-  margin-top: ${({ margintop }) => (margintop ? margintop : "7vw")};
+  margin-top: ${({ margintop }) => (margintop ? margintop : "clamp(72px, 7vw, 140px)")};
   margin-bottom: ${({ marginbottom }) =>
-    marginbottom ? marginbottom : "9.3vw"};
+    marginbottom ? marginbottom : "clamp(72px, 9.3vw, 140px)"};
   line-height: 1.06;
   width: 70vw;
   margin-left: 11.4vw;

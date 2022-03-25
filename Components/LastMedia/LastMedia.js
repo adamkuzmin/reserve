@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useStore } from "../../Store/useStore";
 
 import styled from "styled-components";
-import { Text48 } from "../common/text";
+import { Text48, Text40 } from "../common/text";
 
 import { ScreenLead } from "../common/body";
 import Router, { useRouter } from "next/router";
@@ -24,6 +24,10 @@ const Media = styled.div`
 
   @media (max-width: ${transValue}) {
     flex-direction: column;
+
+    && > * + * {
+      margin-top: clamp(20px, 6.25vw, 40px);
+    }
   }
 `;
 
@@ -89,6 +93,21 @@ const LargeCard = styled.div`
   }
 `;
 
+LargeCard.Title = styled.div`
+  margin-top: 12px;
+
+  && * {
+    color: white;
+    font-weight: 600;
+  }
+
+  @media (max-width: 800px) {
+    && {
+      margin-top: clamp(4px, 1.2vw, 12px);
+    }
+  }
+`;
+
 LargeCard.Content = styled.div`
   height: 45vw;
 
@@ -138,7 +157,7 @@ LargeCard.Content = styled.div`
       flex-direction: row;
 
       & > * + * {
-        margin-left: 2px
+        margin-left: 2px;
       }
     }
   }
@@ -242,7 +261,7 @@ const LastMedia = () => {
 
   return (
     <MediaWrapper ref={MediaRef}>
-      <ScreenLead color={"white"} margintop={"7vw"} marginbottom={"9.3vw"}>
+      <ScreenLead color={"white"}>
         {intro.descr[lang]}
       </ScreenLead>
       <Media>
@@ -254,9 +273,9 @@ const LastMedia = () => {
           }
         >
           <LargeCard.Content data-content="image" src="/renders/10.jpg" />
-          <h3>
+          <LargeCard.Title>
             <Text48 data-type="title">{intro.labels.news[lang]}</Text48>
-          </h3>
+          </LargeCard.Title>
         </LargeCard>
         <LargeCard
           onClick={() =>
@@ -266,24 +285,24 @@ const LastMedia = () => {
           }
         >
           <LargeCard.Content data-content="image" src="/renders/11.jpg" />
-          <h3>
-            <Text48 data-type="title">{intro.labels.publications[lang]}</Text48>
-          </h3>
+          <LargeCard.Title>
+            <Text40 data-type="title">{intro.labels.publications[lang]}</Text40>
+          </LargeCard.Title>
         </LargeCard>
         <LargeCard swidth={60}>
           <LargeCard.Content data-content="tiles">
             <Tile src="/renders/12.jpg"></Tile>
             <Tile src="/renders/13.jpg"></Tile>
           </LargeCard.Content>
-          <h3>
-            <Text48 data-type="title">{intro.labels.socmedia[lang]}</Text48>
-          </h3>
+          <LargeCard.Title>
+            <Text40 data-type="title">{intro.labels.socmedia[lang]}</Text40>
+          </LargeCard.Title>
         </LargeCard>
       </Media>
       <Link href="/media/all">
         <a>
           <WideButton>
-            <Text48 data-font="wremena">{intro.labels.allmedia[lang]}</Text48>
+            <Text40 data-font="wremena">{intro.labels.allmedia[lang]}</Text40>
           </WideButton>
         </a>
       </Link>

@@ -29,7 +29,7 @@ const Text96 = styled.span`
     font-size: clamp(30px, 7.2vw, 72px);
 
     &[data-type="kpi"] {
-      font-size: clamp(64px, 7.2vw, 72px);
+      font-size: clamp(56px, 7.2vw, 72px);
     }
   }
 

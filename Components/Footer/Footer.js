@@ -34,6 +34,7 @@ Foot.Sections = styled.div`
   width: 100%;
   max-width: 1376px;
   min-width: 1000px;
+  margin-top: 64px;
   display: flex;
   justify-content: space-between;
 
@@ -51,7 +52,7 @@ Foot.Sections = styled.div`
       display: grid !important;
       grid-template-columns: 50% 50%;
       column-gap: 2px;
-      row-gap: 35px
+      row-gap: 45px;
     }
   }
 `;
@@ -113,6 +114,12 @@ const LinksBlock = styled.div`
 
   && > * + * {
     margin-top: 16px;
+
+    @media (max-width: 800px) {
+      & {
+        margin-top: clamp(12px, 2vw, 16px);
+      }
+    }
   }
 
   && a {
@@ -134,17 +141,19 @@ const SearchIcon = styled.div`
 
 const SearchInput = styled.input`
   width: 100%;
-  height: 40px;
+  height: 60px;
   border-left: 0px;
   border-top: 0px;
   border-right: 0px;
   border-bottom: 1px solid white;
   background: none;
   color: white;
-  font-size: clamp(16px, 1.6vw, 24px);
+  text-align: center;
+  font-size: clamp(16px, 1.6vw, 30px);
 
   &&::placeholder {
-    font-size: clamp(16px, 1.6vw, 24px);
+    text-align: center;
+    font-size: clamp(16px, 2.1vw, 30px);
     color: #9f9f9f;
   }
 `;
@@ -232,7 +241,6 @@ const Footer = () => {
   return (
     <Foot ref={FooterRef}>
       <Foot.Search>
-        <SearchIcon />
         <SearchInput data-font="ibm" type="text" placeholder="Поиск по сайту" />
       </Foot.Search>
       <Foot.Sections>
