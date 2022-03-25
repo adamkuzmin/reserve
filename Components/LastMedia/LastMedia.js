@@ -45,6 +45,12 @@ const WideButton = styled.div`
     background: white;
     color: black;
   }
+
+  @media (max-width: 768px) {
+    &&& {
+      height: clamp(101px, 18vw, 147px);
+    }
+  }
 `;
 
 const LargeCard = styled.div`
@@ -86,6 +92,12 @@ const LargeCard = styled.div`
 LargeCard.Content = styled.div`
   height: 45vw;
 
+  @media (max-width: ${transValue}) {
+    && {
+      height: 45vw;
+    }
+  }
+
   &&[data-content="image"] {
     width: 100%;
     background: grey;
@@ -94,6 +106,14 @@ LargeCard.Content = styled.div`
     justify-content: center;
     align-items: center;
     overflow: hidden;
+
+    @media (max-width: ${transValue}) {
+      & {
+        background: url(${({ src }) => (src ? src : "")});
+        background-size: cover;
+        padding-bottom: 124%;
+      }
+    }
 
     &::after {
       content: "";
@@ -116,6 +136,10 @@ LargeCard.Content = styled.div`
 
     @media (max-width: ${transValue}) {
       flex-direction: row;
+
+      & > * + * {
+        margin-left: 2px
+      }
     }
   }
 `;
@@ -129,6 +153,12 @@ const Tile = styled.div`
   justify-content: center;
   align-items: center;
   overflow: hidden;
+
+  @media (max-width: ${transValue}) {
+    && {
+      border-radius: clamp(10px, 12vw, 96px);
+    }
+  }
 
   &&:hover {
     &::after {

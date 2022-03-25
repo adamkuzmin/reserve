@@ -47,6 +47,13 @@ const Lead = styled.div`
   width: 70vw;
   margin-left: 11.4vw;
   color: ${({ color }) => (color ? color : "black")};
+
+  @media (max-width: 800px) {
+    && {
+      margin-left: 0;
+      width: 80vw;
+    }
+  }
 `;
 
 ////////////////////////////////

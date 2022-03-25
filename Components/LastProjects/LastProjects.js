@@ -155,57 +155,13 @@ const WideButton = styled.div`
     color: white;
     cursor: pointer;
   }
-`;
 
-const LPData = [
-  [
-    {
-      category: { ru: "Жилой комлпекс", en: "Residential Compound" },
-      title: { ru: "Небо", en: "Sky" },
-      year: 2021,
-      render: "/renders/4.jpg",
-      ratio: 60,
-    },
-    {
-      category: { ru: "Объект культуры", en: "Cultural object" },
-      title: { ru: "Концертный зал «Зарядье»", en: "Zaryadye Concert Hall" },
-      year: 2019,
-      render: "/renders/5.jpg",
-    },
-  ],
-  [
-    {
-      category: { ru: "Жилой комлпекс", en: "Residential Compound" },
-      title: { ru: "Концертный зал «Зарядье»", en: "Zaryadye Concert Hall" },
-      year: 2019,
-      render: "/renders/6.jpg",
-    },
-    {
-      category: { ru: "Жилой комлпекс", en: "Residential Compound" },
-      title: { ru: "Wine House", en: "Wine House" },
-      year: 2019,
-      render: "/renders/7.jpg",
-    },
-  ],
-  [
-    {
-      category: { ru: "Объект здравохранения", en: "Health facility" },
-      title: {
-        ru: "Больница с родильным домом в Коммунарке",
-        en: "A hospital with a maternity clinic in Kommunarka",
-      },
-      year: 2019,
-      render: "/renders/8.jpg",
-    },
-    {
-      category: { ru: "Жилой комлпекс", en: "Residential Compound" },
-      title: { ru: "Небо", en: "Sky" },
-      year: 2019,
-      render: "/renders/9.jpg",
-      ratio: 60,
-    },
-  ],
-];
+  @media (max-width: 768px) {
+    &&& {
+      height: clamp(101px, 18vw, 147px);
+    }
+  }
+`;
 
 const LastProjects = () => {
   const screens = useBreakpoint();
@@ -244,8 +200,6 @@ const LastProjects = () => {
   for (let i = 0; i < 3; i++) {
     LastProjects.push(projectsDataCopy.slice(i * 2, i * 2 + 2));
   }
-
-  console.log("LastProjects", LastProjects);
 
   return (
     <Projects ref={LPRef}>
