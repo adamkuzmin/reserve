@@ -7,8 +7,8 @@ import { useStore } from "../../Store/useStore";
 const StyledTitle = styled.h2`
   font-weight: 600;
   color: black;
-  margin-top: clamp(30px, 6.5vw, 128px);
-  margin-bottom: clamp(18px, 1.5vw, 60px);
+  margin-top: clamp(48px, 6.5vw, 128px);
+  margin-bottom: clamp(12px, 1.5vw, 60px);
 `;
 
 const leadData = {

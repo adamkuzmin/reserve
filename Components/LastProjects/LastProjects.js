@@ -14,7 +14,7 @@ const Projects = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-top: 8vw;
+  margin-top: clamp(36px, 8vw, 160px);
 `;
 
 Projects.Row = styled.div`

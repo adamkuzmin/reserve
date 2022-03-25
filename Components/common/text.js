@@ -100,7 +100,7 @@ const Text36 = styled.span`
 
   @media (max-width: 1000px) {
     && {
-      font-size: clamp(16px, 3vw, 30px);
+      font-size: clamp(14px, 3vw, 30px);
       line-height: clamp(24px, 4.8vw, 48px)
     }
   }
