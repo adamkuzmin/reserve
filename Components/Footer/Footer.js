@@ -150,6 +150,7 @@ const SearchInput = styled.input`
   color: white;
   text-align: center;
   font-size: clamp(16px, 1.6vw, 30px);
+  border-radius: 0px !important;
 
   &&::placeholder {
     text-align: center;
@@ -281,7 +282,7 @@ const Footer = () => {
                         <Text24 style={{ fontWeight: "600" }}>
                           ООО «ТПО “Резерв”»
                         </Text24>
-                        <Text14 style={{color: 'rgb(162 162 162)'}}>
+                        <Text14 style={{ color: "rgb(162 162 162)" }}>
                           Фактический адрес: <br />
                           Ленинградский проспект, 31А стр. 1, Москва, 125284,
                           Россия
@@ -313,7 +314,7 @@ const Footer = () => {
                         <Text24 style={{ fontWeight: "600" }}>
                           Работа в «Резерве»
                         </Text24>
-                        <Text14 style={{color: 'rgb(162 162 162)'}}>
+                        <Text14 style={{ color: "rgb(162 162 162)" }}>
                           Мы всегда заинтересованы в талантах! Присылайте ваше
                           портфолио и резюме. Размер прикрепленных к письму
                           файлов не должны превышать 10 мб.

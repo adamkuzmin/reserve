@@ -24,6 +24,7 @@ const Text254 = styled.span`
 
 const Text96 = styled.span`
   font-size: 96px;
+  line-height: clamp(34px, 100%, 120px);
 
   @media (max-width: 1000px) {
     font-size: clamp(30px, 7.2vw, 72px);
@@ -46,7 +47,7 @@ const Text96 = styled.span`
 
 const Text60 = styled.span`
   font-size: 60px;
-  line-height: 1.1;
+  line-height: clamp(32px, 110%, 66px);
 
   @media (max-width: 1000px) {
     && {
@@ -101,7 +102,11 @@ const Text36 = styled.span`
   @media (max-width: 1000px) {
     && {
       font-size: clamp(14px, 3vw, 30px);
-      line-height: clamp(24px, 4.8vw, 48px)
+      line-height: clamp(24px, 4.8vw, 48px);
+
+      &[data-type="title"] {
+        line-height: clamp(18px, 4.8vw, 48px);
+      }
     }
   }
 
@@ -136,6 +141,10 @@ const Text24 = styled.span`
   @media (max-width: 1000px) {
     && {
       font-size: clamp(14px, 2.1vw, 21px);
+    }
+
+    &&[data-type="label"] {
+      font-size: clamp(12px, 2.1vw, 21px);
     }
   }
 
@@ -184,5 +193,5 @@ export {
   Text24,
   Wrap24,
   Wrap16,
-  Text14
+  Text14,
 };

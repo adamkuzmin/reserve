@@ -133,6 +133,12 @@ Header.Title = styled.div`
     line-height: 1.46;
     font-weight: 400;
   }
+
+  @media (max-width: 800px) {
+    && > * + * {
+      margin-top: 4px;
+    }
+  }
 `;
 
 Header.Year = styled.div`
@@ -231,7 +237,9 @@ const LastProjects = () => {
                     <Header>
                       <Header.Title>
                         <p>
-                          <Text24 data-font="wremena">{category}</Text24>
+                          <Text24 data-type="label" data-font="wremena">
+                            {category}
+                          </Text24>
                         </p>
                         <h3>
                           <Text36 data-type="title">{title}</Text36>
