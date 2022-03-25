@@ -79,7 +79,7 @@ Card.Substrate = styled.div`
   && {
     width: 100vw;
     height: 30vh;
-    position: absolute;
+    position: fixed;
     background: black;
     bottom: ${({ deg }) => (deg === 0 ? 0 : "auto")};
     top: ${({ deg }) => (deg === 180 ? 0 : "auto")};
@@ -90,7 +90,7 @@ Card.Substrate = styled.div`
       rgba(196, 196, 196, 0) 100%
     );
     mix-blend-mode: multiply;
-    z-index: 1;
+    z-index: 10;
   }
 `;
 
@@ -102,7 +102,7 @@ Card.Content = styled.div`
 `;
 
 Card.Header = styled.div`
-  position: absolute;
+  position: fixed;
   bottom: 0;
   z-index: 5000;
   margin-left: 88px;
@@ -376,6 +376,8 @@ const Slider = ({ projectType = false }) => {
 
   return (
     <CarouselWrapper ref={CarouselRef}>
+      {/*<Card.Substrate deg={0} />*/}
+      {/*<Card.Substrate deg={180} />*/}
       {!startAutoplay && false && <SkeletonSlider />}
       <ScrollDown xmlns="http://www.w3.org/2000/svg" viewBox="0 350 160 90">
         <g className="svg-wrap">
@@ -420,8 +422,7 @@ const Slider = ({ projectType = false }) => {
               }}
               data-swiper-parallax="0"
             />
-            <Card.Substrate deg={0} />
-            <Card.Substrate deg={180} />
+
             <Card.Content>
               <Card.Header data-type="slide-header">
                 <p data-font="wremena" data-swiper-parallax={`${swipeLabel}`}>

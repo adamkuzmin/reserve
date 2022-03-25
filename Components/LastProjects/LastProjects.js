@@ -2,7 +2,11 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { useStore } from "../../Store/useStore";
 import styled from "styled-components";
-import { Text48, Text30 } from "../common/text";
+import { Text48, Text40, Text36, Text30, Text24 } from "../common/text";
+import { projectData } from "../ProjectsLayout/data/data";
+
+import { Grid } from "antd";
+const { useBreakpoint } = Grid;
 
 const transValue = "800px";
 
@@ -23,11 +27,12 @@ Projects.Row = styled.div`
   }
 
   @media (max-width: ${transValue}) {
-    & {
+    &&& {
       flex-direction: column;
+      margin-bottom: clamp(50px, 10vw, 70px) !important;
 
       & > * + * {
-        margin-top: 90px;
+        margin-top: clamp(50px, 10vw, 70px) !important;
       }
     }
   }
@@ -70,12 +75,28 @@ const Render = styled.div`
   align-items: center;
   overflow: hidden;
 
+  @media (max-width: ${transValue}) {
+    &&&& {
+      height: auto;
+      padding-bottom: calc(9 / 16 * 100%);
+      position: relative;
+      background-image: url(${({ src }) => (src ? src : "")});
+      background-size: cover;
+      background-position: center;
+
+      &::before {
+        display: none;
+      }
+    }
+  }
+
   &&::before {
     content: "";
     width: 100%;
     height: 100%;
     background-image: url(${({ src }) => (src ? src : "")});
     background-size: cover;
+    background-position: center;
     transform: scale(1.06);
     transition: transform 0.6s ease-in-out;
   }
@@ -86,11 +107,19 @@ const Header = styled.div`
   display: flex;
   justify-content: space-between;
   padding-right: 26px;
+  margin-top: 16px;
+
+  @media (max-width: 768px) {
+    && {
+      padding-right: 0px !important;
+    }
+  }
 `;
 
 Header.Title = styled.div`
   display: flex;
   flex-direction: column;
+  padding-right: 40px;
 
   && p,
   && h3 {
@@ -179,6 +208,8 @@ const LPData = [
 ];
 
 const LastProjects = () => {
+  const screens = useBreakpoint();
+
   const blackLogo = useStore((state) => state.blackLogo);
   const setBlackLogo = useStore((state) => state.setBlackLogo);
 
@@ -202,40 +233,64 @@ const LastProjects = () => {
     return () => window.removeEventListener("scroll", onScroll);
   });
 
+  const ratios = [
+    [60, null],
+    [null, null],
+    [null, 60],
+  ];
+  let projectsDataCopy = [...projectData];
+
+  let LastProjects = [];
+  for (let i = 0; i < 3; i++) {
+    LastProjects.push(projectsDataCopy.slice(i * 2, i * 2 + 2));
+  }
+
+  console.log("LastProjects", LastProjects);
+
   return (
     <Projects ref={LPRef}>
-      {LPData.map((key, i) => {
-        return (
-          <Projects.Row key={`Projects.Row${i}`}>
-            {key.map((project, b) => {
-              return (
-                <Projects.Item
-                  onClick={() => (location.href = "/project")}
-                  swidth={project.ratio && project.ratio}
-                  key={`Projects.Item${b}`}
-                >
-                  <Render data-type="render" src={project.render} />
-                  <Header>
-                    <Header.Title>
-                      <p>
-                        <Text30 data-font="wremena">
-                          {project.category[lang]}
-                        </Text30>
-                      </p>
-                      <h3>
-                        <Text48 data-type="title">{project.title[lang]}</Text48>
-                      </h3>
-                    </Header.Title>
-                    <Header.Year>
-                      <Text30 data-font="wremena">{project.year}</Text30>
-                    </Header.Year>
-                  </Header>
-                </Projects.Item>
-              );
-            })}
-          </Projects.Row>
-        );
-      })}
+      {LastProjects &&
+        LastProjects.map((key, i) => {
+          return (
+            <Projects.Row key={`Projects.Row${i}`}>
+              {key.map((project, b) => {
+                const { nameru, nameen, finished } = project;
+                const { coververt, coverhor } = project;
+
+                const category =
+                  lang === "ru" ? "Объект культуры" : "Culture Object";
+                const title = lang === "ru" ? nameru : nameen;
+
+                const metaRatio =
+                  ratios[i][b] === 60 && screens.md ? coverhor : coververt;
+                const metaSrc = `/projects/Frame%20${metaRatio}.jpg`;
+
+                return (
+                  <Projects.Item
+                    onClick={() => (location.href = "/project")}
+                    swidth={ratios[i][b]}
+                    key={`Projects.Item${b}`}
+                  >
+                    <Render data-type="render" src={metaSrc} />
+                    <Header>
+                      <Header.Title>
+                        <p>
+                          <Text24 data-font="wremena">{category}</Text24>
+                        </p>
+                        <h3>
+                          <Text36 data-type="title">{title}</Text36>
+                        </h3>
+                      </Header.Title>
+                      <Header.Year>
+                        <Text24 data-font="wremena">{finished}</Text24>
+                      </Header.Year>
+                    </Header>
+                  </Projects.Item>
+                );
+              })}
+            </Projects.Row>
+          );
+        })}
       <Link href="/projects">
         <a>
           <WideButton data-font="wremena">
