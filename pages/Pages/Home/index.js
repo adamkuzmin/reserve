@@ -24,7 +24,7 @@ const { Paragraph } = Typography;
 
 const Cover = styled.div`
   width: 100vw;
-  height: 100vh;
+  height: ${({ height }) => (height ? `${height}px` : `100vh;`)};
 `;
 
 const CanvasGeometry = styled.div`
@@ -51,6 +51,11 @@ const CanvasGeometry = styled.div`
 const Home = () => {
   const blackLogo = useStore((state) => state.blackLogo);
   const setBlackLogo = useStore((state) => state.setBlackLogo);
+
+  const [windowHeight, setWindowHeight] = useState(null);
+  useEffect(() => {
+    setWindowHeight(window.innerHeight);
+  }, []);
 
   const BodyRef = useRef();
   const DescriptionRef = useRef();
@@ -85,8 +90,8 @@ const Home = () => {
     <div ref={BodyRef}>
       <NavRight />
       <Navigation />
-      <Cover>
-        <Slider />
+      <Cover height={windowHeight}>
+        <Slider {...{ height: windowHeight }} />
       </Cover>
       <Content justifyContent={"flex-end"} ref={DescriptionRef}>
         <CanvasGeometry>

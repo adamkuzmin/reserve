@@ -34,8 +34,8 @@ const contentStyle = {
 
 const CarouselWrapper = styled.div`
   width: 100vw;
-  height: 100vh;
-  }
+
+  height: ${({ height }) => (height ? `${height}px` : `100vh;`)};
 `;
 
 const CarouselBlock = styled(Carousel)`
@@ -102,7 +102,7 @@ Card.Content = styled.div`
 `;
 
 Card.Header = styled.div`
-  position: fixed;
+  position: absolute;
   bottom: 0;
   z-index: 5000;
   margin-left: 88px;
@@ -314,7 +314,7 @@ const ScrollDown = styled.svg`
   }
 `;
 
-const Slider = ({ projectType = false }) => {
+const Slider = ({ projectType = false, height }) => {
   const swipeTitle = -700;
   const swipeLabel = -2000;
 
@@ -375,7 +375,7 @@ const Slider = ({ projectType = false }) => {
   const sdata = projectType ? projectSliderData : sliderData;
 
   return (
-    <CarouselWrapper ref={CarouselRef}>
+    <CarouselWrapper height={height} ref={CarouselRef}>
       {/*<Card.Substrate deg={0} />*/}
       {/*<Card.Substrate deg={180} />*/}
       {!startAutoplay && false && <SkeletonSlider />}
