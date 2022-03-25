@@ -14,7 +14,8 @@ const KPIs = styled.div`
   @media (max-width: 600px) {
     & {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 50% 50%;
+      column-gap: 2px;
     }
   }
 `;
@@ -23,6 +24,7 @@ KPIs.Item = styled.div`
   display: flex;
   flex-direction: column;
   color: black;
+  max-width: clamp(220px, 13vw, 250px);
 
   && h3 {
     font-weight: 600;

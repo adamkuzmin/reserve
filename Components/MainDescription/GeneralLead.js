@@ -8,7 +8,7 @@ const Lead = styled.div`
   align-items: flex-end;
   justify-content: space-between;
   align-items: start;
-  margin-top: 9.7vw;
+  margin-top: clamp(64px, 9.7vw, 220px);
   margin-bottom: 6vw;
 
   @media (max-width: 1100px) {
