@@ -1,8 +1,8 @@
 export const pagesConfigs = {
   "/": {
     type: "main",
-    title: "Резерв",
-    entitle: "Reserve",
+    title: "Главная",
+    entitle: "Home",
   },
   "/projects": {
     type: "projects",
@@ -20,14 +20,14 @@ export const pagesConfigs = {
     title: "Новости",
     entitle: "News",
   },
-  "/about": {
-    type: "about",
-    title: "О бюро",
-    entitle: "About",
-  },
   "/contacts": {
     type: "contacts",
     title: "Контакты",
     entitle: "Contacts",
+  },
+  "/about": {
+    type: "about",
+    title: "О бюро",
+    entitle: "About",
   },
 };

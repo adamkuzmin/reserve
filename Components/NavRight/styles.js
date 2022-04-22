@@ -35,6 +35,17 @@ const NavBlock = styled.div`
   && > * + * {
     margin-top: 7px;
   }
+
+  @media (max-width: 480px) {
+    & {
+      margin-top: clamp(80px, 26vw, 128px);
+    }
+
+    & *[data-type="nav-secondary"] * {
+      font-size: clamp(16px, 6.4vw, 24px);
+      line-height: 1.3;
+    }
+  }
 `;
 
 const NavLink = styled.div`

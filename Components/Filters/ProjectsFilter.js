@@ -59,11 +59,17 @@ const DirectionsFilter = ({
       return true;
     }
 
+    if (DirItems.includes(item)) {
+      selDirItems((state) => state.filter((_item) => _item !== item));
+      return;
+    }
+
     if (!DirItems.includes(item)) {
       let _DirItems = DirItems[0] === 0 ? [] : [...DirItems];
       _DirItems.push(item);
 
       selDirItems(_DirItems);
+      return;
     }
   };
 

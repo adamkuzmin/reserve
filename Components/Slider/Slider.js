@@ -35,6 +35,7 @@ const contentStyle = {
 const CarouselWrapper = styled.div`
   width: 100vw;
   background: black;
+  position: relative;
 
   height: ${({ height }) => (height ? `${height}px` : `100vh;`)};
   /*height: 100vh;*/
@@ -77,25 +78,6 @@ const Card = styled.div`
   }
 `;
 
-Card.Substrate = styled.div`
-  && {
-    width: 100vw;
-    height: 30vh;
-    position: fixed;
-    background: black;
-    bottom: ${({ deg }) => (deg === 0 ? 0 : "auto")};
-    top: ${({ deg }) => (deg === 180 ? 0 : "auto")};
-    z-index: 2;
-    background: linear-gradient(
-      ${({ deg }) => (deg ? deg : 0)}deg,
-      #355266 0%,
-      rgba(196, 196, 196, 0) 100%
-    );
-    mix-blend-mode: multiply;
-    z-index: 10;
-  }
-`;
-
 Card.Content = styled.div`
   width: 100%;
   height: 100%;
@@ -113,7 +95,7 @@ Card.Header = styled.div`
   @media (max-width: 1000px) {
     & {
       margin-left: 40px;
-      margin-bottom: 120px;
+      margin-bottom: 65px;
 
       @media (max-width: 480px) {
         margin-left: 20px;
@@ -183,6 +165,7 @@ const BackImg = styled.div`
 
   &[data-status="no-active"] {
     display: none;
+    pointer-events: none;
   }
 
   &[data-status="was-active"] {
@@ -392,6 +375,13 @@ const OverlayBlack = styled.div`
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0, #000 100%);
   opacity: 0.16;
   position: absolute;
+
+  ${({ rotate }) =>
+    rotate
+      ? `
+    transform: rotate(${rotate}deg);
+  `
+      : ``}
 `;
 
 const Black = styled.div`
@@ -408,10 +398,11 @@ const Black = styled.div`
 
   &&[data-active="noactive"] {
     opacity: 0;
+    pointer-events: none;
   }
 `;
 
-const Slider = ({ projectType = false, height }) => {
+const Slider = ({ projectType = false, height, scrolling = () => {} }) => {
   const swipeTitle = -700;
   const swipeLabel = -2000;
 
@@ -439,7 +430,9 @@ const Slider = ({ projectType = false, height }) => {
   useEffect(() => {
     if (startAutoplay) {
       let timer = setInterval(() => {
-        return setSlideKey((state) => (state < 3 ? state + 1 : 0));
+        return setSlideKey((state) =>
+          state < sdata.length - 1 ? state + 1 : 0
+        );
       }, 5500);
 
       return () => {
@@ -475,7 +468,7 @@ const Slider = ({ projectType = false, height }) => {
 
   const handleActiveKey = (i, slideKey) => {
     if (i === slideKey) return "active";
-    if (i === 3 && slideKey === 0) return "was-active";
+    if (i === sdata.length - 1 && slideKey === 0) return "was-active";
     if (i === slideKey - 1) return "was-active";
     return "no-active";
   };
@@ -485,33 +478,32 @@ const Slider = ({ projectType = false, height }) => {
       <CarouselWrapper height={height} ref={CarouselRef}>
         <Black data-active={blackOverlay ? "active" : "noactive"} />
 
-        <OverlayBlack />
-        <OverlayBlack rotate={180} />
+        {sdata.map(({ cover, name, category }, i) => {
+          return (
+            <BackImg fill={cover} data-status={handleActiveKey(i, slideKey)}>
+              <OverlayBlack />
+              <OverlayBlack rotate={180} />
 
-        {Array(4)
-          .fill(1)
-          .map((_, i) => {
-            return (
-              <BackImg
-                fill={`/carousel/${i + 1}.jpg`}
-                data-status={handleActiveKey(i, slideKey)}
-              />
-            );
-          })}
-
-        <Card.Content>
-          <Card.Header data-type="slide-header">
-            <p data-font="wremena" data-swiper-parallax={`${swipeLabel}`}>
-              {/*category[lang]*/ "Объект культуры"}
-            </p>
-            <h3 data-font="ibm" data-swiper-parallax={`${swipeTitle}`}>
-              {/*name[lang]*/ "Название проекта"}
-            </h3>
-          </Card.Header>
-        </Card.Content>
+              <Card.Content>
+                <Card.Header data-type="slide-header">
+                  <p data-font="wremena" data-swiper-parallax={`${swipeLabel}`}>
+                    {category[lang]}
+                  </p>
+                  <h3 data-font="ibm" data-swiper-parallax={`${swipeTitle}`}>
+                    {name[lang]}
+                  </h3>
+                </Card.Header>
+              </Card.Content>
+            </BackImg>
+          );
+        })}
       </CarouselWrapper>
 
-      <ScrollDown xmlns="http://www.w3.org/2000/svg" viewBox="0 350 160 90">
+      <ScrollDown
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 350 160 90"
+        onClick={scrolling}
+      >
         <g className="svg-wrap">
           {/*<g className="svg-circle-wrap">
             <circle className="svg-circle" cx="42" cy="42" r="40"></circle>

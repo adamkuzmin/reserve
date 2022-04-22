@@ -25,6 +25,7 @@ body {
   opacity: 1;
   transition: all .8s cubic-bezier(0.455, 0.03, 0.515, 0.955)/*cubic-bezier(0.165, 0.84, 0.44, 1)*/;
   opacity: 1;
+  pointer-events: none;
 }
 
 .preload-backWrapper[data-status="hidden"] {

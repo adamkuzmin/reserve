@@ -70,7 +70,7 @@ const SecondaryLinks = ({ routes }) => {
               </Link>
             </Text30>
           ) : (
-            <Text60>
+            <Text60 data-type="nav-secondary">
               <Link href={route}>
                 <a data-font="ibm">{lang === "ru" ? title : entitle}</a>
               </Link>

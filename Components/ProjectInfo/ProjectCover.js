@@ -13,7 +13,7 @@ const ProjectCoverWrapper = styled.div`
   background-attachment: fixed;
 `;
 
-const ProjectCover = () => {
+const ProjectCover = ({ scrolling = () => {} }) => {
   const setBlackLogo = useStore((state) => state.setBlackLogo);
   const blackLogo = useStore((state) => state.blackLogo);
 
@@ -34,7 +34,7 @@ const ProjectCover = () => {
     return () => window.removeEventListener("scroll", onScroll);
   });
 
-  return <ProjectCoverWrapper ref={contentRef} />;
+  return <ProjectCoverWrapper ref={contentRef} scrolling={scrolling} />;
 };
 
 export default ProjectCover;

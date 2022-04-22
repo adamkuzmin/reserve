@@ -79,6 +79,14 @@ const Home = () => {
     setBlackLogo(false);
   }, []);
 
+  const toDescriptionSection = (e) => {
+    e.preventDefault();
+    DescriptionRef.current.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  };
+
   useEffect(() => {
     const onScroll = (e) => {
       if (DescriptionRef && DescriptionRef.current) {
@@ -105,7 +113,9 @@ const Home = () => {
       <NavRight />
       <Navigation />
       <Cover height={windowHeight}>
-        <Slider {...{ height: windowHeight }} />
+        <Slider
+          {...{ height: windowHeight, scrolling: toDescriptionSection }}
+        />
       </Cover>
       <Content justifyContent={"flex-end"} ref={DescriptionRef}>
         <CanvasGeometry>

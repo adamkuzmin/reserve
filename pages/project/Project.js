@@ -34,6 +34,16 @@ const Project = () => {
   const contentRef = useRef();
   const contentRef1 = useRef();
 
+  const goToDescription = (e) => {
+    e.preventDefault();
+
+    e.preventDefault();
+    contentRef.current.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  };
+
   useEffect(() => {
     const onScroll = () => {
       if (contentRef && contentRef.current) {
@@ -62,14 +72,14 @@ const Project = () => {
       <NavRight />
       <Navigation />
 
-      <ProjectCover />
+      <ProjectCover scrolling={goToDescription} />
       <Content ref={contentRef}>
         <ProjectHeader />
         <ProjectContent />
       </Content>
 
       <PlansSlider>
-        <Slider projectType />
+        <Slider projectType scrolling={goToDescription} />
       </PlansSlider>
 
       <Content ref={contentRef1}>

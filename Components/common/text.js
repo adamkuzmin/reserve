@@ -36,6 +36,12 @@ const Text96 = styled.span`
     &[data-type="navright"] {
       font-size: clamp(44px, 7.2vw, 72px);
     }
+
+    @media (max-width: 480px) {
+      &[data-type="navright"] {
+        font-size: clamp(24px, 11.7vw, 44px);
+      }
+    }
   }
 
   @media (min-width: 1000px) and (max-width: 1500px) {
