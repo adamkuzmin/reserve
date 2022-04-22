@@ -34,6 +34,7 @@ const contentStyle = {
 
 const CarouselWrapper = styled.div`
   width: 100vw;
+  background: black;
 
   height: ${({ height }) => (height ? `${height}px` : `100vh;`)};
   /*height: 100vh;*/
@@ -165,6 +166,67 @@ Card.Header = styled.div`
     @media (min-width: 1000px) and (max-width: 1500px) {
       & {
         font-size: 34px;
+      }
+    }
+  }
+`;
+
+const BackImg = styled.div`
+  width: 100%;
+  height: 100%;
+  background-image: url("${({ fill }) => (fill ? fill : "")}");
+  background-size: cover;
+  filter: brightness(0.9) contrast(100%);
+  background-position: center;
+  position: absolute;
+  display: block;
+
+  &[data-status="no-active"] {
+    display: none;
+  }
+
+  &[data-status="was-active"] {
+    animation-duration: 1s;
+    animation-timing-function: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+    animation-delay: 0s;
+    animation-iteration-count: 1;
+    animation-direction: normal;
+    animation-fill-mode: both;
+    animation-play-state: running;
+    animation-name: fadeOut;
+
+    @keyframes fadeOut {
+      from {
+        opacity: 1;
+        display: block;
+      }
+
+      to {
+        opacity: 0;
+        display: block;
+      }
+    }
+  }
+
+  &[data-status="active"] {
+    animation-duration: 1s;
+    animation-timing-function: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+    animation-delay: 1.5s;
+    animation-iteration-count: 1;
+    animation-direction: normal;
+    animation-fill-mode: both;
+    animation-play-state: running;
+    animation-name: fadeIn;
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        display: block;
+      }
+
+      to {
+        opacity: 1;
+        display: block;
       }
     }
   }
@@ -315,11 +377,29 @@ const ScrollDown = styled.svg`
   }
 `;
 
+const OverlayBlack = styled.div`
+  width: 100%;
+  height: 100%;
+  background: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(rgba(0, 0, 0, 0)),
+    to(black)
+  );
+  background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 0, #000 100%);
+  background: -o-linear-gradient(top, rgba(0, 0, 0, 0) 0, #000 100%);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0, #000 100%);
+  opacity: 0.16;
+  position: absolute;
+`;
+
 const Slider = ({ projectType = false, height }) => {
   const swipeTitle = -700;
   const swipeLabel = -2000;
 
   const [startAutoplay, setStartAutoplay] = useState(false);
+  const [slideKey, setSlideKey] = useState(0);
 
   const lang = useStore((state) => state.lang);
 
@@ -327,7 +407,6 @@ const Slider = ({ projectType = false, height }) => {
   const setBlackLogo = useStore((state) => state.setBlackLogo);
 
   const CarouselRef = useRef();
-  const sliderRef = useRef();
 
   useEffect(() => {
     let timer = setTimeout(() => setStartAutoplay(true), 800);
@@ -337,20 +416,16 @@ const Slider = ({ projectType = false, height }) => {
     };
   }, []);
 
-  /* autoplay */
   useEffect(() => {
-    if (sliderRef && startAutoplay) {
-      const swiper = sliderRef.current.swiper;
+    let timer = setInterval(
+      () => setSlideKey((state) => (state < 3 ? state + 1 : 0)),
+      5500
+    );
 
-      const autoTransition = setInterval(() => {
-        swiper.slideNext();
-      }, 4000);
-
-      return () => {
-        clearInterval(autoTransition);
-      };
-    }
-  }, [sliderRef, startAutoplay]);
+    return () => {
+      clearInterval(timer);
+    };
+  }, [startAutoplay]);
 
   useEffect(() => {
     const onScroll = (e) => {
@@ -375,65 +450,47 @@ const Slider = ({ projectType = false, height }) => {
 
   const sdata = projectType ? projectSliderData : sliderData;
 
+  console.log("sdata", sdata);
+
+  const handleActiveKey = (i, slideKey) => {
+    if (i === slideKey) return "active";
+    if (i === 3 && slideKey === 0) return "was-active";
+    if (i === slideKey - 1) return "was-active";
+    return "no-active";
+  };
+
   return (
     <>
       <CarouselWrapper height={height} ref={CarouselRef}>
-        {/*<Card.Substrate deg={0} />*/}
-        {/*<Card.Substrate deg={180} />*/}
-        {!startAutoplay && false && <SkeletonSlider />}
-        <CustomSwiper
-          style={{
-            "--swiper-navigation-color": "#fff",
-            "--swiper-pagination-color": "#fff",
-          }}
-          speed={1000}
-          parallax={true}
-          loop={true}
-          ref={sliderRef}
-          pagination={{
-            clickable: true,
-            renderBullet: function (index, className) {
-              const dynamicBullet =
-                '<svg width="10" height="10"><path class="svgbullet" stroke="#ffffff" d="M10,5c2.8,0,5,2.2,5,5s-2.2,5-5,5s-5-2.2-5-5S7.2,5,10,5z" style="stroke-dasharray: 31.4876; stroke-dashoffset: 1;"></path></svg>';
-
-              return '<span class="' + className + '">' + "</span>";
-            },
-          }}
-          modules={[Parallax, Pagination, Navigation]}
-          className="mySwiper"
-        >
-          {sdata.map(({ cover, category, name }, i) => (
-            <SwiperSlide key={`swiper::${i}`}>
-              <div
-                slot="container-start"
-                className="parallax-bg"
-                style={{
-                  backgroundImage: `url("${cover}")`,
-                }}
-                data-swiper-parallax="0"
+        <OverlayBlack />
+        {Array(4)
+          .fill(1)
+          .map((_, i) => {
+            return (
+              <BackImg
+                fill={`/carousel/${i + 1}.jpg`}
+                data-status={handleActiveKey(i, slideKey)}
               />
+            );
+          })}
 
-              <Card.Content>
-                <Card.Header data-type="slide-header">
-                  <p data-font="wremena" data-swiper-parallax={`${swipeLabel}`}>
-                    {category[lang]}
-                  </p>
-                  <h3 data-font="ibm" data-swiper-parallax={`${swipeTitle}`}>
-                    {name[lang]}
-                  </h3>
-                </Card.Header>
-              </Card.Content>
-            </SwiperSlide>
-          ))}
-        </CustomSwiper>
-        )
+        <Card.Content>
+          <Card.Header data-type="slide-header">
+            <p data-font="wremena" data-swiper-parallax={`${swipeLabel}`}>
+              {/*category[lang]*/ "Объект культуры"}
+            </p>
+            <h3 data-font="ibm" data-swiper-parallax={`${swipeTitle}`}>
+              {/*name[lang]*/ "Название проекта"}
+            </h3>
+          </Card.Header>
+        </Card.Content>
       </CarouselWrapper>
 
       <ScrollDown xmlns="http://www.w3.org/2000/svg" viewBox="0 350 160 90">
         <g className="svg-wrap">
-          <g className="svg-circle-wrap">
+          {/*<g className="svg-circle-wrap">
             <circle className="svg-circle" cx="42" cy="42" r="40"></circle>
-          </g>
+        </g>*/}
           <path
             className="svg-arrow"
             d="M.983,6.929,4.447,3.464.983,0,0,.983,2.482,3.464,0,5.946Z"
