@@ -19,7 +19,7 @@ const BackCover = styled.div`
   width: 100vw;
   min-height: 41vw;
 
-  background: url("/about/p5.jpg");
+  background: url("/about/office/4.jpg");
   background-size: cover;
 `;
 

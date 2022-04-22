@@ -8,7 +8,7 @@ import { Text254, Text48, Text36, Text30 } from "../common/text";
 import { Col, Space } from "antd";
 import { Content } from "../common/body";
 
-import { intro, plotkin, team1 } from "./team/data";
+import { intro, plotkin, team1, team2 } from "./team/data";
 
 const People = styled.div`
   width: 100vw;
@@ -81,6 +81,14 @@ Member.Photo = styled.div`
 
   background-color: lightgrey;
   background-image: url(${({ url }) => (url ? `"${url}"` : `""`)});
+  background-size: cover;
+`;
+
+const BackImage = styled.div`
+  width: 100vw;
+  height: 55.6vw;
+
+  background: url("/about/office/2.jpg");
   background-size: cover;
 `;
 
@@ -199,21 +207,15 @@ const Team = () => {
         />
 
         <TeamList
-          title={team1.title}
-          members={team1.members}
+          title={team2.title}
+          members={team2.members}
           lang={lang}
           col={3}
-        />
-
-        <TeamList
-          title={team1.title}
-          members={team1.members}
-          lang={lang}
-          col={4}
         />
       </Content>
 
       <Gap sheight={"180px"} />
+      <BackImage />
     </>
   );
 };

@@ -61,66 +61,108 @@ const plotkin = {
 
 const team1 = {
   title: {
-    ru: <>Руководители мастерских</>,
-    en: <>Workshop leaders</>,
+    ru: <>Руководство компании</>,
+    en: <>Company management</>,
   },
   members: [
     {
       name: {
-        ru: <>Сергей Гусарев</>,
-        en: <>Sergei Gusarev</>,
+        ru: <>Владимир Плоткин</>,
+        en: <>Vladimir Plotkin</>,
       },
       whois: {
-        ru: <>Руководитель мастерской №1</>,
-        en: <>Workshop Leader #1</>,
+        ru: <>Директор по архитектуре</>,
+        en: <>Director of Architecture</>,
       },
-      photo: "/about/team/1.jpg",
+      photo: "/about/office/t1.jpg",
     },
     {
       name: {
-        ru: <>Сергей Гусарев</>,
-        en: <>Sergei Gusarev</>,
+        ru: <>Дмитрий Пруслин</>,
+        en: <>Dmitry Pruslin</>,
       },
       whois: {
-        ru: <>Руководитель мастерской №1</>,
-        en: <>Workshop Leader #1</>,
+        ru: <>Генеральный директор</>,
+        en: <>Director General</>,
       },
-      photo: "/about/team/2.jpg",
+      photo: "/about/office/t2.jpg",
     },
     {
       name: {
-        ru: <>Сергей Гусарев</>,
-        en: <>Sergei Gusarev</>,
+        ru: <>Денис Канаровский</>,
+        en: <>Denis Kanarovsky</>,
       },
       whois: {
-        ru: <>Руководитель мастерской №1</>,
-        en: <>Workshop Leader #1</>,
+        ru: <>Главный инженер</>,
+        en: <>Chief Engineer</>,
       },
-      photo: "/about/team/3.jpg",
-    },
-    {
-      name: {
-        ru: <>Сергей Гусарев</>,
-        en: <>Sergei Gusarev</>,
-      },
-      whois: {
-        ru: <>Руководитель мастерской №1</>,
-        en: <>Workshop Leader #1</>,
-      },
-      photo: "/about/team/4.jpg",
-    },
-    {
-      name: {
-        ru: <>Сергей Гусарев</>,
-        en: <>Sergei Gusarev</>,
-      },
-      whois: {
-        ru: <>Руководитель мастерской №1</>,
-        en: <>Workshop Leader #1</>,
-      },
-      photo: "/about/team/5.jpg",
+      photo: "/about/office/t3.jpg",
     },
   ],
 };
 
-export { intro, plotkin, team1 };
+const team2 = {
+  title: {
+    ru: <>Руководители архитектурных мастерских</>,
+    en: <>Heads of architectural workshops</>,
+  },
+  members: [
+    {
+      name: {
+        ru: <>Ирина Деева</>,
+        en: <>Irina Deeva</>,
+      },
+      whois: {
+        ru: <>Руководитель мастерской №1</>,
+        en: <>Workshop Leader #1</>,
+      },
+      photo: "/about/office/t4.jpg",
+    },
+    {
+      name: {
+        ru: <>Сергей Успенский</>,
+        en: <>Sergei Ouspensky</>,
+      },
+      whois: {
+        ru: <>Руководитель мастерской №2</>,
+        en: <>Workshop Leader No. 2</>,
+      },
+      photo: "/about/office/t5.jpg",
+    },
+    {
+      name: {
+        ru: <>Алексей Бородушкин</>,
+        en: <>Alexei Borodushkin</>,
+      },
+      whois: {
+        ru: <>Руководитель мастерской №3</>,
+        en: <>Workshop Leader No. 3</>,
+      },
+      photo: "/about/office/t6.jpg",
+    },
+    {
+      name: {
+        ru: <>Сергей Гусарев</>,
+        en: <>Sergei Gusarev</>,
+      },
+      whois: {
+        ru: <>Руководитель мастерской №4</>,
+        en: <>Workshop Leader No. 4</>,
+      },
+      photo: "/about/office/t7.jpg",
+    },
+    {
+      name: {
+        ru: <>Татьяна Квасова </>,
+        en: <>Tatiana Kvasova </>,
+      },
+      whois: {
+        ru: <>Руководитель мастерской №5</>,
+        en: <>Workshop Leader No. 5</>,
+      },
+      photo: "/about/office/t8.jpg",
+    },
+  ],
+};
+
+export { intro, plotkin, team1, team2 };

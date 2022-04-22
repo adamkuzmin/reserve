@@ -1,6 +1,7 @@
 import { Carousel } from "antd";
 import { useEffect, useRef, useState } from "react";
 import { useStore } from "../../Store/useStore";
+import Link from "next/link";
 import styled from "styled-components";
 
 import "swiper/css";
@@ -154,6 +155,7 @@ Card.Header = styled.div`
 `;
 
 const BackImg = styled.div`
+  cursor: pointer;
   width: 100%;
   height: 100%;
   background-image: url("${({ fill }) => (fill ? fill : "")}");
@@ -480,21 +482,26 @@ const Slider = ({ projectType = false, height, scrolling = () => {} }) => {
 
         {sdata.map(({ cover, name, category }, i) => {
           return (
-            <BackImg fill={cover} data-status={handleActiveKey(i, slideKey)}>
-              <OverlayBlack />
-              <OverlayBlack rotate={180} />
+            <Link href="/project">
+              <BackImg fill={cover} data-status={handleActiveKey(i, slideKey)}>
+                <OverlayBlack />
+                <OverlayBlack rotate={180} />
 
-              <Card.Content>
-                <Card.Header data-type="slide-header">
-                  <p data-font="wremena" data-swiper-parallax={`${swipeLabel}`}>
-                    {category[lang]}
-                  </p>
-                  <h3 data-font="ibm" data-swiper-parallax={`${swipeTitle}`}>
-                    {name[lang]}
-                  </h3>
-                </Card.Header>
-              </Card.Content>
-            </BackImg>
+                <Card.Content>
+                  <Card.Header data-type="slide-header">
+                    <p
+                      data-font="wremena"
+                      data-swiper-parallax={`${swipeLabel}`}
+                    >
+                      {category[lang]}
+                    </p>
+                    <h3 data-font="ibm" data-swiper-parallax={`${swipeTitle}`}>
+                      {name[lang]}
+                    </h3>
+                  </Card.Header>
+                </Card.Content>
+              </BackImg>
+            </Link>
           );
         })}
       </CarouselWrapper>

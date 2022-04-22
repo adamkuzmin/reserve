@@ -45,7 +45,9 @@ const career = {
   jobs: [
     {
       title: {
-        ru: <>Ведущий архитектор Revit</>,
+        ru: (
+          <>Ведущий инженер – конструктор / Главный специалист - конструктор</>
+        ),
         en: <>Leading Revit architect</>,
       },
       descr: {

@@ -60,7 +60,7 @@ const BackImage = styled.div`
   width: 100vw;
   height: 55.6vw;
 
-  background: url("/about/p2.jpg");
+  background: url("/about/office/1.jpg");
   background-size: cover;
 `;
 
@@ -159,7 +159,6 @@ const About = () => {
         <Gap sheight={`120px`} />
       </Content>
       <BackImage />
-      <Gap sheight={`60px`} />
     </>
   );
 };
