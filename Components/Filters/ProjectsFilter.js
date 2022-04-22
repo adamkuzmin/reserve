@@ -123,6 +123,11 @@ const YearsFilter = ({ setFilterType, toPageTop, YearItems, selYearItems }) => {
       return true;
     }
 
+    if (YearItems.includes(item)) {
+      selYearItems((state) => state.filter((_item) => _item !== item));
+      return;
+    }
+
     if (!YearItems.includes(item)) {
       let _YearItems = YearItems[0] === 0 ? [] : [...YearItems];
       _YearItems.push(item);

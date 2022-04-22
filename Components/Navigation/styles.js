@@ -40,6 +40,27 @@ Nav.Logo = styled.div`
   mix-blend-mode: difference;
   pointer-events: visible;
 
+  animation-duration: 1s;
+  animation-timing-function: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  animation-delay: 1s;
+  animation-iteration-count: 1;
+  animation-direction: normal;
+  animation-fill-mode: both;
+  animation-play-state: running;
+  animation-name: fadeIn;
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      display: block;
+    }
+
+    to {
+      opacity: 1;
+      display: block;
+    }
+  }
+
   &&[data-type="black"] {
     background-image: url("/icons/navlogo-black.png");
   }
@@ -68,7 +89,27 @@ Nav.BurgerWrapper = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  position: relative;
   pointer-events: visible;
+
+  animation-duration: 1s;
+  animation-timing-function: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  animation-delay: 1s;
+  animation-iteration-count: 1;
+  animation-direction: normal;
+  animation-fill-mode: both;
+  animation-play-state: running;
+  animation-name: fadeIn;
+
+  @keyframes fadeIn {
+    from {
+      top: -100px;
+    }
+
+    to {
+      top: 0px;
+    }
+  }
 
   && {
     @media (max-width: 480px) {
