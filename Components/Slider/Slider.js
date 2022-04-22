@@ -394,11 +394,29 @@ const OverlayBlack = styled.div`
   position: absolute;
 `;
 
+const Black = styled.div`
+  width: 100%;
+  height: 100%;
+  background: black;
+  position: absolute;
+  transition: all 1.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  z-index: 2;
+
+  &&[data-active="active"] {
+    opacity: 1;
+  }
+
+  &&[data-active="noactive"] {
+    opacity: 0;
+  }
+`;
+
 const Slider = ({ projectType = false, height }) => {
   const swipeTitle = -700;
   const swipeLabel = -2000;
 
   const [startAutoplay, setStartAutoplay] = useState(false);
+  const [blackOverlay, setBlackOverlay] = useState(true);
   const [slideKey, setSlideKey] = useState(0);
 
   const lang = useStore((state) => state.lang);
@@ -409,22 +427,25 @@ const Slider = ({ projectType = false, height }) => {
   const CarouselRef = useRef();
 
   useEffect(() => {
-    let timer = setTimeout(() => setStartAutoplay(true), 800);
+    let timer = setTimeout(() => setStartAutoplay(true), 4000);
+    let timer1 = setTimeout(() => setBlackOverlay(false), 2000);
 
     return () => {
       clearTimeout(timer);
+      clearTimeout(timer1);
     };
   }, []);
 
   useEffect(() => {
-    let timer = setInterval(
-      () => setSlideKey((state) => (state < 3 ? state + 1 : 0)),
-      5500
-    );
+    if (startAutoplay) {
+      let timer = setInterval(() => {
+        return setSlideKey((state) => (state < 3 ? state + 1 : 0));
+      }, 5500);
 
-    return () => {
-      clearInterval(timer);
-    };
+      return () => {
+        clearInterval(timer);
+      };
+    }
   }, [startAutoplay]);
 
   useEffect(() => {
@@ -462,7 +483,11 @@ const Slider = ({ projectType = false, height }) => {
   return (
     <>
       <CarouselWrapper height={height} ref={CarouselRef}>
+        <Black data-active={blackOverlay ? "active" : "noactive"} />
+
         <OverlayBlack />
+        <OverlayBlack rotate={180} />
+
         {Array(4)
           .fill(1)
           .map((_, i) => {
