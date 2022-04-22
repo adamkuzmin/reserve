@@ -420,7 +420,7 @@ const Slider = ({ projectType = false, height, scrolling = () => {} }) => {
   const CarouselRef = useRef();
 
   useEffect(() => {
-    let timer = setTimeout(() => setStartAutoplay(true), 4000);
+    let timer = setTimeout(() => setStartAutoplay(true), 3000);
     let timer1 = setTimeout(() => setBlackOverlay(false), 2000);
 
     return () => {
