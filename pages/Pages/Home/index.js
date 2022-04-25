@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { useStore } from "../../../Store/useStore";
+import dynamic from "next/dynamic";
 
 import styled from "styled-components";
-import { Typography } from "antd";
+import { Typography, Grid } from "antd";
 
 import Navigation from "../../../Components/Navigation/Navigation";
 import NavRight from "../../../Components/NavRight/NavRight";
@@ -13,14 +14,15 @@ import LastMedia from "../../../Components/LastMedia/LastMedia";
 import Footer from "../../../Components/Footer/Footer";
 import { Content } from "../../../Components/common/body";
 
-import ThreeCanvas from "../../../Models/construcetor";
-
 import PreludeWithKPI from "../../../Components/MainDescription/PreludeWithKPI";
 import GeneralLead from "../../../Components/MainDescription/GeneralLead";
 import FloatedBack from "../../../Components/MainDescription/FloatedBack";
 import SectionLead from "../../../Components/MainDescription/SectionLead";
 
+const ThreeCanvas = dynamic(() => import("../../../Models/construcetor"));
+
 const { Paragraph } = Typography;
+const { useBreakpoint } = Grid;
 
 const Cover = styled.div`
   width: 100vw;
@@ -50,6 +52,8 @@ const CanvasGeometry = styled.div`
 `;
 
 const Home = () => {
+  const screens = useBreakpoint();
+
   const blackLogo = useStore((state) => state.blackLogo);
   const setBlackLogo = useStore((state) => state.setBlackLogo);
 
@@ -118,9 +122,11 @@ const Home = () => {
         />
       </Cover>
       <Content justifyContent={"flex-end"} ref={DescriptionRef}>
-        <CanvasGeometry>
-          <ThreeCanvas />
-        </CanvasGeometry>
+        {screens.sm && (
+          <CanvasGeometry>
+            <ThreeCanvas />
+          </CanvasGeometry>
+        )}
         <PreludeWithKPI />
         <GeneralLead />
       </Content>
