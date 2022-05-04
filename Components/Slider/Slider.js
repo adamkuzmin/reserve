@@ -122,7 +122,13 @@ Card.Header = styled.div`
     margin-bottom: 3px;
     font-weight: 300;
 
-    @media (max-width: 1000px) {
+    @media (max-width: 576px) {
+      & {
+        font-size: 14px;
+      }
+    }
+
+    @media (max-width: 1000px) and (min-width: 576px) {
       & {
         font-size: clamp(14px, 2.1vw, 21px);
       }
@@ -140,7 +146,13 @@ Card.Header = styled.div`
     line-height: 1.1;
     font-weight: 600;
 
-    @media (max-width: 1000px) {
+    @media (max-width: 576px) {
+      & {
+        font-size: 20px;
+      }
+    }
+
+    @media (max-width: 1000px) and (min-width: 576px) {
       & {
         font-size: clamp(20px, 3.4vw, 34px);
       }
@@ -465,8 +477,6 @@ const Slider = ({ projectType = false, height, scrolling = () => {} }) => {
   });
 
   const sdata = projectType ? projectSliderData : sliderData;
-
-  console.log("sdata", sdata);
 
   const handleActiveKey = (i, slideKey) => {
     if (i === slideKey) return "active";

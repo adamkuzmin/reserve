@@ -9,6 +9,11 @@ const StyledTitle = styled.h2`
   color: black;
   margin-top: clamp(48px, 6.5vw, 128px);
   margin-bottom: clamp(12px, 1.5vw, 60px);
+
+  @media (max-width: 576px) {
+    margin-top: 48px;
+    margin-bottom: 12px;
+  }
 `;
 
 const leadData = {

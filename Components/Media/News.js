@@ -25,6 +25,8 @@ const MainContent = styled.div`
   @media (max-width: 576px) {
     &&& {
       min-width: 100%;
+      width: 100%;
+      max-width: 100%;
     }
   }
 `;

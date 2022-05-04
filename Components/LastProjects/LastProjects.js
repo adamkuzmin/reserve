@@ -15,6 +15,12 @@ const Projects = styled.div`
   flex-direction: column;
   width: 100%;
   margin-top: clamp(36px, 8vw, 160px);
+
+  @media (max-width: 576px) {
+    & {
+      margin-top: 36px;
+    }
+  }
 `;
 
 Projects.Row = styled.div`
@@ -26,13 +32,25 @@ Projects.Row = styled.div`
     margin-left: 4px;
   }
 
-  @media (max-width: ${transValue}) {
+  @media (max-width: ${transValue}) and (min-width: 576px) {
     &&& {
       flex-direction: column;
       margin-bottom: clamp(30px, 10vw, 70px) !important;
 
       & > * + * {
         margin-top: clamp(30px, 10vw, 70px) !important;
+        margin-left: 0px !important;
+      }
+    }
+  }
+
+  @media (max-width: 576px) {
+    &&& {
+      flex-direction: column;
+      margin-bottom: 30px !important;
+
+      & > * + * {
+        margin-top: 30px !important;
         margin-left: 0px !important;
       }
     }
@@ -110,10 +128,17 @@ const Header = styled.div`
   padding-right: 26px;
   margin-top: 16px;
 
-  @media (max-width: 768px) {
+  @media (max-width: 768px) and (min-width: 576px) {
     && {
       padding-right: 0px !important;
       margin-top: clamp(8px, 2vw, 16px);
+    }
+  }
+
+  @media (max-width: 576px) {
+    && {
+      padding-right: 0px !important;
+      margin-top: 8px;
     }
   }
 `;
@@ -164,9 +189,15 @@ const WideButton = styled.div`
     cursor: pointer;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 768px) and (min-width: 576px) {
     &&& {
       height: clamp(45px, 18vw, 147px);
+    }
+  }
+
+  @media (max-width: 576px) {
+    & {
+      height: 45px;
     }
   }
 `;

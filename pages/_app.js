@@ -6,6 +6,7 @@ import PageHead from "../Components/common/head";
 import { useStore } from "../Store/useStore";
 
 import Preload from "../Components/Preload/Preload";
+import GlobalStyle from "../styles/global-styles";
 
 import "../styles/globals.css";
 
@@ -65,6 +66,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <ConfigProvider locale={ruRU}>
       <MouseContextProvider>
+        <GlobalStyle />
         <PageHead />
 
         <Preload

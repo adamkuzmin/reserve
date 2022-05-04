@@ -60,11 +60,23 @@ const LeadQuote = styled.div`
     max-width: clamp(300px, 59vw, 1200px);
     margin-bottom: 80px;
   }
+
+  @media (max-width: 576px) {
+    && {
+      max-width: 300px;
+    }
+  }
 `;
 
 const LeadDescription = styled.div`
   & {
     max-width: clamp(300px, 71vw, 1400px);
+  }
+
+  @media (max-width: 576px) {
+    & {
+      max-width: 300px;
+    }
   }
 `;
 

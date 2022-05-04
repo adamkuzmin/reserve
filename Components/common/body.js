@@ -40,9 +40,18 @@ const Col = styled.div`
 `;
 
 const Lead = styled.div`
-  margin-top: ${({ margintop }) => (margintop ? margintop : "clamp(72px, 7vw, 140px)")};
+  margin-top: ${({ margintop }) =>
+    margintop ? margintop : "clamp(72px, 7vw, 140px)"};
   margin-bottom: ${({ marginbottom }) =>
     marginbottom ? marginbottom : "clamp(72px, 9.3vw, 140px)"};
+
+  @media (max-width: 576px) {
+    & {
+      margin-top: 72px;
+      margin-bottom: 72px;
+    }
+  }
+
   line-height: 1.06;
   width: 70vw;
   margin-left: 11.4vw;

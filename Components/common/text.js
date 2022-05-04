@@ -9,7 +9,13 @@ const Text254 = styled.span`
     color: black;
   }
 
-  @media (max-width: 1000px) {
+  @media (max-width: 576px) {
+    & {
+      font-size: 96px;
+    }
+  }
+
+  @media (max-width: 1000px) and (min-width: 576px) {
     & {
       font-size: clamp(96px, 21.6vw, 216px);
     }
@@ -26,20 +32,36 @@ const Text96 = styled.span`
   font-size: 96px;
   line-height: clamp(34px, 100%, 120px);
 
+  @media (max-width: 576px) {
+    line-height: 34px;
+  }
+
   @media (max-width: 1000px) {
     font-size: clamp(30px, 7.2vw, 72px);
 
+    @media (max-width: 576px) {
+      & {
+        font-size: 30px;
+      }
+    }
+
     &[data-type="kpi"] {
       font-size: clamp(56px, 7.2vw, 72px);
+    }
+
+    @media (max-width: 576px) {
+      &[data-type="kpi"] {
+        font-size: 56px;
+      }
     }
 
     &[data-type="navright"] {
       font-size: clamp(44px, 7.2vw, 72px);
     }
 
-    @media (max-width: 480px) {
+    @media (max-width: 576px) {
       &[data-type="navright"] {
-        font-size: clamp(24px, 11.7vw, 44px);
+        font-size: 44px;
       }
     }
   }
@@ -55,7 +77,14 @@ const Text60 = styled.span`
   font-size: 60px;
   line-height: clamp(32px, 110%, 66px);
 
-  @media (max-width: 1000px) {
+  @media (max-width: 576px) {
+    && {
+      font-size: 24px;
+      line-height: 32px;
+    }
+  }
+
+  @media (max-width: 1000px) and (min-width: 576px) {
     && {
       font-size: clamp(24px, 6vw, 60px);
     }
@@ -72,7 +101,13 @@ const Text48 = styled.span`
   font-size: 48px;
   line-height: 1.125;
 
-  @media (max-width: 1000px) {
+  @media (max-width: 576px) {
+    && {
+      font-size: 20px;
+    }
+  }
+
+  @media (max-width: 1000px) and (min-width: 576px) {
     && {
       font-size: clamp(20px, 4vw, 40px);
     }
@@ -88,7 +123,13 @@ const Text48 = styled.span`
 const Text40 = styled.span`
   font-size: 40px;
 
-  @media (max-width: 1000px) {
+  @media (max-width: 576px) {
+    && {
+      font-size: 18px;
+    }
+  }
+
+  @media (max-width: 1000px) and (min-width: 576px) {
     && {
       font-size: clamp(18px, 3.4vw, 34px);
     }
@@ -105,7 +146,18 @@ const Text36 = styled.span`
   font-size: 36px;
   line-height: 1.27;
 
-  @media (max-width: 1000px) {
+  @media (max-width: 576px) {
+    && {
+      font-size: 14px;
+      line-height: 24px;
+
+      &[data-type="title"] {
+        line-height: 18px;
+      }
+    }
+  }
+
+  @media (max-width: 1000px) and (min-width: 576px) {
     && {
       font-size: clamp(14px, 3vw, 30px);
       line-height: clamp(24px, 4.8vw, 48px);
@@ -127,7 +179,13 @@ const Text30 = styled.span`
   font-size: 30px;
   line-height: 1.3;
 
-  @media (max-width: 1000px) {
+  @media (max-width: 576px) {
+    && {
+      font-size: 14px;
+    }
+  }
+
+  @media (max-width: 1000px) and (min-width: 576px) {
     && {
       font-size: clamp(14px, 2.6vw, 26px);
     }
@@ -144,7 +202,17 @@ const Text24 = styled.span`
   font-size: 24px;
   line-height: 1.25;
 
-  @media (max-width: 1000px) {
+  @media (max-width: 576px) {
+    && {
+      font-size: 14px;
+    }
+
+    &&[data-type="label"] {
+      font-size: 12px;
+    }
+  }
+
+  @media (max-width: 1000px) and (min-width: 576px) {
     && {
       font-size: clamp(14px, 2.1vw, 21px);
     }

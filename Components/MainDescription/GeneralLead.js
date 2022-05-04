@@ -11,6 +11,12 @@ const Lead = styled.div`
   margin-top: clamp(64px, 9.7vw, 220px);
   margin-bottom: 6vw;
 
+  @media (max-width: 576px) {
+    & {
+      margin-top: 64px;
+    }
+  }
+
   @media (max-width: 1100px) {
     & {
       flex-direction: column !important;
@@ -34,6 +40,12 @@ KPI.Number = styled.div`
 KPI.Text = styled.div`
   font-weight: 400;
   max-width: clamp(100px, 13.8vw, 400px);
+
+  @media (max-width: 576px) {
+    & {
+      max-width: 100px;
+    }
+  }
 `;
 
 const LeadAbout = styled.div`

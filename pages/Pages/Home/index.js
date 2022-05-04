@@ -19,6 +19,8 @@ import GeneralLead from "../../../Components/MainDescription/GeneralLead";
 import FloatedBack from "../../../Components/MainDescription/FloatedBack";
 import SectionLead from "../../../Components/MainDescription/SectionLead";
 
+import { useWindowHeight } from "@react-hook/window-size";
+
 const ThreeCanvas = dynamic(() => import("../../../Models/construcetor"));
 
 const { Paragraph } = Typography;
@@ -58,22 +60,7 @@ const Home = () => {
   const setBlackLogo = useStore((state) => state.setBlackLogo);
 
   /* высота для слайдера */
-  const [windowHeight, setWindowHeight] = useState(null);
-  useEffect(() => {
-    const handleWindowHeight = () => {
-      if (window.innerWidth > 576 || !window.innerHeight) {
-        setWindowHeight(() => window.innerHeight);
-      }
-    };
-    window.addEventListener("resize", handleWindowHeight);
-
-    return () => window.removeEventListener("resize", handleWindowHeight);
-  }, [window.innerHeight]);
-  /* */
-
-  useEffect(() => {
-    setWindowHeight(window.innerHeight);
-  }, []);
+  const windowHeight = useWindowHeight();
 
   const BodyRef = useRef();
   const DescriptionRef = useRef();

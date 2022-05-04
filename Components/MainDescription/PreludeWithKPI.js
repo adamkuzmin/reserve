@@ -26,6 +26,12 @@ KPIs.Item = styled.div`
   color: black;
   max-width: clamp(220px, 13vw, 250px);
 
+  @media (max-width: 576px) {
+    & {
+      max-width: 220px;
+    }
+  }
+
   && h3 {
     font-weight: 600;
     line-height: 1.25;
@@ -44,6 +50,11 @@ const SLeadText = styled(LeadText)`
     margin-top: clamp(64px, 6vw, 100px);
     margin-bottom: clamp(40px, 7.3vw, 116px);
     font-weight: 400;
+
+    @media (max-width: 576px) {
+      margin-top: 64px;
+      margin-bottom: 40px;
+    }
   }
 `;
 

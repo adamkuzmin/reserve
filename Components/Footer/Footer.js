@@ -73,6 +73,12 @@ Foot.Base = styled.div`
   color: white;
   margin-top: clamp(60px, 5vw, 140px);
   margin-bottom: 5vw;
+
+  @media (max-width: 576px) {
+    & {
+      margin-top: 60px;
+    }
+  }
 `;
 
 const SocialNets = styled.div`
@@ -115,9 +121,15 @@ const LinksBlock = styled.div`
   && > * + * {
     margin-top: 16px;
 
-    @media (max-width: 800px) {
+    @media (max-width: 800px) and (min-width: 576px) {
       & {
         margin-top: clamp(12px, 2vw, 16px);
+      }
+    }
+
+    @media (max-width: 576px) {
+      & {
+        margin-top: 12px;
       }
     }
   }
@@ -152,10 +164,24 @@ const SearchInput = styled.input`
   font-size: clamp(16px, 1.6vw, 30px);
   border-radius: 0px !important;
 
+  @media (max-width: 576px) {
+    & {
+      font-size: 16px;
+    }
+  }
+
   &&::placeholder {
     text-align: center;
     font-size: clamp(16px, 2.1vw, 30px);
     color: #9f9f9f;
+  }
+
+  @media (max-width: 576px) {
+    &&::placeholder {
+      text-align: center;
+      font-size: 16px;
+      color: #9f9f9f;
+    }
   }
 `;
 

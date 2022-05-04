@@ -56,9 +56,12 @@ const Navigation = () => {
     <Nav data-status={barIsVisible ? "opened" : "closed"} ref={BarRef}>
       <Link href="/">
         <a>
-          <Nav.Logo data-type={!blackLogo ? "white" : "black"}></Nav.Logo>
+          <Nav.LogoWrapper>
+            <Nav.Logo data-type={!blackLogo ? "white" : "black"}></Nav.Logo>
+          </Nav.LogoWrapper>
         </a>
       </Link>
+
       <Burger />
     </Nav>
   );

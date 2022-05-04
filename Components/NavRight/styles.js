@@ -38,11 +38,11 @@ const NavBlock = styled.div`
 
   @media (max-width: 480px) {
     & {
-      margin-top: clamp(80px, 26vw, 128px);
+      margin-top: 80px;
     }
 
     & *[data-type="nav-secondary"] * {
-      font-size: clamp(16px, 6.4vw, 24px);
+      font-size: 20px;
       line-height: 1.3;
     }
   }
@@ -52,7 +52,7 @@ const NavLink = styled.div`
   line-height: 1;
   display: flex;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 
   & a,
   & a:hover {

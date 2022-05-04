@@ -22,11 +22,19 @@ const Media = styled.div`
     margin-left: 4px;
   }
 
-  @media (max-width: ${transValue}) {
+  @media (max-width: ${transValue}) and (min-width: 576px) {
     flex-direction: column;
 
     && > * + * {
       margin-top: clamp(20px, 6.25vw, 40px);
+    }
+  }
+
+  @media (max-width: 576px) {
+    flex-direction: column;
+
+    && > * + * {
+      margin-top: 20px;
     }
   }
 `;
@@ -44,15 +52,27 @@ const WideButton = styled.div`
   margin-top: 5.7vw;
   margin-bottom: clamp(96px, 13vw, 144px);
 
+  @media (max-width: 576px) {
+    & {
+      margin-bottom: 96px;
+    }
+  }
+
   &&:hover {
     cursor: pointer;
     background: white;
     color: black;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 768px) and (min-width: 576px) {
     &&& {
       height: clamp(45px, 18vw, 147px);
+    }
+  }
+
+  @media (max-width: 576px) {
+    &&& {
+      height: 45px;
     }
   }
 `;
@@ -101,9 +121,15 @@ LargeCard.Title = styled.div`
     font-weight: 600;
   }
 
-  @media (max-width: 800px) {
+  @media (max-width: 800px) and (min-width: 576px) {
     && {
       margin-top: clamp(4px, 1.2vw, 12px);
+    }
+  }
+
+  @media (max-width: 576px) {
+    && {
+      margin-top: 4px;
     }
   }
 `;
@@ -173,9 +199,15 @@ const Tile = styled.div`
   align-items: center;
   overflow: hidden;
 
-  @media (max-width: ${transValue}) {
+  @media (max-width: ${transValue}) and (min-width: 576px) {
     && {
       border-radius: clamp(10px, 12vw, 96px);
+    }
+  }
+
+  @media (max-width: 576px) {
+    && {
+      border-radius: 10px;
     }
   }
 
@@ -261,9 +293,7 @@ const LastMedia = () => {
 
   return (
     <MediaWrapper ref={MediaRef}>
-      <ScreenLead color={"white"}>
-        {intro.descr[lang]}
-      </ScreenLead>
+      <ScreenLead color={"white"}>{intro.descr[lang]}</ScreenLead>
       <Media>
         <LargeCard
           onClick={() =>

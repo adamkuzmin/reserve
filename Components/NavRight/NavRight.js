@@ -12,10 +12,12 @@ import {
   Langs,
   SocNetIcon,
 } from "./styles";
-import { Tooltip } from "antd";
+import { Tooltip, Grid } from "antd";
 
 /* данные по ссылкам */
 import { pagesConfigs } from "../../Store/pagesConfigs";
+
+const { useBreakpoint } = Grid;
 
 const FixedBottom = styled.div`
   min-width: 100%;
@@ -52,13 +54,17 @@ const NavRight = () => {
     };
   }, [navRef]);
 
+  const screens = useBreakpoint();
+
   return (
     <Nav ref={navRef} data-status={navIsOpened ? "opened" : "closed"}>
-      <FixedBottom>
-        <NavBottom data-space="nospace">
-          <Text24>hello@reserve.ru</Text24>
-        </NavBottom>
-      </FixedBottom>
+      {screens.sm && (
+        <FixedBottom>
+          <NavBottom data-space="nospace">
+            <Text24>hello@reserve.ru</Text24>
+          </NavBottom>
+        </FixedBottom>
+      )}
 
       <NavBlock>
         <LeadLinks routes={leadLinks} />

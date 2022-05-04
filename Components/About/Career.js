@@ -27,6 +27,12 @@ const MainContent = styled.div`
   width: 100%;
   max-width: clamp(300px, 59vw, 1140px);
 
+  @media (max-width: 576px) {
+    & {
+      max-width: 300px;
+    }
+  }
+
   display: flex;
   flex-direction: column;
 `;

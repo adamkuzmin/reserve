@@ -14,7 +14,13 @@ const Nav = styled.div`
     transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
     pointer-events: none;
 
-    @media (max-width: 1000px) {
+    @media (max-width: 576px) {
+      & {
+        height: 68px;
+      }
+    }
+
+    @media (max-width: 1000px) and (min-width: 576px) {
       & {
         height: clamp(68px, 11.2vw, 112px);
       }
@@ -29,6 +35,23 @@ const Nav = styled.div`
     && {
       padding-left: calc(20px + 10px);
       padding-right: 20px;
+    }
+  }
+`;
+
+Nav.LogoWrapper = styled.div`
+  position: relative;
+  width: max-content;
+
+  @media (max-width: 772px) and (min-width: 576px) {
+    & {
+      width: 94px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    & {
+      width: 61px;
     }
   }
 `;
@@ -70,10 +93,11 @@ Nav.Logo = styled.div`
   }
 
   &&&& {
-    @media (max-width: 1000px) {
+    @media (max-width: 772px) {
       & {
-        width: clamp(61px, 9.4vw, 94px);
-        height: clamp(32px, 4.9vw, 49px);
+        padding-bottom: 52.1%;
+        width: 100%;
+        height: auto;
       }
     }
   }
