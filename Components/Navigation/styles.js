@@ -156,11 +156,11 @@ Nav.BurgerWrapper = styled.div`
 
   &&[data-status="close"] {
     & div:first-child {
-      transform: rotate(45deg);
+      transform: translateY(14px) rotate(45deg);
     }
 
     & div:last-child {
-      transform: translateY(-22px) rotate(-45deg);
+      transform: translateY(-8px) rotate(-45deg);
     }
   }
 `;

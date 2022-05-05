@@ -43,6 +43,10 @@ const InputSearch = styled(Input.Search)`
     border-right: 0px;
     border-bottom: 1px solid black;
 
+    @media (max-width: 576px) {
+      font-size: 24px;
+    }
+
     &:hover {
       border-color: white;
       border-bottom: 1px solid black;
