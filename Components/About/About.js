@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import dynamic from "next/dynamic";
 import styled from "styled-components";
 import { useStore } from "../../Store/useStore";
 
@@ -31,6 +32,8 @@ import {
   whatwedo,
   directions,
 } from "./about/data";
+
+const ThreeCanvas = dynamic(() => import("../../Models/construcetor"));
 
 const { useBreakpoint } = Grid;
 
@@ -83,6 +86,27 @@ const Tip = styled.div`
   &&[data-display="hide"] {
     opacity: 0;
   }
+`;
+
+const CanvasGeometry = styled.div`
+  position: absolute;
+  opacity: 0.7;
+  top: 80px;
+  right: 0;
+  width: 35vw;
+  height: 40.5vw;
+
+  @media (max-width: 480px) {
+    top: 260px;
+    left: 0;
+    width: 100vw;
+    height: 99vw;
+
+    display: none;
+  }
+
+  //background-image: url("/renders/16.svg");
+  //background-size: cover;
 `;
 
 const About = () => {
@@ -197,17 +221,27 @@ const About = () => {
           </Col>
 
           {screens.md && (
-            <Col span={screens.xl ? 7 : 4}>
-              {
-                <Tip data-display={tooltip ? "show" : "hide"}>
-                  <Text24 style={{ opacity: 0.7 }}>
-                    В 1987 году основано «Творческое производственное
-                    объединение “РЕЗЕРВ”». С момента создания компания не
-                    прекращала работу. Каждый день в течение более чем тридцати
-                    лет мы создаем и строим архитектуру.
-                  </Text24>
-                </Tip>
-              }
+            <Col span={12}>
+              {screens.xl && (
+                <CanvasGeometry>
+                  <ThreeCanvas />
+                </CanvasGeometry>
+              )}
+
+              <Row>
+                <Col span={screens.xl ? 14 : 4}>
+                  {
+                    <Tip data-display={tooltip ? "show" : "hide"}>
+                      <Text24 style={{ opacity: 0.7 }}>
+                        В 1987 году основано «Творческое производственное
+                        объединение “РЕЗЕРВ”». С момента создания компания не
+                        прекращала работу. Каждый день в течение более чем
+                        тридцати лет мы создаем и строим архитектуру.
+                      </Text24>
+                    </Tip>
+                  }
+                </Col>
+              </Row>
             </Col>
           )}
         </Row>
