@@ -244,6 +244,8 @@ const Footer = () => {
   const blackLogo = useStore((state) => state.blackLogo);
   const setBlackLogo = useStore((state) => state.setBlackLogo);
 
+  const showSearchPanel = useStore(({ showSearchPanel }) => showSearchPanel);
+
   const FooterRef = useRef();
 
   useEffect(() => {
@@ -267,7 +269,12 @@ const Footer = () => {
   return (
     <Foot ref={FooterRef}>
       <Foot.Search>
-        <SearchInput data-font="ibm" type="text" placeholder="Поиск по сайту" />
+        <SearchInput
+          onClick={() => showSearchPanel(true)}
+          data-font="ibm"
+          type="text"
+          placeholder="Поиск по сайту"
+        />
       </Foot.Search>
       <Foot.Sections>
         {FooterData.map((key, i) => {

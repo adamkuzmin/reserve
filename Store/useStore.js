@@ -19,6 +19,9 @@ const useStore = create((set) => ({
   /* стэйт должна ли быть галерея анимированной */
   animatedGallery: true,
   setAnimatedGallery: (e) => set(() => ({ animatedGallery: e })),
+  /* */
+  searchPanel: false,
+  showSearchPanel: (e) => set(() => ({ searchPanel: e })),
 }));
 
 export { useStore };

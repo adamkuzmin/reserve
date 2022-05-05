@@ -20,6 +20,7 @@ import MouseContextProvider from "../Components/common/Cursor/mouse-context";
 
 /* Конфигурации страница */
 import { pagesConfigs } from "../Store/pagesConfigs";
+import SearchPanel from "../Components/Search";
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -30,6 +31,8 @@ function MyApp({ Component, pageProps }) {
   const setPageTitle = useStore((state) => state.setPageTitle);
   const setBarIsVisible = useStore((state) => state.setBarIsVisible);
   const setNavIsOpened = useStore((state) => state.setNavIsOpened);
+
+  const searchPanel = useStore(({ searchPanel }) => searchPanel);
 
   /* preload эффект, которые активируется при изменении route */
   useEffect(() => {
@@ -78,6 +81,8 @@ function MyApp({ Component, pageProps }) {
             setLoadedImgCount,
           }}
         />
+
+        {searchPanel && <SearchPanel visible={searchPanel} />}
 
         {/* главный компонент */}
         {!loading && imagesAreLoaded && <Component {...pageProps} />}
