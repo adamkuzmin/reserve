@@ -5,11 +5,16 @@ import Link from "next/link";
 import { Nav } from "./styles";
 
 import { disableBodyScroll, clearAllBodyScrollLocks } from "body-scroll-lock";
+import { Grid } from "antd";
 
 import Burger from "./Burger";
 
+const { useBreakpoint } = Grid;
+
 /* Navigation */
 const Navigation = () => {
+  const screens = useBreakpoint();
+
   const [oldScrollY, setOldScrollY] = useState(null);
   const [newScrollY, setNewScrollY] = useState(null);
 
@@ -54,15 +59,22 @@ const Navigation = () => {
 
   return (
     <Nav data-status={barIsVisible ? "opened" : "closed"} ref={BarRef}>
-      <Link href="/">
-        <a>
-          <Nav.LogoWrapper>
-            <Nav.Logo
-              data-type={/*!blackLogo ? "white" : "black"*/ "white"}
-            ></Nav.Logo>
-          </Nav.LogoWrapper>
-        </a>
-      </Link>
+      {
+        <Link href="/">
+          <a>
+            <Nav.LogoWrapper>
+              <Nav.Logo
+                data-type={
+                  /*!blackLogo ? "white" : "black"*/ screens.sm ||
+                  (!screens.sm && !navIsOpened)
+                    ? "white"
+                    : "black"
+                }
+              ></Nav.Logo>
+            </Nav.LogoWrapper>
+          </a>
+        </Link>
+      }
 
       <Burger />
     </Nav>
