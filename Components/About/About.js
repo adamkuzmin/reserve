@@ -180,7 +180,7 @@ const About = () => {
         <Gap sheight={`120px`} />
 
         <Row gutter={[24, 24]} style={{ width: "100%" }}>
-          <Col span={12}>
+          <Col span={screens.xl ? 12 : !screens.md ? 24 : 20}>
             <Space direction="vertical" size={18}>
               {directions.map((direction, i) => {
                 return (
@@ -196,8 +196,8 @@ const About = () => {
             </Space>
           </Col>
 
-          {
-            <Col span={7}>
+          {screens.md && (
+            <Col span={screens.xl ? 7 : 4}>
               {
                 <Tip data-display={tooltip ? "show" : "hide"}>
                   <Text24 style={{ opacity: 0.7 }}>
@@ -209,7 +209,7 @@ const About = () => {
                 </Tip>
               }
             </Col>
-          }
+          )}
         </Row>
 
         <Gap sheight={`120px`} />
