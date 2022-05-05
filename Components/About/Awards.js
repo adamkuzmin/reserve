@@ -1,9 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import styled from "styled-components";
 import { useStore } from "../../Store/useStore";
 
 import { Content } from "../common/body";
 import { Space } from "antd";
+import { projectData } from "../ProjectsLayout/data/data";
+import { MouseContext } from "../common/Cursor/mouse-context";
 
 import { intro, awardsData } from "./awards/data";
 
@@ -48,6 +50,8 @@ Award.Photo = styled.div`
 
 const Awards = () => {
   const lang = useStore((state) => state.lang);
+
+  const { cursorType, cursorChangeHandler } = useContext(MouseContext);
 
   const setBlackLogo = useStore((state) => state.setBlackLogo);
   const blackLogo = useStore((state) => state.blackLogo);
@@ -105,9 +109,30 @@ const Awards = () => {
                       <Award.Photo url={photo} />
 
                       <Space direction="vertical" size={12}>
-                        {items.map(({ name, label }) => {
+                        {items.map(({ name, label, index }) => {
+                          const record = projectData[index];
+
+                          const { coververt, coverhor } = record;
+                          const cover = index % 2 === 0 ? coververt : coverhor;
+                          const coverClass =
+                            index % 2 === 0 ? "renderHor-1" : "renderVer-3";
+
+                          const metaSrc = cover
+                            ? `/projects/Frame%20${cover}.jpg`
+                            : "";
+
                           return (
-                            <Space direction="vertical" size={0}>
+                            <Space
+                              direction="vertical"
+                              size={0}
+                              onMouseEnter={() =>
+                                cursorChangeHandler({
+                                  url: metaSrc,
+                                  coverClass,
+                                })
+                              }
+                              onMouseLeave={() => cursorChangeHandler(null)}
+                            >
                               <LocalTitle size={30}>{name[lang]}</LocalTitle>
                               <Text24>{label[lang]}</Text24>
                             </Space>

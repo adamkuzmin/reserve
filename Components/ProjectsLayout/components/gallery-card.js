@@ -2,7 +2,7 @@ import React from "react";
 import { useRouter } from "next/router";
 
 import { Layout, Header, Render, TextWrapper } from "./gallery-styles";
-import { Text48, Text30 } from "../../common/text";
+import { Text48, Text36, Text30, Text24 } from "../../common/text";
 import { useEffect, useState } from "react";
 import { useStore } from "../../../Store/useStore";
 
@@ -46,23 +46,23 @@ const Card = ({ swidth, src, meta, ratio = "horizontal" }) => {
         <Header.Title>
           <TextWrapper data-type="text-wrapper" direction={-100}>
             <p>
-              <Text30 data-font="wremena">Объект культуры</Text30>
+              <Text24 data-font="wremena">Объект культуры</Text24>
             </p>
           </TextWrapper>
           <TextWrapper data-type="text-wrapper" direction={100}>
             <h3>
-              <Text48 data-type="title">
+              <Text36 data-type="title">
                 {meta ? (lang === "ru" ? nameru : nameen) : null}
-              </Text48>
+              </Text36>
             </h3>
           </TextWrapper>
         </Header.Title>
         <Header.Year>
           <TextWrapper data-type="text-wrapper">
             <div>
-              <Text30 data-font="wremena" direction={-100}>
+              <Text24 data-font="wremena" direction={-100}>
                 {finished && finished}
-              </Text30>
+              </Text24>
             </div>
           </TextWrapper>
         </Header.Year>

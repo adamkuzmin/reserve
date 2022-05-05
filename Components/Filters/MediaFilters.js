@@ -15,7 +15,7 @@ const MediaFilters = ({ setLayoutType, layoutType }) => {
   };
 
   return (
-    <FilterWrapper style={{ minWidth: "max-content" }}>
+    <FilterWrapper $type="media" style={{ minWidth: "max-content" }}>
       <Filters size={0}>
         <FLink
           data-type={layoutType === "all" && "link"}

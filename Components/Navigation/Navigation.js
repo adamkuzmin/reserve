@@ -32,7 +32,7 @@ const Navigation = () => {
 
     const ScrollVector = newScrollY - oldScrollY;
 
-    if (ScrollVector > 30 && barIsVisible) {
+    if (ScrollVector > 5 && barIsVisible) {
       setBarIsVisible(false);
     } else if (ScrollVector && ScrollVector < 0) {
       setBarIsVisible(true);
@@ -57,7 +57,9 @@ const Navigation = () => {
       <Link href="/">
         <a>
           <Nav.LogoWrapper>
-            <Nav.Logo data-type={!blackLogo ? "white" : "black"}></Nav.Logo>
+            <Nav.Logo
+              data-type={/*!blackLogo ? "white" : "black"*/ "white"}
+            ></Nav.Logo>
           </Nav.LogoWrapper>
         </a>
       </Link>

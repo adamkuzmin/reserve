@@ -27,6 +27,7 @@ const data2019 = [
     photo: "/about/awards/1.jpg",
     items: [
       {
+        index: 1,
         name: {
           ru: <>Больница с родильным домом в пос. Коммунарка</>,
           en: <>Hospital with maternity hospital in Kommunarka</>,
@@ -53,6 +54,7 @@ const data2019 = [
     photo: "/about/awards/2.jpg",
     items: [
       {
+        index: 3,
         name: {
           ru: <>Концертный зал «Зарядье»</>,
           en: <>Zaryadye Concert Hall</>,
@@ -63,6 +65,7 @@ const data2019 = [
         },
       },
       {
+        index: 1,
         name: {
           ru: <>Больница с родильным домом в пос. Коммунарка</>,
           en: <>Hospital with maternity hospital in Kommunarka</>,
@@ -79,6 +82,7 @@ const data2019 = [
     photo: "/about/awards/3.jpg",
     items: [
       {
+        index: 3,
         name: {
           ru: <>Концертный зал «Зарядье»</>,
           en: <>Zaryadye Concert Hall</>,
@@ -95,6 +99,7 @@ const data2019 = [
     photo: "/about/awards/4.jpg",
     items: [
       {
+        index: 3,
         name: {
           ru: <>Концертный зал «Зарядье»</>,
           en: <>Zaryadye Concert Hall</>,
@@ -113,6 +118,7 @@ const data2018 = [
     photo: "/about/awards/5.jpg",
     items: [
       {
+        index: 0,
         name: {
           ru: <>Комплекс апартаментов STORY, Москва, Автозаводский пр. 13</>,
           en: <>Apartment complex STORY, Avtozavodskiy Ave. 13</>,
@@ -131,6 +137,7 @@ const data2017 = [
     photo: "/about/awards/6.jpg",
     items: [
       {
+        index: 8,
         name: {
           ru: <>Жилой комплекс Wine House</>,
           en: <>Wine House residential complex</>,
@@ -158,6 +165,7 @@ const data2017 = [
     photo: "/about/awards/7.png",
     items: [
       {
+        index: 22,
         name: {
           ru: <>Китайский деловой центр «Парк Хуамин»</>,
           en: <>Huaming Park Chinese Business Centre</>,

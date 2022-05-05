@@ -15,6 +15,13 @@ const Gap = styled.div`
 const ContentFlex = styled.div`
   display: flex;
 
+  ${({ direction }) =>
+    direction === "vertical"
+      ? `& {flex-direction: column}`
+      : direction === "column-reverse"
+      ? `& {flex-direction: ${direction}}`
+      : ``}
+
   &&[data-columns="eq"] {
     & > * {
       width: 100%;

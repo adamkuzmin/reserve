@@ -24,10 +24,10 @@ const Burger = ({ iswhite, ...props }) => {
       }}
     >
       <Nav.BurgerLine
-        data-type={!blackLogo && !navIsOpened ? "white" : "black"}
+        data-type={/*!blackLogo && !navIsOpened ? "white" : "black"*/ "black"}
       />
       <Nav.BurgerLine
-        data-type={!blackLogo && !navIsOpened ? "white" : "black"}
+        data-type={/*!blackLogo && !navIsOpened ? "white" : "black"*/ "black"}
       />
     </Nav.BurgerWrapper>
   );

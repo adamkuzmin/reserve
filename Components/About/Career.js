@@ -14,6 +14,9 @@ import {
 
 import { Text60, Text48, Text36, Text30, Text24 } from "../common/text";
 import { cover, career } from "./career/data";
+import { Grid, Row, Col } from "antd";
+
+const { useBreakpoint } = Grid;
 
 const BackCover = styled.div`
   width: 100vw;
@@ -39,6 +42,7 @@ const MainContent = styled.div`
 
 const Career = () => {
   const lang = useStore((state) => state.lang);
+  const screens = useBreakpoint();
 
   const setBlackLogo = useStore((state) => state.setBlackLogo);
   const blackLogo = useStore((state) => state.blackLogo);
@@ -84,12 +88,14 @@ const Career = () => {
           <Gap sheight={"60px"} />
 
           <ContentFlex>
-            <Gap swidth={`12.1vw`} />
-            <LeadQuote>
-              <Text60 style={{ color: "white" }} data-font="wremena">
-                {cover.descr[lang]}
-              </Text60>
-            </LeadQuote>
+            <Row>
+              {screens.lg && <Gap swidth={`12.1vw`} />}
+              <Col span={screens.lg ? 15 : 24}>
+                <Text60 style={{ color: "white" }} data-font="wremena">
+                  {cover.descr[lang]}
+                </Text60>
+              </Col>
+            </Row>
           </ContentFlex>
 
           <Gap sheight={"120px"} />
@@ -103,7 +109,7 @@ const Career = () => {
         <Gap sheight={"80px"} />
 
         <ContentFlex>
-          <Gap swidth={`12.1vw`} />
+          {screens.sm && <Gap swidth={`12.1vw`} />}
 
           <MainContent>
             <Text36 style={{ color: "#939393" }}>{career.nojobs[lang]}</Text36>

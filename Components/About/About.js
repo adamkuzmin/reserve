@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { useStore } from "../../Store/useStore";
 
-import { Col, Space } from "antd";
+import { Col, Space, Grid } from "antd";
 import {
   Gap,
   ContentFlex,
@@ -30,12 +30,19 @@ import {
   directions,
 } from "./about/data";
 
+const { useBreakpoint } = Grid;
+
 const PlotkinPhoto = styled.div`
   width: 47vw;
-  height: 52vw;
+  padding-bottom: 110.6%;
   background-color: lightgrey;
   background: url("/about/p1.jpg");
   background-size: cover;
+  margin-bottom: 24px;
+
+  @media (max-width: 992px) {
+    width: 100%;
+  }
 `;
 
 const Direction = styled.div`
@@ -65,6 +72,8 @@ const BackImage = styled.div`
 `;
 
 const About = () => {
+  const screens = useBreakpoint();
+
   const [bioIsFull, SetBioIsFull] = useState(false);
 
   const lang = useStore((state) => state.lang);
@@ -110,12 +119,18 @@ const About = () => {
 
         <Gap sheight={`120px`} />
 
-        <ContentFlex>
+        <ContentFlex direction={screens.lg ? "horizontal" : "vertical"}>
+          {!screens.lg && (
+            <Col>
+              <PlotkinPhoto />
+            </Col>
+          )}
+
           <Col>
             <LocalTitle size={48}>{plotkinProfile.name[lang]}</LocalTitle>
             <Text30>{plotkinProfile.whois[lang]}</Text30>
             <Gap sheight={`64px`} />
-            <ContentFlex style={{ paddingRight: "80px" }}>
+            <ContentFlex style={screens.sm ? { paddingRight: "80px" } : {}}>
               <Gap swidth={`12.1vw`} />
               <VertFlex size={"20px"}>
                 <Text24>
@@ -131,9 +146,11 @@ const About = () => {
               </VertFlex>
             </ContentFlex>
           </Col>
-          <Col>
-            <PlotkinPhoto />
-          </Col>
+          {screens.lg && (
+            <Col>
+              <PlotkinPhoto />
+            </Col>
+          )}
         </ContentFlex>
 
         <Gap sheight={`120px`} />

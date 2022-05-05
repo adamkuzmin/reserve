@@ -9,6 +9,29 @@ const FilterWrapper = styled(Space)`
   z-index: 9200;
   opacity: 1;
 
+  ${({ $type }) =>
+    $type === "media"
+      ? `
+    & {
+      @media (max-width: 480px) {
+        & {
+          width: 100vw;
+          overflow-x: scroll;
+          padding-left: 15px;
+          padding-right: 15px;
+          -ms-overflow-style: none; 
+          scrollbar-width: none;
+          min-width: auto !important; 
+        }
+
+        &::-webkit-scrollbar  {
+          display: none;
+        }
+      }
+    }
+  `
+      : ``}
+
   &&[data-animation="true"] {
     transform: translateX(-50%) translateY(-50%);
     opacity: 0;
@@ -72,6 +95,8 @@ const Filters = styled(Space)`
 `;
 
 const FLink = styled.div`
+  width: max-content;
+
   @media (max-width: 480px) {
     &&& {
       padding-left: 14px;

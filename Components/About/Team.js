@@ -4,15 +4,25 @@ import { useStore } from "../../Store/useStore";
 
 import { ContentFlex, Gap, LocalTitle, VertFlex } from "./common/styles";
 
-import { Text254, Text48, Text36, Text30 } from "../common/text";
-import { Col, Space } from "antd";
+import { Text254, Text48, Text36, Text30, Text24 } from "../common/text";
+import { Col, Space, Grid, Row } from "antd";
 import { Content } from "../common/body";
 
 import { intro, plotkin, team1, team2 } from "./team/data";
 
+const { useBreakpoint } = Grid;
+
 const People = styled.div`
   width: 100vw;
-  height: 17vw;
+  height: 20vw;
+
+  @media (max-width: 576px) {
+    height: 58vw;
+  }
+
+  @media (min-width: 576px) and (max-width: 1200px) {
+    height: 35vw;
+  }
 
   background: url("/about/p3.jpg");
   background-size: cover;
@@ -56,12 +66,30 @@ const MembersWrapper = styled.div`
     grid-template-columns: 1fr 1fr 1fr;
     column-gap: 100px;
     row-gap: 70px;
+
+    @media (max-width: 480px) {
+      & {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 1200px) and (min-width: 480px) {
+      & {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
   }
 
   &[data-col="4"] {
     grid-template-columns: 1fr 1fr 1fr 1fr;
     column-gap: 60px;
     row-gap: 70px;
+
+    @media (max-width: 1200px) {
+      & {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+    }
   }
 `;
 
@@ -106,8 +134,9 @@ const TeamList = ({ title, members, lang, col = 3 }) => {
               <Member.Photo url={photo} />
 
               <Space direction="vertical" size={0}>
-                <LocalTitle size={36}>{name[lang]}</LocalTitle>
-                {col < 4 && <Text30 data-font="wremena">{whois[lang]}</Text30>}
+                <LocalTitle size={30}>{name[lang]}</LocalTitle>
+                <Gap sheight={"4px"} />
+                {col < 4 && <Text24 data-font="wremena">{whois[lang]}</Text24>}
               </Space>
             </Member>
           );
@@ -118,6 +147,8 @@ const TeamList = ({ title, members, lang, col = 3 }) => {
 };
 
 const Team = () => {
+  const screens = useBreakpoint();
+
   const lang = useStore((state) => state.lang);
 
   const setBlackLogo = useStore((state) => state.setBlackLogo);
@@ -176,16 +207,24 @@ const Team = () => {
         <Gap sheight={`72px`} />
         <LocalTitle size={48}>{plotkin.title[lang]}</LocalTitle>
 
-        <Gap sheight={"80px"} />
+        <Gap sheight={screens.md ? "80px" : "24px"} />
 
-        <ContentFlex data-columns="eq">
-          <Col>
+        <Row gutter={[40, 40]}>
+          {!screens.md && (
+            <Col span={24}>
+              <PlotkinPhoto />
+            </Col>
+          )}
+
+          <Col span={screens.md ? 12 : 24}>
             <ContentFlex>
-              <Gap swidth={"8.1vw"} />
+              {screens.xl && <Gap swidth={"8.1vw"} />}
 
               <VertFlex>
                 <Text48 data-font="wremena">{plotkin.descr[lang]}</Text48>
+
                 <Gap sheight={"70px"} />
+
                 <VertFlex>
                   <LocalTitle size={36}>{plotkin.name[lang]}</LocalTitle>
                   <Text30 data-font="wremena">{plotkin.whois[lang]}</Text30>
@@ -194,10 +233,13 @@ const Team = () => {
               <Gap swidth={"40px"} />
             </ContentFlex>
           </Col>
-          <Col>
-            <PlotkinPhoto />
-          </Col>
-        </ContentFlex>
+
+          {screens.md && (
+            <Col span={12}>
+              <PlotkinPhoto />
+            </Col>
+          )}
+        </Row>
 
         <TeamList
           title={team1.title}

@@ -3,6 +3,11 @@ import { useStore } from "../../Store/useStore";
 import styled from "styled-components";
 import { Text48 } from "../common/text";
 import Router, { useRouter } from "next/router";
+import { Grid } from "antd";
+
+const { useBreakpoint } = Grid;
+
+const transValue = `800px`;
 
 const MediaWrapper = styled.div`
   padding-top: 9.6vw;
@@ -35,25 +40,21 @@ const Media = styled.div`
   && > * + * {
     margin-left: 4px;
   }
-`;
 
-const WideButton = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 300px;
-  height: 194px;
-  font-size: 48px;
-  border: 1px solid white;
-  color: white;
-  margin-top: 5.7vw;
-  margin-bottom: 13vw;
+  @media (max-width: ${transValue}) and (min-width: 576px) {
+    flex-direction: column;
 
-  &&:hover {
-    cursor: pointer;
-    background: white;
-    color: black;
+    && > * + * {
+      margin-top: clamp(20px, 6.25vw, 40px);
+    }
+  }
+
+  @media (max-width: 576px) {
+    flex-direction: column;
+
+    && > * + * {
+      margin-top: 20px;
+    }
   }
 `;
 
@@ -98,6 +99,14 @@ LargeCard.Content = styled.div`
     justify-content: center;
     align-items: center;
     overflow: hidden;
+
+    @media (max-width: ${transValue}) {
+      & {
+        background: url(${({ src }) => (src ? src : "")});
+        background-size: cover;
+        padding-bottom: 124%;
+      }
+    }
 
     &::after {
       content: "";
@@ -186,6 +195,7 @@ const intro = {
 };
 
 const AllMedia = () => {
+  const screens = useBreakpoint();
   const lang = useStore((state) => state.lang);
 
   const blackLogo = useStore((state) => state.blackLogo);
@@ -237,15 +247,17 @@ const AllMedia = () => {
             <Text48 data-type="title">{intro.labels.publications[lang]}</Text48>
           </h3>
         </LargeCard>
-        <LargeCard swidth={60}>
-          <LargeCard.Content data-content="tiles">
-            <Tile src="/renders/12.jpg"></Tile>
-            <Tile src="/renders/13.jpg"></Tile>
-          </LargeCard.Content>
-          <h3>
-            <Text48 data-type="title">{intro.labels.socmedia[lang]}</Text48>
-          </h3>
-        </LargeCard>
+        {screens.md && (
+          <LargeCard swidth={60}>
+            <LargeCard.Content data-content="tiles">
+              <Tile src="/renders/12.jpg"></Tile>
+              <Tile src="/renders/13.jpg"></Tile>
+            </LargeCard.Content>
+            <h3>
+              <Text48 data-type="title">{intro.labels.socmedia[lang]}</Text48>
+            </h3>
+          </LargeCard>
+        )}
       </Media>
 
       <Media>

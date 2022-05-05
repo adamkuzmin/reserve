@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 const Nav = styled.div`
   && {
+    background: white;
     width: 100vw;
     height: 112px;
     display: flex;
@@ -11,7 +12,7 @@ const Nav = styled.div`
     padding-left: 40px;
     padding-right: 40px;
     z-index: 9999;
-    transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+    transition: all 1.5s cubic-bezier(0.19, 1, 0.22, 1);
     pointer-events: none;
 
     @media (max-width: 576px) {
