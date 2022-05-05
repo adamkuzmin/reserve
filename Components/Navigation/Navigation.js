@@ -25,6 +25,8 @@ const Navigation = () => {
   const barIsVisible = useStore((state) => state.barIsVisible);
   const setBarIsVisible = useStore((state) => state.setBarIsVisible);
 
+  const searchPanel = useStore(({ searchPanel }) => searchPanel);
+
   /* входные для правой навигации */
   const navIsOpened = useStore((state) => state.navIsOpened);
 
@@ -58,7 +60,10 @@ const Navigation = () => {
   }, [navIsOpened]);
 
   return (
-    <Nav data-status={barIsVisible ? "opened" : "closed"} ref={BarRef}>
+    <Nav
+      data-status={barIsVisible || searchPanel ? "opened" : "closed"}
+      ref={BarRef}
+    >
       {
         <Link href="/">
           <a>

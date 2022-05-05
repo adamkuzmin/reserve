@@ -10,6 +10,9 @@ const Burger = ({ iswhite, ...props }) => {
   const navIsOpened = useStore((state) => state.navIsOpened);
   const setNavIsOpened = useStore((state) => state.setNavIsOpened);
 
+  const searchPanel = useStore(({ searchPanel }) => searchPanel);
+  const showSearchPanel = useStore(({ showSearchPanel }) => showSearchPanel);
+
   /* черный / белый лого */
   const blackLogo = useStore((state) => state.blackLogo);
 
@@ -17,9 +20,11 @@ const Burger = ({ iswhite, ...props }) => {
     <Nav.BurgerWrapper
       onMouseEnter={() => cursorChangeHandler("hovered")}
       onMouseLeave={() => cursorChangeHandler(null)}
-      data-status={navIsOpened ? "opened" : "closed"}
+      data-status={searchPanel ? "close" : navIsOpened ? "opened" : "closed"}
       onClick={(e) => {
         e.stopPropagation();
+
+        if (searchPanel) return showSearchPanel(false);
         setNavIsOpened(!navIsOpened);
       }}
     >

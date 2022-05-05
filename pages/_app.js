@@ -33,6 +33,7 @@ function MyApp({ Component, pageProps }) {
   const setNavIsOpened = useStore((state) => state.setNavIsOpened);
 
   const searchPanel = useStore(({ searchPanel }) => searchPanel);
+  const showSearchPanel = useStore(({ showSearchPanel }) => showSearchPanel);
 
   /* preload эффект, которые активируется при изменении route */
   useEffect(() => {
@@ -60,6 +61,8 @@ function MyApp({ Component, pageProps }) {
     /* при загрузке правая навигация скрыта, а бар видимый */
     setBarIsVisible(true);
     setNavIsOpened(false);
+
+    showSearchPanel(false);
 
     return () => {
       clearTimeout(timer);

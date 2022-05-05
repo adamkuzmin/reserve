@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
-import { Input } from "antd";
+import { Input, Row, Col } from "antd";
 
 import { Content } from "../common/body";
 import { Gap } from "../About/common/styles";
+
+import { Text24 } from "../common/text";
 
 const Wrapper = styled.div`
   background: white;
@@ -55,11 +57,31 @@ const InputSearch = styled(Input.Search)`
 `;
 
 const SearchPanel = ({ visible }) => {
+  const searchRef = useRef();
+
+  const [note, showNote] = useState(false);
+
   return (
     <Wrapper data-display={visible ? "show" : "hide"}>
       <Content>
         <Gap sheight={`120px`} />
-        <InputSearch allowClear enterButton={false} addonAfter={false} />
+        <InputSearch
+          placeholder="Поиск по сайту"
+          autoFocus
+          ref={searchRef}
+          enterButton={false}
+          addonAfter={false}
+          onChange={() => showNote(true)}
+        />
+
+        {note && (
+          <Row justify="center" style={{ width: "100%" }}>
+            <Col>
+              <Gap sheight={`120px`} />
+              <Text24>Поиск находится в разработке...</Text24>
+            </Col>
+          </Row>
+        )}
       </Content>
     </Wrapper>
   );

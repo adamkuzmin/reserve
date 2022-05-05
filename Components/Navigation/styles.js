@@ -153,6 +153,16 @@ Nav.BurgerWrapper = styled.div`
       transform: translateY(-12px);
     }
   }
+
+  &&[data-status="close"] {
+    & div:first-child {
+      transform: rotate(45deg);
+    }
+
+    & div:last-child {
+      transform: translateY(-22px) rotate(-45deg);
+    }
+  }
 `;
 
 Nav.BurgerLine = styled.div`
