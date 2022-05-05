@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { useStore } from "../../Store/useStore";
 
-import { Col, Space, Grid } from "antd";
+import { Col, Space, Grid, Row } from "antd";
 import {
   Gap,
   ContentFlex,
@@ -20,6 +20,8 @@ import {
   Text36,
   Text30,
   Text24,
+  Wrap16,
+  Wrap24,
 } from "../../Components/common/text";
 
 import {
@@ -71,6 +73,18 @@ const BackImage = styled.div`
   background-size: cover;
 `;
 
+const Tip = styled.div`
+  opacity: 0;
+
+  &&[data-display="show"] {
+    transition: all 1s fade-in;
+    opacity: 1;
+  }
+  &&[data-display="hide"] {
+    opacity: 0;
+  }
+`;
+
 const About = () => {
   const screens = useBreakpoint();
 
@@ -101,6 +115,8 @@ const About = () => {
 
     return () => window.removeEventListener("scroll", onScroll);
   });
+
+  const [tooltip, setTooltip] = useState(false);
 
   return (
     <>
@@ -163,15 +179,38 @@ const About = () => {
 
         <Gap sheight={`120px`} />
 
-        <Space direction="vertical" size={18}>
-          {directions.map((direction, i) => {
-            return (
-              <Direction key={`dir:${i}`}>
-                <Text36 text-font="ibm">{direction[lang]}</Text36>
-              </Direction>
-            );
-          })}
-        </Space>
+        <Row gutter={[24, 24]} style={{ width: "100%" }}>
+          <Col span={12}>
+            <Space direction="vertical" size={18}>
+              {directions.map((direction, i) => {
+                return (
+                  <Direction
+                    key={`dir:${i}`}
+                    onMouseEnter={() => setTooltip(true)}
+                    onMouseLeave={() => setTooltip(false)}
+                  >
+                    <Text30 text-font="ibm">{direction[lang]}</Text30>
+                  </Direction>
+                );
+              })}
+            </Space>
+          </Col>
+
+          {
+            <Col span={7}>
+              {
+                <Tip data-display={tooltip ? "show" : "hide"}>
+                  <Text24 style={{ opacity: 0.7 }}>
+                    В 1987 году основано «Творческое производственное
+                    объединение “РЕЗЕРВ”». С момента создания компания не
+                    прекращала работу. Каждый день в течение более чем тридцати
+                    лет мы создаем и строим архитектуру.
+                  </Text24>
+                </Tip>
+              }
+            </Col>
+          }
+        </Row>
 
         <Gap sheight={`120px`} />
       </Content>
