@@ -8,6 +8,10 @@ const ProjectHeaderWrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
+
+  @media (max-width: 576px) {
+    flex-direction: column;
+  }
 `;
 
 const Header = styled.div`
@@ -37,6 +41,12 @@ const StyledText24 = styled.div`
   width: 100%;
   max-width: 20vw;
   min-width: 120px;
+
+  @media (max-width: 576px) {
+    margin-top: 24px;
+    max-width: 60%;
+    margin-left: auto;
+  }
 `;
 
 const intro = {

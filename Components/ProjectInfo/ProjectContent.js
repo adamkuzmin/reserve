@@ -2,6 +2,9 @@ import styled from "styled-components";
 import { useStore } from "../../Store/useStore";
 
 import { Text48, Text36, Text30 } from "../common/text";
+import { Grid } from "antd";
+
+const { useBreakpoint } = Grid;
 
 const ProjectContentWrapper = styled.div`
   width: 100%;
@@ -14,9 +17,22 @@ const ProjectCols = styled.div`
   && > * + * {
     margin-left: 40px;
   }
+
+  @media (max-width: 776px) {
+    flex-direction: column;
+
+    && > * + * {
+      margin-left: 0px;
+    }
+  }
 `;
 ProjectCols.RightCol = styled.div`
   width: 31%;
+
+  @media (max-width: 776px) {
+    width: 80%;
+    margin-bottom: 24px;
+  }
 `;
 
 ProjectCols.LeftCol = styled.div`
@@ -58,10 +74,16 @@ const ImageContent = styled.div`
   height: 33vw;
   margin-left: auto;
   margin-right: auto;
-  background-size: cover;
+
   background: url("/renders/17.jpg");
+  background-size: cover;
   margin-top: 5.5vw;
   margin-bottom: 5vw;
+
+  @media (max-width: 576px) {
+    width: 100%;
+    padding-top: 40%;
+  }
 `;
 
 const ParamBlock = styled.div`
@@ -193,6 +215,8 @@ const descr = {
 };
 
 const ProjectContent = () => {
+  const screens = useBreakpoint();
+
   const lang = useStore((state) => state.lang);
 
   return (
@@ -202,7 +226,7 @@ const ProjectContent = () => {
       </StyledSubTitle>
       <ProjectCols>
         <ProjectCols.LeftCol>
-          <ProjectCols.LeftGap />
+          {screens.lg && <ProjectCols.LeftGap />}
           <ProjectCols.Content>
             <StyledText48 data-font="wremena">{descr.l2[lang]}</StyledText48>
           </ProjectCols.Content>
@@ -214,7 +238,7 @@ const ProjectContent = () => {
         <ProjectCols.LeftCol>
           <ProjectCols.Content>
             <ProjectCols.LeftCol>
-              <ProjectCols.LeftGap />
+              {screens.lg && <ProjectCols.LeftGap />}
               <ProjectCols.Content>
                 <StyledText36 data-font="ibm">{descr.l3[lang]}</StyledText36>
               </ProjectCols.Content>
@@ -227,7 +251,7 @@ const ProjectContent = () => {
             <ImageContent />
             <StyledText36 data-font="ibm">{descr.l6[lang]}</StyledText36>
             <ProjectCols.LeftCol>
-              <ProjectCols.LeftGap />
+              {screens.lg && <ProjectCols.LeftGap />}
               <ProjectCols.Content>
                 <StyledText48 data-font="wremena">
                   {descr.l7[lang]}

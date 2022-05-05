@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import { useStore } from "../../Store/useStore";
 
-import { Col } from "antd";
+import { Col, Row, Grid } from "antd";
 
 import Navigation from "../../Components/Navigation/Navigation";
 import NavRight from "../../Components/NavRight/NavRight";
@@ -13,6 +13,8 @@ import { Content } from "../../Components/common/body";
 import { Text60, Text30, Text24 } from "../../Components/common/text";
 
 import ReactMapGL, { Marker } from "react-map-gl";
+
+const { useBreakpoint } = Grid;
 
 const MAPBOX_TOKEN =
   "pk.eyJ1IjoibWFya2thYmllcnNraSIsImEiOiJja2lpa3N2c3QwaXVrMnltbHVzcXZ3dDU2In0.t_Lcd-0hPAJSk75HCJFw0g"; // Set your mapbox token here
@@ -38,9 +40,10 @@ const InfoBlock = styled.div`
 `;
 
 const MapWrapper = styled.div`
-  width: 46vw;
-  height: 35vw;
+  width: 100%;
+  padding-bottom: 76%;
   background-color: lightgrey;
+  position: relative;
 `;
 
 const BlockTitle = styled.div`
@@ -53,6 +56,8 @@ const BlockTitle = styled.div`
 `;
 
 const Contacts = () => {
+  const screens = useBreakpoint();
+
   const [viewport, setViewport] = useState({
     latitude: 55.76,
     longitude: 37.612,
@@ -92,70 +97,76 @@ const Contacts = () => {
           <Text60 data-type="title">Контакты</Text60>
         </h3>
         <InfoContent>
-          <Col>
-            <Gap swidth={`11.1vw`} />
-          </Col>
-          <Col>
-            <InfoBlock>
-              <BlockTitle>
-                <Text30>ООО «ТПО “Резерв”»</Text30>
-              </BlockTitle>
-              <Text24>
-                Фактический адрес:
-                <br /> Ленинградский проспект, 31А стр. 1, Москва, 125284,
-                Россия <br />
-                Юридический адрес:
-                <br /> Ул. Грузинская Б. дом 20, офис 4, Москва, 123242, Россия
-              </Text24>
-            </InfoBlock>
-            <InfoBlock>
-              <BlockTitle>
-                <Text30>+7 495 755 69 60</Text30>
-                <Text30>+7 495 280 75 25</Text30>
-              </BlockTitle>
-            </InfoBlock>
-            <InfoBlock>
-              <Text24>
-                Сообщите о своем визите заранее, чтобы мы заказали для вас
-                пропуск.
-              </Text24>
-            </InfoBlock>
-            <InfoBlock>
-              <BlockTitle>
-                <Text30>Сотрудничество и общие вопросы</Text30>
-              </BlockTitle>
-              <Text30>info@reserve.ru</Text30>
-            </InfoBlock>
-            <InfoBlock>
-              <BlockTitle>
-                <Text30>Пресса</Text30>
-              </BlockTitle>
-              <Text30>press@reserve.ru</Text30>
-            </InfoBlock>
-            <InfoBlock>
-              <BlockTitle>
-                <Text30>Работа в «Резерве»</Text30>
-              </BlockTitle>
-              <Text24>
-                Мы всегда заинтересованы в талантах! Присылайте ваше портфолио и
-                резюме. Размер прикрепленных к письму файлов не должны превышать
-                10 мб.
-              </Text24>
-              <Text30>ok@reserve.ru</Text30>
-            </InfoBlock>
-          </Col>
-          <Col>
-            <MapWrapper>
-              <ReactMapGL
-                {...viewport}
-                width="100%"
-                height="100%"
-                mapStyle="mapbox://styles/markkabierski/ckwdu1l7q096k15p7se9gvol3"
-                onViewportChange={setViewport}
-                mapboxApiAccessToken={MAPBOX_TOKEN}
-              ></ReactMapGL>
-            </MapWrapper>
-          </Col>
+          <Row gutter={[40, 40]}>
+            <Col span={screens.sm ? 12 : 22}>
+              <Row justify="end">
+                <Col span={screens.lg ? 16 : 24}>
+                  <InfoBlock>
+                    <BlockTitle>
+                      <Text30>ООО «ТПО “Резерв”»</Text30>
+                    </BlockTitle>
+                    <Text24>
+                      Фактический адрес:
+                      <br /> Ленинградский проспект, 31А стр. 1, Москва, 125284,
+                      Россия <br />
+                      Юридический адрес:
+                      <br /> Ул. Грузинская Б. дом 20, офис 4, Москва, 123242,
+                      Россия
+                    </Text24>
+                  </InfoBlock>
+                  <InfoBlock>
+                    <BlockTitle>
+                      <Text30>+7 495 755 69 60</Text30>
+                      <Text30>+7 495 280 75 25</Text30>
+                    </BlockTitle>
+                  </InfoBlock>
+                  <InfoBlock>
+                    <Text24>
+                      Сообщите о своем визите заранее, чтобы мы заказали для вас
+                      пропуск.
+                    </Text24>
+                  </InfoBlock>
+                  <InfoBlock>
+                    <BlockTitle>
+                      <Text30>Сотрудничество и общие вопросы</Text30>
+                    </BlockTitle>
+                    <Text30>info@reserve.ru</Text30>
+                  </InfoBlock>
+                  <InfoBlock>
+                    <BlockTitle>
+                      <Text30>Пресса</Text30>
+                    </BlockTitle>
+                    <Text30>press@reserve.ru</Text30>
+                  </InfoBlock>
+                  <InfoBlock>
+                    <BlockTitle>
+                      <Text30>Работа в «Резерве»</Text30>
+                    </BlockTitle>
+                    <Text24>
+                      Мы всегда заинтересованы в талантах! Присылайте ваше
+                      портфолио и резюме. Размер прикрепленных к письму файлов
+                      не должны превышать 10 мб.
+                    </Text24>
+                    <Text30>ok@reserve.ru</Text30>
+                  </InfoBlock>
+                </Col>
+              </Row>
+            </Col>
+
+            <Col span={screens.sm ? 12 : 24}>
+              <MapWrapper>
+                <ReactMapGL
+                  style={{ position: "absolute" }}
+                  {...viewport}
+                  width="100%"
+                  height="100%"
+                  mapStyle="mapbox://styles/markkabierski/ckwdu1l7q096k15p7se9gvol3"
+                  onViewportChange={setViewport}
+                  mapboxApiAccessToken={MAPBOX_TOKEN}
+                ></ReactMapGL>
+              </MapWrapper>
+            </Col>
+          </Row>
         </InfoContent>
       </Content>
 
