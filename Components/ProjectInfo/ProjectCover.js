@@ -11,6 +11,13 @@ const ProjectCoverWrapper = styled.div`
   background-image: url("/renders/18.jpg");
   background-position: left bottom;
   background-attachment: fixed;
+
+  @media (max-width: 576px) {
+    & {
+      background-position: center bottom;
+      background-attachment: unset;
+    }
+  }
 `;
 
 const ProjectCover = ({ scrolling = () => {} }) => {
