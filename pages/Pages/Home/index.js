@@ -20,6 +20,7 @@ import FloatedBack from "../../../Components/MainDescription/FloatedBack";
 import SectionLead from "../../../Components/MainDescription/SectionLead";
 
 import { useWindowHeight } from "@react-hook/window-size";
+import APIConnect from "../../../Components/Api";
 
 const ThreeCanvas = dynamic(() => import("../../../Models/construcetor"));
 
@@ -101,6 +102,8 @@ const Home = () => {
 
   return (
     <div ref={BodyRef}>
+      <APIConnect />
+
       <NavRight />
       <Navigation />
       <Cover height={windowHeight}>
