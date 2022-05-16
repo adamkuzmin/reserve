@@ -102,8 +102,6 @@ const Home = () => {
 
   return (
     <div ref={BodyRef}>
-      <APIConnect />
-
       <NavRight />
       <Navigation />
       <Cover height={windowHeight}>
