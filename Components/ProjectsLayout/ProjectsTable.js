@@ -6,6 +6,8 @@ import { Table, Typography, Skeleton, Space, Grid } from "antd";
 import { MouseContext } from "../common/Cursor/mouse-context";
 import { projectData } from "./data/data";
 
+import Link from "next/link";
+
 import stc from "string-to-color";
 
 import { Text24, Wrap24, Text14 } from "../common/text";
@@ -32,6 +34,10 @@ const CatsArray = styled.div`
 `;
 
 const StyledText = styled(Text24)`
+  &&[data-type="link"]:hover {
+    text-decoration: underline;
+  }
+
   && {
     line-height: 1.33;
     letter-spacing: -0.01em;
@@ -146,9 +152,11 @@ const columns = [
     width: "40%",
     key: "name",
     render: (a) => (
-      <StyledText data-weight="semibold" data-font="ibm">
-        {a}
-      </StyledText>
+      <Link href="/project">
+        <StyledText data-type="link" data-weight="semibold" data-font="ibm">
+          {a}
+        </StyledText>
+      </Link>
     ),
   },
   {
@@ -299,6 +307,7 @@ const ProjectsTable = ({ stateData }) => {
                 onMouseEnter: () =>
                   cursorChangeHandler({ url: metaSrc, coverClass }),
                 onMouseLeave: () => cursorChangeHandler(null),
+                onClick: () => cursorChangeHandler(null),
               };
             }}
             columns={screens.md ? columns : mobileColumns}

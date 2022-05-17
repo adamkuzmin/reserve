@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useStore } from "../../Store/useStore";
 import { Text254, Text96, Text30, Text24 } from "../common/text";
+import Link from "next/link";
 
 const Lead = styled.div`
   width: 100%;
@@ -147,9 +148,11 @@ const GeneralLead = () => {
         <LeadAbout>
           <Text96 data-font="ibm">{leadData.leadlabel[lang]}</Text96>
         </LeadAbout>
-        <ButtonBlock>
-          <Text30 data-font="ibm">{leadData.leadlink[lang]}</Text30>
-        </ButtonBlock>
+        <Link href={"/about"}>
+          <ButtonBlock>
+            <Text30 data-font="ibm">{leadData.leadlink[lang]}</Text30>
+          </ButtonBlock>
+        </Link>
       </LeadWithBtn>
     </Lead>
   );

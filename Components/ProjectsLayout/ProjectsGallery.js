@@ -47,7 +47,11 @@ const MainGallery = ({ stateData, cards, setCards, showBottomTrigger }) => {
   const bottomTriggerRef = useRef();
 
   useEffect(() => {
-    if (bottomTriggerRef && partCards.length < cards.length) {
+    if (
+      bottomTriggerRef &&
+      bottomTriggerRef.current &&
+      partCards.length < cards.length
+    ) {
       const triggerScroll = () => {
         const top = bottomTriggerRef.current.getBoundingClientRect().top;
 
@@ -206,7 +210,7 @@ const LayoutWrapperMobile = styled.div`
   overflow: hidden;
   height: 100%;
 
-  margin-left: -20px
+  margin-left: -20px;
 `;
 
 const ProjectsGallery = ({ stateData }) => {
