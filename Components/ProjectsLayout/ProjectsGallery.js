@@ -47,11 +47,7 @@ const MainGallery = ({ stateData, cards, setCards, showBottomTrigger }) => {
   const bottomTriggerRef = useRef();
 
   useEffect(() => {
-    if (
-      bottomTriggerRef &&
-      bottomTriggerRef.current &&
-      partCards.length < cards.length
-    ) {
+    if (bottomTriggerRef && partCards.length < cards.length) {
       const triggerScroll = () => {
         const top = bottomTriggerRef.current.getBoundingClientRect().top;
 
