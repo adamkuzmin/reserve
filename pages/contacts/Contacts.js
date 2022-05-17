@@ -13,6 +13,7 @@ import { Content } from "../../Components/common/body";
 import { Text60, Text30, Text24 } from "../../Components/common/text";
 
 import ReactMapGL, { Marker } from "react-map-gl";
+import { CirclePoint } from "../../Components/ProjectsLayout/ProjectsMap";
 
 const { useBreakpoint } = Grid;
 
@@ -163,7 +164,16 @@ const Contacts = () => {
                   mapStyle="mapbox://styles/markkabierski/ckwdu1l7q096k15p7se9gvol3"
                   onViewportChange={setViewport}
                   mapboxApiAccessToken={MAPBOX_TOKEN}
-                ></ReactMapGL>
+                >
+                  <Marker
+                    latitude={55.784233}
+                    longitude={37.55955}
+                    offsetLeft={-15}
+                    offsetTop={-15}
+                  >
+                    <CirclePoint data-type="2"/>
+                  </Marker>
+                </ReactMapGL>
               </MapWrapper>
             </Col>
           </Row>

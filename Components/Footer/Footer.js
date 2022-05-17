@@ -200,42 +200,49 @@ const StyledH4 = styled.div`
 const FooterData = [
   {
     title: "Резерв",
+    entitle: "Reserve",
     links: [
-      { name: "Бюро" },
-      { name: "Команда" },
-      { name: "Карьера" },
-      { name: "Заказчики" },
-      { name: "Награды" },
+      { name: "Бюро", enname: "Bureau" },
+      { name: "Команда", enname: "Team" },
+      { name: "Карьера", enname: "Career" },
+      { name: "Заказчики", enname: "Customers" },
+      { name: "Награды", enname: "Awards" },
     ],
   },
   {
     title: "Проекты",
+    entitle: "Projects",
     links: [
-      { name: "Жилые" },
-      { name: "Офисно-административные" },
-      { name: "Торговые" },
-      { name: "Культура" },
-      { name: "Инфраструктура и транспорт" },
-      { name: "Смешанная функция" },
-      { name: "Градостроительство" },
-      { name: "Построенные" },
-      { name: "Текущие" },
-      { name: "Конкурсные" },
-      { name: "Арт-объекты и дизайн" },
+      { name: "Жилые", enname: "Residential" },
+      { name: "Офисно-административные", enname: "Office and administrative" },
+      { name: "Торговые", enname: "Trade" },
+      { name: "Культура", enname: "Culture" },
+      {
+        name: "Инфраструктура и транспорт",
+        enname: "Infrastructure and transport",
+      },
+      { name: "Смешанная функция", enname: "Mixed function" },
+      { name: "Градостроительство", enname: "Urban planning" },
+      { name: "Построенные", enname: "Built" },
+      { name: "Текущие", enname: "Current" },
+      { name: "Конкурсные", enname: "Competitive" },
+      { name: "Арт-объекты и дизайн", enname: "Art objects and design" },
     ],
   },
   {
     title: "Медиа",
+    entitle: "Media",
     links: [
-      { name: "Новости" },
-      { name: "Публикации" },
-      { name: "Выставки" },
-      { name: "Интервью" },
-      { name: "Лекции" },
+      { name: "Новости", enname: "News" },
+      { name: "Публикации", enname: "Publications" },
+      { name: "Выставки", enname: "Exhibitions" },
+      { name: "Интервью", enname: "Interview" },
+      { name: "Лекции", enname: "Lectures" },
     ],
   },
   {
     title: "Контакты",
+    entitle: "Contacts",
     links: [],
   },
 ];
@@ -243,6 +250,9 @@ const FooterData = [
 const Footer = () => {
   const blackLogo = useStore((state) => state.blackLogo);
   const setBlackLogo = useStore((state) => state.setBlackLogo);
+
+  const lang = useStore((state) => state.lang);
+  const setLang = useStore((state) => state.setLang);
 
   const showSearchPanel = useStore(({ showSearchPanel }) => showSearchPanel);
 
@@ -273,24 +283,26 @@ const Footer = () => {
           onClick={() => showSearchPanel(true)}
           data-font="ibm"
           type="text"
-          placeholder="Поиск по сайту"
+          placeholder={lang === "ru" ? "Поиск по сайту" : "Search site"}
         />
       </Foot.Search>
       <Foot.Sections>
-        {FooterData.map((key, i) => {
+        {FooterData.map((key = {}, i) => {
+          const { links = [] } = key;
+
           return (
             <Foot.Col key={`Foot.Col${i}`}>
               <StyledH4>
                 <Text36 data-font="ibm" style={{ fontWeight: "600" }}>
-                  {key.title}
+                  {lang === "ru" ? key.title : key.entitle}
                 </Text36>
               </StyledH4>
               <LinksBlock>
                 {key.title !== "Контакты" ? (
-                  key?.links?.map((link, b) => {
+                  links.map((link = {}, b) => {
                     return (
                       <Text24 data-font="ibm" key={`footer.a.${b}`}>
-                        <a>{link.name}</a>
+                        <a>{lang === "ru" ? link.name : link.enname}</a>
                       </Text24>
                     );
                   })
@@ -312,23 +324,43 @@ const Footer = () => {
 
                       <Space direction="vertical" size={10}>
                         <Text24 style={{ fontWeight: "600" }}>
-                          ООО «ТПО “Резерв”»
+                          {lang === "ru"
+                            ? "ООО «ТПО “Резерв”»"
+                            : "TPO Reserve Ltd."}
                         </Text24>
                         <Text14 style={{ color: "rgb(162 162 162)" }}>
-                          Фактический адрес: <br />
-                          Ленинградский проспект, 31А стр. 1, Москва, 125284,
-                          Россия
-                          <br />
-                          <br />
-                          Юридический адрес:
-                          <br /> Ул. Грузинская Б. дом 20, офис 4, Москва,
-                          123242, Россия
+                          {lang === "ru" ? (
+                            <>
+                              Фактический адрес: <br />
+                              Ленинградский проспект, 31А стр. 1, Москва,
+                              125284, Россия
+                              <br />
+                              <br />
+                              Юридический адрес:
+                              <br /> Ул. Грузинская Б. дом 20, офис 4, Москва,
+                              123242, Россия
+                            </>
+                          ) : (
+                            <>
+                              Actual address: <br />
+                              31A, Leningradsky prospect, bld. 1, Moscow,
+                              125284, Russia
+                              <br />
+                              <br />
+                              Legal address:
+                              <br />
+                              20 Gruzinskaya str., office 4, Moscow, 123242,
+                              Russia
+                            </>
+                          )}
                         </Text14>
                       </Space>
 
                       <Space direction="vertical" size={10}>
                         <Text24 style={{ fontWeight: "600" }}>
-                          Сотрудничество и общие вопросы
+                          {lang === "ru"
+                            ? "Сотрудничество и общие вопросы"
+                            : "Cooperation and common issues"}
                         </Text24>
                         <Text24 style={{ textDecoration: "underline" }}>
                           info@reserve.ru
@@ -336,7 +368,9 @@ const Footer = () => {
                       </Space>
 
                       <Space direction="vertical" size={10}>
-                        <Text24 style={{ fontWeight: "600" }}>Пресса</Text24>
+                        <Text24 style={{ fontWeight: "600" }}>
+                          {lang === "ru" ? "Пресса" : "Press"}
+                        </Text24>
                         <Text24 style={{ textDecoration: "underline" }}>
                           press@reserve.ru
                         </Text24>
@@ -344,12 +378,24 @@ const Footer = () => {
 
                       <Space direction="vertical" size={10}>
                         <Text24 style={{ fontWeight: "600" }}>
-                          Работа в «Резерве»
+                          {lang === "ru"
+                            ? "Работа в «Резерве»"
+                            : "Working in the Reserves"}
                         </Text24>
                         <Text14 style={{ color: "rgb(162 162 162)" }}>
-                          Мы всегда заинтересованы в талантах! Присылайте ваше
-                          портфолио и резюме. Размер прикрепленных к письму
-                          файлов не должны превышать 10 мб.
+                          {lang === "ru" ? (
+                            <>
+                              Мы всегда заинтересованы в талантах! Присылайте
+                              ваше портфолио и резюме. Размер прикрепленных к
+                              письму файлов не должны превышать 10 мб.
+                            </>
+                          ) : (
+                            <>
+                              We are always interested in talent! Send your
+                              portfolio and CV. Please send your portfolio and
+                              CV to us. of your email should not exceed 10 MB.
+                            </>
+                          )}
                         </Text14>
                         <Text24 style={{ textDecoration: "underline" }}>
                           ok@reserve.ru
@@ -368,8 +414,8 @@ const Footer = () => {
           <Text30 data-font="ibm">© 1987—2021 Резерв</Text30>
         </p>
         <SocialNets>
-          <a>
-            <Text30 data-font="ibm">EN</Text30>
+          <a onClick={() => setLang(lang === "en" ? "ru" : "en")}>
+            <Text30 data-font="ibm">{lang === "en" ? "RU" : "EN"}</Text30>
           </a>
         </SocialNets>
       </Foot.Base>

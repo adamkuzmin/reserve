@@ -185,9 +185,7 @@ const SearchFilter = ({ setFilterType }) => {
       <Col>
         <LabelRow justify="space-between">
           <Col>
-            <Wrap16 data-font="wremena">
-              Вы можете выбрать несколько категорий одновременнно
-            </Wrap16>
+            <Wrap16 data-font="wremena">Поиск по ключевым словам</Wrap16>
           </Col>
           <CloseBtnCol onClick={() => setFilterType(null)}>
             <Wrap16 data-font="ibm">Свернуть</Wrap16>

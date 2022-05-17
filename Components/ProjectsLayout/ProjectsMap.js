@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { useState, useRef, useMemo, useEffect } from "react";
 import ReactMapGL, { Marker } from "react-map-gl";
 import { Grid } from "antd";
+import { useRouter } from "next/router";
 
 import { Text24 } from "../common/text";
 
@@ -19,7 +20,7 @@ const MAPBOX_TOKEN =
 
 const MapGLWrapped = styled(ReactMapGL)``;
 
-const CirclePoint = styled.div`
+export const CirclePoint = styled.div`
   width: 22px;
   height: 22px;
   background: black;
@@ -149,6 +150,8 @@ const ProjectsMap = ({ stateData }) => {
 
         const metaSrc = cover ? `/projects/Frame%20${cover}.jpg` : "";
 
+        const router = useRouter();
+
         if (lat && lat > 0 && lng && lng > 0)
           return (
             <Marker
@@ -161,6 +164,10 @@ const ProjectsMap = ({ stateData }) => {
               <CirclePoint
                 color={stc(color)}
                 data-type={`${i % 4}`}
+                onClick={() => {
+                  cursorChangeHandler(null);
+                  router.push("/project");
+                }}
                 onMouseEnter={() => {
                   return cursorChangeHandler({
                     url: metaSrc,
