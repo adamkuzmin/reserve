@@ -67,6 +67,8 @@ const MainGallery = ({ stateData, cards, setCards, showBottomTrigger }) => {
     setBarIsVisible(true);
   }, [cards]);
 
+  console.log("cards", cards);
+
   useEffect(() => {
     if (needsToLoadMore) {
       const fetchMoreData = () => {
@@ -139,6 +141,8 @@ const MainGallery = ({ stateData, cards, setCards, showBottomTrigger }) => {
     for (let i = 0; i < cyclesAmount; i++) {
       for (let b = 0; b < sequence.length; b++) {
         const part = copiedData.splice(0, sequence[b]);
+
+        console.log("part", part);
 
         if (part.length > 0) {
           switch (rowType[b]) {

@@ -122,6 +122,8 @@ const Projects = () => {
    * Разделы
    */
 
+  console.log("stateData", stateData);
+
   let LayoutBlock;
 
   switch (LayoutType) {

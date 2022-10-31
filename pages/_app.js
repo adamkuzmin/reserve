@@ -23,6 +23,8 @@ import MouseContextProvider from "../Components/common/Cursor/mouse-context";
 import { pagesConfigs } from "../Store/pagesConfigs";
 import SearchPanel from "../Components/Search";
 
+import WIPPage from "./wip";
+
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
@@ -89,7 +91,8 @@ function MyApp({ Component, pageProps }) {
         {searchPanel && <SearchPanel visible={searchPanel} />}
 
         {/* главный компонент */}
-        {!loading && imagesAreLoaded && <Component {...pageProps} />}
+        {!loading && imagesAreLoaded && <WIPPage />}
+        {/*!loading && imagesAreLoaded && <Component {...pageProps} />*/}
         <DotRing />
       </MouseContextProvider>
     </ConfigProvider>
