@@ -91,8 +91,8 @@ function MyApp({ Component, pageProps }) {
         {searchPanel && <SearchPanel visible={searchPanel} />}
 
         {/* главный компонент */}
-        {!loading && imagesAreLoaded && <WIPPage />}
-        {/*!loading && imagesAreLoaded && <Component {...pageProps} />*/}
+
+        {!loading && imagesAreLoaded && <Component {...pageProps} />}
         <DotRing />
       </MouseContextProvider>
     </ConfigProvider>
