@@ -1,18 +1,15 @@
 import LoginWrapper from "../../Components/Admin/login-wrapper/login-wrapper";
-import cookie from "js-cookie";
+import { useRouter } from "next/router";
+import Bar from "../../Components/Admin/bar/bar";
+import AdminWrapper from "../../Components/Admin/admin-wrapper/admin-wrapper";
 
 const AdminPage = () => {
-  const handleLogout = () => {
-    cookie.remove("token");
-    location.reload();
-  };
+  const router = useRouter();
 
   return (
-    <LoginWrapper>
+    <AdminWrapper>
       <div>Now you have access</div>
-
-      <div onClick={handleLogout}>Log out</div>
-    </LoginWrapper>
+    </AdminWrapper>
   );
 };
 

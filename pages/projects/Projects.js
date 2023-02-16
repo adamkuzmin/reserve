@@ -28,7 +28,7 @@ const ProjectsMap = dynamic(() =>
   import("../../Components/ProjectsLayout/ProjectsMap")
 );
 
-const MainContent = styled(Content)`
+export const MainContent = styled(Content)`
   &&& {
     padding-left: 40px;
     padding-right: 40px;

@@ -128,6 +128,19 @@ const FLink = styled.div`
       opacity: 0.6;
     }
 
+    &[data-theme="white"] {
+      color: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(0, 0, 0, 0.5);
+
+      &[data-status="active_"] {
+        background-color: rgba(0, 0, 0, 0.2);
+      }
+    }
+
+    &[data-theme="white"]:hover {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+
     &[data-theme="black"] {
       color: white;
       border: 1px solid rgba(255, 255, 255, 0.8);

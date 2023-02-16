@@ -97,6 +97,35 @@ const Text60 = styled.span`
   }
 `;
 
+const Wrap60 = styled.div`
+  &&&&&& {
+    &,
+    & * {
+      font-size: 60px;
+      line-height: clamp(32px, 110%, 66px);
+
+      @media (max-width: 576px) {
+        & {
+          font-size: 24px;
+          line-height: 32px;
+        }
+      }
+
+      @media (max-width: 1000px) and (min-width: 576px) {
+        & {
+          font-size: clamp(24px, 6vw, 60px);
+        }
+      }
+
+      @media (min-width: 1000px) and (max-width: 1500px) {
+        & {
+          font-size: 50px;
+        }
+      }
+    }
+  }
+`;
+
 const Text48 = styled.span`
   font-size: 48px;
   line-height: 1.125;
@@ -198,6 +227,34 @@ const Text30 = styled.span`
   }
 `;
 
+const Wrap30 = styled.div`
+  &&&&&&&&& {
+    &,
+    & * {
+      font-size: 30px;
+      line-height: 1.3;
+
+      @media (max-width: 576px) {
+        & {
+          font-size: 14px;
+        }
+      }
+
+      @media (max-width: 1000px) and (min-width: 576px) {
+        & {
+          font-size: clamp(14px, 2.6vw, 26px);
+        }
+      }
+
+      @media (min-width: 1000px) and (max-width: 1500px) {
+        & {
+          font-size: 26px;
+        }
+      }
+    }
+  }
+`;
+
 const Text24 = styled.span`
   font-size: 24px;
   line-height: 1.25;
@@ -259,10 +316,12 @@ const Text14 = styled.span`
 export {
   Text254,
   Text96,
+  Wrap60,
   Text60,
   Text48,
   Text40,
   Text36,
+  Wrap30,
   Text30,
   Text24,
   Wrap24,

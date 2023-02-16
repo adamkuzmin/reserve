@@ -74,7 +74,7 @@ const intro = {
   },
 };
 
-const ProjectHeader = () => {
+const ProjectHeader = ({ location, name, isReal = false, isEdit = false }) => {
   const lang = useStore((state) => state.lang);
 
   return (

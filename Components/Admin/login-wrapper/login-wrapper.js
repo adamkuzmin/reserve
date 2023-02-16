@@ -1,6 +1,4 @@
-// components/login-wrapper/login-wrapper.js
 import { useEffect, useState } from "react";
-import cookie from "js-cookie";
 import LoginForm from "../login-form/login-form";
 
 const LoginWrapper = ({ children }) => {
@@ -9,31 +7,25 @@ const LoginWrapper = ({ children }) => {
   useEffect(() => {
     async function checkAuthStatus() {
       try {
-        console.log("dd", cookie.get("username"));
-        console.log("aa", cookie.get());
-
-        const res = await fetch("/api/login/auth", {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${cookie.get("username")}`,
-          },
-        });
-        console.log("res", res);
-
-        if (res.status === 200) {
+        const response = await fetch("/api/login/auth");
+        console.log("response", response);
+        if (response.ok) {
           setStatus("access");
         } else {
           setStatus("no-access");
         }
-      } catch (err) {
-        console.error(err);
+      } catch (error) {
+        console.error(error);
         setStatus("no-access");
       }
     }
     checkAuthStatus();
   }, []);
 
-  if (!status || status === "no-access") return <LoginForm />;
+  if (!status || status === "no-access") {
+    return <LoginForm />;
+  }
+
   return <>{children}</>;
 };
 

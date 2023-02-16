@@ -1,7 +1,4 @@
-import { useState } from "react";
 import { Form, Input, Button, message } from "antd";
-import cookie from "js-cookie";
-import jwt from "jsonwebtoken";
 import { useRouter } from "next/router";
 
 const LoginForm = () => {
@@ -19,8 +16,7 @@ const LoginForm = () => {
       });
       if (response.ok) {
         const data = await response.json();
-
-        cookie.set("username", data.username /* , { sameSite: "strict" } */);
+        message.success(`Welcome ${data.username}!`);
         location.reload();
       } else {
         message.error("Invalid username or password");

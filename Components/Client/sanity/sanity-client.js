@@ -2,10 +2,10 @@ import { createClient } from "next-sanity";
 import imageUrlBuilder from "@sanity/image-url";
 
 const options = {
-  dataset: "projects_images",
-  projectId: "9qwu66sw",
+  dataset: "cmx-data",
+  projectId: "4llqmfig",
   token:
-    "skIq4Zvtov3QxjBoLSYT3Xxa4hd63fcbBqAetxTwQqE48gYcMaEORtntuowA9CIbCrGZck03tKisu70Jg00Z0QMVj6utFze5h9YkLCK5yyBghuAhqY9mO6pfyWQPAYAid4qqa6nYwMUymwP4dq7D6qKh2DoqPX3qG1dP09xOw6uz5Ov33Vow",
+    "skVhm3VhF0mO6TUkcO4kwRJv3q50N4er8uZt79MdUiDLgu8WNjIA3rhEWZp9IikKtn65Jw3xL8lPY0GlMfgphFVL2ORg2uxKhSCFUo6qv5vFezfM7wpzSAk3FzJErFy4CocRWJzjGCXytBAIs8H8fVsQ9NVDg177zsw3fgSpRbDXdmfRds5V",
   apiVersion: "2022-11-12",
 };
 
