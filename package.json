@@ -40,15 +40,15 @@
     "react-quill": "^2.0.0",
     "react-three-fiber": "^6.0.13",
     "string-to-color": "^2.2.2",
-    "styled-components": "^5.3.3",
+    "styled-components": "^5.3.5",
     "swiper": "^8.0.6",
-    "three": "^0.149.0",
+    "three": "^0.142.0",
     "uuid": "^9.0.0",
-    "zustand": "^3.7.0"
+    "zustand": "^4.0.0"
   },
   "devDependencies": {
     "@svgr/webpack": "^6.5.1",
-    "eslint": "7",
-    "eslint-config-next": "12.0.4"
+    "eslint": "8.20.0",
+    "eslint-config-next": "^13.1.2"
   }
 }
