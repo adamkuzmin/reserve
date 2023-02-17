@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useStore } from "../../Store/useStore";
 
 import { Text48 } from "../common/text";
+import { Button } from "antd";
 
 const ProjectB = styled.div`
   width: 100%;
@@ -30,22 +31,28 @@ const StyledText24 = styled.div`
   min-width: 120px;
 `;
 
-const WideButton = styled.div`
-  margin-top: 3.9vw;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 0;
-  height: 178px;
-  border: 1px solid black;
-  color: black;
-  margin-bottom: 7vw;
+export const WideButton = styled(Button)`
+  &,
+  &:hover,
+  &:focus {
+    border: 0px;
+    margin-top: 3.9vw;
+    box-shadow: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0;
+    height: 178px;
+    border: 1px solid black;
+    color: black;
+    margin-bottom: 7vw;
 
-  &&:hover {
-    background: black;
-    color: white;
-    cursor: pointer;
+    &&:hover {
+      background: black;
+      color: white;
+      cursor: pointer;
+    }
   }
 `;
 

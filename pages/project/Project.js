@@ -17,13 +17,15 @@ import ProjectContent from "../../Components/ProjectInfo/ProjectContent";
 import OtherRenders from "../../Components/ProjectInfo/OtherRenders";
 import ProjectBottom from "../../Components/ProjectInfo/ProjectBottom";
 import Slider from "../../Components/Slider/Slider";
+import Constructor from "@/Components/Admin/project/b-editor/constructor";
+import { Form } from "antd";
 
 const PlansSlider = styled.div`
   width: 100vw;
   height: 100vh;
 `;
 
-const Project = () => {
+const Project = ({ initialValues = {} }) => {
   const blackLogo = useStore((state) => state.blackLogo);
   const setBlackLogo = useStore((state) => state.setBlackLogo);
 
@@ -72,10 +74,12 @@ const Project = () => {
       <NavRight />
       <Navigation />
 
-      <ProjectCover scrolling={goToDescription} />
+      <ProjectCover {...{ initialValues }} scrolling={goToDescription} />
+
       <Content ref={contentRef}>
-        <ProjectHeader />
-        <ProjectContent />
+        <Form initialValues={initialValues}>
+          <Constructor />
+        </Form>
       </Content>
 
       <PlansSlider>

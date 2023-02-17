@@ -25,9 +25,9 @@ const Card = ({ swidth, src, meta, ratio = "horizontal" }) => {
   const router = useRouter();
 
   const localMeta = meta ? meta : {};
-  const { coverhor, coververt, finished, nameru, nameen } = localMeta;
+  const { coverhor, coververt, finished, nameru, nameen, id } = localMeta;
   const metaRatio = ratio === "vertical" ? coverhor : coververt;
-  const metaSrc = `/projects/Frame%20${metaRatio}.jpg`;
+  const metaSrc = metaRatio;
 
   const [RandomTime, setRandomTime] = useState(0);
 
@@ -39,7 +39,7 @@ const Card = ({ swidth, src, meta, ratio = "horizontal" }) => {
     <Layout.Project
       {...{ swidth, randomtime: RandomTime }}
       data-effect={animatedGallery && "fade"}
-      onClick={() => router.push("/project")}
+      onClick={() => router.push(`/project/${id}`)}
     >
       <Render {...{ src: meta ? metaSrc : src }} />
       <Header data-type="card-header">

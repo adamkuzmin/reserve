@@ -8,22 +8,45 @@ import ImageSingleUploader from "./blocks/image-single-upload";
 import Mapbox from "./blocks/map";
 import { Btn } from "./blocks/__styles";
 
-const Common = () => {
+const Common = ({ cats }) => {
   return (
     <>
-      <Form style={{ width: "100%", maxWidth: "700px" }} layout="vertical">
+      <div
+        style={{
+          width: "100%",
+          maxWidth: "700px",
+          display: "flex",
+          flexDirection: "column",
+        }}
+        layout="vertical"
+      >
         <Wrap30 data-font="Wremena" style={{ marginBottom: "24px" }}>
           <h3>1. Название и адрес</h3>
         </Wrap30>
 
         <Wrap30>
           <div style={{ display: "flex" }}>
-            <Form.Item style={{ maxWidth: "230px" }} name="city">
+            <Form.Item
+              rules={[
+                {
+                  required: true,
+                  message: "Поле не заполнено",
+                },
+              ]}
+              style={{ maxWidth: "230px" }}
+              name="city"
+            >
               <Input placeholder="Город" />
             </Form.Item>
             <Form.Item
               style={{ marginLeft: "10px", width: "100%" }}
               name="address"
+              rules={[
+                {
+                  required: true,
+                  message: "Поле не заполнено",
+                },
+              ]}
             >
               <Input placeholder="Точный адрес объекта" />
             </Form.Item>
@@ -31,7 +54,15 @@ const Common = () => {
         </Wrap30>
 
         <Wrap30>
-          <Form.Item name="name">
+          <Form.Item
+            name="name"
+            rules={[
+              {
+                required: true,
+                message: "Поле не заполнено",
+              },
+            ]}
+          >
             <TextArea autoSize placeholder="Название проекта" />
           </Form.Item>
         </Wrap30>
@@ -47,7 +78,7 @@ const Common = () => {
         </Wrap30>
 
         <Form.Item name="cats">
-          <Cats />
+          <Cats cats={cats} />
         </Form.Item>
 
         <br />
@@ -60,7 +91,15 @@ const Common = () => {
         </LabelRow>
 
         <Wrap30>
-          <Form.Item name="year">
+          <Form.Item
+            name="year"
+            rules={[
+              {
+                required: true,
+                message: "Поле не заполнено",
+              },
+            ]}
+          >
             <Input placeholder="Год" />
           </Form.Item>
         </Wrap30>
@@ -135,13 +174,7 @@ const Common = () => {
         <Form.Item style={{ width: "100%" }} name="secondary_imgs">
           <ImageMultiUploader label={null} />
         </Form.Item>
-
-        <Form.Item>
-          <Btn type="primary" htmlType="submit">
-            Сохранить проект
-          </Btn>
-        </Form.Item>
-      </Form>
+      </div>
     </>
   );
 };

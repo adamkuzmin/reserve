@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useStore } from "../../Store/useStore";
 import styled from "styled-components";
 
@@ -17,6 +17,9 @@ import ProjectsMap from "../../Components/ProjectsLayout/ProjectsMap";*/
 import FloatFilters from "../../Components/Filters/FloatFilters";
 
 import { projectData } from "../../Components/ProjectsLayout/data/data";
+import { useQuery } from "@apollo/client";
+import { getProjectsHub } from "../admin/projects";
+import client from "@/Components/Client/apollo/apollo-client";
 
 const ProjectsGallery = dynamic(() =>
   import("../../Components/ProjectsLayout/ProjectsGallery")
@@ -78,7 +81,40 @@ const FilterBackdrop = styled.div`
 
 const Projects = () => {
   /* записи */
-  const [stateData, setStateData] = useState(projectData);
+  const { data, error } = useQuery(getProjectsHub, {
+    client,
+  });
+
+  console.log("data", data);
+
+  const stateData = useMemo(() => {
+    if (data) {
+      const { tiger_data_r_pr_hub: a = [] } = data;
+
+      return a.map((item = {}) => {
+        const { name, coverhor, coververt, year, id } = item;
+
+        return {
+          nameru: name,
+          nameen: name,
+          coververt,
+          coverhor,
+          lat: 55.695804,
+          lng: 37.485664,
+          built: 1,
+          current: 0,
+          finished: year,
+          competition: 0,
+          residential: 1,
+          id,
+        };
+      });
+    }
+  }, [data]);
+
+  const setStateData = () => {};
+
+  //const [stateData, setStateData] = useState(projectData);
 
   /**
    * States для анимации галереи
@@ -122,8 +158,6 @@ const Projects = () => {
    * Разделы
    */
 
-  console.log("stateData", stateData);
-
   let LayoutBlock;
 
   switch (LayoutType) {
@@ -137,6 +171,10 @@ const Projects = () => {
       LayoutBlock = <ProjectsMap {...{ stateData }} />;
       break;
   }
+
+  console.log("stateData", stateData);
+
+  if (!stateData) return <></>;
 
   return (
     <div>

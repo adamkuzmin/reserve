@@ -74,23 +74,35 @@ const intro = {
   },
 };
 
-const ProjectHeader = ({ location, name, isReal = false, isEdit = false }) => {
+const ProjectHeader = ({
+  location,
+  isReal = false,
+  isEdit = false,
+  initialValues = {},
+}) => {
   const lang = useStore((state) => state.lang);
+
+  const {
+    address = "",
+    city = "",
+    name = "Проект без названия",
+    comment = "",
+  } = initialValues;
 
   return (
     <ProjectHeaderWrapper>
       <Header>
         <Header.Title>
           <p>
-            <Text30 data-font="wremena">{intro.location[lang]}</Text30>
+            <Text30 data-font="wremena">{`${city}, ${address}`}</Text30>
           </p>
           <h3>
-            <Text60 data-type="title">{intro.name[lang]}</Text60>
+            <Text60 data-type="title">{name}</Text60>
           </h3>
         </Header.Title>
       </Header>
       <StyledText24>
-        <Text24>{intro.descr[lang]}</Text24>
+        <Text24>{comment}</Text24>
       </StyledText24>
     </ProjectHeaderWrapper>
   );

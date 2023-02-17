@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const Text254 = styled.span`
   font-size: 254px;
@@ -126,26 +126,35 @@ const Wrap60 = styled.div`
   }
 `;
 
+export const Text48Rules = css`
+  &,
+  & * {
+    font-size: 48px;
+    line-height: 1.125;
+
+    @media (max-width: 576px) {
+      & {
+        font-size: 20px;
+      }
+    }
+
+    @media (max-width: 1000px) and (min-width: 576px) {
+      & {
+        font-size: clamp(20px, 4vw, 40px);
+      }
+    }
+
+    @media (min-width: 1000px) and (max-width: 1500px) {
+      & {
+        font-size: 40px;
+      }
+    }
+  }
+`;
+
 const Text48 = styled.span`
-  font-size: 48px;
-  line-height: 1.125;
-
-  @media (max-width: 576px) {
-    && {
-      font-size: 20px;
-    }
-  }
-
-  @media (max-width: 1000px) and (min-width: 576px) {
-    && {
-      font-size: clamp(20px, 4vw, 40px);
-    }
-  }
-
-  @media (min-width: 1000px) and (max-width: 1500px) {
-    && {
-      font-size: 40px;
-    }
+  && {
+    ${Text48Rules}
   }
 `;
 
@@ -171,118 +180,121 @@ const Text40 = styled.span`
   }
 `;
 
+export const Text36Rules = css`
+  &,
+  & * {
+    font-size: 36px;
+    line-height: 1.27;
+
+    @media (max-width: 576px) {
+      & {
+        font-size: 14px;
+        line-height: 24px;
+
+        &[data-type="title"] {
+          line-height: 18px;
+        }
+      }
+    }
+
+    @media (max-width: 1000px) and (min-width: 576px) {
+      & {
+        font-size: clamp(14px, 3vw, 30px);
+        line-height: clamp(24px, 4.8vw, 48px);
+
+        &[data-type="title"] {
+          line-height: clamp(18px, 4.8vw, 48px);
+        }
+      }
+    }
+
+    @media (min-width: 1000px) and (max-width: 1500px) {
+      & {
+        font-size: 30px;
+      }
+    }
+  }
+`;
+
 const Text36 = styled.span`
-  font-size: 36px;
-  line-height: 1.27;
+  && {
+    ${Text36Rules}
+  }
+`;
 
-  @media (max-width: 576px) {
-    && {
-      font-size: 14px;
-      line-height: 24px;
+export const Text30Rules = css`
+  &,
+  & * {
+    font-size: 30px;
+    line-height: 1.3;
 
-      &[data-type="title"] {
-        line-height: 18px;
+    @media (max-width: 576px) {
+      & {
+        font-size: 14px;
       }
     }
-  }
 
-  @media (max-width: 1000px) and (min-width: 576px) {
-    && {
-      font-size: clamp(14px, 3vw, 30px);
-      line-height: clamp(24px, 4.8vw, 48px);
-
-      &[data-type="title"] {
-        line-height: clamp(18px, 4.8vw, 48px);
+    @media (max-width: 1000px) and (min-width: 576px) {
+      & {
+        font-size: clamp(14px, 2.6vw, 26px);
       }
     }
-  }
 
-  @media (min-width: 1000px) and (max-width: 1500px) {
-    && {
-      font-size: 30px;
+    @media (min-width: 1000px) and (max-width: 1500px) {
+      & {
+        font-size: 26px;
+      }
     }
   }
 `;
 
 const Text30 = styled.span`
-  font-size: 30px;
-  line-height: 1.3;
-
-  @media (max-width: 576px) {
-    && {
-      font-size: 14px;
-    }
-  }
-
-  @media (max-width: 1000px) and (min-width: 576px) {
-    && {
-      font-size: clamp(14px, 2.6vw, 26px);
-    }
-  }
-
-  @media (min-width: 1000px) and (max-width: 1500px) {
-    && {
-      font-size: 26px;
-    }
-  }
+  ${Text30Rules}
 `;
 
 const Wrap30 = styled.div`
   &&&&&&&&& {
-    &,
-    & * {
-      font-size: 30px;
-      line-height: 1.3;
+    ${Text30Rules}
+  }
+`;
 
-      @media (max-width: 576px) {
-        & {
-          font-size: 14px;
-        }
+export const Text24Rules = css`
+  &,
+  & * {
+    font-size: 24px;
+    line-height: 1.25;
+
+    @media (max-width: 576px) {
+      & {
+        font-size: 14px;
       }
 
-      @media (max-width: 1000px) and (min-width: 576px) {
-        & {
-          font-size: clamp(14px, 2.6vw, 26px);
-        }
+      &[data-type="label"] {
+        font-size: 12px;
+      }
+    }
+
+    @media (max-width: 1000px) and (min-width: 576px) {
+      & {
+        font-size: clamp(14px, 2.1vw, 21px);
       }
 
-      @media (min-width: 1000px) and (max-width: 1500px) {
-        & {
-          font-size: 26px;
-        }
+      &[data-type="label"] {
+        font-size: clamp(12px, 2.1vw, 21px);
+      }
+    }
+
+    @media (min-width: 1000px) and (max-width: 1500px) {
+      & {
+        font-size: 21px;
       }
     }
   }
 `;
 
 const Text24 = styled.span`
-  font-size: 24px;
-  line-height: 1.25;
-
-  @media (max-width: 576px) {
-    && {
-      font-size: 14px;
-    }
-
-    &&[data-type="label"] {
-      font-size: 12px;
-    }
-  }
-
-  @media (max-width: 1000px) and (min-width: 576px) {
-    && {
-      font-size: clamp(14px, 2.1vw, 21px);
-    }
-
-    &&[data-type="label"] {
-      font-size: clamp(12px, 2.1vw, 21px);
-    }
-  }
-
-  @media (min-width: 1000px) and (max-width: 1500px) {
-    && {
-      font-size: 21px;
-    }
+  && {
+    ${Text24Rules}
   }
 `;
 

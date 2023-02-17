@@ -8,7 +8,7 @@ const LoginWrapper = ({ children }) => {
     async function checkAuthStatus() {
       try {
         const response = await fetch("/api/login/auth");
-        console.log("response", response);
+
         if (response.ok) {
           setStatus("access");
         } else {

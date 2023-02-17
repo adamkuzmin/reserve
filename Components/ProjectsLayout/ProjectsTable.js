@@ -15,7 +15,7 @@ const { useBreakpoint } = Grid;
 
 const { Paragraph, Text } = Typography;
 
-const TableWrapper = styled.div`
+export const TableWrapper = styled.div`
   width: 100%;
 
   @media (max-width: 576px) {
@@ -33,7 +33,7 @@ const CatsArray = styled.div`
   }
 `;
 
-const StyledText = styled(Text24)`
+export const StyledText = styled(Text24)`
   &&[data-type="link"]:hover {
     text-decoration: underline;
   }
@@ -66,7 +66,7 @@ const MobileText = styled(Text14)`
   }
 `;
 
-const PTable = styled(Table)`
+export const PTable = styled(Table)`
   &&& .ant-table-tbody > tr > td {
     border-bottom: 1px solid black;
   }

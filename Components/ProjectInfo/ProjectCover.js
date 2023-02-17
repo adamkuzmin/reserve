@@ -8,7 +8,7 @@ const ProjectCoverWrapper = styled.div`
   height: 100vh;
   background-color: grey;
   background-size: cover;
-  background-image: url("/renders/18.jpg");
+  background-image: url("${({ src }) => (src ? src : "")}");
   background-position: left bottom;
   background-attachment: fixed;
 
@@ -20,9 +20,11 @@ const ProjectCoverWrapper = styled.div`
   }
 `;
 
-const ProjectCover = ({ scrolling = () => {} }) => {
+const ProjectCover = ({ scrolling = () => {}, initialValues = {} }) => {
   const setBlackLogo = useStore((state) => state.setBlackLogo);
   const blackLogo = useStore((state) => state.blackLogo);
+
+  const { main_img = "" } = initialValues;
 
   const contentRef = useRef();
 
@@ -41,7 +43,13 @@ const ProjectCover = ({ scrolling = () => {} }) => {
     return () => window.removeEventListener("scroll", onScroll);
   });
 
-  return <ProjectCoverWrapper ref={contentRef} scrolling={scrolling} />;
+  return (
+    <ProjectCoverWrapper
+      {...{ src: main_img }}
+      ref={contentRef}
+      scrolling={scrolling}
+    />
+  );
 };
 
 export default ProjectCover;

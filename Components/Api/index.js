@@ -12,8 +12,6 @@ const client = sanityClient({
 
 const APIConnect = () => {
   useEffect(() => {
-    console.log("client", client);
-
     const query = '*[_type == "projects"] {name, image}';
 
     client.fetch(query).then((item) => console.log("item", item));

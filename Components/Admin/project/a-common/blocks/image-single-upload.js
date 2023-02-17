@@ -14,8 +14,6 @@ const ImageSingleUploader = ({
   label,
 }) => {
   const handleUpload = (file) => {
-    console.log("file", file);
-
     const reader = new FileReader();
     reader.readAsDataURL(file);
 
@@ -56,6 +54,8 @@ const ImageSingleUploader = ({
     onRemove: handleRemove,
     showUploadList: false,
   };
+
+  console.log("imageUrl", imageUrl);
 
   return (
     <>

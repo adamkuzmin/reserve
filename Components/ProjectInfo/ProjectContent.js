@@ -3,6 +3,7 @@ import { useStore } from "../../Store/useStore";
 
 import { Text48, Text36, Text30 } from "../common/text";
 import { Grid } from "antd";
+import QuillEditor from "../Admin/project/b-editor/blocks/quill";
 
 const { useBreakpoint } = Grid;
 
@@ -214,107 +215,31 @@ const descr = {
   },
 };
 
-const ProjectContent = () => {
+const ProjectContent = ({ initialValues = {} }) => {
   const screens = useBreakpoint();
+
+  console.log("initialValue1111s", initialValues);
+
+  const { description, meta } = initialValues;
 
   const lang = useStore((state) => state.lang);
 
   return (
     <ProjectContentWrapper>
-      <StyledSubTitle>
-        <Text48>{descr.l1[lang]}</Text48>
-      </StyledSubTitle>
       <ProjectCols>
         <ProjectCols.LeftCol>
-          {screens.lg && <ProjectCols.LeftGap />}
-          <ProjectCols.Content>
-            <StyledText48 data-font="wremena">{descr.l2[lang]}</StyledText48>
-          </ProjectCols.Content>
-        </ProjectCols.LeftCol>
-        <ProjectCols.RightCol />
-      </ProjectCols>
-
-      <ProjectCols>
-        <ProjectCols.LeftCol>
-          <ProjectCols.Content>
-            <ProjectCols.LeftCol>
-              {screens.lg && <ProjectCols.LeftGap />}
-              <ProjectCols.Content>
-                <StyledText36 data-font="ibm">{descr.l3[lang]}</StyledText36>
-              </ProjectCols.Content>
-            </ProjectCols.LeftCol>
-
-            <StyledSubTitle>
-              <Text48>{descr.l4[lang]}</Text48>
-            </StyledSubTitle>
-            <StyledText36 data-font="ibm">{descr.l5[lang]}</StyledText36>
-            <ImageContent />
-            <StyledText36 data-font="ibm">{descr.l6[lang]}</StyledText36>
-            <ProjectCols.LeftCol>
-              {screens.lg && <ProjectCols.LeftGap />}
-              <ProjectCols.Content>
-                <StyledText48 data-font="wremena">
-                  {descr.l7[lang]}
-                </StyledText48>
-              </ProjectCols.Content>
-            </ProjectCols.LeftCol>
-          </ProjectCols.Content>
+          {description && (
+            <QuillEditor
+              value={description}
+              {...{ isEdit: true }}
+              type="description"
+            />
+          )}
         </ProjectCols.LeftCol>
         <ProjectCols.RightCol>
-          <ProjectCols.Content>
-            <ParamBlock>
-              <Text30>Типология</Text30>
-              <Text30>Не известно</Text30>
-            </ParamBlock>
-            <ParamBlock>
-              <Text30>Статус</Text30>
-              <Text30>Не известно</Text30>
-            </ParamBlock>
-            <ParamBlock>
-              <Text30>Место</Text30>
-              <Text30>
-                г.Москва,ул. Садовническая, вл. 57, стр. 1А, 2, 3, 4, 5, 6, 7, 8
-              </Text30>
-            </ParamBlock>
-            <ParamBlock>
-              <Text30>Год</Text30>
-              <Text30>2013—2016</Text30>
-            </ParamBlock>
-            <ParamBlock>
-              <Text30>Команда</Text30>
-              <Text30>
-                Хрустим Похрустам
-                <br />
-                Вионович Плоткин
-                <br />
-                Карим Каримский
-              </Text30>
-            </ParamBlock>
-            <ParamBlock>
-              <Text30>Подрядчик</Text30>
-              <Text30>ООО ПРОСМТРОЙ</Text30>
-            </ParamBlock>
-            <ParamBlock>
-              <Text30>Фотографии</Text30>
-              <Text30>Прыовлф Руслан Мулан</Text30>
-            </ParamBlock>
-            <ParamBlock>
-              <Text30>Сотрудничество</Text30>
-              <Text30>SPEECH</Text30>
-            </ParamBlock>
-            <ParamBlock>
-              <Text30>Награды</Text30>
-              <Text30>
-                Диплом Союза Архитекторов России на фестивале "Зодчество 2017",
-                номинация "Многофункциональные жилые ансамбли и комплексы",
-                победитель номинации; RREF AWARDS 2015 г., номинация "Элитное
-                жилье", победитель номинации; Urban Awards 2013 номинация
-                «Лучший строящийся жилой комплекс элит-класса Москвы»,
-                победитель номинации; RREF AWARDS 2013 г. номинация "Элитное
-                жилье", победитель номинации.
-              </Text30>
-            </ParamBlock>
-          </ProjectCols.Content>
+          {meta && (
+            <QuillEditor value={meta} {...{ isEdit: true }} type="meta" />
+          )}
         </ProjectCols.RightCol>
       </ProjectCols>
     </ProjectContentWrapper>

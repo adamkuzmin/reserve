@@ -14,15 +14,7 @@ const CATS = gql`
   }
 `;
 
-const Cats = ({ value, onChange }) => {
-  const { data: catsData, loading } = useQuery(CATS, { client });
-  const cats = useMemo(() => {
-    if (catsData) {
-      const { tiger_data_r_cat_hub = [] } = catsData;
-      return tiger_data_r_cat_hub;
-    }
-  }, [catsData]);
-
+const Cats = ({ cats, value, onChange }) => {
   const handleSelect = (id) => {
     let result = value ? [...value] : [];
     if (result.includes(id)) {
@@ -33,8 +25,6 @@ const Cats = ({ value, onChange }) => {
 
     onChange(result);
   };
-
-  if (loading) return <></>;
 
   return (
     <>
@@ -53,8 +43,8 @@ const Cats = ({ value, onChange }) => {
                 data-size="small"
                 data-theme="white"
                 key={`FilterDir${i}`}
-                onClick={() => handleSelect(item.id)}
-                data-status={value && value.includes(item.id) && "active_"}
+                onClick={() => handleSelect(item.name)}
+                data-status={value && value.includes(item.name) && "active_"}
               >
                 <Text14>{item.name}</Text14>
               </FLink>

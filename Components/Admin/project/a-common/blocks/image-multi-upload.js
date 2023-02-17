@@ -20,8 +20,6 @@ const ImageMultiUploader = ({
 }) => {
   const [uploading, setUploading] = useState(false);
 
-  console.log("imageUrls", imageUrls);
-
   const handleUpload = async (_file) => {
     setUploading(true);
 
@@ -56,7 +54,6 @@ const ImageMultiUploader = ({
           });
       };
     } catch (error) {
-      console.log(error);
       message.error("Upload failed.");
       setUploading(false);
     }
