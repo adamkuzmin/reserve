@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Button } from "antd";
 
 export const UplWrapper = styled.div`
   display: flex;
@@ -68,5 +69,30 @@ export const Grid = styled.div`
       right: 10px;
       top: 10px;
     }
+  }
+`;
+
+export const Btn = styled(Button)`
+  &&&&& {
+    width: 100%;
+    height: 90px;
+    margin-bottom: 160px;
+    font-size: 18px;
+
+    &,
+    &:hover,
+    &:focus {
+      background: black;
+      color: white;
+      border: 1px solid black;
+    }
+  }
+`;
+
+export const MapWrapper = styled.div`
+  && position: relative;
+
+  &&& .mapboxgl-control-container {
+    height: 100%;
   }
 `;

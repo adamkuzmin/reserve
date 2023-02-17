@@ -17,7 +17,7 @@ import { CirclePoint } from "../../Components/ProjectsLayout/ProjectsMap";
 
 const { useBreakpoint } = Grid;
 
-const MAPBOX_TOKEN =
+export const MAPBOX_TOKEN =
   "pk.eyJ1IjoibWFya2thYmllcnNraSIsImEiOiJja2lpa3N2c3QwaXVrMnltbHVzcXZ3dDU2In0.t_Lcd-0hPAJSk75HCJFw0g"; // Set your mapbox token here
 
 const Gap = styled.div`
@@ -171,7 +171,7 @@ const Contacts = () => {
                     offsetLeft={-15}
                     offsetTop={-15}
                   >
-                    <CirclePoint data-type="2"/>
+                    <CirclePoint data-type="2" />
                   </Marker>
                 </ReactMapGL>
               </MapWrapper>

@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 
 import PageHead from "../Components/common/head";
 import { MouseContext } from "../Components/common/Cursor/mouse-context";
+import "react-quill/dist/quill.snow.css";
 
 import { useStore } from "../Store/useStore";
 

@@ -3,7 +3,7 @@ import { useStore } from "../../Store/useStore";
 
 import { Text60, Text30, Text24 } from "../common/text";
 
-const ProjectHeaderWrapper = styled.div`
+export const ProjectHeaderWrapper = styled.div`
   margin-top: 5.1vw;
   width: 100%;
   display: flex;
@@ -14,7 +14,7 @@ const ProjectHeaderWrapper = styled.div`
   }
 `;
 
-const Header = styled.div`
+export const Header = styled.div`
   display: flex;
   justify-content: space-between;
   padding-right: 26px;
@@ -36,7 +36,7 @@ Header.Title = styled.div`
   }
 `;
 
-const StyledText24 = styled.div`
+export const StyledText24 = styled.div`
   color: #4d4d4d;
   width: 100%;
   max-width: 20vw;

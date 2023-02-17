@@ -1,10 +1,12 @@
-import { Form, Input, Upload } from "antd";
+import { Button, Form, Input, Upload } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import { Text14, Wrap16, Wrap30, Wrap60 } from "../../../common/text";
 import { LabelRow } from "../../../Filters/styles";
 import Cats from "./blocks/cats";
 import ImageMultiUploader from "./blocks/image-multi-upload";
 import ImageSingleUploader from "./blocks/image-single-upload";
+import Mapbox from "./blocks/map";
+import { Btn } from "./blocks/__styles";
 
 const Common = () => {
   return (
@@ -33,6 +35,10 @@ const Common = () => {
             <TextArea autoSize placeholder="Название проекта" />
           </Form.Item>
         </Wrap30>
+
+        {/* <Form.Item style={{ marginLeft: "10px", width: "100%" }} name="lngLat">
+          <Mapbox />
+  </Form.Item> */}
 
         <br />
         <br />
@@ -128,6 +134,12 @@ const Common = () => {
         </LabelRow>
         <Form.Item style={{ width: "100%" }} name="secondary_imgs">
           <ImageMultiUploader label={null} />
+        </Form.Item>
+
+        <Form.Item>
+          <Btn type="primary" htmlType="submit">
+            Сохранить проект
+          </Btn>
         </Form.Item>
       </Form>
     </>

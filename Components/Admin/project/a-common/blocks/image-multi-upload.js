@@ -118,7 +118,12 @@ const ImageMultiUploader = ({
                   <LoadingOutlined />
                 ) : (
                   <>
-                    <InboxOutlined />
+                    <p
+                      className="ant-upload-drag-icon"
+                      style={{ fontSize: "44px" }}
+                    >
+                      +
+                    </p>
                     <p className="ant-upload-text">
                       <Text14>Изображение должно быть не больше</Text14>
                     </p>

@@ -10,7 +10,7 @@ const ProjectContentWrapper = styled.div`
   width: 100%;
 `;
 
-const ProjectCols = styled.div`
+export const ProjectCols = styled.div`
   width: 100%;
   display: flex;
 
