@@ -13,7 +13,6 @@ import GlobalStyle from "../styles/global-styles";
 import "../styles/globals.css";
 
 import { ConfigProvider } from "antd";
-import "antd/dist/antd.css";
 
 import ruRU from "antd/lib/locale/ru_RU";
 

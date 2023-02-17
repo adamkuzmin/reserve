@@ -78,11 +78,9 @@ const ProjectBottom = () => {
         </a>
       </ProjectHeaderWrapper>
       <Link href="/projects">
-        <a>
-          <WideButton data-font="wremena">
-            <Text48>{navData.all[lang]}</Text48>
-          </WideButton>
-        </a>
+        <WideButton data-font="wremena">
+          <Text48>{navData.all[lang]}</Text48>
+        </WideButton>
       </Link>
     </ProjectB>
   );

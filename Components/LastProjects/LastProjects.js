@@ -287,11 +287,9 @@ const LastProjects = () => {
           );
         })}
       <Link href="/projects">
-        <a>
-          <WideButton data-font="wremena">
-            <Text48>{lang === "ru" ? "Все проекты" : "All projects"}</Text48>
-          </WideButton>
-        </a>
+        <WideButton data-font="wremena">
+          <Text48>{lang === "ru" ? "Все проекты" : "All projects"}</Text48>
+        </WideButton>
       </Link>
     </Projects>
   );

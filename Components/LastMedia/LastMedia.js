@@ -330,11 +330,9 @@ const LastMedia = () => {
         </LargeCard>
       </Media>
       <Link href="/media/all">
-        <a>
-          <WideButton>
-            <Text40 data-font="wremena">{intro.labels.allmedia[lang]}</Text40>
-          </WideButton>
-        </a>
+        <WideButton>
+          <Text40 data-font="wremena">{intro.labels.allmedia[lang]}</Text40>
+        </WideButton>
       </Link>
     </MediaWrapper>
   );

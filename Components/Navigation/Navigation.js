@@ -66,18 +66,16 @@ const Navigation = () => {
     >
       {
         <Link href="/">
-          <a>
-            <Nav.LogoWrapper>
-              <Nav.Logo
-                data-type={
-                  /*!blackLogo ? "white" : "black"*/ screens.sm ||
-                  (!screens.sm && !navIsOpened)
-                    ? "white"
-                    : "black"
-                }
-              ></Nav.Logo>
-            </Nav.LogoWrapper>
-          </a>
+          <Nav.LogoWrapper>
+            <Nav.Logo
+              data-type={
+                /*!blackLogo ? "white" : "black"*/ screens.sm ||
+                (!screens.sm && !navIsOpened)
+                  ? "white"
+                  : "black"
+              }
+            ></Nav.Logo>
+          </Nav.LogoWrapper>
         </Link>
       }
 

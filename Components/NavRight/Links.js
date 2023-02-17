@@ -31,15 +31,11 @@ const LeadLinks = ({ routes }) => {
         >
           {screens.sm ? (
             <Text48>
-              <Link href={route}>
-                <a>{lang === "ru" ? title : entitle}</a>
-              </Link>
+              <Link href={route}>{lang === "ru" ? title : entitle}</Link>
             </Text48>
           ) : (
             <Text96 data-type="navright">
-              <Link href={route}>
-                <a>{lang === "ru" ? title : entitle}</a>
-              </Link>
+              <Link href={route}>{lang === "ru" ? title : entitle}</Link>
             </Text96>
           )}
         </NavLink>
@@ -66,13 +62,13 @@ const SecondaryLinks = ({ routes }) => {
           {screens.sm ? (
             <Text30>
               <Link href={route}>
-                <a data-font="ibm">{lang === "ru" ? title : entitle}</a>
+                <span data-font="ibm">{lang === "ru" ? title : entitle}</span>
               </Link>
             </Text30>
           ) : (
             <Text60 data-type="nav-secondary">
               <Link href={route}>
-                <a data-font="ibm">{lang === "ru" ? title : entitle}</a>
+                <span data-font="ibm">{lang === "ru" ? title : entitle}</span>
               </Link>
             </Text60>
           )}
