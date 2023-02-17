@@ -48,7 +48,7 @@
     "zustand": "^3.7.0"
   },
   "devDependencies": {
-    "@svgr/webpack": "^5.5.0",
+    "@svgr/webpack": "^6.5.1",
     "eslint": "7",
     "eslint-config-next": "12.0.4"
   }
