@@ -8,9 +8,6 @@ export default async function handler(req, res) {
     case "POST":
       let { id, thumbnail_img } = req.body;
 
-      console.log("sdfs");
-      console.log("req.body", req.body.id);
-
       try {
         let data = {};
 
@@ -32,16 +29,9 @@ export default async function handler(req, res) {
           .then((imageAsset) => {
             const { url } = imageAsset;
 
-            console.log("imageAsset", imageAsset);
-
             res.status(200).json({ data, url, msg: "edited" });
           })
-          .catch((e) => {
-            console.log("e", e);
-          });
-        /* .then((e) => {
-            console.log("e", e);
-          }); */
+          .catch((e) => {});
       } catch (err) {
         res
           .status(500)

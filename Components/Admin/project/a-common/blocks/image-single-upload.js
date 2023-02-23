@@ -55,8 +55,6 @@ const ImageSingleUploader = ({
     showUploadList: false,
   };
 
-  console.log("imageUrl", imageUrl);
-
   return (
     <>
       <UplWrapper>

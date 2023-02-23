@@ -4,12 +4,11 @@ import {
   StyledText,
   TableWrapper,
 } from "@/Components/ProjectsLayout/ProjectsTable";
-import { Space } from "antd";
+import { notification, Space } from "antd";
 import Link from "next/link";
-import { DELETE_PROJECT } from "../project/__queries";
-import client from "@/Components/Client/apollo/apollo-client";
-import { useMutation } from "@apollo/client";
-import { getProjectsHub } from "@/pages/admin/projects";
+import { sanity } from "@/Components/Client/sanity/sanity-client";
+import { useState } from "react";
+import { useStore } from "@/Store/useStore";
 
 const columns = (handleDelete = () => {}) => [
   {
@@ -17,8 +16,8 @@ const columns = (handleDelete = () => {}) => [
     dataIndex: "name",
     width: "40%",
     key: "name",
-    render: (a, { id }) => (
-      <Link href={`/admin/project/${id}`}>
+    render: (a, { _id }) => (
+      <Link href={`/admin/project/${_id}`}>
         <StyledText data-type="link" data-weight="semibold" data-font="ibm">
           {a}
         </StyledText>
@@ -30,14 +29,14 @@ const columns = (handleDelete = () => {}) => [
     dataIndex: "action",
     width: "10%",
     key: "action",
-    render: (a, { id }) => (
+    render: (a, { _id }) => (
       <Space>
         <Text24
           style={{ cursor: "pointer", color: "red", fontWeight: "400" }}
           data-type="link"
           data-weight="semibold"
           data-font="ibm"
-          onClick={() => handleDelete({ variables: { project_id: id } })}
+          onClick={() => handleDelete(_id)}
         >
           Удалить
         </Text24>
@@ -47,10 +46,29 @@ const columns = (handleDelete = () => {}) => [
 ];
 
 const Projects = ({ data }) => {
-  const [deleteProject] = useMutation(DELETE_PROJECT, {
-    client,
-    refetchQueries: [{ query: getProjectsHub }, "getProjects"],
-  });
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const setLogId = useStore(({ setLogId }) => setLogId);
+
+  const deleteProject = async (project_id) => {
+    setIsDeleting(true);
+
+    try {
+      await sanity.delete(project_id);
+
+      notification.success({ message: `Проект удален!`, placement: "bottom" });
+      setLogId();
+    } catch (err) {
+      console.error(err);
+
+      notification.error({
+        message: `Ошибка при удалении`,
+        placement: "bottom",
+      });
+    }
+
+    setIsDeleting(false);
+  };
 
   return (
     <>

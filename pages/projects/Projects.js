@@ -20,6 +20,9 @@ import { projectData } from "../../Components/ProjectsLayout/data/data";
 import { useQuery } from "@apollo/client";
 import { getProjectsHub } from "../admin/projects";
 import client from "@/Components/Client/apollo/apollo-client";
+import groq from "groq";
+import { projectFields } from "@/Components/Admin/queries/__queries";
+import { sanity } from "@/Components/Client/sanity/sanity-client";
 
 const ProjectsGallery = dynamic(() =>
   import("../../Components/ProjectsLayout/ProjectsGallery")
@@ -81,40 +84,44 @@ const FilterBackdrop = styled.div`
 
 const Projects = () => {
   /* записи */
-  const { data, error } = useQuery(getProjectsHub, {
-    client,
-  });
+  const [isFetched, setFetched] = useState(false);
+  const [stateData, setStateData] = useState();
 
-  console.log("data", data);
+  const logId = useStore(({ logId }) => logId);
+  useEffect(() => {
+    const query = groq`
+      *[_type == "projects"] {
+        ${projectFields}
+      }
+    `;
 
-  const stateData = useMemo(() => {
-    if (data) {
-      const { tiger_data_r_pr_hub: a = [] } = data;
+    sanity
+      .fetch(query)
+      .then((data) => {
+        const _data = data.map((item = {}) => {
+          const { name, coverhor, coververt, year, _id } = item;
 
-      return a.map((item = {}) => {
-        const { name, coverhor, coververt, year, id } = item;
+          return {
+            nameru: name,
+            nameen: name,
+            coververt,
+            coverhor,
+            lat: 55.695804,
+            lng: 37.485664,
+            built: 1,
+            current: 0,
+            finished: year,
+            competition: 0,
+            residential: 1,
+            id: _id,
+          };
+        });
 
-        return {
-          nameru: name,
-          nameen: name,
-          coververt,
-          coverhor,
-          lat: 55.695804,
-          lng: 37.485664,
-          built: 1,
-          current: 0,
-          finished: year,
-          competition: 0,
-          residential: 1,
-          id,
-        };
-      });
-    }
-  }, [data]);
-
-  const setStateData = () => {};
-
-  //const [stateData, setStateData] = useState(projectData);
+        setStateData(_data);
+        setFetched(true);
+      })
+      .catch(console.error);
+  }, [logId]);
 
   /**
    * States для анимации галереи
@@ -172,9 +179,7 @@ const Projects = () => {
       break;
   }
 
-  console.log("stateData", stateData);
-
-  if (!stateData) return <></>;
+  if (!(stateData && isFetched)) return <></>;
 
   return (
     <div>
@@ -195,7 +200,7 @@ const Projects = () => {
           toPageTop,
           //работа с записями
           stateData,
-          setStateData,
+          setStateData: () => {},
         }}
       />
       <MainContent key={`contentType:${LayoutType}`} ref={maincontentRef}>

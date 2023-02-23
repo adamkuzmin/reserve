@@ -1,4 +1,6 @@
+import { MainContent } from "@/pages/projects/Projects";
 import { useEffect, useState } from "react";
+import Bar from "../bar/bar";
 import LoginForm from "../login-form/login-form";
 
 const LoginWrapper = ({ children }) => {
@@ -22,8 +24,18 @@ const LoginWrapper = ({ children }) => {
     checkAuthStatus();
   }, []);
 
-  if (!status || status === "no-access") {
-    return <LoginForm />;
+  if (!status) return <></>;
+
+  if (status === "no-access") {
+    return (
+      <>
+        <Bar noAuth />
+
+        <MainContent>
+          <LoginForm />
+        </MainContent>
+      </>
+    );
   }
 
   return <>{children}</>;

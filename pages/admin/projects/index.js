@@ -1,54 +1,44 @@
 import { gql, useLazyQuery, useQuery } from "@apollo/client";
 import { Button } from "antd";
 import { useRouter } from "next/router";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import AdminWrapper from "../../../Components/Admin/admin-wrapper/admin-wrapper";
 import client from "../../../Components/Client/apollo/apollo-client";
 import { v4 as uuidv4 } from "uuid";
 import { WideButton } from "@/Components/ProjectInfo/ProjectBottom";
 import { Text24, Text30 } from "@/Components/common/text";
 import Projects from "@/Components/Admin/projects/projects";
-
-export const getProjectsHub = gql`
-  query getProjects {
-    tiger_data_r_pr_hub {
-      id
-      address
-      cats
-      city
-      comment
-      coverhor
-      coververt
-      cr
-      description
-      main_img
-      meta
-      name
-      year
-      slider_imgs
-      secondary_imgs
-    }
-  }
-`;
+import { sanity } from "@/Components/Client/sanity/sanity-client";
+import groq from "groq";
+import { useStore } from "@/Store/useStore";
+import { projectFields } from "@/Components/Admin/queries/__queries";
 
 const ProjectsPage = () => {
   const router = useRouter();
 
-  const [getProjects, { data, error }] = useLazyQuery(getProjectsHub, {
-    client,
-  });
+  const logId = useStore(({ logId }) => logId);
+
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    getProjects();
-  }, []);
+    const query = groq`
+      *[_type == "projects"] {
+        ${projectFields}
+      }
+      | order(cr desc)
+    `;
 
-  const projects = useMemo(() => {
-    if (data) {
-      const { tiger_data_r_pr_hub: a = [] } = data;
+    setLoading(true);
 
-      return a;
-    }
-  }, [data]);
+    sanity
+      .fetch(query)
+      .then((data) => {
+        setProjects(data);
+        setLoading(false);
+      })
+      .catch(console.error);
+  }, [logId]);
 
   return (
     <>
@@ -65,7 +55,7 @@ const ProjectsPage = () => {
         <br />
         <br />
 
-        {projects && <Projects data={projects} />}
+        {projects && !loading && <Projects data={projects} />}
       </AdminWrapper>
     </>
   );

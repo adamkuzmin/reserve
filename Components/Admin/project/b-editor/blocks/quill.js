@@ -231,8 +231,6 @@ const QuillEditor = (props = {}) => {
 
   const editor = useRef();
 
-  console.log("value", value);
-
   return (
     <DescriptionWrapper type={type} isEdit={isEdit}>
       <Form.Item style={{ width: "100%" }} name={type}>

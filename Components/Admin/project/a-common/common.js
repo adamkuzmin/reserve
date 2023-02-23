@@ -1,4 +1,4 @@
-import { Button, Form, Input, Upload } from "antd";
+import { Button, Form, Input, InputNumber, Upload } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import { Text14, Wrap16, Wrap30, Wrap60 } from "../../../common/text";
 import { LabelRow } from "../../../Filters/styles";
@@ -100,7 +100,7 @@ const Common = ({ cats }) => {
               },
             ]}
           >
-            <Input placeholder="Год" />
+            <InputNumber style={{ width: "100%" }} placeholder="Год" />
           </Form.Item>
         </Wrap30>
 

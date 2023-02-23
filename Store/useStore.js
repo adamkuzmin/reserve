@@ -1,4 +1,5 @@
 import create from "zustand";
+import { v4 as uuidv4 } from "uuid";
 
 const useStore = create((set) => ({
   /* язык сайта */
@@ -22,6 +23,9 @@ const useStore = create((set) => ({
   /* */
   searchPanel: false,
   showSearchPanel: (e) => set(() => ({ searchPanel: e })),
+  /* */
+  logId: uuidv4(),
+  setLogId: () => set({ logId: uuidv4() }),
 }));
 
 export { useStore };

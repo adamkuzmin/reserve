@@ -17,6 +17,10 @@ import Common from "../../../Components/Admin/project/a-common/common";
 import Editor from "../../../Components/Admin/project/b-editor/editor";
 import Nav from "../../../Components/Admin/project/nav/nav";
 import { getProjectsHub } from "../projects";
+import { sanity } from "@/Components/Client/sanity/sanity-client";
+import { useStore } from "@/Store/useStore";
+
+import moment from "moment/moment";
 
 const { TabPane } = Tabs;
 
@@ -24,9 +28,11 @@ const ProjectPage = ({ cats, id, mode, initialValues }) => {
   const [section, setSection] = useState("common");
   const router = useRouter();
 
+  const setLogId = useStore(({ setLogId }) => setLogId);
+
   const cfgs = {
-    refetchQueries: [{ query: getProjectsHub }, "getProjects"],
     onCompleted: () => {
+      setLogId();
       notification.success({
         message: `Данные сохранились!`,
         placement: "bottom",
@@ -34,7 +40,10 @@ const ProjectPage = ({ cats, id, mode, initialValues }) => {
 
       router.push(`/admin/projects`, null, { shallow: false });
     },
-    onError: () => {
+    onError: (e) => {
+      console.log("e", e);
+
+      setLogId();
       notification.error({
         message: `Ошибка!`,
         placement: "bottom",
@@ -44,19 +53,35 @@ const ProjectPage = ({ cats, id, mode, initialValues }) => {
     },
   };
 
-  const [addProject] = useMutation(ADD_PROJECT, {
-    client,
-    ...cfgs,
-  });
-  const [editProject] = useMutation(EDIT_PROJECT, { client, ...cfgs });
+  const addProject = async (e) => {
+    const data = { ...e, cr: moment().toISOString(), _type: "projects" };
+
+    try {
+      await sanity.create(data);
+      cfgs.onCompleted();
+    } catch (err) {
+      cfgs.onError();
+    }
+  };
+
+  const editProject = async (e, id) => {
+    const data = { ...e };
+
+    try {
+      await sanity.patch(id).set(data).commit();
+      cfgs.onCompleted();
+    } catch (err) {
+      cfgs.onError();
+    }
+  };
 
   const handleFinish = (e) => {
     if (!e) return;
 
     if (mode === "new") {
-      addProject({ variables: { object: e } });
+      addProject(e);
     } else if (mode === "edit") {
-      editProject({ variables: { object: e, project_id: id } });
+      editProject(e, id);
     }
   };
 

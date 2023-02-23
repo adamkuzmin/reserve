@@ -1,5 +1,7 @@
+import { Wrap30 } from "@/Components/common/text";
 import { Form, Input, Button, message } from "antd";
 import { useRouter } from "next/router";
+import { AntForm } from "./__styles";
 
 const LoginForm = () => {
   const [form] = Form.useForm();
@@ -27,27 +29,45 @@ const LoginForm = () => {
   };
 
   return (
-    <div style={{ maxWidth: "500px" }}>
-      <h1>Login Page</h1>
-      <Form form={form} onFinish={handleLogin}>
-        <Form.Item
-          name="username"
-          rules={[{ required: true, message: "Please enter your username" }]}
-        >
-          <Input placeholder="Username" />
-        </Form.Item>
-        <Form.Item
-          name="password"
-          rules={[{ required: true, message: "Please enter your password" }]}
-        >
-          <Input.Password placeholder="Password" />
-        </Form.Item>
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Login
-          </Button>
-        </Form.Item>
-      </Form>
+    <div
+      style={{ width: "100%", display: "flex", justifyContent: "center" }}
+      data-type="wrapper"
+    >
+      <div style={{ width: "100%", maxWidth: "600px", marginTop: "120px" }}>
+        <div style={{ width: "100%" }}>
+          <AntForm form={form} onFinish={handleLogin}>
+            <Wrap30>
+              <Form.Item
+                name="username"
+                rules={[
+                  { required: true, message: "Please enter your username" },
+                ]}
+              >
+                <Input placeholder="Username" />
+              </Form.Item>
+            </Wrap30>
+
+            <Wrap30>
+              <Form.Item
+                name="password"
+                rules={[
+                  { required: true, message: "Please enter your password" },
+                ]}
+              >
+                <Input.Password placeholder="Password" />
+              </Form.Item>
+            </Wrap30>
+
+            <Wrap30>
+              <Form.Item>
+                <Button type="primary" htmlType="submit">
+                  Login
+                </Button>
+              </Form.Item>
+            </Wrap30>
+          </AntForm>
+        </div>
+      </div>
     </div>
   );
 };

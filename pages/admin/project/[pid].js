@@ -1,59 +1,86 @@
 import { useRouter } from "next/router";
-import client from "@/Components/Client/apollo/apollo-client";
-import { gql, useLazyQuery, useQuery } from "@apollo/client";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import ProjectPage from ".";
 
-import { GET_PROJECT, CATS } from "@/Components/Admin/project/__queries";
 import { exampleValues } from "@/Components/Admin/project/__data";
+import groq from "groq";
+import {
+  catsFields,
+  projectFields,
+} from "@/Components/Admin/queries/__queries";
+import { sanity } from "@/Components/Client/sanity/sanity-client";
 
 const ProjectPID = () => {
   const router = useRouter();
   const { query, isReady } = router;
   const { pid } = query;
 
-  /* Найти проект */
-  const [getProject, { data, error }] = useLazyQuery(GET_PROJECT, {
-    client,
-    fetchPolicy: "no-cache",
-  });
+  const [values, setValues] = useState();
+  const [cats, setCats] = useState();
 
-  console.log("error", error);
+  const [isFetched, setFetched] = useState(false);
+  const [isCatsFetched, setCatsFetched] = useState(false);
 
   useEffect(() => {
-    getProject({
-      variables: { project_id: pid },
-    });
+    if (isReady && pid) {
+      const query = groq`
+      *[_type == "projects" && _id == "${pid}"] {
+        ${projectFields}
+      }
+      `;
+
+      const catsQuery = groq`
+      *[_type == "categories"] {
+        ${catsFields}
+      }
+      `;
+
+      sanity
+        .fetch(query)
+        .then((data) => {
+          setValues(data);
+          setFetched(true);
+        })
+        .catch(() => setFetched(true));
+
+      sanity
+        .fetch(catsQuery)
+        .then((data) => {
+          setCats(data);
+          setCatsFetched(true);
+        })
+        .catch(() => setCatsFetched(true));
+    }
   }, [isReady, pid]);
 
   const mode = useMemo(() => {
-    if (data) {
-      const { tiger_data_r_pr_hub_by_pk: a } = data;
-      if (a) return "edit";
+    if (isFetched) {
+      if (values && values.length > 0) return "edit";
       return "new";
     }
     return null;
-  }, [data]);
+  }, [values, isFetched]);
 
   const initialValues = useMemo(() => {
-    if (data) {
-      const { tiger_data_r_pr_hub_by_pk: a } = data;
-      if (a) return a;
+    if (isFetched) {
+      if (values.length > 0) return values[0];
       return exampleValues;
     }
     return null;
-  });
+  }, [isFetched, values]);
 
-  /* Найти категории */
-  const { data: catsData, loading } = useQuery(CATS, { client });
-  const cats = useMemo(() => {
-    if (catsData) {
-      const { tiger_data_r_cat_hub = [] } = catsData;
-      return tiger_data_r_cat_hub;
-    }
-  }, [catsData]);
-
-  if (!(pid && isReady && data && !loading && cats && mode && initialValues))
+  if (
+    !(
+      pid &&
+      isReady &&
+      values &&
+      isFetched &&
+      isCatsFetched &&
+      cats &&
+      mode &&
+      initialValues
+    )
+  )
     return <></>;
 
   return (

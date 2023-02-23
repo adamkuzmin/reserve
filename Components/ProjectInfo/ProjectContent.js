@@ -218,8 +218,6 @@ const descr = {
 const ProjectContent = ({ initialValues = {} }) => {
   const screens = useBreakpoint();
 
-  console.log("initialValue1111s", initialValues);
-
   const { description, meta } = initialValues;
 
   const lang = useStore((state) => state.lang);
