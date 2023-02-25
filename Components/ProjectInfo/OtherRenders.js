@@ -1,3 +1,4 @@
+import { Image } from "antd";
 import styled from "styled-components";
 
 const OR = styled.div`
@@ -24,9 +25,17 @@ OR.Item = styled.div`
   width: 100%;
   background-color: grey;
   height: 30vw;
-  background-image: url(${({ src }) => (src ? src : "")});
+   background-image: url(${({ src }) => (src ? src : "")}); 
   background-position: center;
   background-size: cover;
+  overflow: hidden;
+  position: relative;
+
+  && .ant-image {
+    width: 100%;
+    position absolute;
+    z-index: 0;
+  }
 `;
 
 const OtherRenders = ({ images = [] }) => {
@@ -43,7 +52,11 @@ const OtherRenders = ({ images = [] }) => {
             <OR.Row key={`g:${rowIndex}`}>
               {rowImages &&
                 rowImages.map((src, b) => {
-                  return <OR.Item key={`d:${b}:${rowIndex}`} src={src} />;
+                  return (
+                    <OR.Item key={`d:${b}:${rowIndex}`} src={src}>
+                      {/* <Image src={src} style={{ width: "100%" }} /> */}
+                    </OR.Item>
+                  );
                 })}
             </OR.Row>
           );
