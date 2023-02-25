@@ -202,7 +202,7 @@ const WideButton = styled.div`
   }
 `;
 
-const LastProjects = () => {
+const LastProjects = ({ data = [] }) => {
   const screens = useBreakpoint();
 
   const blackLogo = useStore((state) => state.blackLogo);
@@ -233,7 +233,7 @@ const LastProjects = () => {
     [null, null],
     [null, 60],
   ];
-  let projectsDataCopy = [...projectData];
+  let projectsDataCopy = [...data];
 
   let LastProjects = [];
   for (let i = 0; i < 3; i++) {
@@ -247,7 +247,14 @@ const LastProjects = () => {
           return (
             <Projects.Row key={`Projects.Row${i}`}>
               {key.map((project, b) => {
-                const { nameru, nameen, finished } = project;
+                const {
+                  nameru,
+                  nameen,
+                  finished,
+                  id,
+                  name,
+                  cats = [],
+                } = project;
                 const { coververt, coverhor } = project;
 
                 const category =
@@ -256,11 +263,11 @@ const LastProjects = () => {
 
                 const metaRatio =
                   ratios[i][b] === 60 && screens.md ? coverhor : coververt;
-                const metaSrc = `/projects/Frame%20${metaRatio}.jpg`;
+                const metaSrc = metaRatio;
 
                 return (
                   <Projects.Item
-                    onClick={() => (location.href = "/project")}
+                    onClick={() => (location.href = `/project/${id}`)}
                     swidth={ratios[i][b]}
                     key={`Projects.Item${b}`}
                   >
@@ -268,12 +275,14 @@ const LastProjects = () => {
                     <Header>
                       <Header.Title>
                         <p>
-                          <Text24 data-type="label" data-font="wremena">
-                            {category}
-                          </Text24>
+                          {cats && cats.length > 0 && (
+                            <Text24 data-type="label" data-font="wremena">
+                              {cats[0]}
+                            </Text24>
+                          )}
                         </p>
                         <h3>
-                          <Text36 data-type="title">{title}</Text36>
+                          <Text36 data-type="title">{name}</Text36>
                         </h3>
                       </Header.Title>
                       <Header.Year>

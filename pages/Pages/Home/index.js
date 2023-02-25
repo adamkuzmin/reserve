@@ -21,6 +21,9 @@ import SectionLead from "../../../Components/MainDescription/SectionLead";
 
 import { useWindowHeight } from "@react-hook/window-size";
 import APIConnect from "../../../Components/Api";
+import { projectFields } from "@/Components/Admin/queries/__queries";
+import { sanity } from "@/Components/Client/sanity/sanity-client";
+import groq from "groq";
 
 const ThreeCanvas = dynamic(() => import("../../../Models/construcetor"));
 
@@ -59,6 +62,39 @@ const Home = () => {
 
   const blackLogo = useStore((state) => state.blackLogo);
   const setBlackLogo = useStore((state) => state.setBlackLogo);
+
+  const [isFetched, setFetched] = useState(false);
+  const [stateData, setStateData] = useState();
+
+  const logId = useStore(({ logId }) => logId);
+  useEffect(() => {
+    const query = groq`
+      *[_type == "projects"] {
+        ${projectFields}
+      }
+    `;
+
+    sanity
+      .fetch(query)
+      .then((data) => {
+        const _data = data.map((item = {}) => {
+          const { name, coverhor, coververt, year, _id, cats, main_img } = item;
+
+          return {
+            id: _id,
+            coverhor,
+            coververt,
+            cats,
+            cover: main_img,
+            name,
+          };
+        });
+
+        setStateData(_data);
+        setFetched(true);
+      })
+      .catch(console.error);
+  }, [logId]);
 
   /* высота для слайдера */
   const windowHeight = useWindowHeight();
@@ -105,9 +141,15 @@ const Home = () => {
       <NavRight />
       <Navigation />
       <Cover height={windowHeight}>
-        <Slider
-          {...{ height: windowHeight, scrolling: toDescriptionSection }}
-        />
+        {isFetched && stateData && (
+          <Slider
+            {...{
+              height: windowHeight,
+              images: stateData,
+              scrolling: toDescriptionSection,
+            }}
+          />
+        )}
       </Cover>
       <Content justifyContent={"flex-end"} ref={DescriptionRef}>
         {screens.sm && (
@@ -125,7 +167,7 @@ const Home = () => {
         <SectionLead />
       </Content>
       <Content>
-        <LastProjects />
+        {isFetched && stateData && <LastProjects {...{ data: stateData }} />}
       </Content>
       <Content background={"black"}>
         <LastMedia />

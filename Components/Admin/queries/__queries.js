@@ -19,6 +19,11 @@ export const projectFields = groq`
     index
 `;
 
+export const projectFields_mini = groq`
+    _id,
+    cr
+`;
+
 export const catsFields = groq`
     _id,
     name,

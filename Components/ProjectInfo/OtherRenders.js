@@ -24,23 +24,43 @@ OR.Item = styled.div`
   width: 100%;
   background-color: grey;
   height: 30vw;
-  background-image: url(${({src}) => src ? src : ''});
+  background-image: url(${({ src }) => (src ? src : "")});
+  background-position: center;
   background-size: cover;
 `;
 
-const OtherRenders = () => {
+const OtherRenders = ({ images = [] }) => {
   return (
     <OR>
-      <OR.Row>
-        <OR.Item src={"/renders/20.jpg"} />
-        <OR.Item src={"/renders/21.jpg"} />
-      </OR.Row>
-      <OR.Row>
-        <OR.Item src={"/renders/22.jpg"} />
-        <OR.Item src={"/renders/23.jpg"} />
-      </OR.Row>
+      {Array(Math.ceil(images.length / 2))
+        .fill(1)
+        .map((_, rowIndex) => {
+          const rowImages = images.filter(
+            (_, i) => i >= rowIndex * 2 && i < rowIndex * 2 + 2
+          );
+
+          return (
+            <OR.Row key={`g:${rowIndex}`}>
+              {rowImages &&
+                rowImages.map((src, b) => {
+                  return <OR.Item key={`d:${b}:${rowIndex}`} src={src} />;
+                })}
+            </OR.Row>
+          );
+        })}
     </OR>
   );
 };
 
 export default OtherRenders;
+
+<OR>
+  <OR.Row>
+    <OR.Item src={"/renders/20.jpg"} />
+    <OR.Item src={"/renders/21.jpg"} />
+  </OR.Row>
+  <OR.Row>
+    <OR.Item src={"/renders/22.jpg"} />
+    <OR.Item src={"/renders/23.jpg"} />
+  </OR.Row>
+</OR>;

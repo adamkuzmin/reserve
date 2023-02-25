@@ -71,18 +71,25 @@ const navData = {
   },
 };
 
-const ProjectBottom = () => {
+const ProjectBottom = ({ beforeAfter = [] }) => {
   const lang = useStore((state) => state.lang);
+
+  const beforeId = beforeAfter[0] && beforeAfter[0]?._id;
+  const nextId = beforeAfter[1] && beforeAfter[1]?._id;
 
   return (
     <ProjectB>
       <ProjectHeaderWrapper>
-        <a>
-          <Text48>{navData.prev[lang]}</Text48>
-        </a>
-        <a>
-          <Text48>{navData.next[lang]}</Text48>
-        </a>
+        {beforeId && (
+          <Link href={`/project/${beforeId}`}>
+            <Text48>{navData.prev[lang]}</Text48>
+          </Link>
+        )}
+        {nextId && (
+          <Link href={`/project/${nextId}`}>
+            <Text48>{navData.next[lang]}</Text48>
+          </Link>
+        )}
       </ProjectHeaderWrapper>
       <Link href="/projects">
         <WideButton data-font="wremena">

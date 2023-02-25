@@ -6,7 +6,10 @@ import Project from "./Project";
 import client from "@/Components/Client/apollo/apollo-client";
 import { sanity } from "@/Components/Client/sanity/sanity-client";
 import groq from "groq";
-import { projectFields } from "@/Components/Admin/queries/__queries";
+import {
+  projectFields,
+  projectFields_mini,
+} from "@/Components/Admin/queries/__queries";
 
 const ProjectPage = () => {
   const router = useRouter();
@@ -15,6 +18,9 @@ const ProjectPage = () => {
 
   const [values, setValues] = useState();
   const [isFetched, setFetched] = useState(false);
+
+  const [beforeAfter, setBeforeAfter] = useState();
+  const [isBAFetched, setBAFecthed] = useState(false);
 
   useEffect(() => {
     if (isReady && pid) {
@@ -31,6 +37,34 @@ const ProjectPage = () => {
           setFetched(true);
         })
         .catch(() => setFetched(true));
+
+      /* */
+
+      const query_ba = groq`
+      *[_type == "projects"] {
+        ${projectFields_mini}
+      }
+      `;
+
+      sanity
+        .fetch(query_ba)
+        .then((data) => {
+          if (data && data.length > 0) {
+            const index = data.findIndex(({ _id }) => _id === pid);
+
+            if (index >= 0) {
+              let beforeIndex = index === 0 ? data.length - 1 : index - 1;
+              let nextIndex = index === data.length - 1 ? 0 : index + 1;
+
+              const before = data[beforeIndex];
+              const next = data[nextIndex];
+
+              setBeforeAfter([before, next]);
+              setBAFecthed(true);
+            }
+          }
+        })
+        .catch(() => setBAFecthed(true));
     }
   }, [isReady, pid]);
 
@@ -42,11 +76,21 @@ const ProjectPage = () => {
     return null;
   }, [isFetched, values]);
 
-  if (!(pid && isReady && isFetched && initialValues)) return <></>;
+  if (
+    !(
+      pid &&
+      isReady &&
+      isFetched &&
+      isBAFetched &&
+      beforeAfter &&
+      initialValues
+    )
+  )
+    return <></>;
 
   return (
     <div>
-      <Project {...{ initialValues, pid }} />
+      <Project {...{ initialValues, beforeAfter, pid }} />
     </div>
   );
 };

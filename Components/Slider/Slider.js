@@ -416,7 +416,16 @@ const Black = styled.div`
   }
 `;
 
-const Slider = ({ projectType = false, height, scrolling = () => {} }) => {
+const LinkWrapper = ({ children, href }) => {
+  return href ? <Link href={href}>{children}</Link> : <>{children}</>;
+};
+
+const Slider = ({
+  projectType = false,
+  images = [],
+  height,
+  scrolling = () => {},
+}) => {
   const swipeTitle = -700;
   const swipeLabel = -2000;
 
@@ -490,28 +499,37 @@ const Slider = ({ projectType = false, height, scrolling = () => {} }) => {
       <CarouselWrapper height={height} ref={CarouselRef}>
         <Black data-active={blackOverlay ? "active" : "noactive"} />
 
-        {sdata.map(({ cover, name, category }, i) => {
+        {images.map(({ cover, name, category, id, cats }, i) => {
           return (
-            <Link href="/project">
+            <LinkWrapper href={id && `/project/${id}`}>
               <BackImg fill={cover} data-status={handleActiveKey(i, slideKey)}>
                 <OverlayBlack />
                 <OverlayBlack rotate={180} />
 
                 <Card.Content>
-                  <Card.Header data-type="slide-header">
-                    <p
-                      data-font="wremena"
-                      data-swiper-parallax={`${swipeLabel}`}
-                    >
-                      {category[lang]}
-                    </p>
-                    <h3 data-font="ibm" data-swiper-parallax={`${swipeTitle}`}>
-                      {name[lang]}
-                    </h3>
-                  </Card.Header>
+                  {(name || cats) && (
+                    <Card.Header data-type="slide-header">
+                      {cats && cats.length > 0 && (
+                        <p
+                          data-font="wremena"
+                          data-swiper-parallax={`${swipeLabel}`}
+                        >
+                          {cats[0]}
+                        </p>
+                      )}
+                      {name && (
+                        <h3
+                          data-font="ibm"
+                          data-swiper-parallax={`${swipeTitle}`}
+                        >
+                          {name}
+                        </h3>
+                      )}
+                    </Card.Header>
+                  )}
                 </Card.Content>
               </BackImg>
-            </Link>
+            </LinkWrapper>
           );
         })}
       </CarouselWrapper>

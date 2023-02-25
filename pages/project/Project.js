@@ -25,9 +25,11 @@ const PlansSlider = styled.div`
   height: 100vh;
 `;
 
-const Project = ({ initialValues = {} }) => {
+const Project = ({ initialValues = {}, beforeAfter = [] }) => {
   const blackLogo = useStore((state) => state.blackLogo);
   const setBlackLogo = useStore((state) => state.setBlackLogo);
+
+  const { slider_imgs = [], secondary_imgs = [] } = initialValues;
 
   useEffect(() => {
     setBlackLogo(false);
@@ -83,12 +85,20 @@ const Project = ({ initialValues = {} }) => {
       </Content>
 
       <PlansSlider>
-        <Slider projectType scrolling={goToDescription} />
+        {slider_imgs && slider_imgs.length > 0 && (
+          <Slider
+            {...{ images: slider_imgs.map((src) => ({ cover: src })) }}
+            projectType
+            scrolling={goToDescription}
+          />
+        )}
       </PlansSlider>
 
       <Content ref={contentRef1}>
-        <OtherRenders />
-        <ProjectBottom />
+        {secondary_imgs && secondary_imgs.length > 0 && (
+          <OtherRenders {...{ images: secondary_imgs }} />
+        )}
+        <ProjectBottom {...{ beforeAfter }} />
       </Content>
 
       <Content background={"black"}>
