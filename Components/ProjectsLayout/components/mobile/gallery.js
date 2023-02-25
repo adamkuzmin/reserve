@@ -86,7 +86,7 @@ Layout.Card = ({ meta = {}, ratio = "horizontal" }) => {
   const localMeta = meta ? meta : {};
   const { coverhor, coververt, finished, nameru, nameen } = localMeta;
   const metaRatio = ratio === "vertical" ? coverhor : coververt;
-  const metaSrc = `/projects/Frame%20${metaRatio}.jpg`;
+  const metaSrc = metaRatio;
 
   return (
     <Link href="/project">
@@ -133,7 +133,7 @@ const MobileGallery = ({
   stateData = [],
   mobileCards = [],
   setMobileCards,
-  showBottomTrigger
+  showBottomTrigger,
 }) => {
   const [partCards, setPartCards] = useState([]);
   const [loadedStep, setLoadedStep] = useState(1);
@@ -260,14 +260,16 @@ const MobileGallery = ({
     <>
       <Layout>{partCards}</Layout>
 
-      {showBottomTrigger && partCards && partCards.length < mobileCards.length && (
-        <MobileBottomTrigger ref={bottomTriggerRef}>
-          <Space size={25}>
-            <Spin indicator={antIcon} />
-            <Text24>Загрузка проектов...</Text24>
-          </Space>
-        </MobileBottomTrigger>
-      )}
+      {showBottomTrigger &&
+        partCards &&
+        partCards.length < mobileCards.length && (
+          <MobileBottomTrigger ref={bottomTriggerRef}>
+            <Space size={25}>
+              <Spin indicator={antIcon} />
+              <Text24>Загрузка проектов...</Text24>
+            </Space>
+          </MobileBottomTrigger>
+        )}
       {showBottomTrigger && partCards.length >= mobileCards.length && (
         <MobileBottomTrigger>
           <Space size={25}>

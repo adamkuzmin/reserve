@@ -53,14 +53,3 @@ const OtherRenders = ({ images = [] }) => {
 };
 
 export default OtherRenders;
-
-<OR>
-  <OR.Row>
-    <OR.Item src={"/renders/20.jpg"} />
-    <OR.Item src={"/renders/21.jpg"} />
-  </OR.Row>
-  <OR.Row>
-    <OR.Item src={"/renders/22.jpg"} />
-    <OR.Item src={"/renders/23.jpg"} />
-  </OR.Row>
-</OR>;
