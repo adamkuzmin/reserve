@@ -301,7 +301,7 @@ const ProjectsTable = ({ stateData }) => {
               const coverClass =
                 rowIndex % 2 === 0 ? "renderHor-1" : "renderVer-3";
 
-              const metaSrc = cover ? `/projects/Frame%20${cover}.jpg` : "";
+              const metaSrc = cover ? cover : "";
 
               return {
                 onMouseEnter: () =>

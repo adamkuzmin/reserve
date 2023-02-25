@@ -1,5 +1,28 @@
-import styled from "styled-components";
-import { Space, Row, Col } from "antd";
+import styled, { css } from "styled-components";
+import { Row, Col } from "antd";
+
+const Space = styled.div`
+  display: flex;
+
+  ${({ direction, size }) =>
+    direction && direction === "vertical"
+      ? css`
+          & {
+            flex-direction: column;
+
+            & > * + * {
+              margin-top: ${size ? `${size}px` : `5px`};
+            }
+          }
+        `
+      : css`
+          & {
+            & > * + * {
+              margin-left: ${size ? `${size}px` : `5px`};
+            }
+          }
+        `}
+`;
 
 const FilterWrapper = styled(Space)`
   position: fixed;
