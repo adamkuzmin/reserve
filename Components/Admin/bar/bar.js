@@ -27,7 +27,7 @@ const Bar = ({ noAuth }) => {
             style={{ cursor: "pointer", pointerEvents: "visible" }}
             onClick={handleLogout}
           >
-            Log out
+          Выйти из аккаунта
           </Text24>
         )}
       </Nav>
