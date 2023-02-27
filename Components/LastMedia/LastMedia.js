@@ -266,7 +266,7 @@ const intro = {
   },
 };
 
-const LastMedia = () => {
+const LastMedia = ({ data = {} }) => {
   const blackLogo = useStore((state) => state.blackLogo);
   const setBlackLogo = useStore((state) => state.setBlackLogo);
 
@@ -291,9 +291,13 @@ const LastMedia = () => {
     return () => window.removeEventListener("scroll", onScroll);
   });
 
+  const { block6_1 } = data;
+
   return (
     <MediaWrapper ref={MediaRef}>
-      <ScreenLead color={"white"}>{intro.descr[lang]}</ScreenLead>
+      <ScreenLead color={"white"}>
+        {/* intro.descr[lang] */ block6_1}
+      </ScreenLead>
       <Media>
         <LargeCard
           onClick={() =>

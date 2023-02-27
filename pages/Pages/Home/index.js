@@ -21,7 +21,7 @@ import SectionLead from "../../../Components/MainDescription/SectionLead";
 
 import { useWindowHeight } from "@react-hook/window-size";
 import APIConnect from "../../../Components/Api";
-import { projectFields } from "@/Components/Admin/queries/__queries";
+import { HomeQuery, projectFields } from "@/Components/Admin/queries/__queries";
 import { sanity } from "@/Components/Client/sanity/sanity-client";
 import groq from "groq";
 
@@ -64,7 +64,10 @@ const Home = () => {
   const setBlackLogo = useStore((state) => state.setBlackLogo);
 
   const [isFetched, setFetched] = useState(false);
+  const [isHomeFetched, setHomeFetched] = useState(false);
+
   const [stateData, setStateData] = useState();
+  const [homeData, setHomeData] = useState();
 
   const logId = useStore(({ logId }) => logId);
   useEffect(() => {
@@ -95,6 +98,21 @@ const Home = () => {
       })
       .catch(console.error);
   }, [logId]);
+
+  useEffect(() => {
+    const query = HomeQuery;
+
+    sanity
+      .fetch(query)
+      .then((data) => {
+        if (data && data.length > 0) {
+          setHomeData(data[0]);
+        }
+
+        setHomeFetched(true);
+      })
+      .catch(() => setHomeFetched(true));
+  }, []);
 
   /* высота для слайдера */
   const windowHeight = useWindowHeight();
@@ -136,6 +154,8 @@ const Home = () => {
     return () => window.removeEventListener("scroll", onScroll);
   });
 
+  console.log("homeData", homeData);
+
   return (
     <div ref={BodyRef}>
       <NavRight />
@@ -157,20 +177,20 @@ const Home = () => {
             <ThreeCanvas />
           </CanvasGeometry>
         )}
-        <PreludeWithKPI />
-        <GeneralLead />
+        {homeData && <PreludeWithKPI data={homeData} />}
+        {homeData && <GeneralLead data={homeData} />}
       </Content>
 
       <FloatedBack />
 
       <Content ref={LastProjectsRef} justifyContent={"flex-end"}>
-        <SectionLead />
+        {homeData && <SectionLead data={homeData} />}
       </Content>
       <Content>
         {isFetched && stateData && <LastProjects {...{ data: stateData }} />}
       </Content>
       <Content background={"black"}>
-        <LastMedia />
+        {homeData && <LastMedia data={homeData} />}
       </Content>
       <Content background={"black"}>
         <Footer />

@@ -39,16 +39,18 @@ const leadData = {
   },
 };
 
-const SectionLead = () => {
+const SectionLead = ({ data = {} }) => {
   const lang = useStore((state) => state.lang);
+
+  const { block5_1, block5_2 } = data;
 
   return (
     <Col>
       <StyledTitle>
-        <Text60 data-font="ibm">{leadData.title[lang]}</Text60>
+        <Text60 data-font="ibm">{/* leadData.title[lang] */ block5_1}</Text60>
       </StyledTitle>
       <LeadText>
-        <Text36 data-font="ibm">{leadData.message[lang]}</Text36>
+        <Text36 data-font="ibm">{/* leadData.message[lang] */ block5_2}</Text36>
       </LeadText>
     </Col>
   );

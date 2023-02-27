@@ -29,3 +29,19 @@ export const catsFields = groq`
     name,
     cr
 `;
+
+export const HomeQuery = groq`
+    *[_type == "home" ] {
+        _id,
+        block1,
+        block2_numbers[],
+        block2_labels[],
+        block3_1,
+        block3_2,
+        block3_3,
+        block4_1,
+        block5_1,
+        block5_2,
+        block6_1
+    }
+`;

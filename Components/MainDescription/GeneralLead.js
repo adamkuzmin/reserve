@@ -131,22 +131,26 @@ const leadData = {
   },
 };
 
-const GeneralLead = () => {
+const GeneralLead = ({ data = {} }) => {
   const lang = useStore((state) => state.lang);
+
+  const { block3_1, block3_2, block3_3 } = data;
 
   return (
     <Lead>
       <KPI>
         <KPI.Number>
-          <Text254 data-font="ibm">{leadData.count}</Text254>
+          <Text254 data-font="ibm">{/* leadData.count */ block3_1}</Text254>
         </KPI.Number>
         <KPI.Text>
-          <Text24 data-font="ibm">{leadData.label[lang]}</Text24>
+          <Text24 data-font="ibm">{/* leadData.label[lang] */ block3_2}</Text24>
         </KPI.Text>
       </KPI>
       <LeadWithBtn>
         <LeadAbout>
-          <Text96 data-font="ibm">{leadData.leadlabel[lang]}</Text96>
+          <Text96 data-font="ibm">
+            {/* leadData.leadlabel[lang] */ block3_3}
+          </Text96>
         </LeadAbout>
         <Link href={"/about"}>
           <ButtonBlock>

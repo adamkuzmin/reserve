@@ -109,16 +109,24 @@ const preludeData = {
   ],
 };
 
-const PreludeWithKPI = () => {
+const PreludeWithKPI = ({ data = {} }) => {
   const lang = useStore((state) => state.lang);
+
+  const { block1 = "", block2_labels = [], block2_numbers = [] } = data;
+
+  let kpis = block2_numbers.map((count, i) => {
+    const label = block2_labels[i];
+
+    return { count, label };
+  });
 
   return (
     <Col>
       <SLeadText>
-        <Text36 data-font="ibm">{preludeData.descr[lang]}</Text36>
+        <Text36 data-font="ibm">{/* preludeData.descr[lang] */ block1}</Text36>
       </SLeadText>
       <KPIs>
-        {preludeData.kpis.map(({ count, label }, i) => {
+        {kpis.map(({ count, label }, i) => {
           return (
             <KPIs.Item key={`kpi:item:${i}`}>
               <h3 data-font="ibm">
@@ -127,7 +135,7 @@ const PreludeWithKPI = () => {
                 </Text96>
               </h3>
               <p>
-                <Text24 data-font="ibm">{label[lang]}</Text24>
+                <Text24 data-font="ibm">{label}</Text24>
               </p>
             </KPIs.Item>
           );
