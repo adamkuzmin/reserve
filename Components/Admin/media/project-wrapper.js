@@ -19,7 +19,8 @@ const ProjectWrapper = ({ section = {} }) => {
       *[_type == "${section.name}" && _id == "${pid}"] {
         _id,
         name,
-        cr
+        cr,
+        ${section.cover ? groq`cover` : groq`description`}
       }
       `;
 
@@ -54,7 +55,12 @@ const ProjectWrapper = ({ section = {} }) => {
 
   return (
     <AdminWrapper>
-      <Project initialValues={initialValues} section={section} mode={mode} />
+      <Project
+        initialValues={initialValues}
+        section={section}
+        mode={mode}
+        id={pid}
+      />
     </AdminWrapper>
   );
 };

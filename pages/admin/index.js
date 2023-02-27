@@ -65,7 +65,7 @@ const AdminPage = () => {
       <Text48 style={{ fontWeight: 600 }}>О бюро</Text48>
 
       <Layout cols={xl ? 5 : lg ? 4 : md ? 3 : sm ? 2 : 1}>
-        <Link href="/admin/projects">
+        <Link href="/admin/vacancies">
           <Card fill={"#7A2383"}>
             <Text24>Вакансии</Text24>
           </Card>

@@ -5,8 +5,10 @@ import { Form, Input, notification } from "antd";
 import { useRouter } from "next/router";
 import ImageSingleUploader from "../project/a-common/blocks/image-single-upload";
 import moment from "moment";
+import QuillEditor from "../project/b-editor/blocks/quill";
+import { sanity } from "@/Components/Client/sanity/sanity-client";
 
-const Project = ({ initialValues, section = {}, mode }) => {
+const Project = ({ initialValues, section = {}, mode, id }) => {
   const router = useRouter();
   const setLogId = useStore(({ setLogId }) => setLogId);
 
@@ -21,6 +23,8 @@ const Project = ({ initialValues, section = {}, mode }) => {
       router.push(`/admin/${section.name}`, null, { shallow: false });
     },
     onError: (e) => {
+      console.log("e", e);
+
       setLogId();
       notification.error({
         message: `Ошибка!`,
@@ -38,6 +42,8 @@ const Project = ({ initialValues, section = {}, mode }) => {
       await sanity.create(data);
       cfgs.onCompleted();
     } catch (err) {
+      console.log("err", err);
+
       cfgs.onError();
     }
   };
@@ -49,6 +55,8 @@ const Project = ({ initialValues, section = {}, mode }) => {
       await sanity.patch(id).set(data).commit();
       cfgs.onCompleted();
     } catch (err) {
+      console.log("err", err);
+
       cfgs.onError();
     }
   };
@@ -99,15 +107,9 @@ const Project = ({ initialValues, section = {}, mode }) => {
         </Wrap30>
 
         {!cover && (
-          <Wrap30>
-            <Form.Item
-              style={{ width: "100%" }}
-              name="description"
-              rules={rules}
-            >
-              <Input.TextArea placeholder="Описание новости" />
-            </Form.Item>
-          </Wrap30>
+          <Form.Item style={{ width: "100%" }} name="description" rules={rules}>
+            <QuillEditor {...{ isEdit: true }} type="description" />
+          </Form.Item>
         )}
 
         <Form.Item>
