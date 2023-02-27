@@ -10,14 +10,14 @@ import { sanity } from "@/Components/Client/sanity/sanity-client";
 import { useState } from "react";
 import { useStore } from "@/Store/useStore";
 
-const columns = (handleDelete = () => {}) => [
+const columns = (handleDelete = () => {}, section = {}) => [
   {
     title: "Название",
     dataIndex: "name",
     width: "40%",
     key: "name",
     render: (a, { _id }) => (
-      <Link href={`/admin/project/${_id}`}>
+      <Link href={`/admin/${section.name}/a/${_id}`}>
         <StyledText data-type="link" data-weight="semibold" data-font="ibm">
           {a}
         </StyledText>
@@ -45,7 +45,7 @@ const columns = (handleDelete = () => {}) => [
   },
 ];
 
-const Projects = ({ data }) => {
+const Projects = ({ data, section }) => {
   const [isDeleting, setIsDeleting] = useState(false);
 
   const setLogId = useStore(({ setLogId }) => setLogId);
@@ -56,7 +56,10 @@ const Projects = ({ data }) => {
     try {
       await sanity.delete(project_id);
 
-      notification.success({ message: `Проект удален!`, placement: "bottom" });
+      notification.success({
+        message: `${section.label} удалена!`,
+        placement: "bottom",
+      });
       setLogId();
     } catch (err) {
       console.error(err);
@@ -75,7 +78,7 @@ const Projects = ({ data }) => {
       <Wrap24 swidth={"100%"}>
         <TableWrapper>
           <PTable
-            columns={columns(deleteProject)}
+            columns={columns(deleteProject, section)}
             dataSource={data}
             showSizeChanger={false}
             pagination={false}
