@@ -36,25 +36,25 @@ const AdminPage = () => {
       <Text48 style={{ fontWeight: 600 }}>Медиа</Text48>
 
       <Layout cols={xl ? 5 : lg ? 4 : md ? 3 : sm ? 2 : 1}>
-        <Link href="/admin/projects">
+        <Link href="/admin/news">
           <Card fill={`#FFC400`}>
             <Text24>Новости</Text24>
           </Card>
         </Link>
 
-        <Link href="/admin/projects">
+        <Link href="/admin/publications">
           <Card fill={`#166CEF`}>
             <Text24>Публикации</Text24>
           </Card>
         </Link>
 
-        <Link href="/admin/projects">
+        <Link href="/admin/interviews">
           <Card fill={`#C10000`}>
             <Text24>Интервью</Text24>
           </Card>
         </Link>
 
-        <Link href="/admin/projects">
+        <Link href="/admin/exhibitions">
           <Card fill={`#FE7B7B`}>
             <Text24>Выставки</Text24>
           </Card>
