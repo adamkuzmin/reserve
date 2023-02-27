@@ -50,7 +50,7 @@ const ProjectsWrapper = ({ section = {} }) => {
             })
           }
         >
-          <Text30>Добавить {section.label}</Text30>
+          <Text30>Добавить</Text30>
         </WideButton>
 
         <br />

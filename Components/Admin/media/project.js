@@ -89,20 +89,18 @@ const Project = ({ initialValues, section = {}, mode, id }) => {
         initialValues={initialValues}
       >
         {cover && (
-          <Wrap30>
-            <Form.Item style={{ width: "100%" }} name="cover" rules={rules}>
-              <ImageSingleUploader />
-            </Form.Item>
-          </Wrap30>
+          <Form.Item
+            style={{ width: "100%", maxWidth: "250px" }}
+            name="cover"
+            rules={rules}
+          >
+            <ImageSingleUploader />
+          </Form.Item>
         )}
 
         <Wrap30>
           <Form.Item style={{ width: "100%" }} name="name" rules={rules}>
-            {!cover ? (
-              <Input.TextArea rows={3} placeholder="Название" />
-            ) : (
-              <Input placeholder="Название" />
-            )}
+            <Input.TextArea rows={3} placeholder="Название" />
           </Form.Item>
         </Wrap30>
 
