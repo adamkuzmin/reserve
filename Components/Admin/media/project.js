@@ -90,7 +90,11 @@ const Project = ({ initialValues, section = {}, mode }) => {
 
         <Wrap30>
           <Form.Item style={{ width: "100%" }} name="name" rules={rules}>
-            <Input.TextArea rows={3} placeholder="Название" />
+            {!cover ? (
+              <Input.TextArea rows={3} placeholder="Название" />
+            ) : (
+              <Input placeholder="Название" />
+            )}
           </Form.Item>
         </Wrap30>
 

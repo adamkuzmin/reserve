@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Upload, message } from "antd";
+import { Upload, message, notification } from "antd";
 import { InboxOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
@@ -49,10 +49,30 @@ const ImageSingleUploader = ({
   const uploadProps = {
     name: "file",
     multiple: false,
-    accept: "image/*",
+    accept: ".jpg,.png",
     action: handleUpload,
     onRemove: handleRemove,
     showUploadList: false,
+    beforeUpload: (file) => {
+      const isJpgOrPng =
+        file.type === "image/jpeg" || file.type === "image/png";
+      if (!isJpgOrPng) {
+        notification.error({
+          message: "Вы можете загрузить только JPEG или PNG",
+          placement: "bottom",
+        });
+        return false;
+      }
+      const isLt2M = file.size / 1024 / 1024 < 2;
+      if (!isLt2M) {
+        notification.error({
+          message: "Изображение не может быть больше 2MB!",
+          placement: "bottom",
+        });
+        return false;
+      }
+      return true;
+    },
   };
 
   return (

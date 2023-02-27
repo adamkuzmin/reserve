@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Upload, message } from "antd";
+import { Upload, message, notification } from "antd";
 import {
   InboxOutlined,
   CloseOutlined,
@@ -66,10 +66,30 @@ const ImageMultiUploader = ({
   const uploadProps = {
     name: "file",
     multiple: true,
-    accept: "image/*",
+    accept: ".jpg,.png",
     beforeUpload: (file) => {
       if (imageUrls.length >= maxImages) {
-        message.warning(`You can only upload up to ${maxImages} images.`);
+        notification.error({
+          message: `You can only upload up to ${maxImages} images.`,
+          placement: "bottom",
+        });
+        return false;
+      }
+      const isJpgOrPng =
+        file.type === "image/jpeg" || file.type === "image/png";
+      if (!isJpgOrPng) {
+        notification.error({
+          message: "Вы можете загрузить только JPEG или PNG",
+          placement: "bottom",
+        });
+        return false;
+      }
+      const isLt2M = file.size / 1024 / 1024 < 2;
+      if (!isLt2M) {
+        notification.error({
+          message: "Изображение не может быть больше 2MB!",
+          placement: "bottom",
+        });
         return false;
       }
       return true;
