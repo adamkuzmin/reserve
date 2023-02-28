@@ -107,6 +107,9 @@ const WireWrapper = ({ children, loading }) => {
 };
 
 const News = ({ interviews = false }) => {
+  
+
+
   const [loadingData, setLoadingData] = useState(true);
   const screens = useBreakpoint();
 
