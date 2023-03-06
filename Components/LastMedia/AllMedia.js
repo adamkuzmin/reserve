@@ -238,7 +238,7 @@ const AllMedia = () => {
         <LargeCard
           onClick={() =>
             router.push({
-              pathname: "/publications",
+              pathname: "/media/publications",
             })
           }
         >
@@ -276,7 +276,7 @@ const AllMedia = () => {
         <LargeCard
           onClick={() =>
             router.push({
-              pathname: "/interview",
+              pathname: "/media/interview",
             })
           }
         >

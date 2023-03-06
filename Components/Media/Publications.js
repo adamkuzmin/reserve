@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { useStore } from "../../Store/useStore";
 
@@ -19,6 +19,9 @@ import {
   ShowBtn,
   LeadDescription,
 } from "../About/common/styles";
+import { sanity } from "../Client/sanity/sanity-client";
+import groq from "groq";
+import moment from "moment";
 
 const MembersWrapper = styled.div`
   width: 100%;
@@ -66,6 +69,42 @@ Member.Photo = styled.div`
 `;
 
 const Publications = ({ exhibitions = false }) => {
+  const logId = useStore(({ logId }) => logId);
+
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const query = groq`
+      *[_type == "${exhibitions ? "exhibitions" : "publications"}"] {
+        _id,
+        name,
+        cover,
+        cr
+      }
+      | order(cr desc)
+    `;
+
+    setLoading(true);
+
+    sanity
+      .fetch(query)
+      .then((data = []) => {
+        setProjects(
+          data.map((item = {}) => {
+            const { name, cover } = item;
+
+            return {
+              title: { ru: name, en: name },
+              url: cover,
+            };
+          })
+        );
+        setLoading(false);
+      })
+      .catch(console.error);
+  }, [logId, exhibitions]);
+
   const lang = useStore((state) => state.lang);
 
   const setBlackLogo = useStore((state) => state.setBlackLogo);
@@ -102,17 +141,19 @@ const Publications = ({ exhibitions = false }) => {
       <Gap sheight={"120px"} />
 
       <MembersWrapper data-col={3}>
-        {publData.map(({ url, title }, i) => {
-          return (
-            <Member key={`publ:${i}`}>
-              <Member.Photo url={url} />
+        {!loading &&
+          projects &&
+          projects.map(({ url, title }, i) => {
+            return (
+              <Member key={`publ:${i}`}>
+                <Member.Photo url={url} />
 
-              <Space direction="vertical" size={0}>
-                <LocalTitle size={30}>{title[lang]}</LocalTitle>
-              </Space>
-            </Member>
-          );
-        })}
+                <Space direction="vertical" size={0}>
+                  <LocalTitle size={30}>{title[lang]}</LocalTitle>
+                </Space>
+              </Member>
+            );
+          })}
       </MembersWrapper>
 
       <Gap sheight={"120px"} />

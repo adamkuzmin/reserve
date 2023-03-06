@@ -7,11 +7,15 @@ import { Content } from "../common/body";
 
 import { Text30 } from "../common/text";
 
-import { newsData, newsList, interviewData } from "./news/data";
+import { newsData /* , newsList*/, interviewData } from "./news/data";
 
 import { Skeleton, Row, Col, Space, Grid } from "antd";
 
 import { ContentFlex, Gap, LocalTitle } from "../About/common/styles";
+import groq from "groq";
+import { sanity } from "../Client/sanity/sanity-client";
+import moment from "moment";
+
 const { useBreakpoint } = Grid;
 
 const MainContent = styled.div`
@@ -107,8 +111,46 @@ const WireWrapper = ({ children, loading }) => {
 };
 
 const News = ({ interviews = false }) => {
-  
+  const logId = useStore(({ logId }) => logId);
 
+  const [newsList, setNewsList] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const query = groq`
+      *[_type == "${interviews ? "interviews" : "news"}"] {
+        _id,
+        name,
+        cr
+      }
+      | order(cr desc)
+    `;
+
+    setLoading(true);
+
+    sanity
+      .fetch(query)
+      .then((data = []) => {
+        setNewsList(
+          data.map((item = {}) => {
+            const { name, cr } = item;
+
+            const ftime = (cr, ln) =>
+              moment(cr).locale(ln).format("MMM D, YYYY");
+
+            const ruTime = ftime(cr, "ru");
+            const enTime = ftime(cr, "en");
+
+            return {
+              title: { ru: name, en: name },
+              date: { ru: ruTime, en: enTime },
+            };
+          })
+        );
+        setLoading(false);
+      })
+      .catch(console.error);
+  }, [logId, interviews]);
 
   const [loadingData, setLoadingData] = useState(true);
   const screens = useBreakpoint();
@@ -123,7 +165,12 @@ const News = ({ interviews = false }) => {
   const lang = useStore((state) => state.lang);
 
   const [windowHeight, setWindowsHeight] = useState(0);
-  const [data, setData] = useState(newsList);
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    if (!(!loading && newsList)) {
+      setData(newsList);
+    }
+  }, [newsList, loading]);
 
   useEffect(() => {
     const resizeListener = () => {
@@ -184,7 +231,7 @@ const News = ({ interviews = false }) => {
 
         <MainContent>
           <WireWrapper loading={loadingData}>
-            <InfiniteScroll
+            {/* <InfiniteScroll
               dataLength={data.length} //This is important field to render the next data
               next={loadMoreData}
               hasMore={data.length < 100}
@@ -196,8 +243,10 @@ const News = ({ interviews = false }) => {
               }
               endMessage={<></>}
               scrollThreshold={`${windowHeight * 0.8}px`}
-            >
-              {data.map(({ title, date }, i) => {
+            > */}
+            {newsList &&
+              !loading &&
+              newsList.map(({ title, date }, i) => {
                 return (
                   <NewsBlock
                     key={`news:${i}`}
@@ -206,7 +255,7 @@ const News = ({ interviews = false }) => {
                   />
                 );
               })}
-            </InfiniteScroll>
+            {/* </InfiniteScroll> */}
           </WireWrapper>
         </MainContent>
       </ContentFlex>
