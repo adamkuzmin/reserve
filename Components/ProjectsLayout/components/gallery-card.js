@@ -39,15 +39,17 @@ const Card = ({ swidth, src, meta, ratio = "horizontal" }) => {
     <Layout.Project
       {...{ swidth, randomtime: RandomTime }}
       data-effect={animatedGallery && "fade"}
-      onClick={() => router.push(`/project/${id}`)}
+      onClick={id ? () => router.push(`/project/${id}`) : () => {}}
     >
       <Render {...{ src: meta ? metaSrc : src }} />
       <Header data-type="card-header">
         <Header.Title>
           <TextWrapper data-type="text-wrapper" direction={-100}>
-            <p>
-              <Text24 data-font="wremena">Объект культуры</Text24>
-            </p>
+            {id && (
+              <p>
+                <Text24 data-font="wremena">Объект культуры</Text24>
+              </p>
+            )}
           </TextWrapper>
           <TextWrapper data-type="text-wrapper" direction={100}>
             <h3>

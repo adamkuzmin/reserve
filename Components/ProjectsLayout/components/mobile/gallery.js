@@ -8,6 +8,7 @@ import Image from "next/image";
 
 import { useStore } from "../../../../Store/useStore";
 import { Text24 } from "../../../common/text";
+import { useRouter } from "next/router";
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -66,6 +67,7 @@ const Card = styled.div`
   height: 100%;
   min-height: inherit;
   background: lightgrey;
+  display: flex;
 
   max-height: ${({ ratio }) =>
     ratio === "vertical" ? `calc(49.5vw * 2)` : `calc(49.5vw)`};
@@ -83,23 +85,23 @@ const Card = styled.div`
 `;
 
 Layout.Card = ({ meta = {}, ratio = "horizontal" }) => {
+  const router = useRouter();
+
   const localMeta = meta ? meta : {};
-  const { coverhor, coververt, finished, nameru, nameen } = localMeta;
+  const { coverhor, coververt, finished, nameru, nameen, id } = localMeta;
   const metaRatio = ratio === "vertical" ? coverhor : coververt;
   const metaSrc = metaRatio;
 
   return (
-    <Link href="/project">
-      <Card {...{ ratio }}>
-        <Image
-          src={metaSrc}
-          width="100%"
-          height="100%"
-          layout="responsive"
-          objectFit="cover"
-        />
-      </Card>
-    </Link>
+    <Card
+      onClick={id ? () => router.push(`/project/${id}`) : () => {}}
+      {...{ ratio }}
+      style={{
+        backgroundImage: `url("${metaSrc}")`,
+        backgroundPosition: "center",
+        backgroundSize: "cover",
+      }}
+    ></Card>
   );
 };
 
@@ -153,10 +155,12 @@ const MobileGallery = ({
   useEffect(() => {
     if (bottomTriggerRef && partCards.length < mobileCards.length) {
       const triggerScroll = () => {
-        const top = bottomTriggerRef.current.getBoundingClientRect().top;
+        try {
+          const top = bottomTriggerRef.current.getBoundingClientRect().top;
 
-        if (top <= window.innerHeight && !needsToLoadMore)
-          setNeedsToLoadMore(true);
+          if (top <= window.innerHeight && !needsToLoadMore)
+            setNeedsToLoadMore(true);
+        } catch (e) {}
       };
 
       document.addEventListener("scroll", triggerScroll, true);

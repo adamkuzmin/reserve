@@ -49,10 +49,12 @@ const MainGallery = ({ stateData, cards, setCards, showBottomTrigger }) => {
   useEffect(() => {
     if (bottomTriggerRef && partCards.length < cards.length) {
       const triggerScroll = () => {
-        const top = bottomTriggerRef.current.getBoundingClientRect().top;
+        try {
+          const top = bottomTriggerRef.current.getBoundingClientRect().top;
 
-        if (top <= window.innerHeight && !needsToLoadMore)
-          setNeedsToLoadMore(true);
+          if (top <= window.innerHeight && !needsToLoadMore)
+            setNeedsToLoadMore(true);
+        } catch (e) {}
       };
 
       document.addEventListener("scroll", triggerScroll, true);
@@ -140,19 +142,21 @@ const MainGallery = ({ stateData, cards, setCards, showBottomTrigger }) => {
       for (let b = 0; b < sequence.length; b++) {
         const part = copiedData.splice(0, sequence[b]);
 
+        const key = `s:${i}:${b}`;
+
         if (part.length > 0) {
           switch (rowType[b]) {
             case "A":
-              components.push(<RowA {...{ data: part }} />);
+              components.push(<RowA {...{ data: part }} key={key} />);
               break;
             case "B":
-              components.push(<RowB {...{ data: part }} />);
+              components.push(<RowB {...{ data: part }} key={key} />);
               break;
             case "C":
-              components.push(<RowC {...{ data: part }} />);
+              components.push(<RowC {...{ data: part }} key={key} />);
               break;
             case "D":
-              components.push(<RowD {...{ data: part }} />);
+              components.push(<RowD {...{ data: part }} key={key} />);
               break;
           }
         }
