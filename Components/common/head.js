@@ -18,20 +18,6 @@ const PageHead = () => {
 
       <link rel="preload" as="image" href={`/icons/navlogo-black.png`}></link>
       <link rel="preload" as="image" href={`/icons/navlogo-white.png`}></link>
-
-      <link rel="preload" as="image" href={`/carousel/1.jpg`}></link>
-
-      {cutData.map(({ coverhor, coververt }, i) => {
-        const metaSrcHot = `/projects/Frame%20${coverhor}.jpg`;
-        const metaSrcVert = `/projects/Frame%20${coververt}.jpg`;
-
-        return (
-          <React.Fragment key={`linkg${i}`}>
-            <link rel="preload" as="image" href={metaSrcHot}></link>
-            <link rel="preload" as="image" href={metaSrcVert}></link>
-          </React.Fragment>
-        );
-      })}
     </Head>
   );
 };
