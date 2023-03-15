@@ -425,9 +425,12 @@ const LinkWrapper = ({ children, href }) => {
 const Slider = ({
   projectType = false,
   images = [],
+  slides = [],
   height,
   scrolling = () => {},
 }) => {
+  images = [...images].filter(({ id }) => slides.includes(id));
+
   const swipeTitle = -700;
   const swipeLabel = -2000;
 

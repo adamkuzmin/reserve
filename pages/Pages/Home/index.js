@@ -64,9 +64,15 @@ const Home = () => {
   const setBlackLogo = useStore((state) => state.setBlackLogo);
 
   const [isFetched, setFetched] = useState(false);
+  const [isFetched1, setFetched1] = useState(false);
+
   const [isHomeFetched, setHomeFetched] = useState(false);
 
   const [stateData, setStateData] = useState();
+  const [slidesData, setSlidesData] = useState();
+
+  console.log("slidesData", slidesData);
+
   const [homeData, setHomeData] = useState();
 
   const logId = useStore(({ logId }) => logId);
@@ -76,6 +82,15 @@ const Home = () => {
         ${projectFields}
       }
       | order(cr desc)
+    `;
+
+    const querySlides = groq`
+      *[_type == "slider"] {
+        _id,
+        order,
+        project_id
+      }
+      | order(order asc)
     `;
 
     sanity
@@ -96,6 +111,19 @@ const Home = () => {
 
         setStateData(_data);
         setFetched(true);
+      })
+      .catch(console.error);
+
+    sanity
+      .fetch(querySlides)
+      .then((data) => {
+        const _data = data.map((item = {}) => {
+          const { project_id } = item;
+          return project_id;
+        });
+
+        setSlidesData(_data);
+        setFetched1(true);
       })
       .catch(console.error);
   }, [logId]);
@@ -160,11 +188,12 @@ const Home = () => {
       <NavRight />
       <Navigation />
       <Cover height={windowHeight}>
-        {isFetched && stateData && (
+        {isFetched && isFetched1 && slidesData && stateData && (
           <Slider
             {...{
               height: windowHeight,
               images: stateData,
+              slides: slidesData,
               scrolling: toDescriptionSection,
             }}
           />

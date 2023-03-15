@@ -25,6 +25,12 @@ const AdminPage = () => {
           </Card>
         </Link>
 
+        <Link href="/admin/slider">
+          <Card fill={"#FE7B7B"}>
+            <Text24>Слайдер</Text24>
+          </Card>
+        </Link>
+
         <Link href="/admin/projects">
           <Card fill={"#008769"}>
             <Text24>Проекты</Text24>
