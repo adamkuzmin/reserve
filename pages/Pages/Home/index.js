@@ -155,8 +155,6 @@ const Home = () => {
     return () => window.removeEventListener("scroll", onScroll);
   });
 
-  console.log("homeData", homeData);
-
   return (
     <div ref={BodyRef}>
       <NavRight />

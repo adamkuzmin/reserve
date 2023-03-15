@@ -4,7 +4,7 @@ const Nav = styled.div`
   && {
     background: white;
     width: 100vw;
-    height: 112px;
+    height: 90px;
     display: flex;
     position: fixed;
     justify-content: space-between;
@@ -17,13 +17,13 @@ const Nav = styled.div`
 
     @media (max-width: 576px) {
       & {
-        height: 68px;
+        height: 54px;
       }
     }
 
     @media (max-width: 1000px) and (min-width: 576px) {
       & {
-        height: clamp(68px, 11.2vw, 112px);
+        height: clamp(54px, 8.96vw, 90px);
       }
     }
   }

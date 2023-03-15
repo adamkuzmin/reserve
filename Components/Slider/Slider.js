@@ -1,5 +1,5 @@
 import { Carousel } from "antd";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useStore } from "../../Store/useStore";
 import Link from "next/link";
 import styled from "styled-components";
@@ -196,11 +196,13 @@ const BackImg = styled.div`
       from {
         opacity: 1;
         display: block;
+        pointer-events: visible;
       }
 
       to {
         opacity: 0;
         display: block;
+        pointer-events: none;
       }
     }
   }
@@ -485,9 +487,11 @@ const Slider = ({
     return () => window.removeEventListener("scroll", onScroll);
   });
 
-  const sdata = projectType ? projectSliderData : sliderData;
+  const sdata = images;
 
   const handleActiveKey = (i, slideKey) => {
+    console.log("i", slideKey);
+
     if (i === slideKey) return "active";
     if (i === sdata.length - 1 && slideKey === 0) return "was-active";
     if (i === slideKey - 1) return "was-active";
