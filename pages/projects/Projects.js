@@ -93,6 +93,7 @@ const Projects = () => {
       *[_type == "projects"] {
         ${projectFields}
       }
+      | order(cr desc)
     `;
 
     sanity

@@ -75,6 +75,7 @@ const Home = () => {
       *[_type == "projects"] {
         ${projectFields}
       }
+      | order(cr desc)
     `;
 
     sanity

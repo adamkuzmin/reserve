@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useStore } from "../../Store/useStore";
 
@@ -15,6 +15,9 @@ import {
 import { Text60, Text48, Text36, Text30, Text24 } from "../common/text";
 import { cover, career } from "./career/data";
 import { Grid, Row, Col } from "antd";
+import groq from "groq";
+import { sanity } from "../Client/sanity/sanity-client";
+import QuillEditor from "../Admin/project/b-editor/blocks/quill";
 
 const { useBreakpoint } = Grid;
 
@@ -41,6 +44,35 @@ const MainContent = styled.div`
 `;
 
 const Career = () => {
+  const logId = useStore(({ logId }) => logId);
+
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const query = groq`
+      *[_type == "vacancies"] {
+        _id,
+        name,
+        description,
+        cr
+      }
+      | order(cr desc)
+    `;
+
+    setLoading(true);
+
+    sanity
+      .fetch(query)
+      .then((data) => {
+        setProjects(data);
+        setLoading(false);
+      })
+      .catch(console.error);
+  }, [logId]);
+
+  console.log("projects", projects);
+
   const lang = useStore((state) => state.lang);
   const screens = useBreakpoint();
 
@@ -115,27 +147,32 @@ const Career = () => {
             <Text36 style={{ color: "#939393" }}>{career.nojobs[lang]}</Text36>
             <Gap sheight={`90px`} />
 
-            <LocalTitle size={48}>{career.jobs[0].title[lang]}</LocalTitle>
-            <Gap sheight={`36px`} />
-            <Text30>{career.jobs[0].descr[lang]}</Text30>
-            <Gap sheight={`24px`} />
-            <ShowBtn>
-              <Text24 data-font="wremena">
-                {lang === "ru" ? "Откликнуться" : "Apply for the job"}
-              </Text24>
-            </ShowBtn>
+            {projects &&
+              projects.map((item = {}) => {
+                const { name, description, _id } = item;
 
-            <Gap sheight={`90px`} />
+                return (
+                  <React.Fragment key={`d:${_id}`}>
+                    <LocalTitle size={48}>{name}</LocalTitle>
+                    <Gap sheight={`36px`} />
+                    <Text30>
+                      <QuillEditor
+                        value={description}
+                        {...{ isEdit: false }}
+                        type="description"
+                      />
+                    </Text30>
+                    <Gap sheight={`24px`} />
+                    <ShowBtn>
+                      <Text24 data-font="wremena">
+                        {lang === "ru" ? "Откликнуться" : "Apply for the job"}
+                      </Text24>
+                    </ShowBtn>
 
-            <LocalTitle size={48}>{career.jobs[1].title[lang]}</LocalTitle>
-            <Gap sheight={`36px`} />
-            <Text30>{career.jobs[1].descr[lang]}</Text30>
-            <Gap sheight={`24px`} />
-            <ShowBtn>
-              <Text24 data-font="wremena">
-                {lang === "ru" ? "Откликнуться" : "Apply for the job"}
-              </Text24>
-            </ShowBtn>
+                    <Gap sheight={`90px`} />
+                  </React.Fragment>
+                );
+              })}
           </MainContent>
         </ContentFlex>
       </Content>

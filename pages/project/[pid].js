@@ -44,6 +44,7 @@ const ProjectPage = () => {
       *[_type == "projects"] {
         ${projectFields_mini}
       }
+      | order(cr desc)
       `;
 
       sanity
