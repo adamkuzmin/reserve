@@ -84,15 +84,15 @@ const Project = ({ initialValues = {}, beforeAfter = [] }) => {
         </Form>
       </Content>
 
-      <PlansSlider>
-        {slider_imgs && slider_imgs.length > 0 && (
+      {slider_imgs && slider_imgs.length > 0 && (
+        <PlansSlider>
           <Slider
             {...{ images: slider_imgs.map((src) => ({ cover: src })) }}
             projectType
             scrolling={goToDescription}
           />
-        )}
-      </PlansSlider>
+        </PlansSlider>
+      )}
 
       <Content ref={contentRef1}>
         {secondary_imgs && secondary_imgs.length > 0 && (
