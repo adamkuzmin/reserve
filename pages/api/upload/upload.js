@@ -1,14 +1,26 @@
 import { client } from "../../../Components/Client/sanity/sanity-client";
 import { v4 as uuidv4 } from "uuid";
+import getRawBody from "raw-body";
 
 const Jimp = require("jimp");
+
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
 
 export default async function handler(req, res) {
   switch (req.method) {
     case "POST":
-      let { id, thumbnail_img } = req.body;
-
       try {
+        const requestBody = await getRawBody(req, {
+          limit: "5mb",
+          encoding: "utf-8",
+        });
+
+        const { id, thumbnail_img } = JSON.parse(requestBody);
+
         let data = {};
 
         const imageBuffer = Buffer.from(
