@@ -429,7 +429,9 @@ const Slider = ({
   height,
   scrolling = () => {},
 }) => {
-  images = [...images].filter(({ id }) => slides.includes(id));
+  images = projectType
+    ? [...images]
+    : [...images].filter(({ id }) => slides.includes(id));
 
   const swipeTitle = -700;
   const swipeLabel = -2000;
