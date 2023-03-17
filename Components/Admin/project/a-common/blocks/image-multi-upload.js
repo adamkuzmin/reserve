@@ -9,6 +9,8 @@ import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import { Grid, UplWrapper } from "./__styles";
 import { Text14 } from "../../../../common/text";
+import pako from "pako";
+import handleImageUpload from "./upload/upload";
 
 const { Dragger } = Upload;
 
@@ -20,43 +22,25 @@ const ImageMultiUploader = ({
 }) => {
   const [uploading, setUploading] = useState(false);
 
-  const handleUpload = async (_file) => {
+  const handleUpload = (file) => {
     setUploading(true);
 
-    if (!_file) return;
-    const { file } = _file;
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
 
-    try {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
+    reader.onload = () => {
+      const imgBase64 = reader.result;
 
-      reader.onload = () => {
-        const imgBase64 = reader.result.split(",")[1];
-
-        const formData = new FormData();
-        formData.append("thumbnail_img", {
-          thumbnail_img: imgBase64,
-          id: uuidv4(),
+      try {
+        handleImageUpload(imgBase64, (url) => {
+          setImageUrls([...imageUrls, url]);
+          message.success("Изображение успешно загрузилось!");
+          setUploading(false);
         });
-
-        axios
-          .post("/api/upload/upload", {
-            id: uuidv4(),
-            thumbnail_img: imgBase64,
-          })
-          .then((res) => {
-            const { data = {} } = res;
-            const { url } = data;
-
-            setImageUrls([...imageUrls, url]);
-            message.success("Upload successful!");
-            setUploading(false);
-          });
-      };
-    } catch (error) {
-      message.error("Upload failed.");
-      setUploading(false);
-    }
+      } catch (e) {
+        setUploading(false);
+      }
+    };
   };
 
   const handleRemove = (url) => {
@@ -94,7 +78,7 @@ const ImageMultiUploader = ({
       }
       return true;
     },
-    customRequest: handleUpload,
+    customRequest: ({ file }) => handleUpload(file),
     showUploadList: false,
   };
 

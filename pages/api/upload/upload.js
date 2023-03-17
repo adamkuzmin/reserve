@@ -1,12 +1,14 @@
 import { client } from "../../../Components/Client/sanity/sanity-client";
 import { v4 as uuidv4 } from "uuid";
 import getRawBody from "raw-body";
+import pako from "pako";
 
 const Jimp = require("jimp");
 
 export const config = {
   api: {
     bodyParser: false,
+    sizeLimit: "10mb", // or any value higher than 1mb
   },
 };
 
@@ -19,7 +21,9 @@ export default async function handler(req, res) {
           encoding: "utf-8",
         });
 
-        const { id, thumbnail_img } = JSON.parse(requestBody);
+        let { id, thumbnail_img } = JSON.parse(requestBody);
+
+        thumbnail_img = pako.deflate(JSON.stringify(thumbnail_img));
 
         let data = {};
 

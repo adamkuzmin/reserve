@@ -4,7 +4,7 @@ import {
   StyledText,
   TableWrapper,
 } from "@/Components/ProjectsLayout/ProjectsTable";
-import { notification, Space } from "antd";
+import { notification, Space, Popconfirm } from "antd";
 import Link from "next/link";
 import { sanity } from "@/Components/Client/sanity/sanity-client";
 import { useState } from "react";
@@ -31,15 +31,22 @@ const columns = (handleDelete = () => {}) => [
     key: "action",
     render: (a, { _id }) => (
       <Space>
-        <Text24
-          style={{ cursor: "pointer", color: "red", fontWeight: "400" }}
-          data-type="link"
-          data-weight="semibold"
-          data-font="ibm"
-          onClick={() => handleDelete(_id)}
+        <Popconfirm
+          title="Действительно хотите удалить?"
+          onConfirm={() => handleDelete(_id)}
+          onCancel={() => {}}
+          okText="Да"
+          cancelText="Нет"
         >
-          Удалить
-        </Text24>
+          <Text24
+            style={{ cursor: "pointer", color: "red", fontWeight: "400" }}
+            data-type="link"
+            data-weight="semibold"
+            data-font="ibm"
+          >
+            Удалить
+          </Text24>
+        </Popconfirm>
       </Space>
     ),
   },
