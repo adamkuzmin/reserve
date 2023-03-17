@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Upload, message, notification } from "antd";
 import { UplWrapper } from "./__styles";
 import { Text14 } from "../../../../common/text";
@@ -13,26 +13,40 @@ const ImageSingleUploader = ({
   label,
 }) => {
   const [uploading, setUploading] = useState(false);
+  const [fileToUpload, setFileToUpload] = useState(null);
 
-  const handleUpload = (file) => {
-    setUploading(true);
+  useEffect(() => {
+    if (!fileToUpload) return;
 
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-
-    reader.onload = () => {
-      const imgBase64 = reader.result;
+    const uploadImage = async () => {
+      setUploading(true);
 
       try {
-        handleImageUpload(imgBase64, (url) => {
+        const imgBase64 = await new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(fileToUpload);
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = (error) => reject(error);
+        });
+
+        await handleImageUpload(imgBase64, (url) => {
           setImageUrl(url);
           message.success("Изображение успешно загрузилось!");
           setUploading(false);
+          setFileToUpload(null);
         });
-      } catch (e) {
+      } catch (error) {
+        console.error(error);
         setUploading(false);
+        setFileToUpload(null);
       }
     };
+
+    uploadImage();
+  }, [fileToUpload]);
+
+  const handleUpload = (file) => {
+    setFileToUpload(file);
   };
 
   const handleRemove = () => {
