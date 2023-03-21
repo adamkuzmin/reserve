@@ -16,6 +16,8 @@ import { Parallax, Pagination, Navigation } from "swiper";
 
 import { sliderData } from "./sliderData";
 import { projectSliderData } from "./projectSliderData";
+import Image from "next/image";
+import { getBlurDataURL } from "next/image";
 
 const SkeletonSlider = styled.div`
   position: absolute;
@@ -115,6 +117,12 @@ Card.Header = styled.div`
   h3 {
     color: white;
     z-index: 1000;
+  }
+
+  &&& {
+    & h3 {
+      margin-top: 10px;
+    }
   }
 
   &&& p {
@@ -511,7 +519,21 @@ const Slider = ({
         {images.map(({ cover, name, category, id, cats }, i) => {
           return (
             <LinkWrapper href={id && `/project/${id}`}>
-              <BackImg fill={cover} data-status={handleActiveKey(i, slideKey)}>
+              <BackImg
+                fill={"" /* cover */}
+                data-status={handleActiveKey(i, slideKey)}
+              >
+                <Image
+                  src={cover}
+                  fill
+                  style={{
+                    objectFit: "cover",
+                    objectPosition: "bottom",
+                    /* position: "absolute",
+                    bottom: 0, */
+                  }}
+                />
+
                 <OverlayBlack />
                 <OverlayBlack rotate={180} />
 

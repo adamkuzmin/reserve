@@ -24,6 +24,14 @@ const Content = styled.div`
   align-items: ${({ justifyContent }) =>
     justifyContent ? justifyContent : "baseline"};
 
+  ${({ mini }) =>
+    mini
+      ? `
+      max-height: 700px;
+      
+    `
+      : ``}
+
   @media (max-width: 480px) {
     padding: 0 20px;
   }

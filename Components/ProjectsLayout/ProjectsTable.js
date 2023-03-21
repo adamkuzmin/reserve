@@ -151,13 +151,17 @@ const columns = [
     dataIndex: "nameru",
     width: "40%",
     key: "name",
-    render: (a) => (
-      <Link href="/project">
-        <StyledText data-type="link" data-weight="semibold" data-font="ibm">
-          {a}
-        </StyledText>
-      </Link>
-    ),
+    render: (a, b) => {
+      const { id } = b;
+
+      return (
+        <Link href={`/project/${id}`}>
+          <StyledText data-type="link" data-weight="semibold" data-font="ibm">
+            {a}
+          </StyledText>
+        </Link>
+      );
+    },
   },
   {
     title: "Место",

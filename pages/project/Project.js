@@ -19,6 +19,8 @@ import ProjectBottom from "../../Components/ProjectInfo/ProjectBottom";
 import Slider from "../../Components/Slider/Slider";
 import Constructor from "@/Components/Admin/project/b-editor/constructor";
 import { Form } from "antd";
+import { MiniPanel } from "@/Components/common/mini";
+import { Text48 } from "@/Components/common/text";
 
 const PlansSlider = styled.div`
   width: 100vw;
@@ -71,6 +73,8 @@ const Project = ({ initialValues = {}, beforeAfter = [] }) => {
     return () => window.removeEventListener("scroll", onScroll);
   });
 
+  const [description, setDescription] = useState(false);
+
   return (
     <div>
       <NavRight />
@@ -78,7 +82,19 @@ const Project = ({ initialValues = {}, beforeAfter = [] }) => {
 
       <ProjectCover {...{ initialValues }} scrolling={goToDescription} />
 
-      <Content ref={contentRef}>
+      <Content mini={!description} ref={contentRef}>
+        {!description && (
+          <MiniPanel>
+            <div
+              onClick={() => setDescription(true)}
+              data-font="wremena"
+              style={{ transform: "translateY(60px)", cursor: "pointer" }}
+            >
+              <Text48>Полное описание ↓</Text48>
+            </div>
+          </MiniPanel>
+        )}
+
         <Form initialValues={initialValues}>
           <Constructor />
         </Form>

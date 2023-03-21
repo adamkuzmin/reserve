@@ -13,12 +13,16 @@ import { Content } from "../../Components/common/body";
 import { Text60, Text30, Text24 } from "../../Components/common/text";
 
 import ReactMapGL, { Marker } from "react-map-gl";
+import mapboxgl from "mapbox-gl";
 import { CirclePoint } from "../../Components/ProjectsLayout/ProjectsMap";
 
 const { useBreakpoint } = Grid;
 
 export const MAPBOX_TOKEN =
-  "pk.eyJ1IjoibWFya2thYmllcnNraSIsImEiOiJja2lpa3N2c3QwaXVrMnltbHVzcXZ3dDU2In0.t_Lcd-0hPAJSk75HCJFw0g"; // Set your mapbox token here
+  "pk.eyJ1IjoibWFya2thYmllcnNraSIsImEiOiJjbGZocWVxc2g0YnZuM3pudG1uNDllZ3c0In0.SUhq0ncJhbm76bV4IXdEnQ"; // Set your mapbox token here
+
+mapboxgl.accessToken =
+  "pk.eyJ1IjoibWFya2thYmllcnNraSIsImEiOiJjbGZocWVxc2g0YnZuM3pudG1uNDllZ3c0In0.SUhq0ncJhbm76bV4IXdEnQ";
 
 const Gap = styled.div`
   height: ${({ sheight }) => (sheight ? sheight : "100%")};
@@ -45,6 +49,7 @@ const MapWrapper = styled.div`
   padding-bottom: 76%;
   background-color: lightgrey;
   position: relative;
+  overflow: hidden;
 `;
 
 const BlockTitle = styled.div`
@@ -156,24 +161,34 @@ const Contacts = () => {
 
             <Col span={screens.sm ? 12 : 24}>
               <MapWrapper>
-                <ReactMapGL
-                  style={{ position: "absolute" }}
-                  {...viewport}
-                  width="100%"
-                  height="100%"
-                  mapStyle="mapbox://styles/markkabierski/ckwdu1l7q096k15p7se9gvol3"
-                  onViewportChange={setViewport}
-                  mapboxApiAccessToken={MAPBOX_TOKEN}
+                <div
+                  style={{
+                    position: "absolute",
+                    width: "100%",
+                    height: "100%",
+                  }}
                 >
-                  <Marker
-                    latitude={55.784233}
-                    longitude={37.55955}
-                    offsetLeft={-15}
-                    offsetTop={-15}
+                  <ReactMapGL
+                    style={{ position: "absolute" }}
+                    {...viewport}
+                    width="100%"
+                    height="100%"
+                    mapStyle="mapbox://styles/markkabierski/ckwdu1l7q096k15p7se9gvol3"
+                    onViewportChange={setViewport}
+                    mapboxApiAccessToken={
+                      "pk.eyJ1IjoibWFya2thYmllcnNraSIsImEiOiJjbGZocWVxc2g0YnZuM3pudG1uNDllZ3c0In0.SUhq0ncJhbm76bV4IXdEnQ"
+                    }
                   >
-                    <CirclePoint data-type="2" />
-                  </Marker>
-                </ReactMapGL>
+                    <Marker
+                      latitude={55.784233}
+                      longitude={37.55955}
+                      offsetLeft={-15}
+                      offsetTop={-15}
+                    >
+                      <CirclePoint data-type="2" />
+                    </Marker>
+                  </ReactMapGL>
+                </div>
               </MapWrapper>
             </Col>
           </Row>

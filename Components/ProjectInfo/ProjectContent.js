@@ -16,7 +16,7 @@ export const ProjectCols = styled.div`
   display: flex;
 
   && > * + * {
-    margin-left: 40px;
+    margin-left: 100px;
   }
 
   @media (max-width: 776px) {
@@ -28,7 +28,7 @@ export const ProjectCols = styled.div`
   }
 `;
 ProjectCols.RightCol = styled.div`
-  width: 31%;
+  width: 41%;
 
   @media (max-width: 776px) {
     width: 80%;
@@ -39,6 +39,11 @@ ProjectCols.RightCol = styled.div`
 ProjectCols.LeftCol = styled.div`
   width: 100%;
   display: flex;
+`;
+
+export const About = styled.div`
+  position: relative;
+  width: 90%;
 `;
 
 ProjectCols.LeftGap = styled.div`

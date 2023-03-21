@@ -9,6 +9,7 @@ import { Form, Input } from "antd";
 import Address from "./blocks/address";
 import QuillEditor from "./blocks/quill";
 import ProjectName from "./blocks/title";
+import { About } from "@/Components/ProjectInfo/ProjectContent";
 
 const { TextArea } = Input;
 
@@ -20,7 +21,7 @@ const Constructor = ({ isEdit = false }) => {
           <Header.Title>
             <p>
               <Wrap30 data-font="wremena">
-                <div style={{display: 'flex'}}>
+                <div style={{ display: "flex" }}>
                   <Form.Item style={{ marginBottom: "0px" }} name="city">
                     <Address />
                   </Form.Item>
@@ -45,9 +46,11 @@ const Constructor = ({ isEdit = false }) => {
 
       <ProjectCols>
         <ProjectCols.LeftCol>
-          <Form.Item style={{ width: "100%" }} name="description">
-            <QuillEditor {...{ isEdit }} type="description" />
-          </Form.Item>
+          <About>
+            <Form.Item style={{ width: "100%" }} name="description">
+              <QuillEditor {...{ isEdit }} type="description" />
+            </Form.Item>
+          </About>
         </ProjectCols.LeftCol>
 
         <ProjectCols.RightCol>
