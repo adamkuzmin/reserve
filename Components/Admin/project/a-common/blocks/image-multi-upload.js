@@ -126,7 +126,7 @@ const ImageMultiUploader = ({
                       +
                     </p>
                     <p className="ant-upload-text">
-                      <Text14>Изображение должно быть не больше</Text14>
+                      <Text14>Изображение должно быть не больше 2МБ</Text14>
                     </p>
                   </>
                 )}

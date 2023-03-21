@@ -51,3 +51,19 @@ export const HomeQuery = groq`
         block6_1
     }
 `;
+
+export const AboutQuery = groq`
+    *[_type == "about" ] {
+        _id,
+        block1,
+        block2,
+        block3_title,
+        block3_label,
+        block3_content,
+        block4_title,
+        block4_content,
+        block5_content,
+        block6[],
+        slider[]
+    }
+`;
