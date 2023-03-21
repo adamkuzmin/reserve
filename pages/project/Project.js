@@ -105,6 +105,7 @@ const Project = ({ initialValues = {}, beforeAfter = [] }) => {
           <Slider
             {...{ images: slider_imgs.map((src) => ({ cover: src })) }}
             projectType
+            noFilter
             scrolling={goToDescription}
           />
         </PlansSlider>

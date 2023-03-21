@@ -9,7 +9,16 @@ export const pagesConfigs = {
     title: "Проекты",
     entitle: "Projects",
   },
-
+  "/about": {
+    type: "about",
+    title: "Бюро",
+    entitle: "Bureau",
+  },
+  "/contacts": {
+    type: "contacts",
+    title: "Контакты",
+    entitle: "Contacts",
+  },
   "/media/all": {
     type: "media",
     title: "Медиа",
@@ -19,15 +28,5 @@ export const pagesConfigs = {
     type: "news",
     title: "Новости",
     entitle: "News",
-  },
-  "/contacts": {
-    type: "contacts",
-    title: "Контакты",
-    entitle: "Contacts",
-  },
-  "/about": {
-    type: "about",
-    title: "О бюро",
-    entitle: "About",
   },
 };

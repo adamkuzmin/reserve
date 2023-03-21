@@ -36,8 +36,8 @@ const NavRight = () => {
   const setNavIsOpened = useStore((state) => state.setNavIsOpened);
 
   const links = Object.keys(pagesConfigs);
-  const leadLinks = links?.slice(0, 4);
-  const secondaryKeys = links?.slice(4, 6);
+  const leadLinks = links?.slice(0, 3);
+  const secondaryKeys = links?.slice(3, 6);
 
   const navRef = useRef();
 
