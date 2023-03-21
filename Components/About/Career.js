@@ -14,7 +14,7 @@ import {
 
 import { Text60, Text48, Text36, Text30, Text24 } from "../common/text";
 import { cover, career } from "./career/data";
-import { Grid, Row, Col } from "antd";
+import { Grid, Row, Col, Form } from "antd";
 import groq from "groq";
 import { sanity } from "../Client/sanity/sanity-client";
 import QuillEditor from "../Admin/project/b-editor/blocks/quill";
@@ -151,17 +151,22 @@ const Career = () => {
               projects.map((item = {}) => {
                 const { name, description, _id } = item;
 
+                console.log("description", description);
+
                 return (
                   <React.Fragment key={`d:${_id}`}>
                     <LocalTitle size={48}>{name}</LocalTitle>
                     <Gap sheight={`36px`} />
-                    <Text30>
-                      <QuillEditor
-                        value={description}
-                        {...{ isEdit: false }}
-                        type="description"
-                      />
-                    </Text30>
+
+                    <Form initialValues={{ description }}>
+                      <Form.Item name="description">
+                        <QuillEditor
+                          {...{ isEdit: false }}
+                          type="description"
+                        />
+                      </Form.Item>
+                    </Form>
+
                     <Gap sheight={`24px`} />
                     <ShowBtn>
                       <Text24 data-font="wremena">
