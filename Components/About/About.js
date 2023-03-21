@@ -197,16 +197,16 @@ const About = () => {
             <ContentFlex style={screens.sm ? { paddingRight: "80px" } : {}}>
               <Gap swidth={`12.1vw`} />
               <VertFlex size={"20px"}>
-                <Text24>
+                <Text24 style={{ whiteSpace: "pre-wrap" }}>
                   {!bioIsFull
                     ? aboutData.block3_content
                     : aboutData.block3_content}
                 </Text24>
-                <ShowBtn onClick={() => SetBioIsFull(!bioIsFull)}>
+                {/* <ShowBtn onClick={() => SetBioIsFull(!bioIsFull)}>
                   <Text24 data-font="wremena">
                     {bioIsFull ? "Скрыть биографию" : "Раскрыть биографию"}
                   </Text24>
-                </ShowBtn>
+                  </ShowBtn> */}
               </VertFlex>
             </ContentFlex>
           </Col>
