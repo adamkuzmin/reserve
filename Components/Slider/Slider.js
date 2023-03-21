@@ -2,7 +2,7 @@ import { Carousel } from "antd";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useStore } from "../../Store/useStore";
 import Link from "next/link";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -180,7 +180,14 @@ const BackImg = styled.div`
   height: 100%;
   background-image: url("${({ fill }) => (fill ? fill : "")}");
   background-size: cover;
-  filter: brightness(0.9) contrast(100%);
+
+  ${({ noFilter }) =>
+    noFilter
+      ? ``
+      : css`
+          filter: brightness(0.9) contrast(100%);
+        `}
+
   background-position: center;
   position: absolute;
   display: block;
@@ -436,6 +443,7 @@ const Slider = ({
   slides = [],
   height,
   scrolling = () => {},
+  noFilter = false,
 }) => {
   images = projectType
     ? [...images]
@@ -520,19 +528,19 @@ const Slider = ({
           return (
             <LinkWrapper href={id && `/project/${id}`}>
               <BackImg
-                fill={"" /* cover */}
+                fill={cover}
                 data-status={handleActiveKey(i, slideKey)}
+                noFilter={noFilter}
               >
-                <Image
+                {/*  <Image
                   src={cover}
                   fill
                   style={{
                     objectFit: "cover",
                     objectPosition: "bottom",
-                    /* position: "absolute",
-                    bottom: 0, */
+                    
                   }}
-                />
+                /> */}
 
                 <OverlayBlack />
                 <OverlayBlack rotate={180} />

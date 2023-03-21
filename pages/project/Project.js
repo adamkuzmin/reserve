@@ -22,7 +22,7 @@ import { Form } from "antd";
 import { MiniPanel } from "@/Components/common/mini";
 import { Text48 } from "@/Components/common/text";
 
-const PlansSlider = styled.div`
+export const PlansSlider = styled.div`
   width: 100vw;
   height: 100vh;
 `;

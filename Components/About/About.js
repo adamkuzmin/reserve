@@ -32,6 +32,10 @@ import {
   whatwedo,
   directions,
 } from "./about/data";
+import { AboutQuery } from "../Admin/queries/__queries";
+import { sanity } from "../Client/sanity/sanity-client";
+import Slider from "../Slider/Slider";
+import { PlansSlider } from "@/pages/project/Project";
 
 const ThreeCanvas = dynamic(() => import("../../Models/construcetor"));
 
@@ -142,6 +146,26 @@ const About = () => {
 
   const [tooltip, setTooltip] = useState(false);
 
+  const [aboutData, setAboutData] = useState();
+  const [fetched, setFetched] = useState(false);
+
+  useEffect(() => {
+    const query = AboutQuery;
+
+    sanity
+      .fetch(query)
+      .then((data) => {
+        if (data && data.length > 0) {
+          setAboutData(data[0]);
+        }
+
+        setFetched(true);
+      })
+      .catch(() => setFetched(true));
+  }, []);
+
+  if (!fetched) return <></>;
+
   return (
     <>
       <Content ref={contentRef}>
@@ -149,12 +173,12 @@ const About = () => {
         <ContentFlex>
           <Gap swidth={`12.1vw`} />
           <LeadQuote>
-            <Text60 data-font="wremena">{leadIntro[lang]}</Text60>
+            <Text60 data-font="wremena">{aboutData.block1}</Text60>
           </LeadQuote>
         </ContentFlex>
 
         <LeadDescription>
-          <Text36 data-font="ibm">{secondaryIntro[lang]}</Text36>
+          <Text36 data-font="ibm">{aboutData.block2}</Text36>
         </LeadDescription>
 
         <Gap sheight={`120px`} />
@@ -167,16 +191,16 @@ const About = () => {
           )}
 
           <Col>
-            <LocalTitle size={48}>{plotkinProfile.name[lang]}</LocalTitle>
-            <Text30>{plotkinProfile.whois[lang]}</Text30>
+            <LocalTitle size={48}>{aboutData.block3_title}</LocalTitle>
+            <Text30>{aboutData.block3_label}</Text30>
             <Gap sheight={`64px`} />
             <ContentFlex style={screens.sm ? { paddingRight: "80px" } : {}}>
               <Gap swidth={`12.1vw`} />
               <VertFlex size={"20px"}>
                 <Text24>
                   {!bioIsFull
-                    ? plotkinProfile.shortbio[lang]
-                    : plotkinProfile.fullbio[lang]}
+                    ? aboutData.block3_content
+                    : aboutData.block3_content}
                 </Text24>
                 <ShowBtn onClick={() => SetBioIsFull(!bioIsFull)}>
                   <Text24 data-font="wremena">
@@ -196,9 +220,9 @@ const About = () => {
         <Gap sheight={`120px`} />
 
         <LeadDescription>
-          <LocalTitle size={48}>{whatwedo.title[lang]}</LocalTitle>
+          <LocalTitle size={48}>{aboutData.block4_title}</LocalTitle>
           <Gap sheight={`24px`} />
-          <Text36 data-font="ibm">{whatwedo.descr[lang]}</Text36>
+          <Text36 data-font="ibm">{aboutData.block4_content}</Text36>
         </LeadDescription>
 
         <Gap sheight={`120px`} />
@@ -233,10 +257,7 @@ const About = () => {
                   {
                     <Tip data-display={tooltip ? "show" : "hide"}>
                       <Text24 style={{ opacity: 0.7 }}>
-                        В 1987 году основано «Творческое производственное
-                        объединение “РЕЗЕРВ”». С момента создания компания не
-                        прекращала работу. Каждый день в течение более чем
-                        тридцати лет мы создаем и строим архитектуру.
+                        {aboutData.block5_content}
                       </Text24>
                     </Tip>
                   }
@@ -248,7 +269,13 @@ const About = () => {
 
         <Gap sheight={`120px`} />
       </Content>
-      <BackImage />
+      <PlansSlider>
+        <Slider
+          noFilter
+          {...{ images: aboutData.slider.map((src) => ({ cover: src })) }}
+          projectType
+        />
+      </PlansSlider>
     </>
   );
 };
