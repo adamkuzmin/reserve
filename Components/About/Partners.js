@@ -1,8 +1,8 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { useStore } from "../../Store/useStore";
 
-import { Text36, Text30 } from "../common/text";
+import { Text36, Text30, Text24 } from "../common/text";
 
 import { Content } from "../common/body";
 
@@ -17,6 +17,9 @@ import {
 } from "./common/styles";
 
 import { intro, partnersData } from "./partners/data";
+import { PartnersQuery } from "../Admin/queries/__queries";
+import { sanity } from "../Client/sanity/sanity-client";
+import { Tooltip } from "antd";
 
 const Partners = styled.div`
   width: 100%;
@@ -56,6 +59,22 @@ const FeedbackLink = styled.div`
 `;
 
 const Awards = () => {
+  const [partners, setPartners] = useState();
+  const [fetched, setFetched] = useState(false);
+
+  useEffect(() => {
+    const query = PartnersQuery;
+
+    sanity
+      .fetch(query)
+      .then((data) => {
+        setPartners(data);
+
+        setFetched(true);
+      })
+      .catch(() => setFetched(true));
+  }, []);
+
   const lang = useStore((state) => state.lang);
 
   const setBlackLogo = useStore((state) => state.setBlackLogo);
@@ -97,23 +116,29 @@ const Awards = () => {
         <Gap sheight={"120px"} />
 
         <Partners>
-          {partnersData.map(({ feedback, name, location }) => {
-            return (
-              <Partners.Row>
-                <Partners.Col>
-                  <Text30>{name[lang]}</Text30>
-                </Partners.Col>
-                <Partners.Col>
-                  <Text30>{location[lang]}</Text30>
-                  {location && (
-                    <FeedbackLink>
-                      <Text30>Отзыв</Text30>
-                    </FeedbackLink>
-                  )}
-                </Partners.Col>
-              </Partners.Row>
-            );
-          })}
+          {partners &&
+            partners.map(({ feedback, name, location, review }) => {
+              return (
+                <Partners.Row>
+                  <Partners.Col>
+                    <Text30>{name}</Text30>
+                  </Partners.Col>
+                  <Partners.Col>
+                    <Text30>{location}</Text30>
+                    {review && (
+                      <FeedbackLink>
+                        <Tooltip
+                          title={<Text24>{review}</Text24>}
+                          placement={"top"}
+                        >
+                          <Text30>Отзыв</Text30>
+                        </Tooltip>
+                      </FeedbackLink>
+                    )}
+                  </Partners.Col>
+                </Partners.Row>
+              );
+            })}
         </Partners>
 
         <Gap sheight={"120px"} />

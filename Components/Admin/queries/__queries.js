@@ -52,6 +52,17 @@ export const HomeQuery = groq`
     }
 `;
 
+export const PartnersQuery = groq`
+    *[_type == "partners" ] {
+      _id,
+      name,
+      location,
+      review,
+      cr,
+    }
+    | order(cr desc)
+`;
+
 export const AboutQuery = groq`
     *[_type == "about" ] {
         _id,

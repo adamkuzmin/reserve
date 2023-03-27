@@ -89,6 +89,12 @@ const AdminPage = () => {
           </Card>
         </Link>
 
+        <Link href="/admin/partners">
+          <Card fill={"#008769"}>
+            <Text24>Партнеры</Text24>
+          </Card>
+        </Link>
+
         <Link href="/admin/vacancies">
           <Card fill={"#7A2383"}>
             <Text24>Вакансии</Text24>
