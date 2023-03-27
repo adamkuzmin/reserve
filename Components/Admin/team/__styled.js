@@ -65,3 +65,22 @@ export const Cover = styled.div`
   background-color: lightgrey;
   border-radius: 20px;
 `;
+
+export const Edit = styled.div`
+  display: flex;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  background: white;
+  border-radius: 16px;
+  padding: 2px 6px;
+  z-index: 5;
+
+  & > div {
+    cursor: pointer;
+  }
+
+  && > * + * {
+    margin-left: 12px;
+  }
+`;

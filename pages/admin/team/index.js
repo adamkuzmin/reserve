@@ -1,9 +1,11 @@
 import { Gap } from "@/Components/About/common/styles";
 import AdminWrapper from "@/Components/Admin/admin-wrapper/admin-wrapper";
+import ImageMultiUploader from "@/Components/Admin/project/a-common/blocks/image-multi-upload";
 import ImageSingleUploader from "@/Components/Admin/project/a-common/blocks/image-single-upload";
 import TeamList from "@/Components/Admin/team/team-list";
 import { Text36, Wrap30 } from "@/Components/common/text";
 import { WideButton } from "@/Components/ProjectInfo/ProjectBottom";
+import { useStore } from "@/Store/useStore";
 
 const { TeamQuery } = require("@/Components/Admin/queries/__queries");
 const { sanity } = require("@/Components/Client/sanity/sanity-client");
@@ -17,6 +19,8 @@ const Team = () => {
   const [isFetched, setFetched] = useState(false);
 
   const router = useRouter();
+
+  const logId = useStore(({ logId }) => logId);
 
   const cfgs = {
     onCompleted: () => {
@@ -51,7 +55,7 @@ const Team = () => {
         setFetched(true);
       })
       .catch(() => setFetched(true));
-  }, []);
+  }, [logId]);
 
   const editProject = async (e, id) => {
     const data = { ...e };
@@ -88,6 +92,7 @@ const Team = () => {
             style={{ width: "100%", marginTop: "64px" }}
             onFinish={handleFinish}
             initialValues={initialValues}
+            /* key={`f:${logId}`} */
           >
             <div
               style={{
@@ -150,6 +155,10 @@ const Team = () => {
               </Form.Item>
 
               <Gap sheight={"36px"} />
+
+              <Form.Item style={{ width: "100%" }} name="slider">
+                <ImageMultiUploader label="Слайдер" />
+              </Form.Item>
 
               <Form.Item>
                 <WideButton

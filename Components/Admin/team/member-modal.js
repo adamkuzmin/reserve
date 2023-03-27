@@ -1,17 +1,21 @@
 import { sanity } from "@/Components/Client/sanity/sanity-client";
 import { Text36, Wrap30 } from "@/Components/common/text";
 import { WideButton } from "@/Components/ProjectInfo/ProjectBottom";
+import { useStore } from "@/Store/useStore";
 import { Form, Input, Modal, notification } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import ImageSingleUploader from "../project/a-common/blocks/image-single-upload";
 import { MemberQuery } from "../queries/__queries";
+import { v4 as uuidv4 } from "uuid";
 
 const MemberModal = ({ member, onClose = () => {} }) => {
   const [initialValues, setInitialValues] = useState();
   const [isFetched, setFetched] = useState(false);
 
   const { id, categoryId } = member ? member : {};
+
+  const setLogId = useStore(({ setLogId }) => setLogId);
 
   const cfgs = {
     onCompleted: () => {
@@ -20,6 +24,7 @@ const MemberModal = ({ member, onClose = () => {} }) => {
         placement: "bottom",
       });
 
+      setLogId(uuidv4());
       onClose();
     },
     onError: (e) => {
@@ -28,6 +33,7 @@ const MemberModal = ({ member, onClose = () => {} }) => {
         placement: "bottom",
       });
 
+      setLogId(uuidv4());
       onClose();
     },
   };

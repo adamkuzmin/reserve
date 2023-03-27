@@ -9,11 +9,34 @@ import {
 import { WideButton } from "@/Components/ProjectInfo/ProjectBottom";
 import { useState } from "react";
 import MemberModal from "./member-modal";
-import { Col, Cover, Grid, Member } from "./__styled";
+import { Col, Cover, Edit, Grid, Member } from "./__styled";
 import { v4 as uuidv4 } from "uuid";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { useStore } from "@/Store/useStore";
+import { notification, Popconfirm } from "antd";
+import { sanity } from "@/Components/Client/sanity/sanity-client";
 
 const TeamList = ({ data = [] }) => {
   const [member, setMember] = useState();
+
+  const setLogId = useStore(({ setLogId }) => setLogId);
+
+  const handleDelete = async (id) => {
+    try {
+      await sanity.delete(id);
+
+      notification.success({
+        message: `Участник удален!`,
+        placement: "bottom",
+      });
+      setLogId();
+    } catch (err) {
+      notification.error({
+        message: `Ошибка при удалении`,
+        placement: "bottom",
+      });
+    }
+  };
 
   return (
     <>
@@ -37,10 +60,26 @@ const TeamList = ({ data = [] }) => {
                     const { _id, url, name, label } = item;
 
                     return (
-                      <Member
-                        onClick={() => setMember({ id: _id, categoryId })}
-                        key={`d:${_id}`}
-                      >
+                      <Member key={`d:${_id}`}>
+                        <Edit>
+                          <div
+                            onClick={() => setMember({ id: _id, categoryId })}
+                          >
+                            <EditOutlined />
+                          </div>
+                          <Popconfirm
+                            title="Действительно хотите удалить?"
+                            onConfirm={() => handleDelete(_id)}
+                            onCancel={() => {}}
+                            okText="Да"
+                            cancelText="Нет"
+                          >
+                            <div>
+                              <DeleteOutlined />
+                            </div>
+                          </Popconfirm>
+                        </Edit>
+
                         <Cover url={url}></Cover>
 
                         <Wrap16>
@@ -70,7 +109,7 @@ const TeamList = ({ data = [] }) => {
           );
         })}
 
-      <WideButton
+      {/* <WideButton
         style={{
           background: "black",
           color: "white",
@@ -79,7 +118,7 @@ const TeamList = ({ data = [] }) => {
         }}
       >
         <Text36>+ Добавить раздел</Text36>
-      </WideButton>
+      </WideButton> */}
     </>
   );
 };

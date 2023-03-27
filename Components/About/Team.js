@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { useStore } from "../../Store/useStore";
 
@@ -9,6 +9,11 @@ import { Col, Space, Grid, Row } from "antd";
 import { Content } from "../common/body";
 
 import { intro, plotkin, team1, team2 } from "./team/data";
+import { useRouter } from "next/router";
+import { TeamQuery } from "../Admin/queries/__queries";
+import { sanity } from "../Client/sanity/sanity-client";
+import { PlansSlider } from "@/pages/project/Project";
+import Slider from "../Slider/Slider";
 
 const { useBreakpoint } = Grid;
 
@@ -34,7 +39,7 @@ const PlotkinPhoto = styled.div`
   padding-bottom: 117%;
   background-color: lightgrey;
 
-  background: url("/about/p4.jpg");
+  background: ${({ url }) => (url ? `url("${url}")` : `url("/about/p4.jpg")`)};
   background-size: cover;
 `;
 
@@ -147,6 +152,30 @@ const TeamList = ({ title, members, lang, col = 3 }) => {
 };
 
 const Team = () => {
+  const [info, setInfo] = useState();
+  const [members, setMembers] = useState();
+  const [isFetched, setFetched] = useState(false);
+
+  const router = useRouter();
+
+  const logId = useStore(({ logId }) => logId);
+
+  useEffect(() => {
+    const query = TeamQuery;
+
+    sanity
+      .fetch(query)
+      .then((data) => {
+        const { team, members = [] } = data;
+
+        setInfo(team);
+        setMembers(members);
+
+        setFetched(true);
+      })
+      .catch(() => setFetched(true));
+  }, [logId]);
+
   const screens = useBreakpoint();
 
   const lang = useStore((state) => state.lang);
@@ -184,6 +213,15 @@ const Team = () => {
     return () => window.removeEventListener("scroll", onScroll);
   });
 
+  if (!(isFetched && info))
+    return (
+      <>
+        <Content ref={contentRef}>
+          <Gap sheight={`120px`} />
+        </Content>
+      </>
+    );
+
   return (
     <>
       <Content ref={contentRef}>
@@ -195,17 +233,17 @@ const Team = () => {
 
       <Content ref={contentRef1}>
         <Intro>
-          <Text36>{intro.descr[lang]}</Text36>
+          <Text36>{info.block1_content}</Text36>
           <ContentFlex align="flex-end">
             <Text48 style={{ minWidth: "min-content" }}>
               {intro.kpi.label[lang]}
             </Text48>
-            <Text254 data-type="kpi">{intro.kpi.count}</Text254>
+            <Text254 data-type="kpi">{info.block1_int}</Text254>
           </ContentFlex>
         </Intro>
 
         <Gap sheight={`72px`} />
-        <LocalTitle size={48}>{plotkin.title[lang]}</LocalTitle>
+        <LocalTitle size={48}>{info.block2_title}</LocalTitle>
 
         <Gap sheight={screens.md ? "80px" : "24px"} />
 
@@ -221,13 +259,13 @@ const Team = () => {
               {screens.xl && <Gap swidth={"8.1vw"} />}
 
               <VertFlex>
-                <Text48 data-font="wremena">{plotkin.descr[lang]}</Text48>
+                <Text48 data-font="wremena">{info.block2_content}</Text48>
 
                 <Gap sheight={"70px"} />
 
                 <VertFlex>
-                  <LocalTitle size={36}>{plotkin.name[lang]}</LocalTitle>
-                  <Text30 data-font="wremena">{plotkin.whois[lang]}</Text30>
+                  <LocalTitle size={36}>{info.block2_name}</LocalTitle>
+                  <Text30 data-font="wremena">{info.block2_label}</Text30>
                 </VertFlex>
               </VertFlex>
               <Gap swidth={"40px"} />
@@ -236,28 +274,58 @@ const Team = () => {
 
           {screens.md && (
             <Col span={12}>
-              <PlotkinPhoto />
+              <PlotkinPhoto url={info.block2_url} />
             </Col>
           )}
         </Row>
 
-        <TeamList
-          title={team1.title}
-          members={team1.members}
-          lang={lang}
-          col={3}
-        />
+        {members &&
+          members.map((section = {}) => {
+            const { _id, name, members: children = [] } = section;
 
-        <TeamList
-          title={team2.title}
-          members={team2.members}
-          lang={lang}
-          col={3}
-        />
+            return (
+              <TeamList
+                key={`d:${_id}`}
+                title={{ ru: name, en: name }}
+                members={
+                  children
+                    ? children.map((member = {}) => {
+                        const { name, label, url } = member;
+
+                        return {
+                          name: {
+                            ru: name,
+                            en: name,
+                          },
+                          whois: {
+                            ru: label,
+                            en: label,
+                          },
+                          photo: url,
+                        };
+                      })
+                    : []
+                }
+                lang={lang}
+                col={3}
+              />
+            );
+          })}
       </Content>
 
       <Gap sheight={"180px"} />
-      <BackImage />
+      <PlansSlider>
+        <Slider
+          noFilter
+          {...{
+            images:
+              info && info.slider
+                ? info.slider.map((src) => ({ cover: src }))
+                : [],
+          }}
+          projectType
+        />
+      </PlansSlider>
     </>
   );
 };

@@ -100,7 +100,8 @@ export const TeamQuery = groq`
       block2_content,
       block2_name,
       block2_label,
-      block2_url
+      block2_url,
+      slider
     }
   }
 `;
