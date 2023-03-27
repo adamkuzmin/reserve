@@ -10,28 +10,13 @@ import {
   LocalTitle,
   VertFlex,
   LeadQuote,
-  ShowBtn,
   LeadDescription,
 } from "./common/styles";
 
 import { Content } from "../../Components/common/body";
-import {
-  Text60,
-  Text48,
-  Text36,
-  Text30,
-  Text24,
-  Wrap16,
-  Wrap24,
-} from "../../Components/common/text";
+import { Text60, Text36, Text30, Text24 } from "../../Components/common/text";
 
-import {
-  leadIntro,
-  secondaryIntro,
-  plotkinProfile,
-  whatwedo,
-  directions,
-} from "./about/data";
+import { directions } from "./about/data";
 import { AboutQuery } from "../Admin/queries/__queries";
 import { sanity } from "../Client/sanity/sanity-client";
 import Slider from "../Slider/Slider";
@@ -45,7 +30,7 @@ const PlotkinPhoto = styled.div`
   width: 47vw;
   padding-bottom: 110.6%;
   background-color: lightgrey;
-  background: url("/about/p1.jpg");
+  background: ${({ url }) => (url ? `url("${url}")` : `url("/about/p1.jpg")`)};
   background-size: cover;
   margin-bottom: 24px;
 
@@ -186,7 +171,7 @@ const About = () => {
         <ContentFlex direction={screens.lg ? "horizontal" : "vertical"}>
           {!screens.lg && (
             <Col>
-              <PlotkinPhoto />
+              <PlotkinPhoto url={aboutData.block3_url}/>
             </Col>
           )}
 
@@ -212,7 +197,7 @@ const About = () => {
           </Col>
           {screens.lg && (
             <Col>
-              <PlotkinPhoto />
+              <PlotkinPhoto url={aboutData.block3_url}/>
             </Col>
           )}
         </ContentFlex>

@@ -1,6 +1,7 @@
 import { Gap } from "@/Components/About/common/styles";
 import AdminWrapper from "@/Components/Admin/admin-wrapper/admin-wrapper";
 import ImageMultiUploader from "@/Components/Admin/project/a-common/blocks/image-multi-upload";
+import ImageSingleUploader from "@/Components/Admin/project/a-common/blocks/image-single-upload";
 import { AboutQuery } from "@/Components/Admin/queries/__queries";
 import { sanity } from "@/Components/Client/sanity/sanity-client";
 import { Text36, Wrap30 } from "@/Components/common/text";
@@ -111,6 +112,10 @@ const About = () => {
             </Wrap30>
 
             <Gap sheight={"64px"} />
+
+            <Form.Item style={{ width: "100%" }} name="block3_url">
+              <ImageSingleUploader label="Обложка-изображение к биографии" />
+            </Form.Item>
 
             <Wrap30>
               <Form.Item {...{ rules }} name="block3_title">
