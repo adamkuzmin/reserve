@@ -74,6 +74,12 @@ const FloatFilters = ({
   toPageTop,
   stateData,
   setStateData,
+  categories = [],
+  years = [],
+  activeCts,
+  activeYrs,
+  setActiveCts,
+  setActiveYrs,
 }) => {
   const screens = useBreakpoint();
 
@@ -149,6 +155,9 @@ const FloatFilters = ({
                   DirItems,
                   selDirItems,
                   toPageTop,
+                  categories,
+                  activeCts,
+                  setActiveCts,
                 }}
               />
             )
@@ -166,6 +175,9 @@ const FloatFilters = ({
                   YearItems,
                   selYearItems,
                   toPageTop,
+                  years,
+                  activeYrs,
+                  setActiveYrs,
                 }}
               />
             )
@@ -206,6 +218,9 @@ const FloatFilters = ({
                   DirItems,
                   selDirItems,
                   toPageTop,
+                  categories,
+                  activeCts,
+                  setActiveCts,
                 }}
               />
             )
@@ -223,6 +238,9 @@ const FloatFilters = ({
                   YearItems,
                   selYearItems,
                   toPageTop,
+                  years,
+                  activeYrs,
+                  setActiveYrs,
                 }}
               />
             )

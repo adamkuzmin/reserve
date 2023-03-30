@@ -25,7 +25,15 @@ const Card = ({ swidth, src, meta, ratio = "horizontal" }) => {
   const router = useRouter();
 
   const localMeta = meta ? meta : {};
-  const { coverhor, coververt, finished, nameru, nameen, id } = localMeta;
+  const {
+    coverhor,
+    coververt,
+    finished,
+    nameru,
+    nameen,
+    id,
+    cats = [],
+  } = localMeta;
   const metaRatio = ratio === "vertical" ? coverhor : coververt;
   const metaSrc = metaRatio;
 
@@ -45,9 +53,9 @@ const Card = ({ swidth, src, meta, ratio = "horizontal" }) => {
       <Header data-type="card-header">
         <Header.Title>
           <TextWrapper data-type="text-wrapper" direction={-100}>
-            {id && (
+            {id && cats && cats.length > 0 && (
               <p>
-                <Text24 data-font="wremena">Объект культуры</Text24>
+                <Text24 data-font="wremena">{cats[0]}</Text24>
               </p>
             )}
           </TextWrapper>

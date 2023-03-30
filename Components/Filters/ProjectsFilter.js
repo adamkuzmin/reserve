@@ -50,26 +50,26 @@ const DirectionsFilter = ({
   DirItems,
   selDirItems,
   toPageTop,
+  categories = [],
+  activeCts = [],
+  setActiveCts,
 }) => {
   const setAnimatedGallery = useStore((state) => state.setAnimatedGallery);
 
   const updateDir = (item) => {
-    if (item === 0) {
-      selDirItems([0]);
-      return true;
-    }
+    if (item === "Все") {
+      setActiveCts([...categories]);
+    } else {
+      setActiveCts((state = []) => {
+        if (state.length === categories.length) return [item];
 
-    if (DirItems.includes(item)) {
-      selDirItems((state) => state.filter((_item) => _item !== item));
-      return;
-    }
-
-    if (!DirItems.includes(item)) {
-      let _DirItems = DirItems[0] === 0 ? [] : [...DirItems];
-      _DirItems.push(item);
-
-      selDirItems(_DirItems);
-      return;
+        if (state.includes(item)) {
+          return [...state].filter((s) => s !== item);
+        } else {
+          state = [...state, item];
+          return state;
+        }
+      });
     }
   };
 
@@ -87,21 +87,28 @@ const DirectionsFilter = ({
           </CloseBtnCol>
         </LabelRow>
         <BlackRow>
-          {DirsTags.map((key, i) => (
-            <FLink
-              data-theme="black"
-              key={`FilterDir${i}`}
-              onClick={() => {
-                setAnimatedGallery(false);
-                toPageTop();
+          {["Все", ...categories].map((key, i) => {
+            const check =
+              (key === "Все" && categories.length === activeCts.length) ||
+              (categories.length !== activeCts.length &&
+                activeCts.includes(key));
 
-                updateDir(i);
-              }}
-              data-status={DirItems.includes(i) && "active"}
-            >
-              <Text24>{key}</Text24>
-            </FLink>
-          ))}
+            return (
+              <FLink
+                data-theme="black"
+                key={`FilterDir${i}`}
+                onClick={() => {
+                  setAnimatedGallery(false);
+                  toPageTop();
+
+                  updateDir(key);
+                }}
+                data-status={check && "active"}
+              >
+                <Text24>{key}</Text24>
+              </FLink>
+            );
+          })}
         </BlackRow>
       </Col>
     </BlackPanel>
@@ -114,25 +121,31 @@ for (let i = 2021; i >= 2000; i--) {
   YearsTags.push(i);
 }
 
-const YearsFilter = ({ setFilterType, toPageTop, YearItems, selYearItems }) => {
+const YearsFilter = ({
+  setFilterType,
+  toPageTop,
+  YearItems,
+  selYearItems,
+  years = [],
+  activeYrs,
+  setActiveYrs,
+}) => {
   const setAnimatedGallery = useStore((state) => state.setAnimatedGallery);
 
   const updateYear = (item) => {
-    if (item === 0) {
-      selYearItems([0]);
-      return true;
-    }
+    if (item === "Все") {
+      setActiveYrs([...years]);
+    } else {
+      setActiveYrs((state = []) => {
+        if (state.length === years.length) return [item];
 
-    if (YearItems.includes(item)) {
-      selYearItems((state) => state.filter((_item) => _item !== item));
-      return;
-    }
-
-    if (!YearItems.includes(item)) {
-      let _YearItems = YearItems[0] === 0 ? [] : [...YearItems];
-      _YearItems.push(item);
-
-      selYearItems(_YearItems);
+        if (state.includes(item)) {
+          return [...state].filter((s) => s !== item);
+        } else {
+          state = [...state, item];
+          return state;
+        }
+      });
     }
   };
 
@@ -150,23 +163,27 @@ const YearsFilter = ({ setFilterType, toPageTop, YearItems, selYearItems }) => {
           </CloseBtnCol>
         </LabelRow>
         <BlackRow>
-          {YearsTags.map((key, i) => (
-            <FLink
-              data-theme="black"
-              key={`filterYear${i}`}
-              onClick={() => {
-                setAnimatedGallery(false);
-                toPageTop();
+          {["Все", ...years].map((key, i) => {
+            const check =
+              (key === "Все" && years.length === activeYrs.length) ||
+              (years.length !== activeYrs.length && activeYrs.includes(key));
 
-                updateYear(key === "Все" ? i : key);
-              }}
-              data-status={
-                YearItems.includes(key === "Все" ? i : key) && "active"
-              }
-            >
-              <Text24>{key}</Text24>
-            </FLink>
-          ))}
+            return (
+              <FLink
+                data-theme="black"
+                key={`filterYear${i}`}
+                onClick={() => {
+                  setAnimatedGallery(false);
+                  toPageTop();
+
+                  updateYear(key);
+                }}
+                data-status={check && "active"}
+              >
+                <Text24>{key}</Text24>
+              </FLink>
+            );
+          })}
         </BlackRow>
       </Col>
     </BlackPanel>

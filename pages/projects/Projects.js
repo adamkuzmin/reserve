@@ -85,7 +85,14 @@ const FilterBackdrop = styled.div`
 const Projects = () => {
   /* записи */
   const [isFetched, setFetched] = useState(false);
+  const [preData, setPreData] = useState();
   const [stateData, setStateData] = useState();
+
+  const [categories, setCategories] = useState();
+  const [years, setYears] = useState();
+
+  const [activeCts, setActiveCts] = useState([]);
+  const [activeYrs, setActiveYrs] = useState([]);
 
   const logId = useStore(({ logId }) => logId);
   useEffect(() => {
@@ -99,8 +106,21 @@ const Projects = () => {
     sanity
       .fetch(query)
       .then((data) => {
+        let categories = [];
+        let years = [];
+
         const _data = data.map((item = {}) => {
-          const { name, coverhor, coververt, year, _id } = item;
+          const { name, coverhor, coververt, year, cats = [], _id } = item;
+
+          cats.map((cat) => {
+            if (!categories.includes(cat)) {
+              categories.push(cat);
+            }
+          });
+
+          if (!years.includes(year)) {
+            years.push(year);
+          }
 
           return {
             nameru: name,
@@ -115,14 +135,47 @@ const Projects = () => {
             competition: 0,
             residential: 1,
             id: _id,
+            cats,
+            year,
           };
         });
 
-        setStateData(_data);
+        setPreData(_data);
+        setCategories(categories);
+        setActiveCts(categories);
+
+        years = [...years].sort().reverse();
+        setYears(years);
+        setActiveYrs(years);
+
         setFetched(true);
       })
       .catch(console.error);
   }, [logId]);
+
+  useEffect(() => {
+    if (preData && activeCts && activeYrs) {
+      setStateData(
+        [...preData].filter((item = {}) => {
+          const { cats = [], year } = item;
+
+          let isCts = false;
+          cats.map((cat) => {
+            if (activeCts.includes(cat)) isCts = true;
+          });
+
+          if (cats.length === 0 && activeCts.length === categories.length) {
+            isCts = true;
+          }
+
+          let isYrs = false;
+          if (activeYrs.includes(year)) isYrs = true;
+
+          if (isCts && isYrs) return true;
+        })
+      );
+    }
+  }, [preData, categories, years, activeCts, activeYrs]);
 
   /**
    * States для анимации галереи
@@ -189,21 +242,30 @@ const Projects = () => {
 
       {FilterType && <FilterBackdrop onClick={() => setFilterType(null)} />}
 
-      <FloatFilters
-        {...{
-          //разделы
-          setLayoutType,
-          LayoutType,
-          //Фильтры
-          FilterType,
-          setFilterType,
-          //Дополнительное
-          toPageTop,
-          //работа с записями
-          stateData,
-          setStateData: () => {},
-        }}
-      />
+      {categories && years && (
+        <FloatFilters
+          {...{
+            //разделы
+            setLayoutType,
+            LayoutType,
+            //Фильтры
+            FilterType,
+            setFilterType,
+            //Дополнительное
+            toPageTop,
+            //работа с записями
+            stateData,
+            setStateData: () => {},
+            categories,
+            years,
+            /* */
+            activeCts,
+            activeYrs,
+            setActiveCts,
+            setActiveYrs,
+          }}
+        />
+      )}
       <MainContent key={`contentType:${LayoutType}`} ref={maincontentRef}>
         {LayoutBlock}
       </MainContent>
