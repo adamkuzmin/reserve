@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useMemo } from "react";
 import styled from "styled-components";
 import { useStore } from "../../Store/useStore";
 
-import { Col, AutoComplete } from "antd";
+import { Col, AutoComplete, Form, Button } from "antd";
 import { FLink, BlackPanel, BlackRow, LabelRow, CloseBtnCol } from "./styles";
 import { Text24, Wrap24, Wrap16 } from "../common/text";
 
@@ -44,6 +44,20 @@ const DirsTags = [
   "Конкурсные проекты",
   "Арт-объекты и дизайн",
 ];
+
+const FormBtn = styled(Button)`
+  &&&& {
+    &,
+    &:hover,
+    &:focus {
+      background: black;
+      border-radius: 0;
+      border: 1px solid white;
+      display: flex;
+      align-items: center;
+    }
+  }
+`;
 
 const DirectionsFilter = ({
   setFilterType,
@@ -194,9 +208,29 @@ const YearsFilter = ({
  * Компонент "Поиск"
  */
 
-const options = [];
+const options = [{ label: "Hello", value: "Hello" }];
 
-const SearchFilter = ({ setFilterType }) => {
+const SearchFilter = ({
+  setFilterType,
+  toPageTop,
+  search,
+  setSearch,
+  stateData,
+}) => {
+  const setAnimatedGallery = useStore((state) => state.setAnimatedGallery);
+
+  const initialValues = useMemo(() => {
+    return { search };
+  }, [search]);
+
+  const handleFinish = (e) => {
+    setAnimatedGallery(false);
+    toPageTop();
+
+    const { search } = e;
+    setSearch(search);
+  };
+
   return (
     <BlackPanel>
       <Col>
@@ -210,14 +244,38 @@ const SearchFilter = ({ setFilterType }) => {
         </LabelRow>
         <BlackRow>
           <AutoCompleteWrapper>
-            <AutoCompleteSearch
-              options={options}
-              placeholder="Попробуйте ввести ключевое слово"
-              filterOption={(inputValue, option) =>
-                option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !==
-                -1
-              }
-            />
+            <Form
+              initialValues={initialValues}
+              layout="horizontal"
+              onFinish={handleFinish}
+            >
+              <Form.Item name="search">
+                <AutoCompleteSearch
+                  allowClear={true}
+                  options={
+                    stateData
+                      ? stateData.map((item = {}) => {
+                          const { nameru } = item;
+
+                          return { label: nameru, value: nameru };
+                        })
+                      : []
+                  }
+                  placeholder="Попробуйте ввести ключевое слово"
+                  filterOption={(inputValue, option) =>
+                    option.value
+                      .toUpperCase()
+                      .indexOf(inputValue.toUpperCase()) !== -1
+                  }
+                />
+              </Form.Item>
+
+              <Form.Item>
+                <FormBtn type="primary" htmlType="submit">
+                  Искать
+                </FormBtn>
+              </Form.Item>
+            </Form>
           </AutoCompleteWrapper>
         </BlackRow>
       </Col>

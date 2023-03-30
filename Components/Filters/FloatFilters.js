@@ -80,6 +80,8 @@ const FloatFilters = ({
   activeYrs,
   setActiveCts,
   setActiveYrs,
+  search,
+  setSearch,
 }) => {
   const screens = useBreakpoint();
 
@@ -193,6 +195,8 @@ const FloatFilters = ({
                   stateData,
                   setStateData,
                   toPageTop,
+                  search,
+                  setSearch,
                 }}
               />
             )
@@ -256,6 +260,8 @@ const FloatFilters = ({
                   stateData,
                   setStateData,
                   toPageTop,
+                  search,
+                  setSearch,
                 }}
               />
             )
@@ -305,7 +311,9 @@ const FloatFilters = ({
             data-theme={FilterType !== null && "black"}
           >
             <Badge
-              count={DirItems.includes(0) ? 0 : DirItems.length}
+              count={
+                categories.length === activeCts.length ? 0 : activeCts.length
+              }
               offset={[-15, 0]}
             >
               <FLink
@@ -318,7 +326,7 @@ const FloatFilters = ({
               </FLink>
             </Badge>
             <Badge
-              count={YearItems.includes(0) ? 0 : YearItems.length}
+              count={years.length === activeYrs.length ? 0 : activeYrs.length}
               offset={[-15, 0]}
             >
               <FLink
@@ -330,7 +338,7 @@ const FloatFilters = ({
                 <Text24>{filterData.year[lang]}</Text24>
               </FLink>
             </Badge>
-            <Badge count={0} offset={[-15, 0]}>
+            <Badge count={search && search !== "" ? 1 : 0} offset={[-15, 0]}>
               <FLink
                 data-type={
                   FilterType !== null && FilterType !== 3 && "notfilter"

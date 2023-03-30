@@ -93,6 +93,7 @@ const Projects = () => {
 
   const [activeCts, setActiveCts] = useState([]);
   const [activeYrs, setActiveYrs] = useState([]);
+  const [search, setSearch] = useState();
 
   const logId = useStore(({ logId }) => logId);
   useEffect(() => {
@@ -157,7 +158,7 @@ const Projects = () => {
     if (preData && activeCts && activeYrs) {
       setStateData(
         [...preData].filter((item = {}) => {
-          const { cats = [], year } = item;
+          const { cats = [], year, nameru: name } = item;
 
           let isCts = false;
           cats.map((cat) => {
@@ -171,11 +172,20 @@ const Projects = () => {
           let isYrs = false;
           if (activeYrs.includes(year)) isYrs = true;
 
-          if (isCts && isYrs) return true;
+          let isSrch = true;
+          if (!(!search || search === "" || !name)) {
+            if (name.toLowerCase().includes(search.toLowerCase())) {
+              isSrch = true;
+            } else {
+              isSrch = false;
+            }
+          }
+
+          if (isCts && isYrs && isSrch) return true;
         })
       );
     }
-  }, [preData, categories, years, activeCts, activeYrs]);
+  }, [preData, categories, years, activeCts, activeYrs, search]);
 
   /**
    * States для анимации галереи
@@ -263,6 +273,9 @@ const Projects = () => {
             activeYrs,
             setActiveCts,
             setActiveYrs,
+            search,
+            setSearch,
+            /* */
           }}
         />
       )}
