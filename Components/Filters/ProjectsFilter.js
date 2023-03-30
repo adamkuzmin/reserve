@@ -28,6 +28,12 @@ const AutoCompleteSearch = styled(AutoComplete)`
 
 const AutoCompleteWrapper = styled(Wrap24)`
   width: 100%;
+
+  && .ant-select-clear {
+    width: 30px;
+    height: 30px;
+    background: none;
+  }
 `;
 
 /* * Фильтр "Направления"*/
@@ -252,6 +258,7 @@ const SearchFilter = ({
               <Form.Item name="search">
                 <AutoCompleteSearch
                   allowClear={true}
+                  onClear={() => setSearch()}
                   options={
                     stateData
                       ? stateData.map((item = {}) => {
