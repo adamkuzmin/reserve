@@ -80,6 +80,41 @@ export const AboutQuery = groq`
     }
 `;
 
+export const AwardsQuery = groq`
+  *[_type == "awards"]{
+    _id,
+    year,
+    cover,
+    cr,
+    awards_refs[]{
+      cover,
+      project->{
+        name
+      }
+    }
+  }
+`;
+
+export const AwardQuery = groq`
+  *[ _type == "awards" && _id == $id ] {
+    _id,
+    cover,
+    year,
+    cr,
+    awards_refs[]
+  }[0]
+`;
+
+export const AwardsRefQuery = groq`
+  *[_type == "awards_ref"] {
+    _id,
+    cover,
+    project->{
+      name
+    }
+  }
+`;
+
 export const MemberQuery = groq`
   *[_type == 'team_members' && _id == $id][0] {
     _id,

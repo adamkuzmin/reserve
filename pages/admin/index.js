@@ -100,6 +100,12 @@ const AdminPage = () => {
             <Text24>Вакансии</Text24>
           </Card>
         </Link>
+
+        <Link href="/admin/awards">
+          <Card fill={"#FFC400"}>
+            <Text24>Награды</Text24>
+          </Card>
+        </Link>
       </Layout>
 
       <Gap sheight={`48px`} />
