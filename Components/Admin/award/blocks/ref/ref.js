@@ -18,6 +18,11 @@ const Ref = ({ initialValues, projects = [] }) => {
     setSelectedRefs(values);
   };
 
+  const handleFormSubmit = (event) => {
+    event.preventDefault(); // Cancel the default form submission behavior
+    form.submit(); // Manually call the form submission
+  };
+
   return (
     <Form initialValues={initialValues} form={form} onFinish={handleSubmit}>
       <Form.Item label="Номинация" name="cover">
@@ -36,7 +41,7 @@ const Ref = ({ initialValues, projects = [] }) => {
         </Select>
       </Form.Item>
       <Form.Item>
-        <Button type="primary" htmlType="submit">
+        <Button type="primary" onClick={handleFormSubmit} htmlType="submit">
           Сохранить
         </Button>
       </Form.Item>

@@ -17,8 +17,6 @@ import Refs from "@/Components/Admin/award/blocks/refs/refs";
 const AwardPage = ({ id, mode, initialValues }) => {
   const router = useRouter();
 
-  console.log("initialValues", initialValues);
-
   const setLogId = useStore(({ setLogId }) => setLogId);
 
   const cfgs = {

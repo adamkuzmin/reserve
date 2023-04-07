@@ -5,7 +5,10 @@ export const Form = styled(AntForm)`
   width: 100%;
   display: flex;
   flex-direction: column;
-  
+
+  border: 1px solid black;
+  padding: 20px;
+  margin-bottom: 10px;
 
   && .ant-form-item {
     margin-bottom: 0;
@@ -19,6 +22,7 @@ export const Form = styled(AntForm)`
       }
 
       & .ant-btn {
+        margin-top: 16px;
         background: black;
         display: flex;
         align-items: center;

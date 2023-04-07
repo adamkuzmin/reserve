@@ -55,11 +55,13 @@ const AwardPID = () => {
 
   const mode = useMemo(() => {
     if (isFetched) {
-      if (values && values.length > 0) return "edit";
+      if (values) return "edit";
       return "new";
     }
     return null;
   }, [values, isFetched]);
+
+  console.log("mode", mode);
 
   const initialValues = useMemo(() => {
     if (isFetched) {
@@ -68,6 +70,8 @@ const AwardPID = () => {
     }
     return null;
   }, [isFetched, values]);
+
+  console.log("initialValues", initialValues);
 
   if (!(pid && isReady && values && isFetched && mode && initialValues))
     return <></>;

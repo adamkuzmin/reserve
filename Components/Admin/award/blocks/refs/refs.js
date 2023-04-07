@@ -4,6 +4,7 @@ import {
 } from "@/Components/Admin/queries/__queries";
 import { sanity } from "@/Components/Client/sanity/sanity-client";
 import { useStore } from "@/Store/useStore";
+import { Button } from "antd";
 import groq from "groq";
 import { useEffect, useState } from "react";
 import Ref from "../ref/ref";
@@ -49,9 +50,6 @@ const Refs = ({ value, onChange = () => {} }) => {
       .catch(console.error);
   }, [logId]);
 
-  console.log("projects", projects);
-  console.log("refs", refs);
-
   if (loading || loading1) return <>Loading...</>;
 
   return (
@@ -71,8 +69,6 @@ const Refs = ({ value, onChange = () => {} }) => {
 
             const { _id: project_id } = project;
 
-            console.log("item", item);
-
             return (
               <div key={`f:${_id}`}>
                 <Ref
@@ -83,6 +79,22 @@ const Refs = ({ value, onChange = () => {} }) => {
               </div>
             );
           })}
+
+      <Button
+        type="primary"
+        style={{
+          background: "black",
+          width: "100%",
+          borderRadius: "0",
+          height: "70px",
+          display: "flex",
+          alignItems: "center",
+          marginTop: "24px",
+          marginBottom: "24px",
+        }}
+      >
+        + Добавить еще поле
+      </Button>
     </List>
   );
 };
