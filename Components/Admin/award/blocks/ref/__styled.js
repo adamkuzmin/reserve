@@ -5,6 +5,7 @@ export const Form = styled(AntForm)`
   width: 100%;
   display: flex;
   flex-direction: column;
+  position: relative;
 
   border: 1px solid black;
   padding: 20px;
@@ -30,5 +31,24 @@ export const Form = styled(AntForm)`
         min-height: 50px;
       }
     }
+  }
+`;
+
+export const RemovePanel = styled.div`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: lightgrey;
+  display: flex;
+  padding: 2px 8px;
+  cursor: pointer;
+  z-index: 40;
+
+  &, & * {
+    font-size: 10px;
+  }
+
+  && > * + * {
+    margin-left: 5px;
   }
 `;

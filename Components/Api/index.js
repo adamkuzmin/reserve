@@ -14,7 +14,7 @@ const APIConnect = () => {
   useEffect(() => {
     const query = '*[_type == "projects"] {name, image}';
 
-    client.fetch(query).then((item) => console.log("item", item));
+    client.fetch(query).then((item) => {});
   }, []);
 
   return <></>;

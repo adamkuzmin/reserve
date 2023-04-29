@@ -511,8 +511,6 @@ const Slider = ({
   const sdata = images;
 
   const handleActiveKey = (i, slideKey) => {
-    console.log("i", slideKey);
-
     if (i === slideKey) return "active";
     if (i === sdata.length - 1 && slideKey === 0) return "was-active";
     if (i === slideKey - 1) return "was-active";

@@ -81,7 +81,7 @@ export const AboutQuery = groq`
 `;
 
 export const AwardsQuery = groq`
-  *[_type == "awards"]{
+  *[_type == "awards"] | order(year desc) {
     _id,
     year,
     cover,
@@ -110,7 +110,10 @@ export const AwardsRefQuery = groq`
     _id,
     cover,
     project->{
-      name
+      _id,
+      name,
+      coverhor,
+      coververt
     }
   }
 `;

@@ -23,8 +23,6 @@ const Project = ({ initialValues, section = {}, mode, id }) => {
       router.push(`/admin/${section.name}`, null, { shallow: false });
     },
     onError: (e) => {
-      console.log("e", e);
-
       setLogId();
       notification.error({
         message: `Ошибка!`,
@@ -42,8 +40,6 @@ const Project = ({ initialValues, section = {}, mode, id }) => {
       await sanity.create(data);
       cfgs.onCompleted();
     } catch (err) {
-      console.log("err", err);
-
       cfgs.onError();
     }
   };
@@ -55,8 +51,6 @@ const Project = ({ initialValues, section = {}, mode, id }) => {
       await sanity.patch(id).set(data).commit();
       cfgs.onCompleted();
     } catch (err) {
-      console.log("err", err);
-
       cfgs.onError();
     }
   };

@@ -94,7 +94,7 @@ const WhitePlane = ({ color, vpwidth, map, url }) => {
 
   return (
     <group ref={PlaneRef}>
-      <mesh >
+      <mesh>
         <planeBufferGeometry args={[width - 0.03, height - 0.03, 2, 2]} />
         {standardMaterial}
       </mesh>
@@ -141,7 +141,6 @@ function Page({ onChangePages }) {
   const handleReflow = useCallback(
     (w, h) => {
       onChangePages((h * 2) / vpHeight);
-      // console.log({ h, vpHeight, pages: h / vpHeight });
     },
     [onChangePages, vpHeight]
   );
@@ -340,7 +339,7 @@ function Page({ onChangePages }) {
               </Box>
             </Box>
           </Flex>
-          
+
           <Flex
             flexDirection="column"
             size={[vpWidth, vpWidth * 0.525, 0]}

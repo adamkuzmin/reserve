@@ -41,8 +41,6 @@ const ProjectPage = ({ cats, id, mode, initialValues }) => {
       router.push(`/admin/projects`, null, { shallow: false });
     },
     onError: (e) => {
-      console.log("e", e);
-
       setLogId();
       notification.error({
         message: `Ошибка!`,

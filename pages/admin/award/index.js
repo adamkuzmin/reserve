@@ -3,7 +3,7 @@ import { WideButton } from "@/Components/ProjectInfo/ProjectBottom";
 
 import { Form, Input, InputNumber, notification } from "antd";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AdminWrapper from "../../../Components/Admin/admin-wrapper/admin-wrapper";
 import Nav from "../../../Components/Admin/project/nav/nav";
 import { sanity } from "@/Components/Client/sanity/sanity-client";
@@ -14,8 +14,14 @@ import { Gap } from "@/Components/About/common/styles";
 import ImageSingleUploader from "@/Components/Admin/project/a-common/blocks/image-single-upload";
 import Refs from "@/Components/Admin/award/blocks/refs/refs";
 
-const AwardPage = ({ id, mode, initialValues }) => {
+const AwardPage = ({ id, mode, initialValues, formLogId }) => {
   const router = useRouter();
+  const [form] = Form.useForm();
+
+  useEffect(() => {
+    if (!form) return;
+    form.setFieldsValue(initialValues);
+  }, [formLogId, initialValues]);
 
   const setLogId = useStore(({ setLogId }) => setLogId);
 
@@ -82,6 +88,7 @@ const AwardPage = ({ id, mode, initialValues }) => {
           style={{ width: "100%" }}
           onFinish={handleFinish}
           initialValues={initialValues}
+          form={form}
         >
           <div
             style={{
@@ -139,7 +146,7 @@ const AwardPage = ({ id, mode, initialValues }) => {
 
             <Wrap24>
               <Form.Item name="awards_refs">
-                <Refs />
+                <Refs awardId={id} mode={mode} />
               </Form.Item>
             </Wrap24>
 

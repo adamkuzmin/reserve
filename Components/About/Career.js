@@ -71,8 +71,6 @@ const Career = () => {
       .catch(console.error);
   }, [logId]);
 
-  console.log("projects", projects);
-
   const lang = useStore((state) => state.lang);
   const screens = useBreakpoint();
 
@@ -150,8 +148,6 @@ const Career = () => {
             {projects &&
               projects.map((item = {}) => {
                 const { name, description, _id } = item;
-
-                console.log("description", description);
 
                 return (
                   <React.Fragment key={`d:${_id}`}>

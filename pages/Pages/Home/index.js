@@ -71,8 +71,6 @@ const Home = () => {
   const [stateData, setStateData] = useState();
   const [slidesData, setSlidesData] = useState();
 
-  console.log("slidesData", slidesData);
-
   const [homeData, setHomeData] = useState();
 
   const logId = useStore(({ logId }) => logId);

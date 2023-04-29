@@ -54,8 +54,6 @@ const Transfer = ({ data = [], slider = [] }) => {
           ...item,
         };
 
-        console.log("create", create);
-
         return sanity.create(create);
       })
     );

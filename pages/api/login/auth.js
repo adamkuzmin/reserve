@@ -4,9 +4,6 @@ import { withIronSession } from "next-iron-session";
 async function handler(req, res) {
   const { username } = req.session.get() || {};
 
-  console.log("username", username);
-  console.log("req.session.get", req.session.get());
-
   if (!username) {
     res.status(401).end("Unauthorized not found");
     return;

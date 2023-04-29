@@ -167,6 +167,5 @@ export default ImageSingleUploader;
           message.success("Upload successful!");
         })
         .catch((err) => {
-          console.log(err);
           message.error("Upload failed.");
         }); */

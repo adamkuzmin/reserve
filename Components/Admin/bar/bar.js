@@ -9,7 +9,6 @@ const Bar = ({ noAuth }) => {
     if (response.ok) {
       location.reload();
     } else {
-      console.log("Logout failed");
     }
   };
 
@@ -27,7 +26,7 @@ const Bar = ({ noAuth }) => {
             style={{ cursor: "pointer", pointerEvents: "visible" }}
             onClick={handleLogout}
           >
-          Выйти из аккаунта
+            Выйти из аккаунта
           </Text24>
         )}
       </Nav>

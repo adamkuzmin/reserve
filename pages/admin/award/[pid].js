@@ -5,6 +5,9 @@ import { AwardsRefQuery } from "@/Components/Admin/queries/__queries";
 import groq from "groq";
 import { sanity } from "@/Components/Client/sanity/sanity-client";
 import AwardPage from ".";
+import { useStore } from "@/Store/useStore";
+import { v4 as uuidv4 } from "uuid";
+import moment from "moment";
 
 const AwardPID = () => {
   const router = useRouter();
@@ -13,7 +16,15 @@ const AwardPID = () => {
 
   const [values, setValues] = useState();
 
+  const logId = useStore(({ logId }) => logId);
+  const setLogId = useStore(({ setLogId }) => setLogId);
   const [isFetched, setFetched] = useState(false);
+
+  const [formLogId, setFormLogId] = useState(uuidv4());
+
+  const forceAction = (action = () => {}, props) => {
+    action(props);
+  };
 
   useEffect(() => {
     if (isReady && pid) {
@@ -23,35 +34,27 @@ const AwardPID = () => {
         cover,
         year,
         cr,
-        awards_refs[]->{
-          _id,
-          cover,
-          project->{
-            _id,
-            name
-          }
-        }
+        awards_refs
       }[0]
     `;
 
       sanity
         .fetch(query)
         .then((data) => {
-          console.log("data", data);
-
           setValues(data);
           setFetched(true);
+          setFormLogId(uuidv4());
+
+          forceAction(data);
         })
         .catch(() => setFetched(true));
 
       sanity
         .fetch(AwardsRefQuery)
-        .then((data) => {
-          console.log("data1", data);
-        })
+        .then((data) => {})
         .catch(() => setFetched(true));
     }
-  }, [isReady, pid]);
+  }, [isReady, pid, logId]);
 
   const mode = useMemo(() => {
     if (isFetched) {
@@ -59,9 +62,7 @@ const AwardPID = () => {
       return "new";
     }
     return null;
-  }, [values, isFetched]);
-
-  console.log("mode", mode);
+  }, [values, isFetched, logId]);
 
   const initialValues = useMemo(() => {
     if (isFetched) {
@@ -69,14 +70,36 @@ const AwardPID = () => {
       return {};
     }
     return null;
-  }, [isFetched, values]);
+  }, [isFetched, values, logId]);
 
-  console.log("initialValues", initialValues);
+  useEffect(() => {
+    const createAward = async () => {
+      const data = { cr: moment().toISOString(), _type: "awards" };
 
-  if (!(pid && isReady && values && isFetched && mode && initialValues))
+      try {
+        let award = await sanity.create(data);
+
+        router.push(`/admin/award/${award._id}`, null, { shallow: true });
+        setLogId();
+      } catch (err) {}
+    };
+
+    if (mode === "new") {
+      createAward();
+    }
+  }, [mode]);
+
+  if (!(pid && isReady && isFetched && mode && mode !== "new" && initialValues))
     return <></>;
 
-  return <AwardPage id={pid} mode={mode} initialValues={initialValues} />;
+  return (
+    <AwardPage
+      id={pid}
+      mode={mode}
+      {...{ formLogId }}
+      initialValues={initialValues}
+    />
+  );
 };
 
 export default AwardPID;

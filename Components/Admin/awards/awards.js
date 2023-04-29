@@ -65,8 +65,6 @@ const columns = (handleDelete = () => {}) => [
 const Awards = ({ data }) => {
   const [isDeleting, setIsDeleting] = useState(false);
 
-  console.log("data", data);
-
   const setLogId = useStore(({ setLogId }) => setLogId);
 
   const deleteProject = async (project_id) => {

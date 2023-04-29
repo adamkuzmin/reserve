@@ -29,8 +29,6 @@ const PartnerPage = ({ id, mode, initialValues }) => {
       router.push(`/admin/partners`, null, { shallow: false });
     },
     onError: (e) => {
-      console.log("e", e);
-
       setLogId();
       notification.error({
         message: `Ошибка!`,

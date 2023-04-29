@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useEffect, useRef, useContext, useMemo } from "react";
 import styled from "styled-components";
 import { useStore } from "../../Store/useStore";
 
@@ -6,6 +6,8 @@ import { Content } from "../common/body";
 import { Space } from "antd";
 import { projectData } from "../ProjectsLayout/data/data";
 import { MouseContext } from "../common/Cursor/mouse-context";
+import { sanity } from "@/Components/Client/sanity/sanity-client";
+import { AwardsRefQuery } from "../Admin/queries/__queries";
 
 import { intro, awardsData } from "./awards/data";
 
@@ -20,6 +22,7 @@ import {
 } from "./common/styles";
 
 import { Text96, Text36, Text30, Text24 } from "../common/text";
+import groq from "groq";
 
 const AwardsList = styled.div`
   width: 100%;
@@ -77,6 +80,103 @@ const Awards = () => {
     return () => window.removeEventListener("scroll", onScroll);
   });
 
+  const [loading, setLoading] = useState(false);
+  const [fetched, setFetched] = useState(false);
+
+  const [projects, setProjects] = useState([]);
+  const [refs, setRefs] = useState([]);
+
+  useEffect(() => {
+    const AwardsQuery = groq`
+    *[_type == "awards"] | order(year desc) {
+      _id,
+      year,
+      cover,
+      cr,
+      awards_refs
+    }
+  `;
+
+    const fetchData = async () => {
+      setLoading(true);
+
+      const [awardsData, refsData] = await Promise.all([
+        sanity.fetch(AwardsQuery),
+        sanity.fetch(AwardsRefQuery),
+      ]);
+
+      setProjects(awardsData);
+      setRefs(refsData);
+      setFetched(true);
+      setLoading(false);
+    };
+
+    fetchData().catch(console.error);
+  }, []);
+
+  const awardsUnits = useMemo(() => {
+    if (!fetched) return;
+
+    let extProjects = [...projects].map((item = {}) => {
+      let awards_refs = item.awards_refs || [];
+
+      awards_refs = awards_refs
+        .map((id) => {
+          const ref = refs.find(({ _id }) => id === _id);
+          return ref;
+        })
+        .filter((item) => item);
+
+      return { ...item, awards_refs };
+    });
+
+    const rearrangeByYear = (arr) => {
+      const result = arr.reduce((acc, cur) => {
+        const year = cur.year.toString();
+
+        if (!acc[year]) {
+          acc[year] = { year, list: [cur] };
+        } else {
+          acc[year].list.push(cur);
+        }
+
+        return acc;
+      }, {});
+
+      return Object.values(result)
+        .sort((a, b) => b.year - a.year)
+        .map((obj) => ({
+          ...obj,
+          year: obj.year.toString(),
+          list: obj.list.map((item, i) => {
+            const { cover, awards_refs = [] } = item;
+
+            return {
+              photo: cover,
+              items: awards_refs.map((a) => {
+                let { cover: label, project = {} } = a;
+                project = project || {};
+
+                let { name, coververt, coverhor } = project;
+
+                return {
+                  index: i,
+                  label: { ru: label, en: label },
+                  name: { ru: name, en: name },
+                  coververt,
+                  coverhor,
+                };
+              }),
+            };
+          }),
+        }));
+    };
+
+    extProjects = rearrangeByYear(extProjects);
+
+    return extProjects;
+  }, [fetched, projects, refs]);
+
   return (
     <>
       <Content ref={contentRef}>
@@ -89,63 +189,64 @@ const Awards = () => {
           <Text36>{intro.descr[lang]}</Text36>
         </LeadDescription>
 
-        {awardsData.map(({ year, list }) => {
-          return (
-            <>
-              <Gap sheight={"120px"} />
-              <Text96
-                data-font="ibm"
-                style={{ fontWeight: "600", color: "black" }}
-              >
-                {year}
-              </Text96>
+        {awardsUnits &&
+          awardsUnits.map(({ year, list }) => {
+            return (
+              <>
+                <Gap sheight={"120px"} />
+                <Text96
+                  data-font="ibm"
+                  style={{ fontWeight: "600", color: "black" }}
+                >
+                  {year}
+                </Text96>
 
-              <Gap sheight={"60px"} />
+                <Gap sheight={"60px"} />
 
-              <AwardsList>
-                {list.map(({ photo, items }) => {
-                  return (
-                    <Award>
-                      <Award.Photo url={photo} />
+                <AwardsList>
+                  {list.map(({ photo, items }) => {
+                    return (
+                      <Award>
+                        <Award.Photo url={photo} />
 
-                      <Space direction="vertical" size={12}>
-                        {items.map(({ name, label, index }) => {
-                          const record = projectData[index];
+                        <Space direction="vertical" size={12}>
+                          {items.map(
+                            ({ name, label, index, coververt, coverhor }) => {
+                              const cover =
+                                index % 2 === 0 ? coververt : coverhor;
+                              const coverClass =
+                                index % 2 === 0 ? "renderHor-1" : "renderVer-3";
 
-                          const { coververt, coverhor } = record;
-                          const cover = index % 2 === 0 ? coververt : coverhor;
-                          const coverClass =
-                            index % 2 === 0 ? "renderHor-1" : "renderVer-3";
+                              const metaSrc = cover || "";
 
-                          const metaSrc = cover
-                            ? `/projects/Frame%20${cover}.jpg`
-                            : "";
-
-                          return (
-                            <Space
-                              direction="vertical"
-                              size={0}
-                              onMouseEnter={() =>
-                                cursorChangeHandler({
-                                  url: metaSrc,
-                                  coverClass,
-                                })
-                              }
-                              onMouseLeave={() => cursorChangeHandler(null)}
-                            >
-                              <LocalTitle size={30}>{name[lang]}</LocalTitle>
-                              <Text24>{label[lang]}</Text24>
-                            </Space>
-                          );
-                        })}
-                      </Space>
-                    </Award>
-                  );
-                })}
-              </AwardsList>
-            </>
-          );
-        })}
+                              return (
+                                <Space
+                                  direction="vertical"
+                                  size={0}
+                                  onMouseEnter={() =>
+                                    cursorChangeHandler({
+                                      url: metaSrc,
+                                      coverClass,
+                                    })
+                                  }
+                                  onMouseLeave={() => cursorChangeHandler(null)}
+                                >
+                                  <LocalTitle size={30}>
+                                    {name[lang]}
+                                  </LocalTitle>
+                                  <Text24>{label[lang]}</Text24>
+                                </Space>
+                              );
+                            }
+                          )}
+                        </Space>
+                      </Award>
+                    );
+                  })}
+                </AwardsList>
+              </>
+            );
+          })}
 
         <Gap sheight={"120px"} />
       </Content>
