@@ -15,12 +15,13 @@ import NavRight from "../../Components/NavRight/NavRight";
 
 import Footer from "../../Components/Footer/Footer";
 import AboutFilters from "../../Components/Filters/AboutFilters";
+import { useRouter } from "next/router";
 
 const WrapperAnimation = styled.div`
   opacity: 0;
   transform: translateY(100px);
 
-  animation: SectionAppear .7s ease-in-out .5s;
+  animation: SectionAppear 0.7s ease-in-out 0.5s;
   @keyframes SectionAppear {
     0% {
       opacity: 0;
@@ -40,6 +41,18 @@ export default function HomeApp() {
   const setBlackLogo = useStore((state) => state.setBlackLogo);
 
   const [layoutType, setLayoutType] = useState(1);
+
+  const router = useRouter();
+  const { query } = router;
+  const { await: _await } = query;
+
+  useEffect(() => {
+    if (_await) {
+      let aw = typeof _await === "string" ? parseInt(_await) : _await;
+
+      setLayoutType(aw);
+    }
+  }, [_await]);
 
   useEffect(() => {
     setBlackLogo(true);

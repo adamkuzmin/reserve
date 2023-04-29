@@ -136,7 +136,7 @@ const Publications = ({ exhibitions = false }) => {
       <Gap sheight={"120px"} />
 
       <LocalTitle size={60}>
-        {exhibitions ? publIntro.title[lang] : exhIntro.title[lang]}
+        {exhibitions ? exhIntro.title[lang] : publIntro.title[lang]}
       </LocalTitle>
       <Gap sheight={"120px"} />
 

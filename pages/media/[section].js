@@ -38,10 +38,15 @@ const Section = ({ type = "all" }) => {
   switch (type) {
     case "all":
       return (
+        <WrapperAnimation key="news">
+          <News />
+        </WrapperAnimation>
+      );
+    /* return (
         <div>
           <Media />
         </div>
-      );
+      ); */
 
     case "news":
       return (
@@ -80,14 +85,20 @@ export default function HomeApp() {
   const [layoutType, setLayoutType] = useState("all");
 
   const router = useRouter();
+  const { query } = router;
+  const { await: _await } = query;
 
   useEffect(() => {
     if (router && router.query && router.query.section) {
       const s = router.query.section;
 
-      setLayoutType(s);
+      if (!_await) {
+        setLayoutType(s);
+      } else {
+        setLayoutType(_await);
+      }
     }
-  }, [router]);
+  }, [router, _await]);
 
   return (
     <div>

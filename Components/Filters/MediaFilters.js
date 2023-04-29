@@ -17,7 +17,7 @@ const MediaFilters = ({ setLayoutType, layoutType }) => {
   return (
     <FilterWrapper $type="media" style={{ minWidth: "max-content" }}>
       <Filters size={0}>
-        <FLink
+        {/* <FLink
           data-type={layoutType === "all" && "link"}
           onClick={() => {
             setLayoutType("all");
@@ -26,7 +26,7 @@ const MediaFilters = ({ setLayoutType, layoutType }) => {
           }}
         >
           <Text24>{lang === "ru" ? "Все" : "All"}</Text24>
-        </FLink>
+        </FLink> */}
         <FLink
           data-type={layoutType === "news" && "link"}
           onClick={() => {

@@ -23,6 +23,7 @@ import client from "@/Components/Client/apollo/apollo-client";
 import groq from "groq";
 import { projectFields } from "@/Components/Admin/queries/__queries";
 import { sanity } from "@/Components/Client/sanity/sanity-client";
+import { useRouter } from "next/router";
 
 const ProjectsGallery = dynamic(() =>
   import("../../Components/ProjectsLayout/ProjectsGallery")
@@ -83,6 +84,12 @@ const FilterBackdrop = styled.div`
 `;
 
 const Projects = () => {
+  const router = useRouter();
+  const { query } = router;
+  const { await: _await } = query;
+
+  const setAnimatedGallery = useStore(({ setAnimatedGallery: a }) => a);
+
   /* записи */
   const [isFetched, setFetched] = useState(false);
   const [preData, setPreData] = useState();
@@ -143,7 +150,13 @@ const Projects = () => {
 
         setPreData(_data);
         setCategories(categories);
-        setActiveCts(categories);
+
+        if (!_await) {
+          setActiveCts(categories);
+        } else {
+          setActiveCts([_await]);
+          setAnimatedGallery(false);
+        }
 
         years = [...years].sort().reverse();
         setYears(years);
@@ -152,7 +165,9 @@ const Projects = () => {
         setFetched(true);
       })
       .catch(console.error);
-  }, [logId]);
+  }, [logId, _await]);
+
+  console.log("activeCts", activeCts);
 
   useEffect(() => {
     if (preData && activeCts && activeYrs) {

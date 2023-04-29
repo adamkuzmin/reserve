@@ -1,9 +1,12 @@
 import styled from "styled-components";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Text36, Text30, Text24, Text14 } from "../common/text";
 import { Space } from "antd";
+import { sanity } from "@/Components/Client/sanity/sanity-client";
 
 import { useStore } from "../../Store/useStore";
+import groq from "groq";
+import Link from "next/link";
 
 const Foot = styled.div`
   width: 100%;
@@ -202,11 +205,11 @@ const FooterData = [
     title: "Резерв",
     entitle: "Reserve",
     links: [
-      { name: "Бюро", enname: "Bureau" },
-      { name: "Команда", enname: "Team" },
-      { name: "Карьера", enname: "Career" },
-      { name: "Заказчики", enname: "Customers" },
-      { name: "Награды", enname: "Awards" },
+      { name: "Бюро", enname: "Bureau", await: 1 },
+      { name: "Команда", enname: "Team", await: 2 },
+      { name: "Карьера", enname: "Career", await: 3 },
+      { name: "Заказчики", enname: "Customers", await: 4 },
+      { name: "Награды", enname: "Awards", await: 5 },
     ],
   },
   {
@@ -233,11 +236,10 @@ const FooterData = [
     title: "Медиа",
     entitle: "Media",
     links: [
-      { name: "Новости", enname: "News" },
-      { name: "Публикации", enname: "Publications" },
-      { name: "Выставки", enname: "Exhibitions" },
-      { name: "Интервью", enname: "Interview" },
-      { name: "Лекции", enname: "Lectures" },
+      { name: "Новости", enname: "News", await: "news" },
+      { name: "Публикации", enname: "Publications", await: "publications" },
+      { name: "Выставки", enname: "Exhibitions", await: "exhibitions" },
+      { name: "Интервью", enname: "Interview", await: "interviews" },
     ],
   },
   {
@@ -276,6 +278,38 @@ const Footer = () => {
     return () => window.removeEventListener("scroll", onScroll);
   });
 
+  const [cats, setCats] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [catsFetched, setCatsFetched] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+
+    const categoriesFields = groq`
+    _id,
+    name,
+    cr
+    `;
+
+    const query = groq`
+      *[_type == "categories"] {
+        ${categoriesFields}
+      }
+      | order(cr desc)
+    `;
+
+    setLoading(true);
+
+    sanity
+      .fetch(query)
+      .then((data) => {
+        setCats(data);
+        setCatsFetched(true);
+        setLoading(false);
+      })
+      .catch(console.error);
+  }, []);
+
   return (
     <Foot ref={FooterRef}>
       <Foot.Search>
@@ -288,7 +322,16 @@ const Footer = () => {
       </Foot.Search>
       <Foot.Sections>
         {FooterData.map((key = {}, i) => {
-          const { links = [] } = key;
+          let { links = [] } = key;
+
+          if (i === 1) {
+            links = cats || [];
+            links = links.map((item = {}) => {
+              const { _id, name } = item;
+
+              return { _id, name, enname: name, await: name };
+            });
+          }
 
           return (
             <Foot.Col key={`Foot.Col${i}`}>
@@ -300,10 +343,21 @@ const Footer = () => {
               <LinksBlock>
                 {key.title !== "Контакты" ? (
                   links.map((link = {}, b) => {
+                    const href =
+                      key.title === "Проекты"
+                        ? "/projects/"
+                        : key.title === "Резерв"
+                        ? "/about/"
+                        : "/media/all/";
+
+                    const hrefAwait = "await";
+
                     return (
-                      <Text24 data-font="ibm" key={`footer.a.${b}`}>
-                        <a>{lang === "ru" ? link.name : link.enname}</a>
-                      </Text24>
+                      <Link href={`${href}?${hrefAwait}=${link.await}`}>
+                        <Text24 data-font="ibm" key={`footer.a.${b}`}>
+                          <a>{lang === "ru" ? link.name : link.enname}</a>
+                        </Text24>
+                      </Link>
                     );
                   })
                 ) : (
@@ -411,7 +465,9 @@ const Footer = () => {
       </Foot.Sections>
       <Foot.Base>
         <p>
-          <Text30 data-font="ibm">© 1987—2021 Резерв</Text30>
+          <Text30 data-font="ibm">
+            © 1987—{new Date().getFullYear()} Резерв
+          </Text30>
         </p>
         <SocialNets>
           <a onClick={() => setLang(lang === "en" ? "ru" : "en")}>
