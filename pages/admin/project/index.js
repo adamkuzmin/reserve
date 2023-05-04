@@ -21,6 +21,7 @@ import { sanity } from "@/Components/Client/sanity/sanity-client";
 import { useStore } from "@/Store/useStore";
 
 import moment from "moment/moment";
+import { useForm } from "antd/lib/form/Form";
 
 const { TabPane } = Tabs;
 
@@ -83,12 +84,15 @@ const ProjectPage = ({ cats, id, mode, initialValues }) => {
     }
   };
 
+  const [form] = useForm();
+
   if (!id) return <></>;
 
   return (
     <>
       <AdminWrapper panel={<Nav {...{ section, setSection }} />}>
         <Form
+          form={form}
           layout="vertical"
           style={{ width: "100%" }}
           onFinish={handleFinish}
@@ -96,7 +100,7 @@ const ProjectPage = ({ cats, id, mode, initialValues }) => {
         >
           <Tabs activeKey={section}>
             <TabPane tab="common" key="common">
-              <Common cats={cats} />
+              <Common cats={cats} form={form} />
             </TabPane>
             <TabPane tab="editor" key="editor">
               <Editor />

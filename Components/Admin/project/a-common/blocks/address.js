@@ -1,61 +1,78 @@
-import React, { useState, useCallback, useRef } from "react";
-import ReactMapGL, { Marker, NavigationControl } from "react-map-gl";
-import Geocoder from "react-map-gl-geocoder";
-import "mapbox-gl/dist/mapbox-gl.css";
-import "react-map-gl-geocoder/dist/mapbox-gl-geocoder.css";
-import { Form, Input } from "antd";
-import { MAPBOX_TOKEN } from "@/Components/ProjectsLayout/ProjectsMap";
+import React, { useEffect, useState } from "react";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  useMapEvents,
+  useMap,
+} from "react-leaflet";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
+import { OpenStreetMapProvider } from "leaflet-geosearch";
+import { GeoSearchControl } from "leaflet-geosearch";
+
+const SearchControl = () => {
+  const map = useMap();
+
+  useEffect(() => {
+    const provider = new OpenStreetMapProvider();
+    const searchControl = new GeoSearchControl({
+      provider: provider,
+      autoComplete: true,
+      autoCompleteDelay: 250,
+      showMarker: false,
+      retainZoomLevel: true,
+    });
+
+    map.addControl(searchControl);
+
+    return () => {
+      map.removeControl(searchControl);
+    };
+  }, [map]);
+
+  return null;
+};
 
 const Address = ({ onPinDrop }) => {
-  const [viewport, setViewport] = useState({
-    latitude: 50.5,
-    longitude: 30.5,
-    zoom: 9,
-  });
-
   const [marker, setMarker] = useState(null);
-  const mapRef = useRef();
 
-  const handleClick = (event) => {
-    const [longitude, latitude] = event.lngLat;
-    setMarker({ latitude, longitude });
-    onPinDrop({ latitude, longitude });
+  const MapEvents = () => {
+    const map = useMapEvents({
+      click: (e) => {
+        const { lat, lng } = e.latlng;
+        setMarker({ latitude: lat, longitude: lng });
+        onPinDrop({ latitude: lat, longitude: lng });
+      },
+    });
+
+    return null;
   };
 
-  const handleViewportChange = useCallback(
-    (newViewport) => setViewport(newViewport),
-    []
-  );
-
   return (
-    <ReactMapGL
-      ref={mapRef}
-      {...viewport}
-      width="100%"
-      height="400px"
-      mapStyle="mapbox://styles/markkabierski/ckwdu1l7q096k15p7se9gvol3"
-      mapboxApiAccessToken={MAPBOX_TOKEN}
-      onViewportChange={handleViewportChange}
-      onClick={handleClick}
+    <MapContainer
+      center={[55.7558, 37.6173]}
+      zoom={9}
+      style={{ height: "400px", width: "100%" }}
     >
-      <Geocoder
-        mapRef={mapRef}
-        onViewportChange={handleViewportChange}
-        mapboxApiAccessToken={MAPBOX_TOKEN}
-        position="top-left"
+      <TileLayer
+        url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
       />
-      <NavigationControl showCompass={false} />
+
+      <MapEvents />
+      <SearchControl />
+
       {marker && (
         <Marker
-          latitude={marker.latitude}
-          longitude={marker.longitude}
-          offsetLeft={-10}
-          offsetTop={-20}
+          position={[marker.latitude, marker.longitude]}
+          icon={L.divIcon({ className: "custom-marker" })}
         >
-          <div style={{ color: "red", fontSize: "24px" }}>📍</div>
+          <Popup>Custom Marker</Popup>
         </Marker>
       )}
-    </ReactMapGL>
+    </MapContainer>
   );
 };
 

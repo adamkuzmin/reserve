@@ -2,12 +2,16 @@ import { Button, Form, Input, InputNumber, Upload } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import { Text14, Wrap16, Wrap30, Wrap60 } from "../../../common/text";
 import { LabelRow } from "../../../Filters/styles";
-import Address from "./blocks/address";
+
 import Cats from "./blocks/cats";
 import ImageMultiUploader from "./blocks/image-multi-upload";
 import ImageSingleUploader from "./blocks/image-single-upload";
 import Mapbox from "./blocks/map";
 import { Btn } from "./blocks/__styles";
+
+import dynamic from "next/dynamic";
+
+const Address = dynamic(() => import("./blocks/address"), { ssr: false });
 
 const Common = ({ cats }) => {
   return (
