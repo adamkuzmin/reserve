@@ -97,9 +97,9 @@ export const PTable = styled(Table)`
     transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
   }
 
-  &&& tr:hover > td:nth-child(2) {
+  /* &&& tr:hover > td:nth-child(2) {
     padding-left: 40px;
-  }
+  } */
 `;
 
 const SkeletonWrapper = styled.div`
@@ -164,73 +164,47 @@ const columns = [
     },
   },
   {
-    title: "Место",
-    dataIndex: "location",
-    key: "location",
+    title: "Город",
+    dataIndex: "city",
+    key: "city",
     width: "18%",
     render: (a) => <StyledText data-font="ibm">{a}</StyledText>,
   },
   {
     title: "Программа",
-    dataIndex: "categories",
-    key: "categories",
+    dataIndex: "cats",
+    key: "cats",
     width: "27%",
-    render: (
-      a,
-      {
-        residential = 0,
-        office = 0,
-        trading = 0,
-        culture = 0,
-        transport = 0,
-        mixed = 0,
-        urban = 0,
-        current = 0,
-        competition = 0,
-        art = 0,
-      }
-    ) => {
-      let categories = [];
-      if (residential) categories.push("Жилые объекты");
-      if (office) categories.push("Офисно-административные");
-      if (trading) categories.push("Торговые объекты");
-      if (culture) categories.push("Объекты культуры");
-      if (transport) categories.push("Инфрастуктура / транспорт");
-      if (mixed) categories.push("Смешанная функция");
-      if (urban) categories.push("Градостроительные концепции");
-      if (current) categories.push("Текущие объекты");
-      if (competition) categories.push("Конкурсные проекты");
-      if (art) categories.push("Арт-объекты и дизайн");
+    render: (a) => {
+      const filtered = [...a].filter((a, i) => i < 6);
 
       return (
         <CatsArray>
           <StyledText data-font="ibm">
-            <Space direction="vertical" size={3}>
-              {categories.splice(0, 2).map((category, i) => (
-                <Space>
-                  <SmallPick color={stc(category)} />
-                  <Paragraph key={`parCat:${i}`} style={{ marginBottom: "0" }}>
-                    {category}
-                  </Paragraph>
-                </Space>
-              ))}
-            </Space>
+            {filtered && filtered.length > 0 ? (
+              <Space direction="vertical" size={3}>
+                {filtered &&
+                  filtered.map((category, i) => (
+                    <Space>
+                      <SmallPick color={stc(category)} />
+                      <Paragraph
+                        key={`parCat:${i}`}
+                        style={{ marginBottom: "0" }}
+                      >
+                        {category}
+                      </Paragraph>
+                    </Space>
+                  ))}
+              </Space>
+            ) : (
+              <Space>
+                <i>(Нет категорий)</i>
+              </Space>
+            )}
           </StyledText>
         </CatsArray>
       );
     },
-  },
-  {
-    title: "Статус",
-    dataIndex: "built",
-    key: "built",
-    filters: [
-      { text: "Построен", value: "Построен" },
-      { text: "Конкурс", value: "Конкурс" },
-    ],
-    onFilter: (value, record) => record.status.includes(value),
-    width: "8%",
-    render: (a) => <StyledText data-font="ibm">{a}</StyledText>,
   },
 ];
 
@@ -259,16 +233,6 @@ const wireColumns = [
     title: "",
     width: "20%",
     key: "wire3",
-    render: () => (
-      <SkeletonWrapper>
-        <Skeleton.Input size="default" style={{ height: "24px" }} active />
-      </SkeletonWrapper>
-    ),
-  },
-  {
-    title: "",
-    width: "20%",
-    key: "wire4",
     render: () => (
       <SkeletonWrapper>
         <Skeleton.Input size="default" style={{ height: "24px" }} active />

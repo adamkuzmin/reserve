@@ -118,7 +118,15 @@ const Projects = () => {
         let years = [];
 
         const _data = data.map((item = {}) => {
-          const { name, coverhor, coververt, year, cats = [], _id } = item;
+          const {
+            name,
+            coverhor,
+            coververt,
+            city,
+            year,
+            cats = [],
+            _id,
+          } = item;
 
           cats.map((cat) => {
             if (!categories.includes(cat)) {
@@ -135,6 +143,7 @@ const Projects = () => {
             nameen: name,
             coververt,
             coverhor,
+            city,
             lat: 55.695804,
             lng: 37.485664,
             built: 1,
@@ -166,8 +175,6 @@ const Projects = () => {
       })
       .catch(console.error);
   }, [logId, _await]);
-
-  console.log("activeCts", activeCts);
 
   useEffect(() => {
     if (preData && activeCts && activeYrs) {

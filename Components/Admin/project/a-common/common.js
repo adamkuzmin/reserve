@@ -2,6 +2,7 @@ import { Button, Form, Input, InputNumber, Upload } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import { Text14, Wrap16, Wrap30, Wrap60 } from "../../../common/text";
 import { LabelRow } from "../../../Filters/styles";
+import Address from "./blocks/address";
 import Cats from "./blocks/cats";
 import ImageMultiUploader from "./blocks/image-multi-upload";
 import ImageSingleUploader from "./blocks/image-single-upload";
@@ -103,6 +104,15 @@ const Common = ({ cats }) => {
             <InputNumber style={{ width: "100%" }} placeholder="Год" />
           </Form.Item>
         </Wrap30>
+
+        <br />
+        <br />
+        <Wrap30 data-font="Wremena" style={{ marginBottom: "24px" }}>
+          <h3>4. Карта</h3>
+        </Wrap30>
+        <Form.Item>
+          <Address />
+        </Form.Item>
 
         <br />
         <br />

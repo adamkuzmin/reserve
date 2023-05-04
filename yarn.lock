@@ -5509,7 +5509,7 @@ react-is@^16.12.0, react-is@^16.13.1, react-is@^16.7.0:
 
 react-map-gl-geocoder@^2.2.0:
   version "2.2.0"
-  resolved "https://registry.npmjs.org/react-map-gl-geocoder/-/react-map-gl-geocoder-2.2.0.tgz"
+  resolved "https://registry.yarnpkg.com/react-map-gl-geocoder/-/react-map-gl-geocoder-2.2.0.tgz#621d18cbd1770d8934f895de7a827fedd7bbe333"
   integrity sha512-OtGaH+Fep/MAEr7Y7Q9N91jca3sskj82o2g/VG00UPtSYapsLRwfhgvD8oTQrw4Mzxmn8TAFfbi5ZbQBpNF6ag==
   dependencies:
     "@mapbox/mapbox-gl-geocoder" "4.7.0"
