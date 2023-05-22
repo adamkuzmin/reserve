@@ -18,6 +18,11 @@ const PageHead = () => {
 
       <link rel="preload" as="image" href={`/icons/navlogo-black.png`}></link>
       <link rel="preload" as="image" href={`/icons/navlogo-white.png`}></link>
+
+      <link
+        href="https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css"
+        rel="stylesheet"
+      />
     </Head>
   );
 };

@@ -2,7 +2,6 @@
 import * as React from "react";
 import { useContext } from "react";
 import { useState, useRef, useMemo, useEffect } from "react";
-import ReactMapGL, { Marker } from "react-map-gl";
 import { Grid } from "antd";
 import { useRouter } from "next/router";
 
@@ -13,12 +12,11 @@ import stc from "string-to-color";
 
 import { MouseContext } from "../common/Cursor/mouse-context";
 import { projectData } from "./data/data";
+import mapboxgl from "mapbox-gl";
 const { useBreakpoint } = Grid;
 
 export const MAPBOX_TOKEN =
   "pk.eyJ1IjoibWFya2thYmllcnNraSIsImEiOiJja2lpa3N2c3QwaXVrMnltbHVzcXZ3dDU2In0.t_Lcd-0hPAJSk75HCJFw0g"; // Set your mapbox token here
-
-const MapGLWrapped = styled(ReactMapGL)``;
 
 export const CirclePoint = styled.div`
   width: 22px;
@@ -72,6 +70,27 @@ const MapWrapper = styled.div`
       margin-left: -20px;
     }
   }
+
+  && .mapboxgl-canvas-container {
+    position: relative;
+    height: 100%;
+  }
+
+  && .marker {
+    border: 1px solid rgba(0, 0, 0, 0.5) !important;
+
+    &[data-type="0"] {
+      border-radius: 50%;
+    }
+
+    &[data-type="1"] {
+      transform: rotate(45deg);
+    }
+
+    &[data-type="2"] {
+      border-radius: 30%;
+    }
+  }
 `;
 
 const StatusLoader = styled.div`
@@ -89,7 +108,32 @@ const StatusLoader = styled.div`
 `;
 
 const ProjectsMap = ({ stateData }) => {
-  const { cursorType, cursorChangeHandler } = useContext(MouseContext);
+  const mapContainerRef = useRef(null);
+  const [map, setMap] = useState(null);
+  const markersRef = useRef([]);
+  //const [markers, setMarkers] = useState(null);
+  const { cursorChangeHandler } = useContext(MouseContext);
+  const router = useRouter();
+
+  // Initialize map when component mounts
+  useEffect(() => {
+    const map = new mapboxgl.Map({
+      container: "map",
+      accessToken:
+        "pk.eyJ1IjoibWFya2thYmllcnNraSIsImEiOiJjbGZocWVxc2g0YnZuM3pudG1uNDllZ3c0In0.SUhq0ncJhbm76bV4IXdEnQ",
+      style: "mapbox://styles/markkabierski/ckwdu1l7q096k15p7se9gvol3",
+      center: [37.612, 55.76],
+      zoom: 10,
+    });
+
+    map.on("load", () => {
+      setMap(map);
+      setMapLoaded(true);
+      map.resize();
+    });
+
+    return () => map.remove();
+  }, []);
 
   const screens = useBreakpoint();
 
@@ -98,29 +142,69 @@ const ProjectsMap = ({ stateData }) => {
   const [pinsLoaded, setPinsLoaded] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setMapLoaded(true), 800);
+    if (stateData && mapLoaded && pinsLoaded && map) {
+      let _stateData = [...stateData].filter(({ lng, lat }) => lng && lat);
 
-    return () => {
-      clearTimeout(timer);
-    };
-  });
+      // Remove old markers
+      markersRef.current.forEach((marker) => marker.remove());
 
-  /* */
+      // Reset markers array
+      markersRef.current = [];
 
-  const [viewport, setViewport] = useState({
-    latitude: 55.76,
-    longitude: 37.612,
-    zoom: 10,
-    bearing: 0,
-    pitch: 0,
-  });
+      console.log("_stateData", _stateData);
 
-  const RectRef = useRef();
+      _stateData.forEach(({ lng, lat, ...other }, i) => {
+        const { coververt, coverhor, nameru, nameen, id, cats = [] } = other;
 
-  const markers = useMemo(() => {
-    return [];
+        const [category] = cats.length > 0 ? cats : ["Uknown"];
 
-    if (stateData && false)
+        const coverClass = i % 2 === 0 ? "renderHor-1" : "renderVer-3";
+
+        const cover = i % 2 === 0 ? coververt : coverhor;
+        const metaSrc = cover ? cover : "";
+
+        const markerElement = document.createElement("div");
+        markerElement.className = "marker";
+        markerElement.style.background = stc(category);
+        markerElement.style.width = "22px";
+        markerElement.style.height = "22px";
+        markerElement.style.border = `2.2px solid ${
+          stc(category) ? stc(category) : "black"
+        }`;
+        markerElement.style.filter = "brightness(1.35)";
+        markerElement.setAttribute("data-type", `${i % 4}`);
+
+        markerElement.addEventListener("click", () => {
+          cursorChangeHandler(null);
+          router.push("/project");
+        });
+        markerElement.addEventListener("mouseenter", () => {
+          cursorChangeHandler({
+            url: metaSrc,
+            coverClass,
+            nameru,
+            nameen,
+          });
+        });
+        markerElement.addEventListener("mouseleave", () => {
+          cursorChangeHandler(null);
+        });
+
+        const marker = new mapboxgl.Marker({
+          element: markerElement,
+          anchor: "center",
+        })
+          .setLngLat([lng, lat])
+          .addTo(map);
+
+        // Store marker reference so we can remove it later
+        markersRef.current.push(marker);
+      });
+    }
+  }, [stateData, mapLoaded, map, pinsLoaded]);
+
+  /* const markers = useMemo(() => {
+    if (stateData) {
       return stateData.map((props = {}, i) => {
         const { lat, lng, coververt, coverhor, nameru, nameen } = props;
         const {
@@ -154,51 +238,56 @@ const ProjectsMap = ({ stateData }) => {
 
         const router = useRouter();
 
-        if (lat && lat > 0 && lng && lng > 0)
-          return (
-            <Marker
-              latitude={lat}
-              longitude={lng}
-              offsetLeft={-15}
-              offsetTop={-15}
-              key={`marker:${i}`}
-            >
-              <CirclePoint
-                color={stc(color)}
-                data-type={`${i % 4}`}
-                onClick={() => {
-                  cursorChangeHandler(null);
-                  router.push("/project");
-                }}
-                onMouseEnter={() => {
-                  return cursorChangeHandler({
-                    url: metaSrc,
-                    coverClass,
-                    nameru,
-                    nameen,
-                  });
-                }}
-                onMouseLeave={() => cursorChangeHandler(null)}
-              />
-            </Marker>
-          );
+        if (lat && lat > 0 && lng && lng > 0) {
+          const markerElement = document.createElement("div");
+          markerElement.className = "marker";
+          markerElement.style.background = stc(color);
+          markerElement.style.width = "22px";
+          markerElement.style.height = "22px";
+          markerElement.style.border = `2.2px solid ${color ? color : "black"}`;
+          markerElement.style.filter = "brightness(1.75)";
+          markerElement.setAttribute("data-type", `${i % 4}`);
+          markerElement.addEventListener("click", () => {
+            cursorChangeHandler(null);
+            router.push("/project");
+          });
+          markerElement.addEventListener("mouseenter", () => {
+            cursorChangeHandler({
+              url: metaSrc,
+              coverClass,
+              nameru,
+              nameen,
+            });
+          });
+          markerElement.addEventListener("mouseleave", () => {
+            cursorChangeHandler(null);
+          });
 
-        return;
+          return new mapboxgl.Marker({
+            element: markerElement,
+            anchor: "center",
+          })
+            .setLngLat([lng, lat])
+            .addTo(map);
+        }
+
+        return null;
       });
-  }, [stateData]);
+    }
+  }, [stateData]); */
 
   useEffect(() => {
-    if (mapLoaded && markers) {
+    if (mapLoaded && stateData) {
       const timer = setTimeout(() => setPinsLoaded(true), 500);
 
       return () => {
         clearTimeout(timer);
       };
     }
-  }, [mapLoaded, markers]);
+  }, [mapLoaded, stateData]);
 
   return (
-    <MapWrapper>
+    <MapWrapper style={{ position: "relative" }}>
       {!mapLoaded && (
         <StatusLoader>
           <Text24>Загрузка карты...</Text24>
@@ -211,20 +300,15 @@ const ProjectsMap = ({ stateData }) => {
         </StatusLoader>
       )}
 
-      {mapLoaded && (
-        <MapGLWrapped
-          {...viewport}
-          width="100%"
-          height={screens.sm ? "46vw" : "100%"}
-          mapStyle="mapbox://styles/markkabierski/ckwdu1l7q096k15p7se9gvol3"
-          onViewportChange={setViewport}
-          mapboxApiAccessToken={
-            "pk.eyJ1IjoibWFya2thYmllcnNraSIsImEiOiJjbGZocWVxc2g0YnZuM3pudG1uNDllZ3c0In0.SUhq0ncJhbm76bV4IXdEnQ"
-          }
-        >
-          {/* markers && pinsLoaded && markers */}
-        </MapGLWrapped>
-      )}
+      <div
+        ref={mapContainerRef}
+        id="map"
+        style={{
+          width: "100%",
+          height: screens.sm ? "46vw" : "100%",
+          position: "relative",
+        }}
+      ></div>
     </MapWrapper>
   );
 };
