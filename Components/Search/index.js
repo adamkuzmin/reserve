@@ -74,8 +74,6 @@ const SearchPanel = ({ visible }) => {
   const [note, showNote] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
 
-  console.log("searchResults", searchResults);
-
   const handleSearch = async (query) => {
     if (query.length >= 1) {
       setLoading(true);

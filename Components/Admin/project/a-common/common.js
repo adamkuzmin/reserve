@@ -13,7 +13,7 @@ import dynamic from "next/dynamic";
 
 const Address = dynamic(() => import("./blocks/address"), { ssr: false });
 
-const Common = ({ cats }) => {
+const Common = ({ cats, form }) => {
   return (
     <>
       <div
@@ -54,6 +54,14 @@ const Common = ({ cats }) => {
               ]}
             >
               <Input placeholder="Точный адрес объекта" />
+            </Form.Item>
+
+            <Form.Item name="lng" hidden>
+              <Input />
+            </Form.Item>
+
+            <Form.Item name="lat" hidden>
+              <Input />
             </Form.Item>
           </div>
         </Wrap30>
@@ -115,7 +123,7 @@ const Common = ({ cats }) => {
           <h3>4. Карта</h3>
         </Wrap30>
         <Form.Item>
-          <Address />
+          <Address form={form} />
         </Form.Item>
 
         <br />

@@ -118,7 +118,9 @@ const ProjectsMap = ({ stateData }) => {
   const RectRef = useRef();
 
   const markers = useMemo(() => {
-    if (stateData)
+    return [];
+
+    if (stateData && false)
       return stateData.map((props = {}, i) => {
         const { lat, lng, coververt, coverhor, nameru, nameen } = props;
         const {
@@ -216,9 +218,11 @@ const ProjectsMap = ({ stateData }) => {
           height={screens.sm ? "46vw" : "100%"}
           mapStyle="mapbox://styles/markkabierski/ckwdu1l7q096k15p7se9gvol3"
           onViewportChange={setViewport}
-          mapboxApiAccessToken={MAPBOX_TOKEN}
+          mapboxApiAccessToken={
+            "pk.eyJ1IjoibWFya2thYmllcnNraSIsImEiOiJjbGZocWVxc2g0YnZuM3pudG1uNDllZ3c0In0.SUhq0ncJhbm76bV4IXdEnQ"
+          }
         >
-          {markers && pinsLoaded && markers}
+          {/* markers && pinsLoaded && markers */}
         </MapGLWrapped>
       )}
     </MapWrapper>

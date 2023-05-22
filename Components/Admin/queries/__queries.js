@@ -4,6 +4,8 @@ export const projectFields = groq`
     _id,
     name,
     description,
+    lng,
+    lat,
     cr,
     address,
     city,

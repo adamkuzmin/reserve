@@ -1,78 +1,78 @@
 import React, { useEffect, useState } from "react";
-import {
-  MapContainer,
-  TileLayer,
-  Marker,
-  Popup,
-  useMapEvents,
-  useMap,
-} from "react-leaflet";
-import L from "leaflet";
-import "leaflet/dist/leaflet.css";
-import { OpenStreetMapProvider } from "leaflet-geosearch";
-import { GeoSearchControl } from "leaflet-geosearch";
+import Canvas from "@/Components/ProjectsLayout/map/canvas";
+import SearchAddress from "./address/search-address";
+import DraggablePin from "./address/draggable-pin";
+import mapboxgl from "mapbox-gl";
+import { MAPBOX_TOKEN } from "@/Components/ProjectsLayout/ProjectsMap";
 
-const SearchControl = () => {
-  const map = useMap();
+const accessToken =
+  "pk.eyJ1IjoibWFya2thYmllcnNraSIsImEiOiJjbGZocWVxc2g0YnZuM3pudG1uNDllZ3c0In0.SUhq0ncJhbm76bV4IXdEnQ";
 
-  useEffect(() => {
-    const provider = new OpenStreetMapProvider();
-    const searchControl = new GeoSearchControl({
-      provider: provider,
-      autoComplete: true,
-      autoCompleteDelay: 250,
-      showMarker: false,
-      retainZoomLevel: true,
+const Address = ({ form }) => {
+  const initialLat = form.getFieldValue("lat");
+  const initialLng = form.getFieldValue("lng");
+  const [marker, setMarker] = useState(
+    initialLat && initialLng ? { lat: initialLat, lng: initialLng } : null
+  );
+
+  const [map, setMap] = useState(null);
+
+  const updateMarker = (lng, lat) => {
+    form.setFieldsValue({
+      lat,
+      lng,
     });
 
-    map.addControl(searchControl);
-
-    return () => {
-      map.removeControl(searchControl);
-    };
-  }, [map]);
-
-  return null;
-};
-
-const Address = ({ onPinDrop }) => {
-  const [marker, setMarker] = useState(null);
-
-  const MapEvents = () => {
-    const map = useMapEvents({
-      click: (e) => {
-        const { lat, lng } = e.latlng;
-        setMarker({ latitude: lat, longitude: lng });
-        onPinDrop({ latitude: lat, longitude: lng });
-      },
-    });
-
-    return null;
+    setMarker({ lng, lat });
   };
 
+  useEffect(() => {
+    const initialLat = form.getFieldValue("lat");
+    const initialLng = form.getFieldValue("lng");
+
+    let center = [37.618423, 55.751244];
+    let zoom = 12;
+    if (initialLat && initialLng) {
+      center = [initialLng, initialLat];
+      zoom = 14;
+    }
+
+    const map = new mapboxgl.Map({
+      container: "map",
+      accessToken,
+      style: "mapbox://styles/markkabierski/ckwdu1l7q096k15p7se9gvol3",
+      center,
+      zoom,
+    });
+
+    map.on("load", () => {
+      setMap(map);
+    });
+
+    map.on("click", (e) => {
+      const { lng, lat } = e.lngLat;
+      updateMarker(lng, lat);
+    });
+
+    return () => {
+      map.remove();
+    };
+  }, [form]);
+
   return (
-    <MapContainer
-      center={[55.7558, 37.6173]}
-      zoom={9}
-      style={{ height: "400px", width: "100%" }}
-    >
-      <TileLayer
-        url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+    <div style={{ width: "100%", height: "400px" }}>
+      <SearchAddress {...{ map, updateMarker }} />
+
+      <DraggablePin
+        {...{
+          marker,
+          updateMarker,
+          map,
+        }}
       />
 
-      <MapEvents />
-      <SearchControl />
-
-      {marker && (
-        <Marker
-          position={[marker.latitude, marker.longitude]}
-          icon={L.divIcon({ className: "custom-marker" })}
-        >
-          <Popup>Custom Marker</Popup>
-        </Marker>
-      )}
-    </MapContainer>
+      <div id="map" style={{ width: "100%", height: "100%" }}></div>
+    </div>
   );
 };
 
