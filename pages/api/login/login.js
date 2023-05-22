@@ -3,7 +3,10 @@ import { withIronSession } from "next-iron-session";
 const handler = async (req, res) => {
   const { username, password } = req.body;
   // Check if the username and password are valid
-  if (username === "admin" && password === "1234") {
+  if (
+    username === "admin" &&
+    password === "cx5fiZYdfASDaksjalsdklaklazzRpUjHsMis"
+  ) {
     // Save the authenticated username in the session
     req.session.set("username", username);
     await req.session.save();
