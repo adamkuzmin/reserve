@@ -176,7 +176,7 @@ const ProjectsMap = ({ stateData }) => {
 
         markerElement.addEventListener("click", () => {
           cursorChangeHandler(null);
-          router.push("/project");
+          router.push(`/project/${id}`);
         });
         markerElement.addEventListener("mouseenter", () => {
           cursorChangeHandler({
