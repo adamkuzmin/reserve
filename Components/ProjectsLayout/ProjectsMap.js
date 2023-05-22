@@ -151,8 +151,6 @@ const ProjectsMap = ({ stateData }) => {
       // Reset markers array
       markersRef.current = [];
 
-      console.log("_stateData", _stateData);
-
       _stateData.forEach(({ lng, lat, ...other }, i) => {
         const { coververt, coverhor, nameru, nameen, id, cats = [] } = other;
 

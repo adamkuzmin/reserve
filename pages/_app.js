@@ -74,6 +74,8 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <ConfigProvider locale={ruRU}>
+      
+
       <MouseContextProvider>
         <GlobalStyle />
         <PageHead />
