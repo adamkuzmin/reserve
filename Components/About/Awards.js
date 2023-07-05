@@ -7,7 +7,7 @@ import { Space } from "antd";
 import { projectData } from "../ProjectsLayout/data/data";
 import { MouseContext } from "../common/Cursor/mouse-context";
 import { sanity } from "@/Components/Client/sanity/sanity-client";
-import { AwardsRefQuery } from "../Admin/queries/__queries";
+import { AwardsHeaderQuery, AwardsRefQuery } from "../Admin/queries/__queries";
 
 import { intro, awardsData } from "./awards/data";
 
@@ -177,6 +177,27 @@ const Awards = () => {
     return extProjects;
   }, [fetched, projects, refs]);
 
+  const [values, setValues] = useState();
+  const [isFetched1, setFetched1] = useState(false);
+
+  useEffect(() => {
+    const query = AwardsHeaderQuery;
+
+    sanity
+      .fetch(query)
+      .then((data) => {
+        setValues(data);
+        setFetched1(true);
+      })
+      .catch(() => setFetched1(true));
+  }, []);
+
+  const initialValues = useMemo(() => {
+    if (!(values && isFetched1)) return;
+
+    if (values.length > 0) return values[0];
+  }, [values, isFetched1]);
+
   return (
     <>
       <Content ref={contentRef}>
@@ -186,7 +207,7 @@ const Awards = () => {
         <Gap sheight={"60px"} />
 
         <LeadDescription>
-          <Text36>{intro.descr[lang]}</Text36>
+          {initialValues && <Text36>{initialValues.description}</Text36>}
         </LeadDescription>
 
         {awardsUnits &&

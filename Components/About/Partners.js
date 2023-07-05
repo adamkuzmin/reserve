@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import styled from "styled-components";
 import { useStore } from "../../Store/useStore";
 
@@ -17,7 +17,7 @@ import {
 } from "./common/styles";
 
 import { intro, partnersData } from "./partners/data";
-import { PartnersQuery } from "../Admin/queries/__queries";
+import { PartnersHeaderQuery, PartnersQuery } from "../Admin/queries/__queries";
 import { sanity } from "../Client/sanity/sanity-client";
 import { Tooltip } from "antd";
 
@@ -101,6 +101,27 @@ const Awards = () => {
     return () => window.removeEventListener("scroll", onScroll);
   });
 
+  const [values, setValues] = useState();
+  const [isFetched1, setFetched1] = useState(false);
+
+  useEffect(() => {
+    const query = PartnersHeaderQuery;
+
+    sanity
+      .fetch(query)
+      .then((data) => {
+        setValues(data);
+        setFetched1(true);
+      })
+      .catch(() => setFetched1(true));
+  }, []);
+
+  const initialValues = useMemo(() => {
+    if (!(values && isFetched1)) return;
+
+    if (values.length > 0) return values[0];
+  }, [values, isFetched1]);
+
   return (
     <>
       <Content ref={contentRef}>
@@ -110,7 +131,7 @@ const Awards = () => {
         <Gap sheight={"60px"} />
 
         <LeadDescription>
-          <Text36>{intro.descr[lang]}</Text36>
+          {initialValues && <Text36>{initialValues.description}</Text36>}
         </LeadDescription>
 
         <Gap sheight={"120px"} />

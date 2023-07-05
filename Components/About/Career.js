@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useMemo } from "react";
 import styled from "styled-components";
 import { useStore } from "../../Store/useStore";
 
@@ -18,6 +18,7 @@ import { Grid, Row, Col, Form } from "antd";
 import groq from "groq";
 import { sanity } from "../Client/sanity/sanity-client";
 import QuillEditor from "../Admin/project/b-editor/blocks/quill";
+import { VacanciesHeaderQuery } from "../Admin/queries/__queries";
 
 const { useBreakpoint } = Grid;
 
@@ -25,8 +26,9 @@ const BackCover = styled.div`
   width: 100vw;
   min-height: 41vw;
 
-  background: url("/about/office/4.jpg");
+  background: url(${({ fill }) => (fill ? `"${fill}"` : `""`)});
   background-size: cover;
+  background-position: center;
 `;
 
 const MainContent = styled.div`
@@ -107,9 +109,30 @@ const Career = () => {
     return () => window.removeEventListener("scroll", onScroll);
   });
 
+  const [values, setValues] = useState();
+  const [isFetched, setFetched] = useState(false);
+
+  useEffect(() => {
+    const query = VacanciesHeaderQuery;
+
+    sanity
+      .fetch(query)
+      .then((data) => {
+        setValues(data);
+        setFetched(true);
+      })
+      .catch(() => setFetched(true));
+  }, []);
+
+  const initialValues = useMemo(() => {
+    if (!(values && isFetched)) return;
+
+    if (values.length > 0) return values[0];
+  }, [values, isFetched]);
+
   return (
     <>
-      <BackCover ref={backRef}>
+      <BackCover fill={initialValues && initialValues.image} ref={backRef}>
         <Content background="none">
           <Gap sheight={"120px"} />
           <LocalTitle size={60} style={{ color: "white" }}>
@@ -121,9 +144,11 @@ const Career = () => {
             <Row>
               {screens.lg && <Gap swidth={`12.1vw`} />}
               <Col span={screens.lg ? 15 : 24}>
-                <Text60 style={{ color: "white" }} data-font="wremena">
-                  {cover.descr[lang]}
-                </Text60>
+                {initialValues && (
+                  <Text60 style={{ color: "white" }} data-font="wremena">
+                    {initialValues.description}
+                  </Text60>
+                )}
               </Col>
             </Row>
           </ContentFlex>
@@ -142,8 +167,14 @@ const Career = () => {
           {screens.sm && <Gap swidth={`12.1vw`} />}
 
           <MainContent>
-            <Text36 style={{ color: "#939393" }}>{career.nojobs[lang]}</Text36>
-            <Gap sheight={`90px`} />
+            {(!projects || (projects && projects.length === 0)) && (
+              <>
+                <Text36 style={{ color: "#939393" }}>
+                  {career.nojobs[lang]}
+                </Text36>
+                <Gap sheight={`90px`} />
+              </>
+            )}
 
             {projects &&
               projects.map((item = {}) => {

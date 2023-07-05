@@ -101,15 +101,33 @@ const AdminPage = () => {
           </Card>
         </Link>
 
+        <Link href="/admin/header/partners">
+          <Card fill={"#008769"}>
+            <Text24>Партнеры (Верхняя шапка)</Text24>
+          </Card>
+        </Link>
+
         <Link href="/admin/partners">
           <Card fill={"#008769"}>
             <Text24>Партнеры</Text24>
           </Card>
         </Link>
 
+        <Link href="/admin/header/vacancies">
+          <Card fill={"#7A2383"}>
+            <Text24>Вакансии (Верхняя шапка)</Text24>
+          </Card>
+        </Link>
+
         <Link href="/admin/vacancies">
           <Card fill={"#7A2383"}>
             <Text24>Вакансии</Text24>
+          </Card>
+        </Link>
+
+        <Link href="/admin/header/awards">
+          <Card fill={"#FFC400"}>
+            <Text24>Награды (Верхняя шапка)</Text24>
           </Card>
         </Link>
 

@@ -54,6 +54,28 @@ export const HomeQuery = groq`
     }
 `;
 
+export const VacanciesHeaderQuery = groq`
+    *[_type == "vacancies_header" ] {
+        _id,
+        description,
+        image
+    }
+`;
+
+export const PartnersHeaderQuery = groq`
+    *[_type == "vacancies_header" ] {
+        _id,
+        description
+    }
+`;
+
+export const AwardsHeaderQuery = groq`
+    *[_type == "vacancies_header" ] {
+        _id,
+        description
+    }
+`;
+
 export const SocialNetsQuery = groq`
     *[_type == "social_nets" ] {
         _id,
