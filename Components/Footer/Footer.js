@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Text36, Text30, Text24, Text14 } from "../common/text";
 import { Space } from "antd";
 import { sanity } from "@/Components/Client/sanity/sanity-client";
@@ -7,6 +7,7 @@ import { sanity } from "@/Components/Client/sanity/sanity-client";
 import { useStore } from "../../Store/useStore";
 import groq from "groq";
 import Link from "next/link";
+import { ContactsQuery } from "../Admin/queries/__queries";
 
 const Foot = styled.div`
   width: 100%;
@@ -310,6 +311,30 @@ const Footer = () => {
       .catch(console.error);
   }, []);
 
+  const [contactsValues, setContactsValues] = useState();
+  const [isContactsFetched, setContactsFetched] = useState(false);
+
+  useEffect(() => {
+    const query = ContactsQuery;
+
+    sanity
+      .fetch(query)
+      .then((data) => {
+        setContactsValues(data);
+        setContactsFetched(true);
+      })
+      .catch(() => setContactsFetched(true));
+  }, []);
+
+  const initialContactsValues = useMemo(() => {
+    const values = contactsValues;
+    const isFetched = isContactsFetched;
+
+    if (!(values && isFetched)) return;
+
+    if (values.length > 0) return values[0];
+  }, [contactsValues, isContactsFetched]);
+
   return (
     <Foot ref={FooterRef}>
       <Foot.Search>
@@ -332,6 +357,9 @@ const Footer = () => {
               return { _id, name, enname: name, await: name };
             });
           }
+
+          if (key.title === "Контакты" && !initialContactsValues)
+            return <Foot.Col key={`Foot.Col${i}`}></Foot.Col>;
 
           return (
             <Foot.Col key={`Foot.Col${i}`}>
@@ -368,43 +396,41 @@ const Footer = () => {
                       style={{ maxWidth: "350px" }}
                     >
                       <Space direction="vertical" size={10}>
-                        <Text24 style={{ fontWeight: "600" }}>
-                          +7 495 755 69 60
-                        </Text24>
-                        <Text24 style={{ fontWeight: "600" }}>
-                          +7 495 280 75 25
-                        </Text24>
+                        {initialContactsValues.phone1 && (
+                          <Text24 style={{ fontWeight: "600" }}>
+                            {initialContactsValues.phone1}
+                          </Text24>
+                        )}
+                        {initialContactsValues.phone2 && (
+                          <Text24 style={{ fontWeight: "600" }}>
+                            {initialContactsValues.phone2}
+                          </Text24>
+                        )}
                       </Space>
 
                       <Space direction="vertical" size={10}>
                         <Text24 style={{ fontWeight: "600" }}>
-                          {lang === "ru"
-                            ? "ООО «ТПО “Резерв”»"
-                            : "TPO Reserve Ltd."}
+                          {initialContactsValues.fullname}
                         </Text24>
                         <Text14 style={{ color: "rgb(162 162 162)" }}>
                           {lang === "ru" ? (
                             <>
                               Фактический адрес: <br />
-                              Ленинградский проспект, 31А стр. 1, Москва,
-                              125284, Россия
+                              {initialContactsValues.actual_location}
                               <br />
                               <br />
                               Юридический адрес:
-                              <br /> Ул. Грузинская Б. дом 20, офис 4, Москва,
-                              123242, Россия
+                              <br /> {initialContactsValues.domicile}
                             </>
                           ) : (
                             <>
                               Actual address: <br />
-                              31A, Leningradsky prospect, bld. 1, Moscow,
-                              125284, Russia
+                              {initialContactsValues.actual_location}
                               <br />
                               <br />
                               Legal address:
                               <br />
-                              20 Gruzinskaya str., office 4, Moscow, 123242,
-                              Russia
+                              {initialContactsValues.domicile}
                             </>
                           )}
                         </Text14>
@@ -417,7 +443,7 @@ const Footer = () => {
                             : "Cooperation and common issues"}
                         </Text24>
                         <Text24 style={{ textDecoration: "underline" }}>
-                          info@reserve.ru
+                          {initialContactsValues.issues_email}
                         </Text24>
                       </Space>
 
@@ -426,7 +452,7 @@ const Footer = () => {
                           {lang === "ru" ? "Пресса" : "Press"}
                         </Text24>
                         <Text24 style={{ textDecoration: "underline" }}>
-                          press@reserve.ru
+                          {initialContactsValues.press_email}
                         </Text24>
                       </Space>
 
@@ -437,22 +463,10 @@ const Footer = () => {
                             : "Working in the Reserves"}
                         </Text24>
                         <Text14 style={{ color: "rgb(162 162 162)" }}>
-                          {lang === "ru" ? (
-                            <>
-                              Мы всегда заинтересованы в талантах! Присылайте
-                              ваше портфолио и резюме. Размер прикрепленных к
-                              письму файлов не должны превышать 10 мб.
-                            </>
-                          ) : (
-                            <>
-                              We are always interested in talent! Send your
-                              portfolio and CV. Please send your portfolio and
-                              CV to us. of your email should not exceed 10 MB.
-                            </>
-                          )}
+                          {initialContactsValues.hunt_description}
                         </Text14>
                         <Text24 style={{ textDecoration: "underline" }}>
-                          ok@reserve.ru
+                          {initialContactsValues.hunt_email}
                         </Text24>
                       </Space>
                     </Space>

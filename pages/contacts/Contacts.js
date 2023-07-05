@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useMemo } from "react";
 import styled from "styled-components";
 import { useStore } from "../../Store/useStore";
 
@@ -15,6 +15,8 @@ import { Text60, Text30, Text24 } from "../../Components/common/text";
 import ReactMapGL, { Marker } from "react-map-gl";
 import mapboxgl from "mapbox-gl";
 import { CirclePoint } from "../../Components/ProjectsLayout/ProjectsMap";
+import { sanity } from "@/Components/Client/sanity/sanity-client";
+import { ContactsQuery } from "@/Components/Admin/queries/__queries";
 
 const { useBreakpoint } = Grid;
 
@@ -64,14 +66,6 @@ const BlockTitle = styled.div`
 const Contacts = () => {
   const screens = useBreakpoint();
 
-  const [viewport, setViewport] = useState({
-    latitude: 55.76,
-    longitude: 37.612,
-    zoom: 10,
-    bearing: 0,
-    pitch: 0,
-  });
-
   const blackLogo = useStore((state) => state.blackLogo);
   const setBlackLogo = useStore((state) => state.setBlackLogo);
 
@@ -92,6 +86,37 @@ const Contacts = () => {
     return () => window.removeEventListener("scroll", onScroll);
   });
 
+  const [values, setValues] = useState();
+  const [isFetched, setFetched] = useState(false);
+
+  useEffect(() => {
+    const query = ContactsQuery;
+
+    sanity
+      .fetch(query)
+      .then((data) => {
+        setValues(data);
+        setFetched(true);
+      })
+      .catch(() => setFetched(true));
+  }, []);
+
+  const initialValues = useMemo(() => {
+    if (!(values && isFetched)) return;
+
+    if (values.length > 0) return values[0];
+  }, [values, isFetched]);
+
+  const [viewport, setViewport] = useState({
+    latitude: 55.76,
+    longitude: 37.612,
+    zoom: 10,
+    bearing: 0,
+    pitch: 0,
+  });
+
+  if (!initialValues) return <></>;
+
   return (
     <div>
       <NavRight />
@@ -109,51 +134,49 @@ const Contacts = () => {
                 <Col span={screens.lg ? 16 : 24}>
                   <InfoBlock>
                     <BlockTitle>
-                      <Text30>ООО «ТПО “Резерв”»</Text30>
+                      <Text30>{initialValues.fullname}</Text30>
                     </BlockTitle>
+                    <br />
                     <Text24>
                       Фактический адрес:
-                      <br /> Ленинградский проспект, 31А стр. 1, Москва, 125284,
-                      Россия <br />
+                      <br /> {initialValues.actual_location} <br />
+                      <br />
                       Юридический адрес:
-                      <br /> Ул. Грузинская Б. дом 20, офис 4, Москва, 123242,
-                      Россия
+                      <br /> {initialValues.domicile}
                     </Text24>
                   </InfoBlock>
                   <InfoBlock>
                     <BlockTitle>
-                      <Text30>+7 495 755 69 60</Text30>
-                      <Text30>+7 495 280 75 25</Text30>
+                      {initialValues.phone1 && (
+                        <Text30>{initialValues.phone1}</Text30>
+                      )}
+                      {initialValues.phone2 && (
+                        <Text30>{initialValues.phone2}</Text30>
+                      )}
                     </BlockTitle>
                   </InfoBlock>
                   <InfoBlock>
-                    <Text24>
-                      Сообщите о своем визите заранее, чтобы мы заказали для вас
-                      пропуск.
-                    </Text24>
+                    <Text24>{initialValues.comment}</Text24>
                   </InfoBlock>
                   <InfoBlock>
-                    <BlockTitle>
+                    <BlockTitle style={{ paddingBottom: "0.5rem" }}>
                       <Text30>Сотрудничество и общие вопросы</Text30>
                     </BlockTitle>
-                    <Text30>info@reserve.ru</Text30>
+                    <Text30>{initialValues.issues_email}</Text30>
                   </InfoBlock>
                   <InfoBlock>
-                    <BlockTitle>
+                    <BlockTitle style={{ paddingBottom: "0.5rem" }}>
                       <Text30>Пресса</Text30>
                     </BlockTitle>
-                    <Text30>press@reserve.ru</Text30>
+                    <Text30>{initialValues.press_email}</Text30>
                   </InfoBlock>
                   <InfoBlock>
-                    <BlockTitle>
+                    <BlockTitle style={{ paddingBottom: "0.5rem" }}>
                       <Text30>Работа в «Резерве»</Text30>
                     </BlockTitle>
-                    <Text24>
-                      Мы всегда заинтересованы в талантах! Присылайте ваше
-                      портфолио и резюме. Размер прикрепленных к письму файлов
-                      не должны превышать 10 мб.
-                    </Text24>
-                    <Text30>ok@reserve.ru</Text30>
+                    <Text24>{initialValues.hunt_description}</Text24>
+                    <br />
+                    <Text30>{initialValues.hunt_email}</Text30>
                   </InfoBlock>
                 </Col>
               </Row>
@@ -179,14 +202,16 @@ const Contacts = () => {
                       "pk.eyJ1IjoibWFya2thYmllcnNraSIsImEiOiJjbGZocWVxc2g0YnZuM3pudG1uNDllZ3c0In0.SUhq0ncJhbm76bV4IXdEnQ"
                     }
                   >
-                    <Marker
-                      latitude={55.784233}
-                      longitude={37.55955}
-                      offsetLeft={-15}
-                      offsetTop={-15}
-                    >
-                      <CirclePoint data-type="2" />
-                    </Marker>
+                    {initialValues.lng && initialValues.lat && (
+                      <Marker
+                        latitude={initialValues.lat}
+                        longitude={initialValues.lng}
+                        offsetLeft={-15}
+                        offsetTop={-15}
+                      >
+                        <CirclePoint data-type="2" />
+                      </Marker>
+                    )}
                   </ReactMapGL>
                 </div>
               </MapWrapper>

@@ -58,14 +58,6 @@ const NavRight = () => {
 
   return (
     <Nav ref={navRef} data-status={navIsOpened ? "opened" : "closed"}>
-      {screens.sm && (
-        <FixedBottom>
-          <NavBottom data-space="nospace">
-            <Text24>hello@reserve.ru</Text24>
-          </NavBottom>
-        </FixedBottom>
-      )}
-
       <NavBlock>
         <LeadLinks routes={leadLinks} />
 

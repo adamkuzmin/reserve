@@ -54,6 +54,24 @@ export const HomeQuery = groq`
     }
 `;
 
+export const ContactsQuery = groq`
+    *[_type == "contacts" ] {
+        _id,
+        fullname,
+        actual_location,
+        domicile,
+        phone1,
+        phone2,
+        comment,
+        issues_email,
+        press_email,
+        hunt_description,
+        hunt_email,
+        lng,
+        lat
+    }
+`;
+
 export const PartnersQuery = groq`
     *[_type == "partners" ] {
       _id,
