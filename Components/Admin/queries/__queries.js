@@ -54,6 +54,24 @@ export const HomeQuery = groq`
     }
 `;
 
+export const SocialNetsQuery = groq`
+    *[_type == "social_nets" ] {
+        _id,
+        image1,
+        url1,
+        type1,
+        image2,
+        url2,
+        type2,
+        image3,
+        url3,
+        type3,
+        image4,
+        url4,
+        type4,
+    }
+`;
+
 export const ContactsQuery = groq`
     *[_type == "contacts" ] {
         _id,

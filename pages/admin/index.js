@@ -48,6 +48,12 @@ const AdminPage = () => {
             <Text24>Контакты</Text24>
           </Card>
         </Link>
+
+        <Link href="/admin/social-nets">
+          <Card fill={"#FE7B7B"}>
+            <Text24>Соцсети</Text24>
+          </Card>
+        </Link>
       </Layout>
 
       <Gap sheight={`48px`} />

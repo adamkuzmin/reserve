@@ -1,12 +1,14 @@
-import { useEffect, useRef } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useStore } from "../../Store/useStore";
 
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Text48, Text40 } from "../common/text";
 
 import { ScreenLead } from "../common/body";
 import Router, { useRouter } from "next/router";
+import { SocialNetsQuery } from "../Admin/queries/__queries";
+import { sanity } from "../Client/sanity/sanity-client";
 
 const transValue = `800px`;
 
@@ -199,6 +201,8 @@ const Tile = styled.div`
   align-items: center;
   overflow: hidden;
 
+  position: relative;
+
   @media (max-width: ${transValue}) and (min-width: 576px) {
     && {
       border-radius: clamp(10px, 12vw, 96px);
@@ -227,6 +231,26 @@ const Tile = styled.div`
     transform: scale(1.08);
     transition: transform 0.6s ease-in-out;
   }
+`;
+
+const SocialIcon = styled.div`
+  width: 55px;
+  height: 55px;
+
+  position: absolute;
+  z-index: 2;
+  right: 10%;
+  bottom: 10%;
+
+  ${({ type }) =>
+    type
+      ? css`
+          & {
+            background-image: url("/icons/social/${type}.svg");
+            background-size: cover;
+          }
+        `
+      : ``}
 `;
 
 const intro = {
@@ -293,6 +317,27 @@ const LastMedia = ({ data = {} }) => {
 
   const { block6_1 } = data;
 
+  const [values, setValues] = useState();
+  const [isFetched, setFetched] = useState(false);
+
+  useEffect(() => {
+    const query = SocialNetsQuery;
+
+    sanity
+      .fetch(query)
+      .then((data) => {
+        setValues(data);
+        setFetched(true);
+      })
+      .catch(() => setFetched(true));
+  }, []);
+
+  const initialValues = useMemo(() => {
+    if (!(values && isFetched)) return;
+
+    if (values.length > 0) return values[0];
+  }, [values, isFetched]);
+
   return (
     <MediaWrapper ref={MediaRef}>
       <ScreenLead color={"white"}>
@@ -325,8 +370,34 @@ const LastMedia = ({ data = {} }) => {
         </LargeCard>
         <LargeCard swidth={60}>
           <LargeCard.Content data-content="tiles">
-            <Tile src="/renders/12.jpg"></Tile>
-            <Tile src="/renders/13.jpg"></Tile>
+            {initialValues && (
+              <>
+                {Array(4)
+                  .fill(1)
+                  .map((_, i) => {
+                    const url = initialValues[`url${i}`];
+                    const image = initialValues[`image${i}`];
+                    const type = initialValues[`type${i}`];
+
+                    const show = url && type;
+
+                    if (!show)
+                      return (
+                        <React.Fragment key={`tile:${i}`}></React.Fragment>
+                      );
+
+                    return (
+                      <Tile
+                        onClick={() => window.open(url, "_blank")}
+                        key={`tile:${i}`}
+                        src={image}
+                      >
+                        <SocialIcon type={type} />
+                      </Tile>
+                    );
+                  })}
+              </>
+            )}
           </LargeCard.Content>
           <LargeCard.Title>
             <Text40 data-type="title">{intro.labels.socmedia[lang]}</Text40>
