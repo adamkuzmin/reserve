@@ -97,7 +97,7 @@ const VacanciesHeader = () => {
               initialValues={initialValues}
             >
               <Wrap30 data-font="Wremena" style={{ marginBottom: "24px" }}>
-                <h3>Верхняя шапка раздела "Партнеры"</h3>
+                <h3>Верхняя шапка раздела &quot;Партнеры&quot;</h3>
               </Wrap30>
 
               <div
