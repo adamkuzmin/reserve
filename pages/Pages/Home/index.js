@@ -94,18 +94,38 @@ const Home = () => {
     sanity
       .fetch(query)
       .then((data) => {
-        const _data = data.map((item = {}) => {
-          const { name, coverhor, coververt, year, _id, cats, main_img } = item;
+        const _data = data
+          .sort((a, b) => {
+            // Case when both items have null or undefined index
+            if (
+              (a.index === null || a.index === undefined) &&
+              (b.index === null || b.index === undefined)
+            ) {
+              return 0; // Maintain original order
+            }
+            // Case when only one item has null or undefined index
+            if (a.index === null || a.index === undefined) {
+              return -1; // a goes before b
+            }
+            if (b.index === null || b.index === undefined) {
+              return 1; // b goes before a
+            }
+            // Case when both items have numeric index
+            return a.index - b.index; // Sort by index in ascending order
+          })
+          .map((item = {}) => {
+            const { name, coverhor, coververt, year, _id, cats, main_img } =
+              item;
 
-          return {
-            id: _id,
-            coverhor,
-            coververt,
-            cats,
-            cover: main_img,
-            name,
-          };
-        });
+            return {
+              id: _id,
+              coverhor,
+              coververt,
+              cats,
+              cover: main_img,
+              name,
+            };
+          });
 
         setStateData(_data);
         setFetched(true);

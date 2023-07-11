@@ -13,12 +13,48 @@ import groq from "groq";
 import { useStore } from "@/Store/useStore";
 import { projectFields } from "@/Components/Admin/queries/__queries";
 
+import { Tabs } from "antd";
+import ProjectsDrag from "@/Components/Admin/projects-drag/projects-drag";
+import styled from "styled-components";
+const { TabPane } = Tabs;
+
+const FixedPanel = styled.div`
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 16px;
+  background-color: #fff;
+`;
+
+const Wrapper = styled.div`
+  &&& {
+    width: 100%;
+  }
+
+  position: relative;
+`;
+
+const Overflow = styled.div`
+  width: 100%;
+  height: 100%;
+
+  background: red;
+
+  display: flex;
+  overflow: hidden;
+
+  position: fixed;
+  z-index: 99999999;
+`;
+
 const ProjectsPage = () => {
   const router = useRouter();
 
   const logId = useStore(({ logId }) => logId);
 
   const [projects, setProjects] = useState([]);
+
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -55,7 +91,18 @@ const ProjectsPage = () => {
         <br />
         <br />
 
-        {projects && !loading && <Projects data={projects} />}
+        {projects && !loading && (
+          <Wrapper>
+            <Tabs defaultActiveKey="1">
+              <TabPane tab="Все проекты" key="1">
+                <Projects data={projects} />
+              </TabPane>
+              <TabPane tab="Сортировка" key="2">
+                <ProjectsDrag loading={loading} data={projects} />
+              </TabPane>
+            </Tabs>
+          </Wrapper>
+        )}
       </AdminWrapper>
     </>
   );

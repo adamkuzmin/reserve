@@ -117,47 +117,66 @@ const Projects = () => {
         let categories = [];
         let years = [];
 
-        const _data = data.map((item = {}) => {
-          const {
-            name,
-            coverhor,
-            coververt,
-            city,
-            year,
-            lng,
-            lat,
-            cats = [],
-            _id,
-          } = item;
-
-          cats.map((cat) => {
-            if (!categories.includes(cat)) {
-              categories.push(cat);
+        const _data = data
+          .sort((a, b) => {
+            // Case when both items have null or undefined index
+            if (
+              (a.index === null || a.index === undefined) &&
+              (b.index === null || b.index === undefined)
+            ) {
+              return 0; // Maintain original order
             }
+            // Case when only one item has null or undefined index
+            if (a.index === null || a.index === undefined) {
+              return -1; // a goes before b
+            }
+            if (b.index === null || b.index === undefined) {
+              return 1; // b goes before a
+            }
+            // Case when both items have numeric index
+            return a.index - b.index; // Sort by index in ascending order
+          })
+          .map((item = {}) => {
+            const {
+              name,
+              coverhor,
+              coververt,
+              city,
+              year,
+              lng,
+              lat,
+              cats = [],
+              _id,
+            } = item;
+
+            cats.map((cat) => {
+              if (!categories.includes(cat)) {
+                categories.push(cat);
+              }
+            });
+
+            if (!years.includes(year)) {
+              years.push(year);
+            }
+
+            return {
+              nameru: name,
+              nameen: name,
+              coververt,
+              coverhor,
+              city,
+              lat,
+              lng,
+              built: 1,
+              current: 0,
+              finished: year,
+              competition: 0,
+              residential: 1,
+              id: _id,
+              cats,
+              year,
+            };
           });
-
-          if (!years.includes(year)) {
-            years.push(year);
-          }
-
-          return {
-            nameru: name,
-            nameen: name,
-            coververt,
-            coverhor,
-            city,
-            lat,
-            lng,
-            built: 1,
-            current: 0,
-            finished: year,
-            competition: 0,
-            residential: 1,
-            id: _id,
-            cats,
-            year,
-          };
-        });
 
         setPreData(_data);
         setCategories(categories);

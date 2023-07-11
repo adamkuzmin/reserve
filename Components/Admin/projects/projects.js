@@ -83,7 +83,24 @@ const Projects = ({ data }) => {
         <TableWrapper>
           <PTable
             columns={columns(deleteProject)}
-            dataSource={data}
+            dataSource={data.sort((a, b) => {
+              // Case when both items have null or undefined index
+              if (
+                (a.index === null || a.index === undefined) &&
+                (b.index === null || b.index === undefined)
+              ) {
+                return 0; // Maintain original order
+              }
+              // Case when only one item has null or undefined index
+              if (a.index === null || a.index === undefined) {
+                return -1; // a goes before b
+              }
+              if (b.index === null || b.index === undefined) {
+                return 1; // b goes before a
+              }
+              // Case when both items have numeric index
+              return a.index - b.index; // Sort by index in ascending order
+            })}
             showSizeChanger={false}
             pagination={false}
           />
