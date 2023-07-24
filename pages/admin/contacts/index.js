@@ -235,12 +235,6 @@ const ContactsPage = () => {
 
               <Wrap30>
                 <Form.Item
-                  rules={[
-                    {
-                      required: true,
-                      message: "Поле не заполнено",
-                    },
-                  ]}
                   style={{ maxWidth: "100%" }}
                   name="phone2"
                 >
